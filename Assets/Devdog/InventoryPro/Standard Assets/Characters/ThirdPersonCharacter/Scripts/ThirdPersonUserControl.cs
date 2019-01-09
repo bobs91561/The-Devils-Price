@@ -61,6 +61,10 @@ namespace Devdog.InventoryPro.UnityStandardAssets
             }
         }
 
+        public void SetCamera()
+        {
+            m_Cam = Camera.main.transform;
+        }
 
         public void SetInputActive(bool active)
         {
@@ -102,6 +106,7 @@ namespace Devdog.InventoryPro.UnityStandardAssets
             {
                 // calculate camera relative direction to move:
                 m_CamForward = Vector3.Scale(m_Cam.forward, new Vector3(1, 0, 1)).normalized;
+                if (!CrossHair.instance) CrossHair.FindInstance();
                 CrossHair.instance.UpdateCrossHair(m_CamForward);
                 m_Move = v*m_CamForward + h*m_Cam.right;
             }
@@ -136,5 +141,11 @@ namespace Devdog.InventoryPro.UnityStandardAssets
         {
             enabled = false;
         }
+
+        public void OnRespawn()
+        {
+            enabled = true;
+        }
+        
     }
 }

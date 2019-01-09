@@ -25,6 +25,8 @@ public class SkillSet : MonoBehaviour {
     public List<GameObject> objectsSheathe;
     public List<GameObject> objectsDrawn;
 
+    private bool _drawn = true;
+
     public Attack currentAttack;
 
     public bool isAttacking = false;
@@ -54,18 +56,23 @@ public class SkillSet : MonoBehaviour {
 
     public void DrawWeapons()
     {
+        if (_drawn) return;
         foreach (GameObject g in objectsSheathe)
             g.SetActive(false);
         foreach (GameObject g in objectsDrawn)
             g.SetActive(true);
+        _drawn = true;
     }
 
     public void SheatheWeapons()
     {
+        if (!_drawn) return;
         foreach (GameObject g in objectsSheathe)
             g.SetActive(true);
         foreach (GameObject g in objectsDrawn)
             g.SetActive(false);
+
+        _drawn = false;
     }
 
     public void Combat()

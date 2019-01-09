@@ -5,9 +5,10 @@ using Systems.Combat;
 
 
 [CreateAssetMenu (menuName ="Attacks/Melee")]
-class Melee : Attack
+public class Melee : Attack
 {
     public bool OneHit = true;
+    public bool DontEndAfterDestroy = false;
     public bool MultipleGenerations;
     public float HitboxDestroyTime;
     public override void UseAttack()
@@ -18,7 +19,7 @@ class Melee : Attack
         objectGenerated = hb;
         hb.transform.SetParent(meleeObject.transform);
         hb.transform.localPosition = new Vector3(0,0,0);
-        hb.GetComponent<Hitbox>().Initialize(attacker,damage, OneHit,HitboxDestroyTime);
+        hb.GetComponent<Hitbox>().Initialize(attacker,damage, OneHit,HitboxDestroyTime, DontEndAfterDestroy);
 
         if(MultipleGenerations && meleeObjectSecondary)
         {
@@ -26,7 +27,7 @@ class Melee : Attack
             objectGeneratedSecondary = hb2;
             hb2.transform.SetParent(meleeObjectSecondary.transform);
             hb2.transform.localPosition = new Vector3(0, 0, 0);
-            hb2.GetComponent<Hitbox>().Initialize(attacker, damage, OneHit, HitboxDestroyTime);
+            hb2.GetComponent<Hitbox>().Initialize(attacker, damage, OneHit, HitboxDestroyTime, DontEndAfterDestroy);
         }
     }
 

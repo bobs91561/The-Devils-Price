@@ -34,6 +34,9 @@ namespace Devdog.InventoryPro.UnityStandardAssets
 		bool m_Crouching;
 
         public bool m_IsReacting;
+        public bool IsRotating;
+        private bool m_IsJumping;
+        private bool m_ReadyToJump;
 
 	    public LayerMask raycastLayerMask;
 
@@ -92,6 +95,8 @@ namespace Devdog.InventoryPro.UnityStandardAssets
             if (jump)
             {
                 m_Animator.SetTrigger("JumpTrigger");
+                m_IsJumping = true;
+                m_ReadyToJump = false;
             }
 
             ScaleCapsuleForCrouching(crouch);
@@ -216,17 +221,28 @@ namespace Devdog.InventoryPro.UnityStandardAssets
             Vector3 v;
             // we implement this function to override the default root motion.
             // this allows us to modify the positional speed before it's applied.
-            if (m_IsGrounded && Time.deltaTime > 0)
+            if (m_IsGrounded && Time.deltaTime > 0 && !m_ReadyToJump)
 			{
 				v = (m_Animator.deltaPosition * m_MoveSpeedMultiplier) / Time.deltaTime;
 
 				// we preserve the existing y part of the current velocity.
 				v.y = m_Rigidbody.velocity.y;
 				m_Rigidbody.velocity = v;
-			}
+
+            }
+            else if (m_IsJumping && m_ReadyToJump)
+            {
+                // jump!
+                m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x, m_JumpPower, m_Rigidbody.velocity.z);
+                m_IsGrounded = false;
+                m_Animator.applyRootMotion = false;
+                m_GroundCheckDistance = 0.1f;
+                m_IsJumping = false;
+                m_ReadyToJump = false;
+            }
 
         }
-
+        
 
 		void CheckGroundStatus()
 		{
@@ -260,5 +276,28 @@ namespace Devdog.InventoryPro.UnityStandardAssets
             else
                 m_IsReacting = false;
         }
-	}
+
+        public void ApplyRotation(float degrees)
+        {
+            Quaternion rot = Quaternion.Euler(new Vector3(0f, transform.rotation.eulerAngles.y + degrees, 0f));
+            StartCoroutine("Rotate", rot);
+        }
+
+        private IEnumerator Rotate(Quaternion rot)
+        {
+            float t = 0f;
+            while (t<=0.5f)
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, rot, Time.deltaTime * 10f);
+                yield return null;
+
+                t += Time.deltaTime;
+            }
+        }
+
+        public void Jump()
+        {
+            m_ReadyToJump = true;
+        }
+    }
 }

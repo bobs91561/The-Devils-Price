@@ -40,7 +40,7 @@ public class HealthManager : MonoBehaviour {
             healthBar = Instantiate(HealthBarPrefab).GetComponent<FloatingHealthBar>();
             healthBar.Initialize(gameObject);
         }
-        
+        if (isPlayer) EventManager.RespawnAction += Respawn;
 	}
 
     private void OnEnable()
@@ -58,8 +58,10 @@ public class HealthManager : MonoBehaviour {
 
     private void Life()
     {
+        Health = maxHealth;
+        isAlive = true;
         _mAnimator.SetBool(animID, !isAlive);
-        enabled = true;
+        this.enabled = true;
     }
 
     // Update is called once per frame
@@ -68,9 +70,8 @@ public class HealthManager : MonoBehaviour {
 
         if (!isAlive)
         {
-            Death();
-
             enabled = false;
+            Death();
         }
        
 	}
@@ -100,6 +101,19 @@ public class HealthManager : MonoBehaviour {
         SendMessage("OnDeathParam", hitBy);
         SendMessage("OnDeath");
     }
+
+    public void Respawn()
+    {
+        Life();
+        SendMessage("OnRespawn");
+    }
+
+    public void OnDestroy()
+    {
+        if (healthBar) Destroy(healthBar);
+    }
+
+    #region Reaction Script
     /// <summary>
     /// Takes a normalized point in local space and applies the animation
     /// </summary>
@@ -112,7 +126,6 @@ public class HealthManager : MonoBehaviour {
         anim.SetFloat("HitDirZ", point.z);
         anim.SetTrigger("React");
     }
-
     public void ReactAt(RaycastHit hit)
     {
         Vector3 point = hit.point;
@@ -137,4 +150,13 @@ public class HealthManager : MonoBehaviour {
         ReactHere(point);
     }
     
+    public void ReactMajor()
+    {
+        if (GetComponent<ThirdPersonCharacter>().m_IsReacting) return;
+        Animator anim = GetComponent<Animator>();
+        anim.SetTrigger("MajorReact");
+        SendMessage("Combat");
+    }
+
+    #endregion
 }

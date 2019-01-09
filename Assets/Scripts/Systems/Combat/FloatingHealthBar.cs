@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class FloatingHealthBar : MonoBehaviour
 {
@@ -13,12 +14,6 @@ public class FloatingHealthBar : MonoBehaviour
     private Slider _slider;
     private HealthManager _hm;
     private RectTransform _rect;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     public void Activate()
     {
@@ -37,7 +32,7 @@ public class FloatingHealthBar : MonoBehaviour
     public void Initialize(GameObject obj)
     {
         if (cam == null) cam = Camera.main;
-        if (canvas == null) canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
+        if (canvas == null) canvas = GameObject.Find("EnemyHealthCanvas").GetComponent<Canvas>();
         parent = obj.transform;
         _hm = obj.GetComponent<HealthManager>();
         _slider = GetComponent<Slider>();
@@ -77,4 +72,6 @@ public class FloatingHealthBar : MonoBehaviour
         return new Vector2((viewport_position.x * canvas_rect.sizeDelta.x) - (canvas_rect.sizeDelta.x * 0.5f),
                            (viewport_position.y * canvas_rect.sizeDelta.y) - (canvas_rect.sizeDelta.y * 0.5f));
     }
+
+
 }

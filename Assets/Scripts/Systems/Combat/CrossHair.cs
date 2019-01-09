@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class CrossHair : MonoBehaviour {
 
     public static CrossHair instance;
 
-    public GameObject ObjectToProjectFrom;
+    public Transform ObjectToProjectFrom;
     public float MaxDistance;
 
     private LayerMask _mask;
@@ -24,6 +25,8 @@ public class CrossHair : MonoBehaviour {
         baseColor = image.color;
         isInitialized = false;
         instance = this;
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        EventManager.SubscribeToPlayer += UpdatePlayer;
 	}
 
     private void Initialize()
@@ -34,7 +37,7 @@ public class CrossHair : MonoBehaviour {
         }
         if (ObjectToProjectFrom == null)
         {
-            ObjectToProjectFrom = GameManager.Player.GetComponent<SkillSet>().castingObject;
+            ObjectToProjectFrom = GameManager.Player.GetComponent<SkillSet>().castingObject.transform;
         }
         isInitialized = true;
     }
@@ -42,9 +45,12 @@ public class CrossHair : MonoBehaviour {
     
     public void UpdateCrossHair (Vector3 fwd) {
         if (!isInitialized) Initialize();
-        Debug.DrawRay(Player.transform.position, fwd*MaxDistance, Color.green);
+        if (!Player) Initialize();
+        Vector3 vec = Player.transform.position;
+        vec.y = ObjectToProjectFrom.position.y;
+        Debug.DrawRay(vec, fwd*MaxDistance, Color.green);
         RaycastHit hit;
-        bool hitSomething = Physics.SphereCast(Player.transform.position, 0.15f, fwd, out hit, MaxDistance, _mask);
+        bool hitSomething = Physics.SphereCast(vec, 0.15f, fwd, out hit, MaxDistance, _mask);
         var hm = hitSomething ? hit.collider.gameObject.GetComponent<HealthManager>() : null;
         if (hitSomething && hm && hm.isAlive)
         {
@@ -55,4 +61,25 @@ public class CrossHair : MonoBehaviour {
 
             image.color = baseColor;
     }
+
+    public static void FindInstance()
+    {
+        CrossHair ch = GameObject.Find("CrossHair").GetComponent<CrossHair>();
+        if (!ch) Debug.Log("Can't find anything");
+        else instance = ch;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (instance == null) instance = this;
+        Player = GameManager.Player;
+        Initialize();
+    }
+
+    public void UpdatePlayer()
+    {
+        Player = GameManager.Player;
+        ObjectToProjectFrom = GameManager.Player.GetComponent<SkillSet>().castingObject.transform;
+    }
+    
 }

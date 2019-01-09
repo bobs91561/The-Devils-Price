@@ -15,6 +15,7 @@ public class AIController : MonoBehaviour
 {
     public int Level;
     public float MinimumAttackTimeDifference = 2f;
+
     public List<Attack> attacks;
     private SkillSet _skillSet;
     private Animator _anim;
@@ -24,6 +25,7 @@ public class AIController : MonoBehaviour
     public AIActionDecider Decider;
 
     public bool Moving;
+    public bool Frozen;
 
     private void Start()
     {
@@ -63,7 +65,7 @@ public class AIController : MonoBehaviour
         }
         else
             _agent.updateRotation = true;
-        if(!_skillSet.CheckAttack())
+        if (!_skillSet.CheckAttack() || Frozen)
             thirdPerson.Move(vel, false, false);
     }
     

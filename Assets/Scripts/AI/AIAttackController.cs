@@ -68,6 +68,7 @@ public class AIAttackController : AttackController {
         if (best != null)
         {
             _skillSet.StartAttack(best);
+            if (!PlayerCenter) PlayerCenter = GameObject.Find("Player").GetComponent<SkillSet>().characterCenter;
             _skillSet.TargetThis(PlayerCenter);
             //Update cooldown
             SendAttack(best);

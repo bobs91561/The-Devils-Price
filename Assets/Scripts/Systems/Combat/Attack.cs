@@ -30,7 +30,7 @@ public abstract class Attack : ScriptableObject {
     /// </summary>
     public abstract void UseAttack();
 
-    public void TriggerAnimation()
+    public virtual void TriggerAnimation()
     {
         Animator a = attacker.GetComponent<Animator>();
         if (a)
@@ -55,6 +55,8 @@ public abstract class Attack : ScriptableObject {
         targetObject = g;
         if (objectGenerated)
         {
+            Vector3 p = g.transform.position;
+            Vector3 t = attacker.GetComponent<SkillSet>().castingObject.transform.position;
             Vector3 forward = (g.transform.position - attacker.GetComponent<SkillSet>().castingObject.transform.position).normalized;
             forward.y = 0f;
             objectGenerated.transform.forward = forward;

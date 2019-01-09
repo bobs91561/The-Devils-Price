@@ -15,6 +15,7 @@ namespace Systems.Combat
 
         private bool DestroyAfterHit;
         private float DestroyAfterTime;
+        private bool EndAfterDestroy;
 
         private float timer;
 
@@ -32,18 +33,19 @@ namespace Systems.Combat
                 Destroy(gameObject);
         }
 
-        public void Initialize(GameObject obj, float damage,bool afterHit = true, float afterTime = 5f)
+        public void Initialize(GameObject obj, float damage,bool afterHit = true, float afterTime = 5f, bool dontEndAfterDestroy = false)
         {
             _mParent = obj;
             DestroyAfterHit = afterHit;
             DestroyAfterTime = afterTime;
             gameObject.layer = _mParent.layer;
             _mDamageDealt = damage;
+            EndAfterDestroy = !dontEndAfterDestroy;
         }
 
         private void OnDestroy()
         {
-            _mParent.GetComponent<SkillSet>().EndAttack();
+            if(EndAfterDestroy) _mParent.GetComponent<SkillSet>().EndAttack();
         }
 
         private void CheckAggression(GameObject g)

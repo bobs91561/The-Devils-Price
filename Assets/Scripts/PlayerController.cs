@@ -160,8 +160,13 @@ public class PlayerController : AttackController {
 
     public void OnDeath()
     {
-        EventManager.Death();
         enabled = false;
+        EventManager.Death();
+    }
+
+    public void OnRespawn()
+    {
+        this.enabled = true;
     }
     
 }

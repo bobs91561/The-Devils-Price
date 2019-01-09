@@ -40,6 +40,7 @@ public class Zone : MonoBehaviour {
     /// The player has entered the Zone, deactivate non-neightboring zones and activate all neighbors
     /// </summary>
     /// <param name="other"></param>
+    /// TODO: Change Deactivate so it is not occuring during physics update
     internal void OnTriggerEnter(Collider other)
     {
         PlayerInZone = true;

@@ -21,6 +21,7 @@ public class SpawnManager : MonoBehaviour {
         _mRespawnRequests = new Queue<RespawnsOnDeath>();
         _mRespawns = new List<RespawnsOnDeath>();
         EventManager.FellOffWorld += ResetPlayer;
+        EventManager.DeathAction += RespawnPlayer;
         instance = this;
 	}
 
@@ -99,9 +100,43 @@ public class SpawnManager : MonoBehaviour {
 
     private void ResetPlayer()
     {
-        Transform t = GameManager.CurrentZone.RespawnPoint;
-        GameManager.Player.transform.position = t.position;
+        if (GameManager.CurrentZone.RespawnPoint)
+        {
+            Transform t = GameManager.CurrentZone.RespawnPoint;
+            GameManager.Player.transform.position = t.position;
+        }
 
+    }
+
+    private void RespawnPlayer()
+    {
+        if (GameManager.CurrentZone)
+        {
+            //Use the respawn point in the current zone
+        }
+        else
+        {
+            StartCoroutine(RespawnAtRespawnPoint());
+        }
+    }
+
+    IEnumerator RespawnAtRespawnPoint()
+    {
+        yield return new WaitForSeconds(2f);
+        //Find the closest respawn point
+        var rps = GameObject.FindGameObjectsWithTag("RespawnPoint");
+        RespawnPoint rp = null;
+        Vector3 pv = GameManager.Player.transform.position;
+        float min = Mathf.Infinity;
+        foreach (GameObject respawns in rps)
+        {
+            var v = Vector3.Distance(respawns.transform.position, pv);
+            if (v < min)
+            {
+                rp = respawns.GetComponent<RespawnPoint>();
+            }
+        }
+        if (rp) rp.Respawn();
     }
 
 }

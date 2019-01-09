@@ -32,12 +32,15 @@ public class AIAction_ATTACK : AIAction {
         decider.combatApproach -= Time.deltaTime;
 
         //return true if the AI isAttacking
-        if (_skillset.CheckAttack()) return true;
+        if (_skillset.CheckAttack())
+        {
+            TimeSinceLastAttack = 0f;
+            return true;
+        }
 
         //if not isAttacking, chooseAttack with AttackController
         //return whether attack was chosen
         bool b = _attackController.ChooseAttack();
-        if (b) TimeSinceLastAttack = 0f;
         return b;
     }
     //TODO Check if the player is visible to the AI

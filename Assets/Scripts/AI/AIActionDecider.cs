@@ -20,6 +20,7 @@ public class AIActionDecider: MonoBehaviour {
     public bool combatMoveActive = false;
 
     public bool CombatNearby;
+    public bool RecentCombat;
     public bool Friendly;
 
     public List<AIAction> actions;
@@ -105,6 +106,7 @@ public class AIActionDecider: MonoBehaviour {
     {
         if (combat) return;
         combat = true;
+        RecentCombat = true;
         skillSet.Combat();
         skillSet.DrawWeapons();
         //GetComponent<Animator>().SetBool("Combat", true);

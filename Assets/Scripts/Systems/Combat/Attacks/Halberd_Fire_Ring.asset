@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72adee43f79f30347893612e8be31394, type: 3}
+  m_Name: Halberd_Fire_Ring
+  m_EditorClassIdentifier: 
+  attacker: {fileID: 0}
+  objectToGenerate: {fileID: 1276926224212706, guid: d4f84c24206f1eb4a91c87ebc9899b0b,
+    type: 3}
+  objectGenerated: {fileID: 0}
+  objectGeneratedSecondary: {fileID: 0}
+  damage: 100
+  coolDown: 10
+  soulStrengthRequired: 0
+  demonicPowerRequired: 10
+  maxForwardDistance: 5
+  areaOfAttack: 5
+  attackSpeed: 5
+  animationKey: DemonicSweep
+  OneHit: 0
+  DontEndAfterDestroy: 1
+  MultipleGenerations: 0
+  HitboxDestroyTime: 5
+  effectToGenerate: {fileID: 1496785301, guid: 3a6709f175ae8824baa4a76b0c3d5295, type: 3}
+  effectGenerated: {fileID: 0}
+  effectDelayed: 1
+  effectGrounded: 1

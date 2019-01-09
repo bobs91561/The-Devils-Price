@@ -15,6 +15,10 @@ public class EventManager {
     public static event VoidDelegate Aggression;
 
     public static event VoidDelegate FellOffWorld;
+
+    public static event VoidDelegate RespawnAction;
+
+    public static event VoidDelegate SubscribeToPlayer;
 	
     public static void Death()
     {
@@ -24,5 +28,16 @@ public class EventManager {
     public static void OffWorld()
     {
         FellOffWorld();
+    }
+
+    public static void Respawn()
+    {
+        RespawnAction();
+    }
+
+    public static void UpdatePlayer()
+    {
+        if(SubscribeToPlayer != null)
+        SubscribeToPlayer();
     }
 }

@@ -5,13 +5,18 @@ using com.ootii.Cameras;
 
 public class CameraChecker : MonoBehaviour
 {
-    
+    public Camera MainCam;
+
+    private void Start()
+    {
+        MainCam = GetComponentInChildren<Camera>();
+    }
     // Update is called once per frame
     void LateUpdate()
     {
-        if (!GetComponent<CameraController>().Anchor)
+        if (!GetComponent<CameraController>().Anchor && GameManager.Player)
         {
-            GetComponent<CameraController>().Anchor = GameObject.Find("Player").transform;
+            GetComponent<CameraController>().Anchor = GameManager.Player.transform;
         }
         else
             enabled = false;

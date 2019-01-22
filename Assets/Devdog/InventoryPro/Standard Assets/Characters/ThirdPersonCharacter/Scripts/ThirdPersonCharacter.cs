@@ -3,8 +3,8 @@ using System.Collections;
 
 namespace Devdog.InventoryPro.UnityStandardAssets
 {
-	[RequireComponent(typeof(Rigidbody))]
-	[RequireComponent(typeof(CapsuleCollider))]
+	//[RequireComponent(typeof(Rigidbody))]
+	//[RequireComponent(typeof(CapsuleCollider))]
 	// [RequireComponent(typeof(Animator))]
 	public class ThirdPersonCharacter : MonoBehaviour
 	{
@@ -33,10 +33,10 @@ namespace Devdog.InventoryPro.UnityStandardAssets
 		CapsuleCollider m_Capsule;
 		bool m_Crouching;
 
-        public bool m_IsReacting;
+        //public bool m_IsReacting;
         public bool IsRotating;
-        private bool m_IsJumping;
-        private bool m_ReadyToJump;
+        [SerializeField]private bool m_IsJumping;
+        [SerializeField] private bool m_ReadyToJump;
 
 	    public LayerMask raycastLayerMask;
 
@@ -44,10 +44,20 @@ namespace Devdog.InventoryPro.UnityStandardAssets
         void Start()
 		{
 			m_Animator = GetComponent<Animator>();
+            if (!m_Animator) m_Animator = GetComponentInChildren<Animator>();
 			m_Rigidbody = GetComponent<Rigidbody>();
 			m_Capsule = GetComponent<CapsuleCollider>();
-			m_CapsuleHeight = m_Capsule.height;
+
+            if (!m_Rigidbody)
+            {
+                m_Rigidbody = GetComponentInParent<Rigidbody>();
+                m_Capsule = GetComponentInParent<CapsuleCollider>();
+            }
+
+            m_CapsuleHeight = m_Capsule.height;
 			m_CapsuleCenter = m_Capsule.center;
+
+            
 
 			m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
 			m_OrigGroundCheckDistance = m_GroundCheckDistance;
@@ -57,11 +67,12 @@ namespace Devdog.InventoryPro.UnityStandardAssets
 	    void OnDisable()
 	    {
 	        m_ForwardAmount = 0;
-            m_Animator.SetFloat("Forward", 0f);
+            if(m_Animator)
+                m_Animator.SetFloat("Forward", 0f);
 	    }
         
 
-		public void Move(Vector3 move, bool crouch, bool jump, bool restrictForward = false)
+		public void Move(Vector3 move, bool crouch, bool jump, bool restrictForward = false, bool sprint = false)
 		{
 #if UMA
 			if(m_Animator == null)
@@ -69,7 +80,7 @@ namespace Devdog.InventoryPro.UnityStandardAssets
 				m_Animator = GetComponent<Animator>();
 			}
 #endif
-            if (m_IsReacting) return;
+
 			// convert the world relative moveInput vector into a local-relative
 			// turn amount and forward amount required to head in the desired
 			// direction.
@@ -91,8 +102,8 @@ namespace Devdog.InventoryPro.UnityStandardAssets
 			{
 				HandleAirborneMovement();
 			}
-
-            if (jump)
+            
+            if (jump && !m_IsJumping && m_IsGrounded)
             {
                 m_Animator.SetTrigger("JumpTrigger");
                 m_IsJumping = true;
@@ -102,8 +113,10 @@ namespace Devdog.InventoryPro.UnityStandardAssets
             ScaleCapsuleForCrouching(crouch);
 			PreventStandingInLowHeadroom();
 
-			// send input and other state parameters to the animator
-			UpdateAnimator(move);
+            // send input and other state parameters to the animator
+
+            m_Animator.SetBool("SprintKey", sprint);
+            UpdateAnimator(move);
 		}
 
 
@@ -221,16 +234,8 @@ namespace Devdog.InventoryPro.UnityStandardAssets
             Vector3 v;
             // we implement this function to override the default root motion.
             // this allows us to modify the positional speed before it's applied.
-            if (m_IsGrounded && Time.deltaTime > 0 && !m_ReadyToJump)
-			{
-				v = (m_Animator.deltaPosition * m_MoveSpeedMultiplier) / Time.deltaTime;
 
-				// we preserve the existing y part of the current velocity.
-				v.y = m_Rigidbody.velocity.y;
-				m_Rigidbody.velocity = v;
-
-            }
-            else if (m_IsJumping && m_ReadyToJump)
+            if (m_IsJumping && m_ReadyToJump)
             {
                 // jump!
                 m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x, m_JumpPower, m_Rigidbody.velocity.z);
@@ -240,6 +245,15 @@ namespace Devdog.InventoryPro.UnityStandardAssets
                 m_IsJumping = false;
                 m_ReadyToJump = false;
             }
+            else if (m_IsGrounded && Time.deltaTime > 0)
+			{
+				v = (m_Animator.deltaPosition * m_MoveSpeedMultiplier) / Time.deltaTime;
+
+				// we preserve the existing y part of the current velocity.
+				v.y = m_Rigidbody.velocity.y;
+				m_Rigidbody.velocity = v;
+
+            }
 
         }
         
@@ -248,7 +262,7 @@ namespace Devdog.InventoryPro.UnityStandardAssets
 		{
 #if UNITY_EDITOR
 			// helper to visualise the ground check ray in the scene view
-			Debug.DrawLine(transform.position + (Vector3.up * 0.1f), transform.position + (Vector3.up * 0.1f) + (Vector3.down * m_GroundCheckDistance));
+			Debug.DrawLine(transform.position + (Vector3.up * 0.1f), transform.position + (Vector3.up * 0.1f) + (Vector3.down * m_GroundCheckDistance), Color.blue);
 #endif
             RaycastHit hitInfo;
             
@@ -267,32 +281,6 @@ namespace Devdog.InventoryPro.UnityStandardAssets
             m_IsGrounded = false;
             m_GroundNormal = Vector3.up;
             m_Animator.applyRootMotion = false;
-        }
-
-        public void React(int pos)
-        {
-            if (pos == 0)
-                m_IsReacting = true;
-            else
-                m_IsReacting = false;
-        }
-
-        public void ApplyRotation(float degrees)
-        {
-            Quaternion rot = Quaternion.Euler(new Vector3(0f, transform.rotation.eulerAngles.y + degrees, 0f));
-            StartCoroutine("Rotate", rot);
-        }
-
-        private IEnumerator Rotate(Quaternion rot)
-        {
-            float t = 0f;
-            while (t<=0.5f)
-            {
-                transform.rotation = Quaternion.Slerp(transform.rotation, rot, Time.deltaTime * 10f);
-                yield return null;
-
-                t += Time.deltaTime;
-            }
         }
 
         public void Jump()

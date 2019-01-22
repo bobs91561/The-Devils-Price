@@ -6,8 +6,6 @@ using UnityEngine.AI;
 [CreateAssetMenu(menuName = "AIAction/DODGE")]
 public class AIAction_DODGE : AIAction {
 
-    private NavMeshAgent _agent;
-    private SkillSet _skillSet;
     private float _timeSinceDodge;
 
     public float MinTimeBetweenDodge;
@@ -38,7 +36,7 @@ public class AIAction_DODGE : AIAction {
     private void Dodge()
     {
         //Trigger Dodge Animation
-        decider.AI.GetComponent<Animator>().SetTrigger(DodgeAnim);
+        _animator.SetTrigger(DodgeAnim);
         
         //Update timeSinceDodge
         _timeSinceDodge = 0f;
@@ -69,8 +67,6 @@ public class AIAction_DODGE : AIAction {
     public override void Initialize(GameObject obj = null)
     {
         base.Initialize(obj);
-        _skillSet = g.GetComponent<SkillSet>();
         _timeSinceDodge = MinTimeBetweenDodge;
-        _agent = g.GetComponent<NavMeshAgent>();
     }
 }

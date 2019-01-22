@@ -1,0 +1,360 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2091038475785878537
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2091038475785878535}
+  - component: {fileID: 2091038475785878534}
+  - component: {fileID: 2091038475785878532}
+  m_Layer: 0
+  m_Name: Camera_Controller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2091038475785878535
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2091038475785878537}
+  m_LocalRotation: {x: 0.13052616, y: -0, z: -0, w: 0.9914449}
+  m_LocalPosition: {x: 0.83, y: 2.53, z: -2.84}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 2091038476708680903}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2091038475785878534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2091038475785878537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3448bdeccae5d54b9a3f6f43274f1d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _UseFixedUpdate: 1
+  _Mode: 0
+  _Anchor: {fileID: 0}
+  _FrameForceToFollowAnchor: 0
+  _IsInternalUpdateEnabled: 1
+  _IsFixedUpdateEnabled: 0
+  _FixedUpdateFPS: 60
+  _InputSourceOwner: {fileID: 0}
+  _AutoFindInputSource: 1
+  _AnchorOffset: {x: 0, y: 2, z: 0}
+  _RotateAnchorOffset: 1
+  _InvertPitch: 1
+  _ActiveMotorIndex: 1
+  MotorTestActivateEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: com.ootii.Messages.MessageEvent, ootii, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  MotorActivatedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: com.ootii.Messages.MessageEvent, ootii, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  MotorDeactivatedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: com.ootii.Messages.MessageEvent, ootii, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  ActionTriggeredEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: com.ootii.Messages.MessageEvent, ootii, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  _IsCollisionsEnabled: 1
+  _CollisionLayers: 1
+  _CollisionRadius: 0.2
+  _MinCollisionDistance: 0
+  _CollisionRecoverySpeed: 5
+  _IsZoomEnabled: 1
+  _ZoomActionAlias: Camera Zoom
+  _ZoomResetOnRelease: 1
+  _ZoomSpeed: 25
+  _ZoomSmoothing: 0.1
+  _ZoomMin: 20
+  _ZoomMax: 0
+  _IsFadeEnabled: 1
+  _FadeDistance: 0.4
+  _FadeSpeed: 0.25
+  _DisableRenderers: 0
+  _ShakeStrength:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  MotorDefinitions:
+  - '{, "Type" : "com.ootii.Cameras.OrbitFollowMotor, ootii, Version=0.0.0.0, Culture=neutral,
+    PublicKeyToken=null", "Name" : "3rd Person Follow", "IsEnabled" : "True", "ActionAlias"
+    : "", "UseRigAnchor" : "True", "AnchorIndex" : "-1", "AnchorOffset" : "(0, 0,
+    0)", "Offset" : "(0, 0, 0)", "Distance" : "3.00000", "MaxDistance" : "3.00000",
+    "IsCollisionEnabled" : "True", "IsFadingEnabled" : "True", "SpecifyFadeRenderers"
+    : "False", "FadeTransformIndexes" : "", "IsYawEnabled" : "True", "MinYaw" : "-180",
+    "MaxYaw" : "180", "YawSpeed" : "120", "TargetRotationMultiplier" : "3", "IsPitchEnabled"
+    : "True", "InvertPitch" : "True", "MinPitch" : "-60", "MaxPitch" : "60", "PitchSpeed"
+    : "45", "Smoothing" : "0.2"}'
+  - '{, "Type" : "com.ootii.Cameras.OrbitFixedMotor, ootii, Version=0.0.0.0, Culture=neutral,
+    PublicKeyToken=null", "Name" : "3rd Person Fixed", "IsEnabled" : "True", "ActionAlias"
+    : "", "UseRigAnchor" : "True", "AnchorIndex" : "-1", "AnchorOffset" : "(0, 0,
+    0)", "Offset" : "(0, 0, 0)", "Distance" : "3.00000", "MaxDistance" : "3.00000",
+    "IsCollisionEnabled" : "True", "IsFadingEnabled" : "True", "SpecifyFadeRenderers"
+    : "False", "FadeTransformIndexes" : "", "RotateWithAnchor" : "False", "RotateAnchor"
+    : "False", "RotateAnchorAlias" : "Camera Rotate Character", "IsYawEnabled" : "True",
+    "MinYaw" : "-180", "MaxYaw" : "180", "YawSpeed" : "120", "TargetRotationMultiplier"
+    : "3", "IsPitchEnabled" : "True", "InvertPitch" : "True", "MinPitch" : "-60",
+    "MaxPitch" : "60", "PitchSpeed" : "45", "Smoothing" : "0.05"}'
+  - '{, "Type" : "com.ootii.Cameras.OrbitFixedMotor, ootii, Version=0.0.0.0, Culture=neutral,
+    PublicKeyToken=null", "Name" : "Targeting", "IsEnabled" : "True", "ActionAlias"
+    : "", "UseRigAnchor" : "True", "AnchorIndex" : "-1", "AnchorOffset" : "(0, 0,
+    0)", "Offset" : "(0.5, 0, 0)", "Distance" : "0.50000", "MaxDistance" : "0.50000",
+    "IsCollisionEnabled" : "True", "IsFadingEnabled" : "True", "SpecifyFadeRenderers"
+    : "False", "FadeTransformIndexes" : "", "RotateWithAnchor" : "False", "RotateAnchor"
+    : "True", "RotateAnchorAlias" : "Camera Rotate Character", "IsYawEnabled" : "True",
+    "MinYaw" : "-180", "MaxYaw" : "180", "YawSpeed" : "120", "TargetRotationMultiplier"
+    : "3", "IsPitchEnabled" : "True", "InvertPitch" : "True", "MinPitch" : "-60",
+    "MaxPitch" : "60", "PitchSpeed" : "45", "Smoothing" : "0.05"}'
+  - '{, "Type" : "com.ootii.Cameras.TransitionMotor, ootii, Version=0.0.0.0, Culture=neutral,
+    PublicKeyToken=null", "Name" : "Targeting In", "IsEnabled" : "False", "ActionAlias"
+    : "Camera Aim", "UseRigAnchor" : "True", "AnchorIndex" : "-1", "AnchorOffset"
+    : "(0, 0, 0)", "Offset" : "(0, 0, 0)", "Distance" : "0.00000", "MaxDistance" :
+    "0.00000", "IsCollisionEnabled" : "True", "IsFadingEnabled" : "True", "SpecifyFadeRenderers"
+    : "False", "FadeTransformIndexes" : "", "StartMotorIndex" : "0", "EndMotorIndex"
+    : "2", "EndMotorIndexOverride" : "-1", "PositionBlend" : "0", "RotationBlend"
+    : "0", "TransitionTime" : "0.15", "ActionAliasEventType" : "0", "LimitToStart"
+    : "True", "TestDistance" : "False", "ActorStances" : "", "InvertVerifyActorStances"
+    : "False", "DistanceCompareType" : "0", "DistanceValue" : "0.5"}'
+  - '{, "Type" : "com.ootii.Cameras.TransitionMotor, ootii, Version=0.0.0.0, Culture=neutral,
+    PublicKeyToken=null", "Name" : "Targeting Out", "IsEnabled" : "False", "ActionAlias"
+    : "Camera Aim", "UseRigAnchor" : "True", "AnchorIndex" : "-1", "AnchorOffset"
+    : "(0, 0, 0)", "Offset" : "(0, 0, 0)", "Distance" : "0.00000", "MaxDistance" :
+    "0.00000", "IsCollisionEnabled" : "True", "IsFadingEnabled" : "True", "SpecifyFadeRenderers"
+    : "False", "FadeTransformIndexes" : "", "StartMotorIndex" : "2", "EndMotorIndex"
+    : "0", "EndMotorIndexOverride" : "-1", "PositionBlend" : "0", "RotationBlend"
+    : "0", "TransitionTime" : "0.25", "ActionAliasEventType" : "1", "LimitToStart"
+    : "True", "TestDistance" : "False", "ActorStances" : "", "InvertVerifyActorStances"
+    : "False", "DistanceCompareType" : "0", "DistanceValue" : "0.5"}'
+  StoredTransforms: []
+  EditorShowDebug: 0
+  EditorTabIndex: 1
+  EditorMotorIndex: 1
+  EditorRefresh: 0
+  EditorCameraStyle: 1
+  EditorUseAdventureStyle: 1
+  EditorShowEvents: 0
+--- !u!114 &2091038475785878532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2091038475785878537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d66085e488d142459ddae288c4bdb7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MainCam: {fileID: 0}
+--- !u!1 &2091038476708680902
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2091038476708680903}
+  - component: {fileID: 2091038476708680898}
+  - component: {fileID: 2091038476708680901}
+  - component: {fileID: 2091038476708680900}
+  - component: {fileID: 2091038476708680899}
+  - component: {fileID: 2091038476708680896}
+  - component: {fileID: 2091038476708680897}
+  m_Layer: 0
+  m_Name: Main Camera
+  m_TagString: MainCamera
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2091038476708680903
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2091038476708680902}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2091038475785878535}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 15, y: 0, z: 0}
+--- !u!20 &2091038476708680898
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2091038476708680902}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_projectionMatrixMode: 1
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_GateFitMode: 2
+  m_FocalLength: 50
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: -1
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 0
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 1
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+--- !u!81 &2091038476708680901
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2091038476708680902}
+  m_Enabled: 1
+--- !u!45 &2091038476708680900
+Skybox:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2091038476708680902}
+  m_Enabled: 1
+  m_CustomSkybox: {fileID: 2100000, guid: 51cb3b5ee97b84aad918468d75f903d5, type: 2}
+--- !u!114 &2091038476708680899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2091038476708680902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff26db721962cdf4a8edcdfa9a767d2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  profile: {fileID: 11400000, guid: 8c80c21b810691545a762a6e72ee6855, type: 2}
+--- !u!114 &2091038476708680896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2091038476708680902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fceaeb339b971b429c4cc600acabd13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tweakMode: 0
+  screenBlendMode: 1
+  hdr: 0
+  sepBlurSpread: 2.5
+  quality: 1
+  bloomIntensity: 0.5
+  bloomThreshold: 0.5
+  bloomThresholdColor: {r: 1, g: 1, b: 1, a: 1}
+  bloomBlurIterations: 2
+  hollywoodFlareBlurIterations: 2
+  flareRotation: 0
+  lensflareMode: 1
+  hollyStretchWidth: 2.5
+  lensflareIntensity: 0
+  lensflareThreshold: 0.3
+  lensFlareSaturation: 0.75
+  flareColorA: {r: 0.4, g: 0.4, b: 0.8, a: 0.75}
+  flareColorB: {r: 0.4, g: 0.8, b: 0.8, a: 0.75}
+  flareColorC: {r: 0.8, g: 0.4, b: 0.8, a: 0.75}
+  flareColorD: {r: 0.8, g: 0.4, b: 0, a: 0.75}
+  lensFlareVignetteMask: {fileID: 2800000, guid: 95ef4804fe0be4c999ddaa383536cde8,
+    type: 3}
+  lensFlareShader: {fileID: 4800000, guid: 459fe69d2f6d74ddb92f04dbf45a866b, type: 3}
+  screenBlendShader: {fileID: 4800000, guid: 7856cbff0a0ca45c787d5431eb805bb0, type: 3}
+  blurAndFlaresShader: {fileID: 4800000, guid: be6e39cf196f146d5be72fbefb18ed75, type: 3}
+  brightPassFilterShader: {fileID: 4800000, guid: 0aeaa4cb29f5d4e9c8455f04c8575c8c,
+    type: 3}
+--- !u!114 &2091038476708680897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2091038476708680902}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a449316af06de094e81461d841de45fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  settings:
+    threshold: 1.1
+    softKnee: 0.1
+    radius: 7
+    intensity: 0.5
+    highQuality: 1
+    antiFlicker: 1
+    dirtTexture: {fileID: 0}
+    dirtIntensity: 2.5
+  m_Shader: {fileID: 4800000, guid: 6c22a0220e229be47b4184c39bd5f31e, type: 3}

@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System;
+[Serializable]
 /// <summary>
 /// Handles the "memory" of demonic forces.
 /// When the player dies, their reputation among the underworld is decreased.
@@ -15,7 +16,6 @@ public class Reputable : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
 	}
 
     public void ModifyReputation(Reputable r, bool death)

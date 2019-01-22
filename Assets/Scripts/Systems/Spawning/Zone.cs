@@ -6,18 +6,35 @@ using UnityEngine;
 /// Zone is a rendering and spawning class. It is attached to a gameObject representing an area
 /// All of its children are part of the Zone and render/disable based on the Zone's status
 /// </summary>
+[RequireComponent(typeof(BoxCollider))]
 public class Zone : MonoBehaviour {
-
-    public List<Zone> NeighborZones;
     public bool PlayerInZone;
     public bool ActiveZone;
 
     public Transform RespawnPoint;
+    private BoxCollider _collider;
 
 	// Use this for initialization
 	void Start () {
-		
+        if (!RespawnPoint)
+        {
+            var rp = GetComponentInChildren<RespawnPoint>();
+            if (rp) RespawnPoint = rp.transform;
+        }
+        _collider = GetComponent<BoxCollider>();
+        _collider.enabled = true;
+        _collider.isTrigger = true;
 	}
+
+    private void OnDisable()
+    {
+        ActiveZone = false;
+    }
+
+    private void OnEnable()
+    {
+        ActiveZone = true;
+    }
     /// <summary>
     /// Deactivates this Zone
     /// </summary>
@@ -29,11 +46,7 @@ public class Zone : MonoBehaviour {
             ActiveZone = false;
         }
     }
-
-    public void CheckDuplicates()
-    {
-        if (NeighborZones.Contains(this)) NeighborZones.Remove(this);
-    }
+    
 
     /// <summary>
     /// The Trigger interacts only with the player layer. All others are ignored.
@@ -45,27 +58,10 @@ public class Zone : MonoBehaviour {
     {
         PlayerInZone = true;
         GameManager.CurrentZone = this;
-        foreach (Zone n in NeighborZones)
-        {
-            n.ActiveZone = true;
-            n.gameObject.SetActive(true);
-        }
-        List<Zone> actives = GameManager.ActiveZones;
-        foreach(Zone z in actives)
-        {
-            if (z!=this && !NeighborZones.Contains(z)) z.Deactivate();
-        }
-        GameManager.ActiveZones = NeighborZones;
-        GameManager.ActiveZones.Add(this);
-        CheckDuplicates();
     }
 
     internal void OnTriggerExit(Collider other)
     {
         PlayerInZone = false;
-        if (GameManager.CurrentZone == this)
-        {
-            EventManager.OffWorld();
-        }
     }
 }

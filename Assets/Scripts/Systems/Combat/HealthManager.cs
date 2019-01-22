@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using PixelCrushers.DialogueSystem;
 using Devdog.InventoryPro.UnityStandardAssets;
 
-[RequireComponent(typeof(Animator))]
 public class HealthManager : MonoBehaviour {
     public bool isAlive;
     public bool Respawns = false;
@@ -13,17 +12,15 @@ public class HealthManager : MonoBehaviour {
     public float maxHealth;
 
     private Animator _mAnimator;
-    private int animID = Animator.StringToHash("Death");
+    private int m_DeathID = Animator.StringToHash("Death");
     private RespawnsOnDeath RoD;
     private SkillSet _skillSet;
     private FriendlyConditional _friendly;
     private AIActionDecider _decider;
+    private ThirdPersonCharacter _mThirdPerson;
     public GameObject hitBy;
-
-    public Slider healthSlider;
-    public FloatingHealthBar healthBar;
-    public bool hasFloatingBar;
-
+    
+    public HealthBar healthBar;
 
     public GameObject HealthBarPrefab;
 
@@ -31,41 +28,33 @@ public class HealthManager : MonoBehaviour {
     // Use this for initialization
     void Start () {        
         _mAnimator = GetComponent<Animator>();
+        if (!_mAnimator) _mAnimator = GetComponentInChildren<Animator>();
+
+        _mThirdPerson = GetComponent<ThirdPersonCharacter>();
+        if (!_mThirdPerson) _mThirdPerson = GetComponentInChildren<ThirdPersonCharacter>();
+
         _skillSet = GetComponent<SkillSet>();
         _friendly = GetComponent<FriendlyConditional>();
         _decider = GetComponent<AIActionDecider>();
+
         if (Respawns) RoD = GetComponent<RespawnsOnDeath>();
-        if (hasFloatingBar)
-        {
-            healthBar = Instantiate(HealthBarPrefab).GetComponent<FloatingHealthBar>();
-            healthBar.Initialize(gameObject);
-        }
+        if (!healthBar && HealthBarPrefab) SpawnHealthBar();
         if (isPlayer) EventManager.RespawnAction += Respawn;
 	}
 
-    private void OnEnable()
+    private void SpawnHealthBar()
     {
-        Health = maxHealth;
-        isAlive = true;
-        if (healthSlider)
-        {
-            healthSlider.maxValue = maxHealth;
-            healthSlider.value = Health;
-        }
-        if (healthBar)
-            healthBar.UpdateHealth();
+        healthBar = Instantiate(HealthBarPrefab).GetComponent<HealthBar>();
+        healthBar.Initialize(gameObject);
     }
 
-    private void Life()
+    private void OnEnable()
     {
-        Health = maxHealth;
-        isAlive = true;
-        _mAnimator.SetBool(animID, !isAlive);
-        this.enabled = true;
+        ResetHealth();
     }
 
     // Update is called once per frame
-    void Update () {
+    void LateUpdate () {
         if (Health <= 0f) isAlive = false;
 
         if (!isAlive)
@@ -81,25 +70,43 @@ public class HealthManager : MonoBehaviour {
         Health += change;
         if (_friendly) SendMessage("OnAggression");
         if (_decider && !_decider.combat) SendMessage("EnterCombat");
-        if (healthSlider) healthSlider.value = Health;
         if (healthBar) healthBar.UpdateHealth();
+    }
+
+    public void ResetHealth()
+    {
+        Health = maxHealth;
+        isAlive = true;
+        if (healthBar) healthBar.UpdateHealth();
+        else if (HealthBarPrefab)
+            SpawnHealthBar();
     }
 
     public void EnterCombat()
     {
-        if (healthBar) healthBar.Activate();
+        if (!isPlayer && healthBar) healthBar.Activate();
+    }
+
+    private void Life()
+    {
+        ResetHealth();
+        _mAnimator.SetBool(m_DeathID, !isAlive);
+        this.enabled = true;
     }
 
     public void Death()
     {
         if (_skillSet.CheckAttack()) _skillSet.currentAttack.Interrupt();
         _mAnimator.SetBool("Combat", false);
-        _mAnimator.SetBool(animID, !isAlive);
+        _mAnimator.SetBool(m_DeathID, !isAlive);
+
         if (gameObject.GetComponentInChildren<IncrementOnDestroy>())
             gameObject.GetComponentInChildren<IncrementOnDestroy>().enabled = false;
-        if (healthBar) healthBar.Deactivate();
+
+        if (!isPlayer && healthBar) healthBar.Deactivate();
+
         SendMessage("OnDeathParam", hitBy);
-        SendMessage("OnDeath");
+        BroadcastMessage("OnDeath");
     }
 
     public void Respawn()
@@ -108,55 +115,14 @@ public class HealthManager : MonoBehaviour {
         SendMessage("OnRespawn");
     }
 
-    public void OnDestroy()
+    private void OnDestroy()
     {
         if (healthBar) Destroy(healthBar);
     }
 
-    #region Reaction Script
-    /// <summary>
-    /// Takes a normalized point in local space and applies the animation
-    /// </summary>
-    /// <param name="point"></param>
-    private void ReactHere(Vector3 point)
+    public void SetHealthFromSave(float health)
     {
-        if (GetComponent<ThirdPersonCharacter>().m_IsReacting || GetComponent<PlayerController>()) return;
-        Animator anim = GetComponent<Animator>();
-        anim.SetFloat("HitDirX", point.x);
-        anim.SetFloat("HitDirZ", point.z);
-        anim.SetTrigger("React");
+        Health = health;
+        if (healthBar) healthBar.UpdateHealth();
     }
-    public void ReactAt(RaycastHit hit)
-    {
-        Vector3 point = hit.point;
-        point = transform.InverseTransformPoint(point);
-        point.Normalize();
-        ReactHere(point);
-    }
-
-    public void ReactAt(Collision collision)
-    {
-        ContactPoint contactPoint = collision.contacts[0];
-        Vector3 point = contactPoint.point;
-        point = transform.InverseTransformPoint(point);
-        point.Normalize();
-        ReactHere(point);  
-    }
-
-    public void ReactAt(Vector3 point)
-    {
-        point = transform.InverseTransformPoint(point);
-        point.Normalize();
-        ReactHere(point);
-    }
-    
-    public void ReactMajor()
-    {
-        if (GetComponent<ThirdPersonCharacter>().m_IsReacting) return;
-        Animator anim = GetComponent<Animator>();
-        anim.SetTrigger("MajorReact");
-        SendMessage("Combat");
-    }
-
-    #endregion
 }

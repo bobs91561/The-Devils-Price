@@ -5,7 +5,6 @@ using UnityEngine.AI;
 
 [CreateAssetMenu(menuName ="AIAction/PATROL")]
 public class AIAction_PATROL : AIAction {
-    private NavMeshAgent _agent;
 
     public float TiredThresholdToStop;
     public float TiredThresholdToStart;
@@ -17,6 +16,7 @@ public class AIAction_PATROL : AIAction {
         //feasible conditions:
         //not in combat
         //tiredness is below threshold to start
+        if (decider.patrolPoints.Count <= 0) return false;
         if (decider.combat && _agent.hasPath && !decider.combatMoveActive) StopPath();
         return (!decider.combat && decider.tiredness <= TiredThresholdToStart);
     }
@@ -67,7 +67,6 @@ public class AIAction_PATROL : AIAction {
     public override void Initialize(GameObject obj = null)
     {
         base.Initialize(obj);
-        _agent = g.GetComponent<NavMeshAgent>();
         path = new NavMeshPath();
     }
 }

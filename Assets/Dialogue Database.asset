@@ -134,6 +134,26 @@ MonoBehaviour:
       typeString: CustomFieldType_Boolean
     portrait: {fileID: 0}
     alternatePortraits: []
+  - id: 7
+    fields:
+    - title: Name
+      value: Eternal Shard
+      type: 0
+      typeString: 
+    - title: Pictures
+      value: '[]'
+      type: 3
+      typeString: CustomFieldType_Files
+    - title: Description
+      value: NO DIALOGUE
+      type: 0
+      typeString: 
+    - title: IsPlayer
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    portrait: {fileID: 0}
+    alternatePortraits: []
   items:
   - id: 2
     fields:
@@ -308,6 +328,102 @@ MonoBehaviour:
       value: True
       type: 2
       typeString: CustomFieldType_Boolean
+  - id: 4
+    fields:
+    - title: Name
+      value: The Awakening
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: Experience Value
+      value: 0
+      type: 1
+      typeString: CustomFieldType_Number
+    - title: Pictures
+      value: '[]'
+      type: 3
+      typeString: CustomFieldType_Files
+    - title: Description
+      value: 
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: Success Description
+      value: You found... something, and it changed you. You remember your life and
+        your death as if you had just woken from a dark slumber, but in Hell, the
+        nightmare only continues.
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: Failure Description
+      value: 
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: State
+      value: unassigned
+      type: 0
+      typeString: CustomFieldType_QuestState
+    - title: Is Item
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Trackable
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Track
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Entry Count
+      value: 6
+      type: 1
+      typeString: CustomFieldType_Number
+    - title: Entry 1 State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Entry 1
+      value: Run Away!
+      type: 0
+      typeString: 
+    - title: Entry 2 State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Entry 2
+      value: Hide in the rocks
+      type: 0
+      typeString: 
+    - title: Entry 3 State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Entry 3
+      value: Go toward the light
+      type: 0
+      typeString: 
+    - title: Entry 4 State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Entry 4
+      value: Take the shard
+      type: 0
+      typeString: 
+    - title: Entry 5 State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Entry 5
+      value: Kill your attackers
+      type: 0
+      typeString: 
+    - title: Entry 6 State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Entry 6
+      value: Escape through the rift
+      type: 0
+      typeString: 
   locations: []
   variables:
   - id: 1
@@ -1934,8 +2050,8 @@ MonoBehaviour:
         y: 107.18492
         width: 160
         height: 30
-    canvasScrollPosition: {x: 41.23109, y: 18.35284}
-    canvasZoom: 0.5037536
+    canvasScrollPosition: {x: 0, y: 0}
+    canvasZoom: 0.3537536
   - id: 3
     fields:
     - title: Title
@@ -3494,7 +3610,7 @@ MonoBehaviour:
     - id: 20
       fields:
       - title: Title
-        value: New Dialogue Entry
+        value: 
         type: 0
         typeString: CustomFieldType_Text
       - title: Pictures
@@ -3519,7 +3635,7 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Dialogue Text
         value: Alright! I'll tell you! You'll find Eligos torturing souls near the
-          Abyss. He keeps his favorites there.
+          Abyss. He keeps his favorites there. The Abyss is over the hill ahead.
         type: 0
         typeString: CustomFieldType_Text
       - title: Parenthetical
@@ -3637,7 +3753,7 @@ MonoBehaviour:
     - id: 22
       fields:
       - title: Title
-        value: New Dialogue Entry
+        value: 
         type: 0
         typeString: CustomFieldType_Text
       - title: Pictures
@@ -3662,7 +3778,7 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Dialogue Text
         value: Well, aren't you handy? You'll find Eligos near the Abyss torturing
-          his favorite souls.
+          his favorite souls. The Abyss is over the hill ahead.
         type: 0
         typeString: CustomFieldType_Text
       - title: Parenthetical
@@ -3775,8 +3891,8 @@ MonoBehaviour:
           Culture=neutral, PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
-        x: 919.52985
-        y: 245.16318
+        x: 923.45917
+        y: 247.1278
         width: 160
         height: 30
     - id: 24
@@ -3900,7 +4016,8 @@ MonoBehaviour:
       falseConditionAction: Block
       conditionPriority: 2
       outgoingLinks: []
-      conditionsString: 
+      conditionsString: CurrentQuestEntryState("Awoken", 5) == "unassigned" and (CurrentQuestEntryState("Awoken",
+        6) == "unassigned") and (CurrentQuestEntryState("Awoken", 4) ~= "success")
       userScript: 
       onExecute:
         m_PersistentCalls:

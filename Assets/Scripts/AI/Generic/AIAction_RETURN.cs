@@ -6,7 +6,6 @@ using UnityEngine.AI;
 [CreateAssetMenu(menuName = "AIAction/RETURN")]
 public class AIAction_RETURN : AIAction
 {
-    private NavMeshAgent _agent;
     private NavMeshPath path;
     private Vector3 _position;
     private Transform _transform;
@@ -60,7 +59,6 @@ public class AIAction_RETURN : AIAction
     public override void Initialize(GameObject obj = null)
     {
         base.Initialize(obj);
-        _agent = g.GetComponent<NavMeshAgent>();
         path = new NavMeshPath();
         _transform = g.transform;
         _position = _transform.position;

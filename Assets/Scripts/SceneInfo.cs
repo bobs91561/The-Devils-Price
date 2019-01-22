@@ -7,10 +7,8 @@ public class SceneInfo : MonoBehaviour
 
     public List<GameObject> ObjectsToActivate;
     public GameObject EntryPoint;
-    public Vector3 EntryOffset;
+    //public Vector3 EntryOffset;
+    public AudioClip SceneEntryAudio;
+    public Camera MainSceneCamera;
 
-    private void Start()
-    {
-        EntryOffset = EntryPoint.GetComponent<RespawnPoint>().offset;
-    }
 }

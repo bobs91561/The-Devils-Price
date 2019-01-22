@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Devdog.InventoryPro.UnityStandardAssets;
+using Systems.Combat;
 
 /// <summary>
 /// This component is  attached to all GameObjects using the Combat System.
@@ -16,14 +17,19 @@ public class SkillSet : MonoBehaviour {
     public Vector3 meleeCenter;
     public Vector3 castingPoint;
 
-    public GameObject meleeObject;
-    public GameObject meleeObjectSecondary;
+    [HideInInspector] public GameObject meleeObject;
+    [HideInInspector] public GameObject HitboxToGenerate;
+    [HideInInspector] public GameObject meleeObjectSecondary;
+    [HideInInspector] public GameObject HitboxToGenerateSecondary;
+
+    [HideInInspector] public float WeaponDamage1, WeaponDamage2;
+
     public GameObject castingObject;
 
     public GameObject characterCenter;
 
     public List<GameObject> objectsSheathe;
-    public List<GameObject> objectsDrawn;
+    private List<GameObject> objectsDrawn;
 
     private bool _drawn = true;
 
@@ -33,26 +39,67 @@ public class SkillSet : MonoBehaviour {
 
     public bool combat;
 
-    private bool _mTargeting;
-    private GameObject _mTargetObject;
+    [SerializeField]private bool _mTargeting;
+    [SerializeField]private GameObject _mTargetObject;
 
     private ThirdPersonUserControl m_userControl;
+    private Animator m_Animator;
 
 	// Use this for initialization
 	void Start () {
+        FindWeapons();
+        FindCastingObject();
         if (attacks == null) attacks = new List<Attack>();
-        List<Attack> inputs = attacks;
         for (int i = 0; i < attacks.Count; i++)
         {
             attacks[i] = Instantiate(attacks[i]);
-            attacks[i].attacker = gameObject;
+            attacks[i].Initialize(gameObject);
         }
-        if (BasicAttack) BasicAttack.attacker = gameObject;
-        if (ChargedAttack) ChargedAttack.attacker = gameObject;
+        if (BasicAttack) BasicAttack.Initialize(gameObject);
+        if (ChargedAttack) ChargedAttack.Initialize(gameObject);
         SendMessage("SetAttacks");
         SheatheWeapons();
         m_userControl = GetComponent<ThirdPersonUserControl>();
+        m_Animator = GetComponent<Animator>();
+        if (!m_Animator) m_Animator = GetComponentInChildren<Animator>();
 	}
+
+    private void FindWeapons()
+    {
+        objectsDrawn = new List<GameObject>();
+        Weapon[] weapons = GetComponentsInChildren<Weapon>();
+        int len = weapons.Length;
+        if(len > 0)
+        {
+            if (len > 1)
+            {
+                meleeObjectSecondary = weapons[0].gameObject;
+                HitboxToGenerateSecondary = weapons[0].GetHitbox();
+                WeaponDamage2 = weapons[0].GetDamage();
+                objectsDrawn.Add(weapons[0].gameObject);
+
+                meleeObject = weapons[1].gameObject;
+                HitboxToGenerate = weapons[1].GetHitbox();
+                WeaponDamage1 = weapons[1].GetDamage();
+                objectsDrawn.Add(weapons[1].gameObject);
+                return;
+            }
+
+            meleeObject = weapons[0].gameObject;
+            HitboxToGenerate = weapons[0].GetHitbox();
+            WeaponDamage1 = weapons[0].GetDamage();
+            objectsDrawn.Add(weapons[0].gameObject);
+            
+        }
+    }
+
+    private void FindCastingObject()
+    {
+        if (!castingObject)
+            castingObject = GetComponentInChildren<CastingObject>().gameObject;
+        if (!castingObject)
+            Debug.Log("No casting Object found on: " + gameObject.name);
+    }
 
     public void DrawWeapons()
     {
@@ -78,7 +125,7 @@ public class SkillSet : MonoBehaviour {
     public void Combat()
     {
         combat = !combat;
-        GetComponent<Animator>().SetBool("Combat", combat);
+        m_Animator.SetBool("Combat", combat);
     }
 
     public void StartAttack(Attack a = null)
@@ -104,6 +151,11 @@ public class SkillSet : MonoBehaviour {
         currentAttack.TriggerAnimation();
     }
 
+    public void TargetThis(Vector3 position)
+    {
+        _mTargeting = true;
+    }
+
     public void TargetThis(GameObject g)
     {
         _mTargeting = true;
@@ -113,6 +165,11 @@ public class SkillSet : MonoBehaviour {
     private void TargetAttack()
     {
         if (!currentAttack) return;
+        if (!_mTargetObject)
+        {
+            _mTargeting = false;
+            return;
+        }
         currentAttack.Target(_mTargetObject);
     }
 

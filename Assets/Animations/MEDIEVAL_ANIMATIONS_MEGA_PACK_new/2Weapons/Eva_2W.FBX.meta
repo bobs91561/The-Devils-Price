@@ -988,21 +988,7 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events:
-      - time: 0
-        functionName: React
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0
-        functionName: CheckReact
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 4
-        intParameter: 0
-        messageOptions: 0
+      events: []
       transformMask: []
       maskType: 0
       maskSource: {instanceID: 0}
@@ -1060,11 +1046,11 @@ ModelImporter:
       curves: []
       events:
       - time: 0.90658337
-        functionName: React
+        functionName: FinishReact
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
-        intParameter: 1
+        intParameter: 0
         messageOptions: 0
       transformMask: []
       maskType: 0
@@ -1933,7 +1919,21 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.394531
+        functionName: UseAttackWithAnim
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.9330094
+        functionName: EndAttack
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 0
       maskSource: {instanceID: 0}
@@ -2586,7 +2586,28 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.3843196
+        functionName: UseAttackWithAnim
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.94467586
+        functionName: EndAttack
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.41408083
+        functionName: PlaySound
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 0
       maskSource: {instanceID: 0}
@@ -2653,6 +2674,14 @@ ModelImporter:
         messageOptions: 0
       - time: 0.6525204
         functionName: EndAttack
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 92945a7eefc8b824e9c06bde7b96e1d6,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.5161297
+        functionName: PlaySound
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 92945a7eefc8b824e9c06bde7b96e1d6,
           type: 3}
@@ -2924,7 +2953,21 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.3802906
+        functionName: UseAttackWithAnim
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.9947907
+        functionName: EndAttack
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 0
       maskSource: {instanceID: 0}

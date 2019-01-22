@@ -12,9 +12,9 @@ using UnityEngine.SceneManagement;
 public class SpawnManager : MonoBehaviour {
     public static SpawnManager instance;
     public float MinimumTimeToConsiderRespawn;
+    public float MinimumDistanceFromPlayer = 50f;
     public Queue<RespawnsOnDeath> _mRespawnRequests;
     public List<RespawnsOnDeath> _mRespawns;
-    
 
 	// Use this for initialization
 	void Start () {
@@ -23,46 +23,47 @@ public class SpawnManager : MonoBehaviour {
         EventManager.FellOffWorld += ResetPlayer;
         EventManager.DeathAction += RespawnPlayer;
         instance = this;
+        StartCoroutine(ConsiderRequests());
 	}
 
-    private void LateUpdate()
+    IEnumerator ConsiderRequests()
     {
-        if(_mRespawnRequests.Count > 0)
-            AcceptRequests();
-        if(_mRespawns.Count > 0)
-            Respawn();
+        yield return new WaitWhile(() => _mRespawnRequests.Count <= 0);
+        Debug.Log("Considering requests");
+        AcceptRequests();
+        Respawn();
+        StartCoroutine(ConsiderRequests());
     }
 
     private void AcceptRequests()
     {
         RespawnsOnDeath request;
-        bool delayFlag = false;
-        int MaxChecks = _mRespawnRequests.Count;
-        int ChecksDone = 0;
-        while(_mRespawnRequests.Count > 0 && ChecksDone < MaxChecks) 
+        Queue<RespawnsOnDeath> delayed = new Queue<RespawnsOnDeath>();
+        while(_mRespawnRequests.Count > 0)
         {
             request = _mRespawnRequests.Dequeue();
             if (!request) continue;
-            ChecksDone++;
-            //is the zone active?
-            //if not, remove the request
-            if (!request.zone || !request.zone.ActiveZone)
-                continue;
-            //is the player in the zone?
-            //if yes, consider delaying
-            //if not, accept
-            if (request.zone.PlayerInZone)
+            //Respawn conditions
+            //Zone inactive? Continue, request is handled by enable
+            //Zone is active, player is nearby? Delay request.
+            //Zone is active, player is not nearby? Accept request.
+            if (!request.zone || !request.zone.ActiveZone) continue;
+            if (request.zone.ActiveZone)
             {
-                delayFlag = DelayRequest(request);
+                var accept = CheckPlayerDistance(request);
+                Debug.Log(accept);
+                if (accept) _mRespawns.Add(request);
+                else delayed.Enqueue(request);
             }
-            if (delayFlag)
-            {
-                _mRespawnRequests.Enqueue(request);
-            }
-            else
-                _mRespawns.Add(request);
         }
+        _mRespawnRequests = delayed;
+    }
 
+    private bool CheckPlayerDistance(RespawnsOnDeath request)
+    {
+        //if (!request.zone.PlayerInZone) return true;
+        var dist = Vector3.Distance(request.gameObject.transform.position, GameManager.Player.transform.position);
+        return dist >= MinimumDistanceFromPlayer;
     }
 
     private bool DelayRequest(RespawnsOnDeath request)
@@ -96,6 +97,7 @@ public class SpawnManager : MonoBehaviour {
     public void NewRequest(RespawnsOnDeath respawn)
     {
         _mRespawnRequests.Enqueue(respawn);
+        Debug.Log("Request received");
     }
 
     private void ResetPlayer()
@@ -110,9 +112,11 @@ public class SpawnManager : MonoBehaviour {
 
     private void RespawnPlayer()
     {
-        if (GameManager.CurrentZone)
+        var zone = GameManager.CurrentZone;
+        if (zone && zone.RespawnPoint)
         {
             //Use the respawn point in the current zone
+            StartCoroutine(RespawnAtRespawnPoint(zone.RespawnPoint));
         }
         else
         {
@@ -120,9 +124,20 @@ public class SpawnManager : MonoBehaviour {
         }
     }
 
+    IEnumerator RespawnAtRespawnPoint(Transform rp)
+    {
+        yield return new WaitForSeconds(2f);
+        GameManager.instance.FadeInScene();
+        yield return new WaitForSeconds(1f);
+        GameManager.Player.transform.position = rp.position;
+        rp.gameObject.GetComponent<RespawnPoint>().Respawn();
+    }
+
     IEnumerator RespawnAtRespawnPoint()
     {
         yield return new WaitForSeconds(2f);
+        GameManager.instance.FadeInScene();
+        yield return new WaitForSeconds(1f);
         //Find the closest respawn point
         var rps = GameObject.FindGameObjectsWithTag("RespawnPoint");
         RespawnPoint rp = null;

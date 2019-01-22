@@ -5,12 +5,14 @@ using UnityEngine;
 public abstract class Attack : ScriptableObject {
 
     //The attacking character
-    public GameObject attacker;
+    [HideInInspector] public GameObject attacker;
 
     //This object has any ParticleSystems, Colliders, or other special effects
     public GameObject objectToGenerate;
-    public GameObject objectGenerated;
-    public GameObject objectGeneratedSecondary;
+    public AudioClip audioToPlay;
+
+    protected GameObject objectGenerated;
+    protected GameObject objectGeneratedSecondary;
 
     public float damage;
     public float coolDown;
@@ -33,9 +35,18 @@ public abstract class Attack : ScriptableObject {
     public virtual void TriggerAnimation()
     {
         Animator a = attacker.GetComponent<Animator>();
+        if (!a) a = attacker.GetComponentInChildren<Animator>();
         if (a)
         {
             a.SetTrigger(animationKey);
+        }
+        if (audioToPlay)
+        {
+            var audio = a.GetComponent<AudioSource>();
+            if (audio)
+            {
+                audio.clip = audioToPlay;
+            }
         }
     }
 
@@ -53,12 +64,19 @@ public abstract class Attack : ScriptableObject {
     public void Target(GameObject g)
     {
         targetObject = g;
+        var skill = targetObject.GetComponent<SkillSet>();
         if (objectGenerated)
         {
-            Vector3 p = g.transform.position;
+            Vector3 p;
+            if(skill && skill.characterCenter)
+            {
+                p = skill.characterCenter.transform.position;
+            }
+            else
+                p = g.transform.position;
             Vector3 t = attacker.GetComponent<SkillSet>().castingObject.transform.position;
             Vector3 forward = (g.transform.position - attacker.GetComponent<SkillSet>().castingObject.transform.position).normalized;
-            forward.y = 0f;
+            //forward.y = 0f;
             objectGenerated.transform.forward = forward;
             
         }
@@ -85,7 +103,7 @@ public abstract class Attack : ScriptableObject {
 
     }
 
-    public void Initialize(GameObject g)
+    public virtual void Initialize(GameObject g)
     {
         attacker = g;
     }

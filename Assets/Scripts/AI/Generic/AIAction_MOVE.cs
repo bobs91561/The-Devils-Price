@@ -6,9 +6,7 @@ using UnityEngine.AI;
 public class AIAction_MOVE : AIAction {
 
     private AIAttackController _attackController;
-    private NavMeshAgent _agent;
     private NavMeshPath _path;
-    private SkillSet _skillSet;
 
     public float minDistanceToPlayer;
     public float MaxMovementTime;
@@ -19,9 +17,10 @@ public class AIAction_MOVE : AIAction {
         //check if the AI is iwithin the min distance of the player, return false if so
         //Check if the AI isActive but the AI is now attacking
         //Return true only if in combat and the AI not attacking
+        if (!IsPlayerPresent() || !decider.combat) return false;
         if (WithinMinDistance()) return false;
-        //if (isActive && _skillSet.CheckAttack()) StopPath();
-        return decider.combat && !_skillSet.CheckAttack();
+        //return decider.combat && !_skillSet.CheckAttack();
+        return !_skillSet.CheckAttack();
     }
 
     public override bool Tick()
@@ -53,7 +52,7 @@ public class AIAction_MOVE : AIAction {
     /// </summary>
     /// <returns></returns>
     private bool WithinMinDistance()
-    {
+    {        
         return (Vector3.Distance(g.transform.position, AIActionDecider.Player.transform.position) <= minDistanceToPlayer);
     }
     public bool ChooseNewPath()
@@ -61,7 +60,8 @@ public class AIAction_MOVE : AIAction {
         if (_agent.hasPath) StopPath();
         NavMeshPath p = new NavMeshPath();
         _path = p;
-        return _agent.CalculatePath(ChoosePathDirection(), _path);
+        var b = _agent.CalculatePath(ChoosePathDirection(), _path);
+        return b;
     }
 
     private bool StopPath()
@@ -80,7 +80,7 @@ public class AIAction_MOVE : AIAction {
     private Vector3 ChoosePathDirection()
     {
         Vector3 playerPos = AIActionDecider.Player.transform.position;
-        playerPos.y = 0;
+        //playerPos.y = 0;
         return playerPos;
     }
 
@@ -88,8 +88,6 @@ public class AIAction_MOVE : AIAction {
     {
         base.Initialize(obj);
         _attackController = g.GetComponent<AIAttackController>();
-        _agent = g.GetComponent<NavMeshAgent>();
-        _skillSet = g.GetComponent<SkillSet>();
         _path = new NavMeshPath();
     }
 

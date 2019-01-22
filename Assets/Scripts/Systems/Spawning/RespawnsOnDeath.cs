@@ -36,14 +36,9 @@ public class RespawnsOnDeath : OnDeathBase {
 
     public IEnumerator Die()
     {
-        yield return new WaitForSeconds(10f);
-        base.OnDeath();
         SpawnManager.instance.NewRequest(this);
         TimeStamp = Time.time;
-    }
-    private void OnDisable()
-    {
-        if(SpawnManager.instance)
-            SpawnManager.instance.RemoveRequest(this);
+        yield return new WaitForSeconds(5f);
+        base.OnDeath();
     }
 }

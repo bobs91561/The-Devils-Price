@@ -8,6 +8,7 @@ using UnityEngine;
 public class ExplosiveForce : MonoBehaviour
 {
     public bool SpellEffect;
+    public bool MajorReactOnly;
 
     public float radius = 5.0F;
     public float power = 10.0F;
@@ -28,20 +29,23 @@ public class ExplosiveForce : MonoBehaviour
         {
             Rigidbody rb = hit.GetComponent<Rigidbody>();
 
-            if (rb != null)
+            if (rb && !MajorReactOnly)
             {
                 rb.isKinematic = false;
                 rb.AddExplosionForce(power, explosionPos, radius, 3.0F);
             }
 
             HealthManager hm = hit.GetComponent<HealthManager>();
+            ReactionManager rm = hit.GetComponent<ReactionManager>();
 
-            if (hm != null)
+            if (hm)
             {
                 hm.ModifyHealth(-Damage);
                 hm.hitBy = parent;
-                hm.ReactMajor();
+                //hm.ReactMajor();
             }
+            if(rm)
+                rm.SpecialReact();
         }
     }
 }

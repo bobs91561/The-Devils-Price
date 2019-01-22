@@ -15,6 +15,7 @@ public class AIAction_IDLE : AIAction
         if (isActive)
         {
             decider.tiredness = Mathf.Clamp01(decider.tiredness - Time.deltaTime*.1f);
+            if (_animator.GetFloat("Forward") > 0f) _animator.SetFloat("Forward", 0f);
         }
         return true;
     }

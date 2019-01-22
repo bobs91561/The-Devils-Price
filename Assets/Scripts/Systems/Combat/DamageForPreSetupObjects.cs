@@ -23,14 +23,14 @@ public class DamageForPreSetupObjects : MonoBehaviour {
 
     public void CollideWith(RaycastHit hit)
     {
-        Debug.Log(hit.collider.gameObject.name);
+        //Debug.Log(hit.collider.gameObject.name);
         _mParent.GetComponent<SkillSet>().EndAttack();
         HealthManager hm = hit.collider.gameObject.GetComponent<HealthManager>();
         if (!hm) return;
 
         hm.hitBy = _mParent;
         hm.ModifyHealth(-Damage);
-        hm.ReactAt(hit);
+        //hm.ReactAt(hit);
     }
 
     public void Initialize(float damage, GameObject parent)

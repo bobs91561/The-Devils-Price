@@ -22,6 +22,10 @@ namespace Systems.Combat
             SendMessage("SetParams");
         }
 
+        public void SetParams()
+        {
+            Debug.Log("Catching message");
+        }
 
     }
 }

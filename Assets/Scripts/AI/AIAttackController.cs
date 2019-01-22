@@ -16,7 +16,7 @@ public class AIAttackController : AttackController {
 	// Use this for initialization
 	void Start () {
         if (Player == null) Player = GameObject.Find("Player");
-        if (PlayerCenter == null) PlayerCenter = Player.GetComponent<SkillSet>().characterCenter;
+        if (PlayerCenter == null && Player) PlayerCenter = Player.GetComponent<SkillSet>().characterCenter;
         AverageMaxDistance = 0;
         enabled = false;
         ConsiderMove = false;

@@ -31,14 +31,14 @@ namespace Systems.Combat
         {
             if (_mDecider) _mDecider.Frozen = true;
             if (_mAgent) _mAgent.isStopped = true;
-            if (_mThirdPerson) _mThirdPerson.m_IsReacting = true;
+            //if (_mThirdPerson) _mThirdPerson.m_IsReacting = true;
         }
 
         public void Unfreeze()
         {
             if (_mDecider) _mDecider.Frozen = false;
             if (_mAgent) _mAgent.isStopped = false;
-            if (_mThirdPerson) _mThirdPerson.m_IsReacting = false;
+            //if (_mThirdPerson) _mThirdPerson.m_IsReacting = false;
         }
 
         public void EndAttack()

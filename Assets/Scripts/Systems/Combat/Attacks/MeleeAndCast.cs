@@ -73,14 +73,14 @@ public class MeleeAndCast : Melee
         GameObject g = effectGenerated;
         g.GetComponentInChildren<DamageForPreSetupObjects>().gameObject.layer = attacker.layer;
         g.GetComponentInChildren<DamageForPreSetupObjects>().Initialize(damage, attacker);
-        g.GetComponentInChildren<RFX1_TransformMotion>().CollidesWith = ~LayerMask.GetMask(LayerMask.LayerToName(attacker.layer), "Ignore Raycast");
+        g.GetComponentInChildren<RFX1_TransformMotion>().CollidesWith = ~LayerMask.GetMask(LayerMask.LayerToName(attacker.layer), "Ignore Raycast", "Zone", "Dialogue");
         if (g.GetComponent<RFX1_Target>()) g.GetComponent<RFX1_Target>().Target = targetObject;
     }
 
     private void UseCustom()
     {
         GameObject g = effectGenerated;
-        g.GetComponent<DamageForCustomObjects>().Initialize(damage, ~LayerMask.GetMask(LayerMask.LayerToName(attacker.layer), "Ignore Raycast"), attacker);
+        g.GetComponent<DamageForCustomObjects>().Initialize(damage, ~LayerMask.GetMask(LayerMask.LayerToName(attacker.layer), "Ignore Raycast", "Zone", "Dialogue"), attacker);
     }
 
     public override void End()

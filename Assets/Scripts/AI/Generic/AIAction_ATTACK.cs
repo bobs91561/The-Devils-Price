@@ -7,23 +7,22 @@ using UnityEngine;
 /// </summary>
 [CreateAssetMenu(menuName ="AIAction/ATTACK")]
 public class AIAction_ATTACK : AIAction {
-    private SkillSet _skillset;
     public float maxDistance;
     public float minCoolDownTime;
     public float TimeSinceLastAttack;
     public bool PlayerSpotted;
     private AIAttackController _attackController;
-    private Animator _animator;
 
     public override bool ActionFeasible()
     {
+        if (!IsPlayerPresent()) return false;
         UpdateTime();
         if (!CheckPlayerDeath())
         {
             decider.ExitCombat();
             return false;
         }
-        return (!decider.Friendly && TimeSinceLastAttack >= minCoolDownTime && PlayerVisible() && AttacksArePossible()) || _skillset.CheckAttack();
+        return (!decider.Friendly && TimeSinceLastAttack >= minCoolDownTime && PlayerVisible() && AttacksArePossible()) || _skillSet.CheckAttack();
     }
 
     public override bool Tick()
@@ -32,7 +31,7 @@ public class AIAction_ATTACK : AIAction {
         decider.combatApproach -= Time.deltaTime;
 
         //return true if the AI isAttacking
-        if (_skillset.CheckAttack())
+        if (_skillSet.CheckAttack())
         {
             TimeSinceLastAttack = 0f;
             return true;
@@ -86,8 +85,6 @@ public class AIAction_ATTACK : AIAction {
         base.Initialize(obj);
         PlayerSpotted = false;
         _attackController = g.GetComponent<AIAttackController>();
-        _skillset = g.GetComponent<SkillSet>();
-        _animator = g.GetComponent<Animator>();
         minCoolDownTime = g.GetComponent<AIController>().MinimumAttackTimeDifference;
         TimeSinceLastAttack = minCoolDownTime;
     }

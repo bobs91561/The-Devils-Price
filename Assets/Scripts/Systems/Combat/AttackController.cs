@@ -41,6 +41,7 @@ namespace Assets.Scripts.Systems.Combat
 
         void LateUpdate()
         {
+            if (_attacks == null) return;
             foreach (Attack a in _attacks)
                 _cooldowns[a] += Time.deltaTime;
         }

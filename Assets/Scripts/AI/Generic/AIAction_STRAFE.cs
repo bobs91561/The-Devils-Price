@@ -5,10 +5,7 @@ using UnityEngine.AI;
 
 [CreateAssetMenu(menuName = "AIAction/STRAFE")]
 public class AIAction_STRAFE : AIAction {
-
-    private NavMeshAgent _agent;
-    private Animator _anim;
-    private SkillSet _skillSet;
+    
     private int _direction;             //-1 for left, 1 for right
     private bool _directionChosen;
 
@@ -18,6 +15,7 @@ public class AIAction_STRAFE : AIAction {
     public override bool ActionFeasible()
     {
         //Feasible if in combat, within a distance range of player
+        if(!IsPlayerPresent()) return false;
         return decider.combat && CheckRange() && !_skillSet.CheckAttack();
     }
 
@@ -40,7 +38,7 @@ public class AIAction_STRAFE : AIAction {
 
     private void SetDirection()
     {
-        _agent.velocity = new Vector3(_direction, 0, 0);
+        _agent.velocity = new Vector3(_direction*2f, 0, 0);
     }
 
     private void ChooseDirection()
@@ -59,15 +57,12 @@ public class AIAction_STRAFE : AIAction {
 
     private void SetAnimation()
     {
-        _anim.SetBool(StrafeAnimation, _directionChosen);
+        _animator.SetBool(StrafeAnimation, _directionChosen);
     }
 
     public override void Initialize(GameObject obj = null)
     {
         base.Initialize(obj);
-        _agent = decider.AI.GetComponent<NavMeshAgent>();
-        _anim = decider.AI.GetComponent<Animator>();
-        _skillSet = decider.AI.GetComponent<SkillSet>();
         _direction = 0;
         _directionChosen = false;
     }

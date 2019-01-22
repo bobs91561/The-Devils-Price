@@ -11,7 +11,14 @@ public class StartMenu : MonoBehaviour
 {
     public void NewGame()
     {
-       SceneManager.LoadScene(1);
+        GameManager.HandleFadeManually = true;
+        StartCoroutine(WaitToLoad());
+    }
+
+    private IEnumerator WaitToLoad()
+    {
+        yield return new WaitForSeconds(1.5f);
+        SceneManager.LoadScene(1);
     }
 
     public void LoadGame()

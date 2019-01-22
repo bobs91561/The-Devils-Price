@@ -1603,12 +1603,12 @@ GameObject:
   - component: {fileID: 114452280987887010}
   - component: {fileID: 1030940054}
   m_Layer: 9
-  m_Name: Player
+  m_Name: PlayerOld
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4808198735113062
 Transform:
   m_ObjectHideFlags: 0
@@ -1690,7 +1690,6 @@ MonoBehaviour:
   DemonicPower: 0
   MaxSoulStrength: 100
   MaxDemonicPower: 0
-  DrawKey: 331
   combatKeys:
   - Cast1
   Mode: 0
@@ -1713,15 +1712,16 @@ MonoBehaviour:
   meleeCenter: {x: 0, y: 0, z: 0}
   castingPoint: {x: 0, y: 0, z: 0}
   meleeObject: {fileID: 1077325888551730}
+  HitboxToGenerate: {fileID: 0}
   meleeObjectSecondary: {fileID: 1915234259736556}
+  HitboxToGenerateSecondary: {fileID: 0}
+  WeaponDamage1: 0
+  WeaponDamage2: 0
   castingObject: {fileID: 1855536583083860}
   characterCenter: {fileID: 1225865821013862}
   objectsSheathe:
   - {fileID: 1358723820669492}
   - {fileID: 1852374392030696}
-  objectsDrawn:
-  - {fileID: 1915234259736556}
-  - {fileID: 1077325888551730}
   currentAttack: {fileID: 0}
   isAttacking: 0
   combat: 0
@@ -1737,7 +1737,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06885c61fbfdaaa42886ea58d80dab24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Cam: {fileID: 0}
   walkSpeedMultilpier: 1
+  isSimplePlayer: 0
 --- !u!114 &114303843421719142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1781,9 +1783,7 @@ MonoBehaviour:
   isPlayer: 0
   maxHealth: 2000
   hitBy: {fileID: 0}
-  healthSlider: {fileID: 0}
   healthBar: {fileID: 0}
-  hasFloatingBar: 0
   HealthBarPrefab: {fileID: 0}
 --- !u!114 &114913235956820348
 MonoBehaviour:
@@ -1932,6 +1932,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82678a6a1af60004b90f075cdbc1c996, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  WeaponSound: {fileID: 0}
+  DrawWeapon: {fileID: 0}
   clips:
   - {fileID: 8300000, guid: d88cbad2d217cd74ba1eb0899d6c55ad, type: 3}
   - {fileID: 8300000, guid: ada024810fd950d408257d2b4903e899, type: 3}
@@ -1942,6 +1944,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: dadaa610dcc8540478eb22b5eb22600d, type: 3}
   - {fileID: 8300000, guid: 4f4662159c986a84d837e300ab18b254, type: 3}
   attackSounds: []
+  reactSounds: []
+  shoutSounds: []
 --- !u!114 &114438864212104296
 MonoBehaviour:
   m_ObjectHideFlags: 0

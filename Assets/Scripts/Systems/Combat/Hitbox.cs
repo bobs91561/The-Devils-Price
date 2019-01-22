@@ -64,7 +64,7 @@ namespace Systems.Combat
             CheckAggression(g);
             hm.hitBy = _mParent;
             hm.ModifyHealth(-_mDamageDealt);
-            hm.ReactAt(collision);
+            //hm.ReactAt(collision);
             if (DestroyAfterHit) Destroy(gameObject);
         }
 
@@ -75,7 +75,7 @@ namespace Systems.Combat
             if (!hm) return;
             CheckAggression(g);
             hm.hitBy = _mParent;
-            hm.ReactAt(other.transform.position);
+            //hm.ReactAt(transform.position);
             if (DestroyAfterHit) hm.ModifyHealth(-_mDamageDealt);
             else
                 hm.ModifyHealth(-_mDamageDealt * Time.deltaTime);

@@ -6,9 +6,9 @@ using UnityEngine;
 using UnityEngine.AI;
 using Devdog.InventoryPro.UnityStandardAssets;
 [RequireComponent(typeof(HealthManager))]
-[RequireComponent(typeof(Animator))]
+//[RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(SkillSet))]
-[RequireComponent(typeof(ThirdPersonCharacter))]
+//[RequireComponent(typeof(ThirdPersonCharacter))]
 [RequireComponent(typeof(AIActionDecider))]
 [RequireComponent(typeof(NavMeshAgent))]
 public class AIController : MonoBehaviour
@@ -31,6 +31,7 @@ public class AIController : MonoBehaviour
     {
         _skillSet = GetComponent<SkillSet>();
         _anim = GetComponent<Animator>();
+        if (!_anim) _anim = GetComponentInChildren<Animator>();
         _agent = GetComponent<NavMeshAgent>();
         attacks = new List<Attack>();
 
@@ -42,6 +43,7 @@ public class AIController : MonoBehaviour
         Decider = GetComponent<AIActionDecider>();
         Moving = false;
         thirdPerson = GetComponent<ThirdPersonCharacter>();
+        if (!thirdPerson) thirdPerson = GetComponentInChildren<ThirdPersonCharacter>();
     }
 
     void Update()

@@ -72,17 +72,20 @@ public class MainMenu : MonoBehaviour
 
     public void Open()
     {
+        GameObject.FindGameObjectWithTag("HealthCanvas").SetActive(false);
         SetMenuStatus(true);
     }
 
     public void Close()
     {
         SetMenuStatus(false);
+        GameObject.FindGameObjectWithTag("HealthCanvas").SetActive(true);
     }
 
     private void SetMenuStatus(bool open)
     {
         isMenuOpen = open;
+        GameManager.SetPlayerInput(!open);
         //if (open) windowRect = scaledRect.GetPixelRect();
         Time.timeScale = open ? 0 : 1;
         if (open) onOpen.Invoke(); else onClose.Invoke();

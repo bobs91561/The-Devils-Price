@@ -31,6 +31,8 @@ public class AIActionDecider: MonoBehaviour {
 	void Start()
     {
         if (!AI) AI = gameObject;
+        skillSet = GetComponent<SkillSet>();
+        _controller = GetComponent<AIController>();
         if (actions == null)
         {
             actions = new List<AIAction>();
@@ -41,8 +43,6 @@ public class AIActionDecider: MonoBehaviour {
             actions[i].Initialize(gameObject);
         }
         if (patrolPoints == null) patrolPoints = new List<GameObject>();
-        skillSet = GetComponent<SkillSet>();
-        _controller = GetComponent<AIController>();
         patrolPoint = 0;
         tiredness = 0f;
         combat = false;
@@ -50,6 +50,9 @@ public class AIActionDecider: MonoBehaviour {
 
     public void Tick()
     {
+
+        int i = 0;
+        bool f = false;
         List<AIAction> feasible = new List<AIAction>();
         foreach(AIAction a in actions)
         {
@@ -59,8 +62,11 @@ public class AIActionDecider: MonoBehaviour {
         if (feasible.Count>1)
             feasible.Sort((a1,a2)=>(int)(a2.priority-a1.priority));
 
-        int i = 0;
-        bool f = false;
+        if (currentAction && currentAction.ActionFeasible() && currentPriority >= feasible[0].priority)
+        {
+            f = currentAction.Tick();
+        }
+
         while (!f && i < feasible.Count && feasible[i])
         {
             f = feasible[i].Tick();
@@ -109,7 +115,7 @@ public class AIActionDecider: MonoBehaviour {
         RecentCombat = true;
         skillSet.Combat();
         skillSet.DrawWeapons();
-        //GetComponent<Animator>().SetBool("Combat", true);
+
         //Send out combat alerts to nearby allies
         Collider[] cs = Physics.OverlapSphere(transform.position, 7f, 1 << LayerMask.NameToLayer("Enemy"));
         
@@ -126,7 +132,6 @@ public class AIActionDecider: MonoBehaviour {
         combat = false;
         CombatNearby = false;
         skillSet.Combat();
-        //GetComponent<Animator>().SetBool("Combat", false);
         GetComponent<AIAttackController>().enabled = false;
     }
 
@@ -141,7 +146,6 @@ public class AIActionDecider: MonoBehaviour {
     public void CombatIsNearby()
     {
         CombatNearby = true;
-        //EnterCombat();
         SendMessage("EnterCombat");
         FaceTarget(Player.transform.position);
     }
@@ -152,7 +156,7 @@ public class AIActionDecider: MonoBehaviour {
         patrolPoint = 0;
     }
 
-    void OnDrawGizmosSelected()
+    /*void OnDrawGizmosSelected()
     {
 
         var nav = GetComponent<NavMeshAgent>();
@@ -177,5 +181,5 @@ public class AIActionDecider: MonoBehaviour {
             line.SetPosition(i, path.corners[i]);
         }
 
-    }
+    }*/
 }

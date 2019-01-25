@@ -12,7 +12,7 @@ namespace CustomManager {
         /// This script will modify based on platform.
         /// PlayerController will pull from this script to get relevant keys.
         /// 
-        /// Key Mappings (for Xbox One):
+        /// Default Key Mappings (for Xbox One):
         ///     A -> Use Object/Conversation
         ///     B -> Draw Weapons
         ///     X -> Dodge

@@ -75,7 +75,6 @@ public class GameManager : MonoBehaviour {
     /// </summary>
     public void TransitionScene()
     {
-        Debug.Log("Transitioning Scene");
         StartCoroutine(TransitionAudio());
         if (HandleFadeManually)
         {

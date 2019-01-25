@@ -187,5 +187,14 @@ public class MainMenu : MonoBehaviour
         }
         DialogueManager.ShowAlert("Saved Game Cleared From PlayerPrefs");
     }
+
+    public void QuitGame()
+    {
+        //Tell the gamemanager to handle the fade
+
+        //Load the main menu scene
+
+        //Destroy all objects
+    }
     #endregion
 }

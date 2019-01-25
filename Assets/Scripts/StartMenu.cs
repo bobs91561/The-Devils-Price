@@ -9,6 +9,10 @@ using UnityEngine.SceneManagement;
 
 public class StartMenu : MonoBehaviour
 {
+    public GameObject IntroPanel;
+    public GameObject ContinueBtn;
+    public List<GameObject> objectsToDisableOnIntro = new List<GameObject>();
+
     public void NewGame()
     {
         GameManager.HandleFadeManually = true;
@@ -17,6 +21,16 @@ public class StartMenu : MonoBehaviour
 
     private IEnumerator WaitToLoad()
     {
+        //Begin intro scaffolding
+        if (IntroPanel)
+        {
+            foreach (GameObject g in objectsToDisableOnIntro)
+                g.SetActive(false);
+            IntroPanel.SetActive(true);
+        }
+        yield return new WaitForSeconds(3.5f);
+        if (ContinueBtn) ContinueBtn.SetActive(true);
+        yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Joystick1Button0));
         yield return new WaitForSeconds(1.5f);
         SceneManager.LoadScene(1);
     }

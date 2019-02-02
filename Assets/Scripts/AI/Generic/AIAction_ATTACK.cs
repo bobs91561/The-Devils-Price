@@ -56,6 +56,7 @@ public class AIAction_ATTACK : AIAction {
             //Check player visibility
             PlayerSpotted = true;
             decider.EnterCombat();
+            decider.PlayerContact = true;
 
             return true;
         }

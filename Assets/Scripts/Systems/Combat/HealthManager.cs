@@ -112,6 +112,7 @@ public class HealthManager : MonoBehaviour {
     public void Respawn()
     {
         Life();
+        SendMessage("SheatheWeapons");
         SendMessage("OnRespawn");
     }
 

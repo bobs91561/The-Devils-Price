@@ -21,6 +21,7 @@ public class AIActionDecider: MonoBehaviour {
 
     public bool CombatNearby;
     public bool RecentCombat;
+    public bool PlayerContact;
     public bool Friendly;
 
     public List<AIAction> actions;
@@ -29,8 +30,8 @@ public class AIActionDecider: MonoBehaviour {
 
 	// Use this for initialization
 	void Start()
-    {
-        if (!AI) AI = gameObject;
+	{
+	    if (!AI) AI = gameObject;
         skillSet = GetComponent<SkillSet>();
         _controller = GetComponent<AIController>();
         if (actions == null)
@@ -46,11 +47,11 @@ public class AIActionDecider: MonoBehaviour {
         patrolPoint = 0;
         tiredness = 0f;
         combat = false;
-    }
+	    PlayerContact = false;
+	}
 
     public void Tick()
     {
-
         int i = 0;
         bool f = false;
         List<AIAction> feasible = new List<AIAction>();
@@ -115,24 +116,37 @@ public class AIActionDecider: MonoBehaviour {
         RecentCombat = true;
         skillSet.Combat();
         skillSet.DrawWeapons();
+        FaceTarget(Player.transform.position);
 
         //Send out combat alerts to nearby allies
-        Collider[] cs = Physics.OverlapSphere(transform.position, 7f, 1 << LayerMask.NameToLayer("Enemy"));
+        Collider[] cs = Physics.OverlapSphere(transform.position, 100f, 1 << LayerMask.NameToLayer("Enemy"));
         
         foreach (Collider c in cs)
         {
-            if(c.gameObject.GetComponent<AIActionDecider>())
+            if (c.gameObject.GetComponent<AIActionDecider>())
                 c.gameObject.SendMessage("CombatIsNearby");
         }
     }
 
     public void ExitCombat()
     {
-        if (!combat) return;
+        if (!combat || !PlayerContact) return;
         combat = false;
         CombatNearby = false;
         skillSet.Combat();
         GetComponent<AIAttackController>().enabled = false;
+        Collider[] cs = Physics.OverlapSphere(transform.position, 100f, 1 << LayerMask.NameToLayer("Enemy"));
+
+        foreach (Collider c in cs)
+        {
+            if (c.gameObject.GetComponent<AIActionDecider>())
+                c.gameObject.SendMessage("UpdatePlayerContact");
+        }
+    }
+
+    public void UpdatePlayerContact()
+    {
+        PlayerContact = true;
     }
 
     public void FaceTarget(Vector3 destination)
@@ -146,6 +160,9 @@ public class AIActionDecider: MonoBehaviour {
     public void CombatIsNearby()
     {
         CombatNearby = true;
+        combat = true;
+        RecentCombat = true;
+        PlayerContact = false;
         SendMessage("EnterCombat");
         FaceTarget(Player.transform.position);
     }

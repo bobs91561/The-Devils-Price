@@ -96,6 +96,7 @@ MonoBehaviour:
   MaxDemonicPower: 0
   ConsiderMove: 0
   AverageMaxDistance: 0
+  MinimumAttackTimeDifference: 2
 --- !u!114 &3613922646706025739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -109,7 +110,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Level: 1
-  MinimumAttackTimeDifference: 5
   attacks: []
   Decider: {fileID: 0}
   Moving: 0
@@ -146,6 +146,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Reputation: 20
+  CurrentRank: 0
 --- !u!114 &3613922646706025740
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,12 +176,15 @@ MonoBehaviour:
   HitboxToGenerateSecondary: {fileID: 0}
   WeaponDamage1: 0
   WeaponDamage2: 0
+  CastingDamage: 0
   castingObject: {fileID: 6666150643354553345}
   characterCenter: {fileID: 6666150643354562445}
   objectsSheathe: []
   currentAttack: {fileID: 0}
   isAttacking: 0
   combat: 0
+  _mTargeting: 0
+  _mTargetObject: {fileID: 0}
 --- !u!114 &3613922646706025735
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -365,8 +369,9 @@ MonoBehaviour:
   m_AnimSpeedMultiplier: 1
   m_GroundCheckDistance: 0.2
   footstep: {fileID: 0}
-  m_IsReacting: 0
   IsRotating: 0
+  m_IsJumping: 0
+  m_ReadyToJump: 0
   raycastLayerMask:
     serializedVersion: 2
     m_Bits: 1
@@ -382,6 +387,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cb37064a8e9c674e9e171cc8411ba3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CastDamageMultiplier: 1
 --- !u!1 &6666150643132842924
 GameObject:
   m_ObjectHideFlags: 0
@@ -514,6 +520,19 @@ MonoBehaviour:
   attackSounds: []
   reactSounds: []
   shoutSounds: []
+--- !u!114 &8613400724244195697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6666150643354553345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cb37064a8e9c674e9e171cc8411ba3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CastDamageMultiplier: 1
 --- !u!114 &3411717931173547412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -526,6 +545,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cb37064a8e9c674e9e171cc8411ba3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CastDamageMultiplier: 1
 --- !u!1001 &6666150643354423643
 PrefabInstance:
   m_ObjectHideFlags: 0

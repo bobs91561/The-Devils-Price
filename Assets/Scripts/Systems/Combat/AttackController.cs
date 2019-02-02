@@ -23,6 +23,8 @@ namespace Assets.Scripts.Systems.Combat
         public float MaxSoulStrength;
         public float MaxDemonicPower;
 
+        private float m_CoolDownSpeed = 1f;
+
         protected void Initialize()
         {
             _skillSet = GetComponent<SkillSet>();
@@ -43,7 +45,7 @@ namespace Assets.Scripts.Systems.Combat
         {
             if (_attacks == null) return;
             foreach (Attack a in _attacks)
-                _cooldowns[a] += Time.deltaTime;
+                _cooldowns[a] += Time.deltaTime * m_CoolDownSpeed;
         }
 
         void OnDisable()
@@ -52,5 +54,33 @@ namespace Assets.Scripts.Systems.Combat
                 foreach (Attack a in _attacks)
                     _cooldowns[a] = a.coolDown;
         }
+
+        #region Levelling Settings
+        public void ModifyDemonicPower(float multiplier)
+        {
+            MaxDemonicPower += MaxDemonicPower * multiplier;
+        }
+
+        public void ModifySoulStrength(float multiplier)
+        {
+            MaxSoulStrength += MaxSoulStrength * multiplier;
+        }
+
+        public void ModifyCoolDownSpeed(float multiplier)
+        {
+            m_CoolDownSpeed += multiplier;
+            if (m_CoolDownSpeed <= 0.75f) m_CoolDownSpeed = 0.75f;
+        }
+
+        public void ChangeMaxPower(float max)
+        {
+            MaxDemonicPower = max;
+        }
+
+        public void ChangeMaxStrength(float max)
+        {
+            MaxSoulStrength = max;
+        }
+        #endregion
     }
 }

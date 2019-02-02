@@ -17,6 +17,7 @@ namespace PixelCrushers
         public class RepuationInfo
         {
             public float reputation;
+            public int rank;
             public float health;
         }
 
@@ -28,8 +29,9 @@ namespace PixelCrushers
             /// You can use SaveSystem.Serialize() to serialize a serializable object to a 
             /// string. This will use the serializer component on the Save System GameObject,
             /// which defaults to JSON serialization.
-            /// 
-            m_data.reputation = GetComponent<Reputable>().Reputation;
+            var rep = GetComponent<Reputable>();
+            m_data.reputation = rep.Reputation;
+            m_data.rank = rep.CurrentRank;
             m_data.health = GetComponent<HealthManager>().Health;
             return SaveSystem.Serialize(m_data);
         }
@@ -46,7 +48,9 @@ namespace PixelCrushers
                 var data = SaveSystem.Deserialize<RepuationInfo>(s, m_data);
                 if (data == null) return;
                 m_data = data;
-                GetComponent<Reputable>().Reputation = data.reputation;
+                var rep = GetComponent<Reputable>();
+                rep.Reputation = data.reputation;
+                rep.CurrentRank = data.rank;
                 GetComponent<HealthManager>().SetHealthFromSave(data.health);
             }
         }

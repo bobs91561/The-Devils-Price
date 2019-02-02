@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class ZoningData : MonoBehaviour {
 
+    public DifficultySetting ZoneSetting;
+
+    public float EnemyDensity;
+    public float SpawnRate;
+
 	// Use this for initialization
 	void Start () {
 		
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }
+

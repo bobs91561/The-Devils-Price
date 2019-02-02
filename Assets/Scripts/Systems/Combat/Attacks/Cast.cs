@@ -7,13 +7,19 @@ using UnityEngine;
 public class Cast : Attack
 {
     public bool effectGrounded;
+    private CastingObject cast;
+    private GameObject castingObject;
+    private float damageMultiplier;
+
     public override void UseAttack()
     {
         //Generate effect at casting point location
         GameObject g = Instantiate(objectToGenerate);
         objectGenerated = g;
 
-        Vector3 castingPoint = attacker.GetComponent<SkillSet>().castingObject.transform.position;
+        damageMultiplier = skillSet.CastingDamage;
+
+        Vector3 castingPoint = castingObject.transform.position;
 
         Vector3 attackerFwd = attacker.transform.forward;
         Vector3 attackerCtr = attacker.transform.position + attackerFwd * maxForwardDistance * .75f;
@@ -32,7 +38,7 @@ public class Cast : Attack
     {
         GameObject g = objectGenerated;
         g.GetComponentInChildren<DamageForPreSetupObjects>().gameObject.layer = attacker.layer;
-        g.GetComponentInChildren<DamageForPreSetupObjects>().Initialize(damage, attacker);
+        g.GetComponentInChildren<DamageForPreSetupObjects>().Initialize(damage * damageMultiplier, attacker);
         g.GetComponentInChildren<RFX1_TransformMotion>().CollidesWith = ~LayerMask.GetMask(LayerMask.LayerToName(attacker.layer), "Ignore Raycast");
         if (g.GetComponent<RFX1_Target>()) g.GetComponent<RFX1_Target>().Target = targetObject;
     }
@@ -40,6 +46,13 @@ public class Cast : Attack
     private void UseCustom()
     {
         GameObject g = objectGenerated;
-        g.GetComponent<DamageForCustomObjects>().Initialize(damage, ~LayerMask.GetMask(LayerMask.LayerToName(attacker.layer), "Ignore Raycast"), attacker);
+        g.GetComponent<DamageForCustomObjects>().Initialize(damage * damageMultiplier, ~LayerMask.GetMask(LayerMask.LayerToName(attacker.layer), "Ignore Raycast"), attacker);
+    }
+
+    public override void Initialize(GameObject g)
+    {
+        base.Initialize(g);
+        castingObject = skillSet.castingObject;
+        cast = castingObject.GetComponent<CastingObject>();
     }
 }

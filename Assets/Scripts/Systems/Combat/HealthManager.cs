@@ -126,4 +126,11 @@ public class HealthManager : MonoBehaviour {
         Health = health;
         if (healthBar) healthBar.UpdateHealth();
     }
+
+    #region Levelling Settings
+    public void ChangeMaxHealth(float newMax)
+    {
+        maxHealth += newMax;
+    }
+    #endregion
 }

@@ -1206,6 +1206,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4257854933425284}
+  - component: {fileID: 8503444882692900009}
   m_Layer: 10
   m_Name: Bip01 R Hand
   m_TagString: Untagged
@@ -1233,6 +1234,19 @@ Transform:
   m_Father: {fileID: 4006054818066208}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8503444882692900009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1390875518709968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cb37064a8e9c674e9e171cc8411ba3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CastDamageMultiplier: 1
 --- !u!1 &1422679328918624
 GameObject:
   m_ObjectHideFlags: 0
@@ -2308,15 +2322,18 @@ MonoBehaviour:
   HitboxToGenerate: {fileID: 0}
   meleeObjectSecondary: {fileID: 0}
   HitboxToGenerateSecondary: {fileID: 0}
+  WeaponDamage1: 0
+  WeaponDamage2: 0
+  CastingDamage: 0
   castingObject: {fileID: 1390875518709968}
   characterCenter: {fileID: 0}
   objectsSheathe:
   - {fileID: 1380104788214920}
-  objectsDrawn:
-  - {fileID: 0}
   currentAttack: {fileID: 0}
   isAttacking: 0
   combat: 0
+  _mTargeting: 0
+  _mTargetObject: {fileID: 0}
 --- !u!114 &114381589202220402
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2366,6 +2383,7 @@ MonoBehaviour:
   MaxDemonicPower: 0
   ConsiderMove: 0
   AverageMaxDistance: 0
+  MinimumAttackTimeDifference: 2
 --- !u!114 &114064418522978516
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2379,7 +2397,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Level: 0
-  MinimumAttackTimeDifference: 2
   attacks: []
   Decider: {fileID: 0}
   Moving: 0
@@ -2401,9 +2418,7 @@ MonoBehaviour:
   isPlayer: 0
   maxHealth: 10
   hitBy: {fileID: 0}
-  healthSlider: {fileID: 0}
   healthBar: {fileID: 0}
-  hasFloatingBar: 1
   HealthBarPrefab: {fileID: 6160945041397555529, guid: ba65a06ba290ea44eac1cc0982e2d7e3,
     type: 3}
 --- !u!114 &114036065396276072
@@ -2427,8 +2442,9 @@ MonoBehaviour:
   m_AnimSpeedMultiplier: 1
   m_GroundCheckDistance: 1.5
   footstep: {fileID: 0}
-  m_IsReacting: 0
   IsRotating: 0
+  m_IsJumping: 0
+  m_ReadyToJump: 0
   raycastLayerMask:
     serializedVersion: 2
     m_Bits: 1
@@ -2481,6 +2497,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Reputation: 5
+  CurrentRank: 0
 --- !u!1 &1780829944194826
 GameObject:
   m_ObjectHideFlags: 0

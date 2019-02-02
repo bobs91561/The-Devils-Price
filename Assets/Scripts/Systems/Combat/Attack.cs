@@ -27,6 +27,8 @@ public abstract class Attack : ScriptableObject {
 
     protected GameObject targetObject;
 
+    protected SkillSet skillSet;
+
     /// <summary>
     /// Call for any attack
     /// </summary>
@@ -106,5 +108,6 @@ public abstract class Attack : ScriptableObject {
     public virtual void Initialize(GameObject g)
     {
         attacker = g;
+        skillSet = g.GetComponent<SkillSet>();
     }
 }

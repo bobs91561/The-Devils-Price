@@ -23,6 +23,7 @@ public class SkillSet : MonoBehaviour {
     [HideInInspector] public GameObject HitboxToGenerateSecondary;
 
     [HideInInspector] public float WeaponDamage1, WeaponDamage2;
+    [HideInInspector] public float CastingDamage;
 
     public GameObject castingObject;
 
@@ -98,7 +99,11 @@ public class SkillSet : MonoBehaviour {
         if (!castingObject)
             castingObject = GetComponentInChildren<CastingObject>().gameObject;
         if (!castingObject)
+        {
             Debug.Log("No casting Object found on: " + gameObject.name);
+            return;
+        }
+        CastingDamage = castingObject.GetComponent<CastingObject>().GetDamage();
     }
 
     public void DrawWeapons()
@@ -190,5 +195,15 @@ public class SkillSet : MonoBehaviour {
     {
         return isAttacking;
     }
-	
+
+    #region Levelling Settings
+    public void ModifyDamage(float multiplier)
+    {
+        WeaponDamage1 += WeaponDamage1 * multiplier;
+        WeaponDamage2 += WeaponDamage2 * multiplier;
+
+        CastingDamage += multiplier;
+        if (CastingDamage <= 0f) CastingDamage = 0.5f;
+    }
+    #endregion
 }

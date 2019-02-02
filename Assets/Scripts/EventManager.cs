@@ -19,6 +19,8 @@ public class EventManager {
     public static event VoidDelegate RespawnAction;
 
     public static event VoidDelegate SubscribeToPlayer;
+
+    public static event VoidDelegate RankUp;
 	
     public static void Death()
     {
@@ -39,5 +41,11 @@ public class EventManager {
     {
         if(SubscribeToPlayer != null)
         SubscribeToPlayer();
+    }
+
+    public static void IncreaseRank()
+    {
+        if (RankUp != null)
+            RankUp();
     }
 }

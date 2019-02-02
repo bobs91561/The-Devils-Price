@@ -14,7 +14,7 @@ using Devdog.InventoryPro.UnityStandardAssets;
 public class AIController : MonoBehaviour
 {
     public int Level;
-    public float MinimumAttackTimeDifference = 2f;
+    //public float MinimumAttackTimeDifference = 2f;
 
     public List<Attack> attacks;
     private SkillSet _skillSet;

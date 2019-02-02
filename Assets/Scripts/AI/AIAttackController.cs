@@ -13,8 +13,10 @@ public class AIAttackController : AttackController {
     public bool ConsiderMove;
     public float AverageMaxDistance;
 
-	// Use this for initialization
-	void Start () {
+    public float MinimumAttackTimeDifference = 2f;
+
+    // Use this for initialization
+    void Start () {
         if (Player == null) Player = GameObject.Find("Player");
         if (PlayerCenter == null && Player) PlayerCenter = Player.GetComponent<SkillSet>().characterCenter;
         AverageMaxDistance = 0;
@@ -135,4 +137,11 @@ public class AIAttackController : AttackController {
         ConsiderMove = true;
         return available;
     }
+
+    #region Levelling Settings
+    public void ChangeAttackRate(float multiplier)
+    {
+        MinimumAttackTimeDifference -= MinimumAttackTimeDifference*multiplier;
+    }
+    #endregion
 }

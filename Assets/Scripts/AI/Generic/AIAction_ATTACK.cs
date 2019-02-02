@@ -86,7 +86,7 @@ public class AIAction_ATTACK : AIAction {
         base.Initialize(obj);
         PlayerSpotted = false;
         _attackController = g.GetComponent<AIAttackController>();
-        minCoolDownTime = g.GetComponent<AIController>().MinimumAttackTimeDifference;
+        minCoolDownTime = _attackController.MinimumAttackTimeDifference;
         TimeSinceLastAttack = minCoolDownTime;
     }
 

@@ -87,6 +87,11 @@ public class HealthManager : MonoBehaviour {
         if (!isPlayer && healthBar) healthBar.Activate();
     }
 
+    public void ExitCombat()
+    {
+        if (!isPlayer && healthBar) healthBar.Deactivate();
+    }
+
     private void Life()
     {
         ResetHealth();

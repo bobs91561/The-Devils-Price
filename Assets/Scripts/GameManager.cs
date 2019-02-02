@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour {
 
     private void Start()
     {
+        Debug.Log("started");
         CurrentSceneData = GameObject.FindGameObjectWithTag("SceneInfo").GetComponent<SceneInfo>();
         ClipPlaying = CurrentSceneData.SceneEntryAudio;
         _mAudioSource = GetComponent<AudioSource>();
@@ -186,6 +187,7 @@ public class GameManager : MonoBehaviour {
 
     private void CheckForDialogueManager()
     {
+        Debug.Log("checking for dialogue manager");
         var go = GameObject.Find("Dialogue Manager");
         if (!go) go = Instantiate(DialogueMangerPrefab);
         DialogueManager = go;

@@ -46,6 +46,8 @@ namespace PixelCrushers.DialogueSystem
 
         public BarkUISettings barkUISettings = new BarkUISettings();
 
+        public enum UseMenuPanelFor { OnlyMe, MeAndResponsesToMe }
+
         [Serializable]
         public class StandardDialogueUISettings
         {
@@ -60,6 +62,9 @@ namespace PixelCrushers.DialogueSystem
 
             [Tooltip("The panel to use if Menu Panel Number is set to Custom.")]
             public StandardUIMenuPanel customMenuPanel = null;
+
+            [Tooltip("If Only Me, only use this menu panel when this Dialogue Actor is the respondent.\nIf MeAndResponsesToMe, use this menu panel when this Dialogue Actor is the response or the character being responded to (i.e., the last one to speak).")]
+            public UseMenuPanelFor useMenuPanelFor = UseMenuPanelFor.OnlyMe;
 
             [Tooltip("If assigned, animator controller that runs this actor's animated portrait. It should animate an Image component, not a SpriteRenderer.")]
             public RuntimeAnimatorController portraitAnimatorController;
@@ -186,6 +191,27 @@ namespace PixelCrushers.DialogueSystem
             if (DialogueManager.isConversationActive && DialogueManager.dialogueUI is StandardDialogueUI)
             {
                 (DialogueManager.dialogueUI as StandardDialogueUI).SetActorSubtitlePanelNumber(this, newSubtitlePanelNumber);
+            }
+        }
+
+        /// <summary>
+        /// Gets the menu panel number to use if using a Standard Dialogue UI.
+        /// </summary>
+        public MenuPanelNumber GetMenuPanelNumber()
+        {
+            return standardDialogueUISettings.menuPanelNumber;
+        }
+
+        /// <summary>
+        /// Changes a dialogue actor's menu panel number. If a conversation is active, updates
+        /// the dialogue UI.
+        /// </summary>
+        public void SetMenuPanelNumber(MenuPanelNumber newMenuPanelNumber)
+        {
+            standardDialogueUISettings.menuPanelNumber = newMenuPanelNumber;
+            if (DialogueManager.isConversationActive && DialogueManager.dialogueUI is StandardDialogueUI)
+            {
+                (DialogueManager.dialogueUI as StandardDialogueUI).SetActorMenuPanelNumber(this, newMenuPanelNumber);
             }
         }
 

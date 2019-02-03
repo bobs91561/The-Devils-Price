@@ -47,17 +47,19 @@ namespace PixelCrushers.DialogueSystem
 
         public AnimationTransitions animationTransitions = new AnimationTransitions();
 
-        private Canvas canvas = null;
+        [Tooltip("You can leave this unassigned if the Canvas is on this GameObject.")]
+        public Canvas canvas;
 
-        private Animator animator = null;
+        protected Animator animator = null;
 
-        public void Awake()
+        public virtual void Awake()
         {
-            canvas = GetComponent<Canvas>();
+            if (canvas == null) canvas = GetComponent<Canvas>();
             animator = GetComponent<Animator>();
+            if (animator == null && canvas != null) animator = canvas.GetComponent<Animator>();
         }
 
-        public void Start()
+        public virtual void Start()
         {
             Usable usable = Tools.GetComponentAnywhere<Usable>(gameObject);
             if ((usable != null) && (nameText != null)) nameText.text = usable.GetName();

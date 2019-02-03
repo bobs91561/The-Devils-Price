@@ -43,14 +43,14 @@ namespace PixelCrushers
         public UnityEvent onClose = new UnityEvent();
         public UnityEvent onBackButtonDown = new UnityEvent();
 
-        private GameObject m_previousSelected = null;
-        private List<GameObject> selectables = new List<GameObject>();
+        protected GameObject m_previousSelected = null;
+        protected List<GameObject> selectables = new List<GameObject>();
         private float m_timeNextCheck = 0;
         private float m_timeNextRefresh = 0;
 
-        private static List<UIPanel> panelStack = new List<UIPanel>();
+        protected static List<UIPanel> panelStack = new List<UIPanel>();
 
-        private static UIPanel topPanel
+        protected static UIPanel topPanel
         {
             get { return (panelStack.Count > 0) ? panelStack[panelStack.Count - 1] : null; }
         }
@@ -79,7 +79,7 @@ namespace PixelCrushers
             }
         }
 
-        private void Start()
+        protected virtual void Start()
         {
             if (panelState == PanelState.Uninitialized)
             {
@@ -134,19 +134,31 @@ namespace PixelCrushers
             RefreshSelectablesList();
         }
 
-        private void OnEnable()
+        protected void PushToPanelStack()
         {
+            if (panelStack.Contains(this)) panelStack.Remove(this);
             panelStack.Add(this);
+
         }
 
-        private void OnDisable()
+        protected void PopFromPanelStack()
+        {
+            panelStack.Remove(this);
+        }
+
+        protected virtual void OnEnable()
+        {
+            PushToPanelStack();
+        }
+
+        protected virtual void OnDisable()
         {
             StopAllCoroutines();
             if (selectPreviousOnDisable && InputDeviceManager.autoFocus && UnityEngine.EventSystems.EventSystem.current != null && m_previousSelected != null && !selectables.Contains(m_previousSelected))
             {
                 UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(m_previousSelected);
             }
-            panelStack.Remove(this);
+            PopFromPanelStack();
         }
 
         public virtual void Open()
@@ -156,10 +168,15 @@ namespace PixelCrushers
             gameObject.SetActive(true);
             onOpen.Invoke();
             animatorMonitor.SetTrigger(showAnimationTrigger, OnVisible, false);
+
+            // With quick panel changes, panel may not reach OnEnable/OnDisable before being reused.
+            // Update panelStack here also to handle this case:
+            PushToPanelStack();
         }
 
         public virtual void Close()
         {
+            PopFromPanelStack();
             CancelInvoke();
             if (panelState == PanelState.Closed || panelState == PanelState.Closing) return;
             panelState = PanelState.Closing;
@@ -183,7 +200,7 @@ namespace PixelCrushers
             if (isOpen) Close(); else Open();
         }
 
-        private void OnVisible()
+        protected virtual void OnVisible()
         {
             panelState = PanelState.Open;
             RefreshSelectablesList();
@@ -197,13 +214,13 @@ namespace PixelCrushers
             }
         }
 
-        private void OnHidden()
+        protected virtual void OnHidden()
         {
             panelState = PanelState.Closed;
             gameObject.SetActive(false);
         }
 
-        private void Update()
+        protected virtual void Update()
         {
             if (!(isOpen && topPanel == this)) return;
             if (InputDeviceManager.isBackButtonDown)
@@ -243,7 +260,7 @@ namespace PixelCrushers
             }
         }
 
-        private GameObject GetFirstInteractableButton()
+        protected GameObject GetFirstInteractableButton()
         {
             foreach (var selectable in GetComponentsInChildren<UnityEngine.UI.Selectable>())
             {

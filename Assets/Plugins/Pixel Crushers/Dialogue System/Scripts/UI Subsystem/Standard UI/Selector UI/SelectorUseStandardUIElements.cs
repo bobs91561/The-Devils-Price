@@ -99,10 +99,12 @@ namespace PixelCrushers.DialogueSystem
         private void OnSelectedUsable(Usable usable)
         {
             this.usable = usable;
+            if (usableUI != null) usableUI.Hide(); // Hide previous selection.
             usableUI = (usable != null) ? usable.GetComponentInChildren<AbstractUsableUI>() : null;
             if (usableUI != null)
             {
                 usableUI.Show(GetUseMessage());
+                HideControls();
             }
             else
             {
@@ -119,10 +121,7 @@ namespace PixelCrushers.DialogueSystem
                 usableUI.Hide();
                 usableUI = null;
             }
-            else
-            {
-                HideControls();
-            }
+            HideControls();
             this.usable = null;
         }
 
@@ -189,7 +188,14 @@ namespace PixelCrushers.DialogueSystem
 
         public void OnConversationEnd(Transform actor)
         {
-            ShowControls();
+            if (usableUI != null)
+            {
+                usableUI.Show(GetUseMessage());
+            }
+            else
+            {
+                ShowControls();
+            }
         }
 
         private void UpdateDisplay(bool inRange)

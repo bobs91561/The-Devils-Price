@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 
 public class RFX4_ShaderColorGradient : MonoBehaviour {
 
@@ -7,12 +6,12 @@ public class RFX4_ShaderColorGradient : MonoBehaviour {
     public Gradient Color = new Gradient();
     public float TimeMultiplier = 1;
     public bool IsLoop;
-    public bool UseSharedMaterial;
+    //public bool UseSharedMaterial;
     [HideInInspector] public float HUE = -1;
 
     [HideInInspector]
-     public bool canUpdate;
-    private Material mat;
+    public bool canUpdate;
+    //private Material mat;
     private int propertyID;
     private float startTime;
     private Color startColor;
@@ -20,62 +19,37 @@ public class RFX4_ShaderColorGradient : MonoBehaviour {
     private bool isInitialized;
     private string shaderProperty;
 
-    void Start()
-    {
-        Init();
-    }
+    private MaterialPropertyBlock props;
+    private Renderer rend;
 
-    private void Init()
+    void Awake()
     {
+        if (props == null) props = new MaterialPropertyBlock();
+        if (rend == null) rend = GetComponent<Renderer>();
+
         shaderProperty = ShaderColorProperty.ToString();
-        startTime = Time.time;
-        canUpdate = true;
-        var rend = GetComponent<Renderer>();
-        if (rend==null) {
-            var projector = GetComponent<Projector>();
-            if (projector!=null) {
-                if (!projector.material.name.EndsWith("(Instance)"))
-                    projector.material = new Material(projector.material) {name = projector.material.name + " (Instance)"};
-                mat = projector.material;
-            }
-        }
-        else
-        {
-            if (!UseSharedMaterial) mat = rend.material;
-            else mat = rend.sharedMaterial;
-        }
-
-        if (mat == null)
-        {
-            canUpdate = false;
-            return;
-        }
-
-        if (!mat.HasProperty(shaderProperty))
-        {
-            canUpdate = false;
-            return;
-        }
-        if (mat.HasProperty(shaderProperty))
-            propertyID = Shader.PropertyToID(shaderProperty);
-
-        startColor = mat.GetColor(propertyID);
-        var eval = Color.Evaluate(0);
-        mat.SetColor(propertyID, eval * startColor);
-        isInitialized = true;
+        propertyID = Shader.PropertyToID(shaderProperty);
+        startColor = rend.sharedMaterial.GetColor(propertyID);
     }
+
 
     private void OnEnable()
     {
-        if (!isInitialized) return;
         startTime = Time.time;
         canUpdate = true;
       
+        rend.GetPropertyBlock(props);
+
+        startColor = rend.sharedMaterial.GetColor(propertyID);
+        props.SetColor(propertyID, startColor * Color.Evaluate(0));
+
+        rend.SetPropertyBlock(props);
     }
 
     private void Update()
     {
-        if (mat == null) return;
+        rend.GetPropertyBlock(props);
+
         var time = Time.time - startTime;
         if (canUpdate)
         {
@@ -85,28 +59,14 @@ public class RFX4_ShaderColorGradient : MonoBehaviour {
                 eval = RFX4_ColorHelper.ConvertRGBColorByHUE(eval, HUE);
                 startColor = RFX4_ColorHelper.ConvertRGBColorByHUE(startColor, HUE);
             }
-            mat.SetColor(propertyID, eval * startColor);
+            props.SetColor(propertyID, eval * startColor);
         }
-        if (time >= TimeMultiplier) {
+        if (time>= TimeMultiplier) {
             if (IsLoop) startTime = Time.time;
             else canUpdate = false;
         }
+       
+       rend.SetPropertyBlock(props);
     }
 
-    void OnDisable()
-    {
-        if (mat == null) return;
-        if (UseSharedMaterial) mat.SetColor(propertyID, startColor);
-        mat.SetColor(propertyID, startColor);
-    }
-
-    //void OnDestroy()
-    //{
-    //    if (!UseSharedMaterial)
-    //    {
-    //        if (mat != null)
-    //            DestroyImmediate(mat);
-    //        mat = null;
-    //    }
-    //}
 }

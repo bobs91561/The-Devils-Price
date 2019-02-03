@@ -17,6 +17,7 @@ namespace PixelCrushers
             public IMessageHandler listener;
             public string message;
             public string parameter;
+            public bool removed;
 
             public ListenerInfo() { }
 
@@ -25,6 +26,7 @@ namespace PixelCrushers
                 this.listener = listener;
                 this.message = message;
                 this.parameter = parameter;
+                this.removed = false;
             }
 
             public void Assign(IMessageHandler listener, string message, string parameter)
@@ -32,6 +34,7 @@ namespace PixelCrushers
                 this.listener = listener;
                 this.message = message;
                 this.parameter = parameter;
+                this.removed = false;
             }
 
             public void Clear()
@@ -39,6 +42,7 @@ namespace PixelCrushers
                 this.listener = null;
                 this.message = null;
                 this.parameter = null;
+                this.removed = false;
             }
         }
 
@@ -52,6 +56,8 @@ namespace PixelCrushers
         private static bool s_sendInEditMode = false;
 
         private static bool s_debug = false;
+
+        private static int s_sendMessageDepth = 0;
 
         /// <summary>
         /// Send messages even when not playing.
@@ -74,6 +80,12 @@ namespace PixelCrushers
         private static List<ListenerInfo> listenerInfo { get { return s_listenerInfo; } }
 
         private static Pool<ListenerInfo> listenerInfoPool { get { return s_listenerInfoPool; } }
+
+        /// <summary>
+        /// When we're in SendMessage(), don't remove items from listenerInfo because SendMessage() is
+        /// currently looping through listenerInfo. Instead, mark them for removal afterward.
+        /// </summary>
+        private static int sendMessageDepth { get { return s_sendMessageDepth; } set { s_sendMessageDepth = value; } }
 
         /// <summary>
         /// Checks if the specified listener, message, and parameter is registered with the message system.
@@ -147,8 +159,8 @@ namespace PixelCrushers
         /// Removes a listener from listening to a specific message and parameter.
         /// </summary>
         /// <param name="listener">Listener.</param>
-        /// <param name="message">Message to no longer listen for.</param>
-        /// <param name="parameter">Messaeg parameter, or blank for all parameters.</param>
+        /// <param name="message">Message to no longer listen for, or blank for all messages.</param>
+        /// <param name="parameter">Message parameter, or blank for all parameters.</param>
         public static void RemoveListener(IMessageHandler listener, string message, string parameter)
         {
             if (debug) Debug.Log("MessageSystem.RemoveListener(listener=" + listener + ": " + message + "," + parameter + ")");
@@ -156,13 +168,33 @@ namespace PixelCrushers
             for (int i = listenerInfo.Count - 1; i >= 0; i--)
             {
                 var x = listenerInfo[i];
-                if (x.listener == listener && string.Equals(x.message, message) && string.Equals(x.parameter, parameter))
+                if (x.listener == listener &&
+                    (string.Equals(x.message, message) || string.IsNullOrEmpty(message)) &&
+                    (string.Equals(x.parameter, parameter) || string.IsNullOrEmpty(parameter)))
                 {
-                    listenerInfo.RemoveAt(i);
+                    x.removed = true;
+                    if (sendMessageDepth == 0)
+                    {
+                        listenerInfo.RemoveAt(i);
+                        x.Clear();
+                        listenerInfoPool.Release(x);
+                    }
+                }
+            }
+        }
+
+        private static void RemoveMarkedListenerInfo()
+        {
+            for (int i = 0; i < listenerInfo.Count; i++)
+            {
+                var x = listenerInfo[i];
+                if (x.removed)
+                {
                     x.Clear();
                     listenerInfoPool.Release(x);
                 }
             }
+            listenerInfo.RemoveAll(x => x.removed);
         }
 
         /// <summary>
@@ -203,8 +235,7 @@ namespace PixelCrushers
         /// </summary>
         public static void RemoveListener(IMessageHandler listener)
         {
-            if (debug) Debug.Log("MessageSystem.RemoveListener(listener=" + listener + ")");
-            listenerInfo.RemoveAll(x => (x.listener == listener));
+            RemoveListener(listener, string.Empty, string.Empty);
         }
 
         /// <summary>
@@ -269,26 +300,36 @@ namespace PixelCrushers
                 ((target == null) ? string.Empty : (" target=" + target)) +
                 ": " + message + "," + parameter + ")");
             var messageArgs = new MessageArgs(sender, target, message, parameter, values); // struct passed on stack; no heap allocated.
-            for (int i = 0; i < listenerInfo.Count; i++)
+            try
             {
-                var x = listenerInfo[i];
-                if (string.Equals(x.message, message) && (string.Equals(x.parameter, parameter) || string.IsNullOrEmpty(x.parameter)))
+                sendMessageDepth++;
+                for (int i = 0; i < listenerInfo.Count; i++)
                 {
-                    try
+                    var x = listenerInfo[i];
+                    if (x.removed) continue;
+                    if (string.Equals(x.message, message) && (string.Equals(x.parameter, parameter) || string.IsNullOrEmpty(x.parameter)))
                     {
-                        if (ShouldLogReceiver(x.listener))
+                        try
                         {
-                            Debug.Log("MessageSystem.SendMessage(sender=" + sender +
-                                ((target == null) ? string.Empty : (" target=" + target)) +
-                                ": " + message + "," + parameter + ")");
+                            if (ShouldLogReceiver(x.listener))
+                            {
+                                Debug.Log("MessageSystem.SendMessage(sender=" + sender +
+                                    ((target == null) ? string.Empty : (" target=" + target)) +
+                                    ": " + message + "," + parameter + ")");
+                            }
+                            x.listener.OnMessage(messageArgs);
                         }
-                        x.listener.OnMessage(messageArgs);
-                    }
-                    catch (System.Exception e)
-                    {
-                        Debug.LogError("Message System exception sending '" + message + "'/'" + parameter + "' to " + x.listener + ": " + e.Message);
+                        catch (System.Exception e)
+                        {
+                            Debug.LogError("Message System exception sending '" + message + "'/'" + parameter + "' to " + x.listener + ": " + e.Message);
+                        }
                     }
                 }
+            }
+            finally
+            {
+                sendMessageDepth--;
+                if (sendMessageDepth == 0) RemoveMarkedListenerInfo();
             }
         }
 

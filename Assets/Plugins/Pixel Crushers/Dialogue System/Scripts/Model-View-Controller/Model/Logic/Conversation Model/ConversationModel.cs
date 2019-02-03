@@ -414,7 +414,7 @@ namespace PixelCrushers.DialogueSystem
                                     if (m_emTagForOldResponses != EmTag.None)
                                     {
                                         string simStatus = Lua.Run(string.Format("return Conversation[{0}].Dialog[{1}].SimStatus", new System.Object[] { destinationEntry.conversationID, destinationEntry.id })).asString;
-                                        bool isOldResponse = string.Equals(simStatus, "WasDisplayed");
+                                        bool isOldResponse = string.Equals(simStatus, DialogueLua.WasDisplayed);
                                         if (isOldResponse) text = string.Format("[em{0}]{1}[/em{0}]", (int)m_emTagForOldResponses, text);
                                     }
                                     if (m_emTagForInvalidResponses != EmTag.None)

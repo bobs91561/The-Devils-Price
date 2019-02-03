@@ -57,7 +57,7 @@ namespace PixelCrushers
         public bool enforceCursorOnPause = false;
 
         [Tooltip("Enable GraphicRaycasters (which detect cursor clicks on UI elements) only when device is mouse.")]
-        public bool controlGraphicRaycasters = true;
+        public bool controlGraphicRaycasters = false;
 
         [Tooltip("If any of these keycodes are pressed, go back to the previous menu.")]
         public KeyCode[] backKeyCodes = new KeyCode[] { KeyCode.JoystickButton1 };

@@ -1,10 +1,10 @@
 // Copyright (c) Pixel Crushers. All rights reserved.
 
-using UnityEngine;
+using PixelCrushers.DialogueSystem.SequencerCommands;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using PixelCrushers.DialogueSystem.SequencerCommands;
+using UnityEngine;
 
 namespace PixelCrushers.DialogueSystem
 {
@@ -917,6 +917,10 @@ namespace PixelCrushers.DialogueSystem
             {
                 return HandleSetPanelInternally(commandName, args);
             }
+            else if (string.Equals(commandName, "SetMenuPanel"))
+            {
+                return HandleSetMenuPanelInternally(commandName, args);
+            }
             else if (string.Equals(commandName, "SetPortrait"))
             {
                 return HandleSetPortraitInternally(commandName, args);
@@ -1609,13 +1613,14 @@ namespace PixelCrushers.DialogueSystem
             if (SequencerTools.SpecifierSpecifiesTag(specifier))
             {
                 var tag = SequencerTools.GetSpecifiedTag(specifier);
-                if (DialogueDebug.logInfo) Debug.Log(string.Format("{0}: Sequencer: SetEnabled({1}, {2}, {3})", new System.Object[] { DialogueDebug.Prefix, componentName, arg, specifier}));
+                if (DialogueDebug.logInfo) Debug.Log(string.Format("{0}: Sequencer: SetEnabled({1}, {2}, {3})", new System.Object[] { DialogueDebug.Prefix, componentName, arg, specifier }));
                 var gameObjects = GameObject.FindGameObjectsWithTag(tag);
                 for (int i = 0; i < gameObjects.Length; i++)
                 {
                     var go = gameObjects[i];
                     var comp = (go != null) ? go.GetComponent(componentName) as Component : null;
-                    if (comp != null) {
+                    if (comp != null)
+                    {
                         Toggle state = Toggle.True;
                         if (!string.IsNullOrEmpty(arg))
                         {
@@ -1667,25 +1672,69 @@ namespace PixelCrushers.DialogueSystem
             string actorName = SequencerTools.GetParameter(args, 0);
             var actorTransform = CharacterInfo.GetRegisteredActorTransform(actorName) ?? SequencerTools.GetSubject(actorName, speaker, listener, speaker);
             string panelID = SequencerTools.GetParameter(args, 1);
-            if (actorTransform == null)
+            var subtitlePanelNumber = string.Equals(panelID, "default", StringComparison.OrdinalIgnoreCase) ? SubtitlePanelNumber.Default
+                            : string.Equals(panelID, "bark", StringComparison.OrdinalIgnoreCase) ? SubtitlePanelNumber.UseBarkUI
+                            : PanelNumberUtility.IntToSubtitlePanelNumber(Tools.StringToInt(panelID));
+            var dialogueActor = (actorTransform != null) ? actorTransform.GetComponent<DialogueActor>() : null;
+            if (dialogueActor != null)
             {
-                if (DialogueDebug.logWarnings) Debug.LogWarning(string.Format("{0}: Sequencer: SetPanel({1}, {2}): Can't find actor named {1}.", new System.Object[] { DialogueDebug.Prefix, actorName, panelID }));
+                if (DialogueDebug.logInfo) Debug.Log(string.Format("{0}: Sequencer: SetPanel({1}, {2})", new System.Object[] { DialogueDebug.Prefix, actorTransform, subtitlePanelNumber }), actorTransform);
+                dialogueActor.SetSubtitlePanelNumber(subtitlePanelNumber);
+                return true;
             }
             else
             {
-                var dialogueActor = actorTransform.GetComponent<DialogueActor>();
-                if (dialogueActor == null)
+                var actor = DialogueManager.masterDatabase.GetActor(actorName);
+                if (actor == null)
                 {
-                    if (DialogueDebug.logWarnings) Debug.LogWarning(string.Format("{0}: Sequencer: SetPanel({1}, {2}): Actor must have a Dialogue Actor component to be able to change panels.", new System.Object[] { DialogueDebug.Prefix, actorName, panelID }), actorTransform);
+                    if (DialogueDebug.logWarnings) Debug.LogWarning(string.Format("{0}: Sequencer: SetPanel({1}, {2}): No actor named {1}", new System.Object[] { DialogueDebug.Prefix, actorName, subtitlePanelNumber }));
                 }
                 else
                 {
-                    var subtitlePanelNumber = string.Equals(panelID, "default", StringComparison.OrdinalIgnoreCase) ? SubtitlePanelNumber.Default
-                        : string.Equals(panelID, "bark", StringComparison.OrdinalIgnoreCase) ? SubtitlePanelNumber.UseBarkUI
-                        : PanelNumberUtility.IntToSubtitlePanelNumber(Tools.StringToInt(panelID));
-                    if (DialogueDebug.logInfo) Debug.Log(string.Format("{0}: Sequencer: SetPanel({1}, {2})", new System.Object[] { DialogueDebug.Prefix, actorTransform, subtitlePanelNumber }), actorTransform);
-                    dialogueActor.SetSubtitlePanelNumber(subtitlePanelNumber);
+                    if (DialogueDebug.logInfo) Debug.Log(string.Format("{0}: Sequencer: SetPanel({1}, {2})", new System.Object[] { DialogueDebug.Prefix, name, subtitlePanelNumber }));
+                    var standardDialogueUI = DialogueManager.dialogueUI as StandardDialogueUI;
+                    if (standardDialogueUI != null)
+                    {
+                        standardDialogueUI.conversationUIElements.standardSubtitleControls.OverrideActorPanel(actor, subtitlePanelNumber);
+                    }
                 }
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// Handles the "SetMenuPanel(actorName, panelNum)" action.
+        /// 
+        /// Arguments:
+        /// -# The name of a GameObject or actor in the dialogue database. Default: speaker.
+        /// -# The panel number or 'default'.
+        /// </summary>
+        private bool HandleSetMenuPanelInternally(string commandName, string[] args)
+        {
+            string actorName = SequencerTools.GetParameter(args, 0);
+            var actorTransform = CharacterInfo.GetRegisteredActorTransform(actorName) ?? SequencerTools.GetSubject(actorName, speaker, listener, speaker);
+            string panelID = SequencerTools.GetParameter(args, 1);
+            var menuPanelNumber = string.Equals(panelID, "default", StringComparison.OrdinalIgnoreCase) ? MenuPanelNumber.Default
+                            : PanelNumberUtility.IntToMenuPanelNumber(Tools.StringToInt(panelID));
+            var dialogueActor = (actorTransform != null) ? actorTransform.GetComponent<DialogueActor>() : null;
+            if (dialogueActor != null)
+            {
+                if (DialogueDebug.logInfo) Debug.Log(string.Format("{0}: Sequencer: SetMenuPanel({1}, {2})", new System.Object[] { DialogueDebug.Prefix, actorTransform, menuPanelNumber }), actorTransform);
+                dialogueActor.SetMenuPanelNumber(menuPanelNumber);
+                return true;
+            }
+            else if (actorTransform != null)
+            {
+                if (DialogueDebug.logInfo) Debug.Log(string.Format("{0}: Sequencer: SetMenuPanel({1}, {2})", new System.Object[] { DialogueDebug.Prefix, name, menuPanelNumber }));
+                var standardDialogueUI = DialogueManager.dialogueUI as StandardDialogueUI;
+                if (standardDialogueUI != null)
+                {
+                    standardDialogueUI.conversationUIElements.standardMenuControls.OverrideActorMenuPanel(actorTransform, menuPanelNumber, standardDialogueUI.conversationUIElements.defaultMenuPanel);
+                }
+            }
+            else
+            {
+                if (DialogueDebug.logWarnings) Debug.LogWarning(string.Format("{0}: Sequencer: SetMenuPanel({1}, {2}): Requires a DialogueActor or GameObject named {1}", new System.Object[] { DialogueDebug.Prefix, actorName, menuPanelNumber }));
             }
             return true;
         }

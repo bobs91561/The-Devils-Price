@@ -27,6 +27,7 @@ namespace PixelCrushers.DialogueSystem
         private UniqueIDWindowPrefs prefs = null;
 
         private bool verbose = false;
+        private string report;
 
         private Vector2 scrollPosition = Vector2.zero;
 
@@ -199,6 +200,7 @@ namespace PixelCrushers.DialogueSystem
         {
             try
             {
+                report = "Unique ID Tool Report:";
                 List<DialogueDatabase> distinct = prefs.databases.Distinct().ToList();
                 MasterIDs masterIDs = new MasterIDs();
                 for (int i = 0; i < distinct.Count; i++)
@@ -208,6 +210,7 @@ namespace PixelCrushers.DialogueSystem
                     {
                         EditorUtility.DisplayProgressBar("Processing Databases (Phase 1/2)", database.name, i / prefs.databases.Count);
                         GetNewIDs(database, masterIDs);
+                        if (!VerifyUniqueConversationIDs(database)) return;
                     }
                 }
                 for (int i = 0; i < distinct.Count; i++)
@@ -220,18 +223,47 @@ namespace PixelCrushers.DialogueSystem
                         EditorUtility.SetDirty(database);
                     }
                 }
-                Debug.Log(string.Format("{0}: Assigned unique IDs to {1} databases.", DialogueDebug.Prefix, prefs.databases.Count));
+                if (verbose) report += "\n";
+                report += "Assigned unique IDs to " + prefs.databases.Count + " databases.";
                 AssetDatabase.SaveAssets();
             }
             finally
             {
                 EditorUtility.ClearProgressBar();
+                Debug.Log(report);
             }
+        }
+
+        private bool VerifyUniqueConversationIDs(DialogueDatabase database)
+        {
+            var result = true;
+            HashSet<int> conversationIDs = new HashSet<int>();
+            for (int i = 0; i < database.conversations.Count; i++)
+            {
+                var conversation = database.conversations[i];
+                if (!conversationIDs.Contains(conversation.id))
+                {
+                    conversationIDs.Add(conversation.id);
+                }
+                else
+                {
+                    var s = "Unable to process conversations. In database '" + database + 
+                        "' two or more conversations have the same conversation ID " + conversation.id + ":";
+                    for (int j = 0; j < database.conversations.Count; j++)
+                    {
+                        s += "\n" + database.conversations[j].Title;
+                    }
+                    Debug.LogError(s, database);
+                    report += "\n" + s;
+                    result = false;
+                }
+            }
+            return result;
         }
 
         private void GetNewIDs(DialogueDatabase database, MasterIDs masterIDs)
         {
-            if (verbose) Debug.Log(string.Format("{0}: Determining new IDs for database {1}", DialogueDebug.Prefix, database.name));
+            if (verbose) report += "\nDetermining new IDs for database " + database.name;
             GetNewActorIDs(database, masterIDs);
             GetNewItemIDs(database, masterIDs);
             GetNewLocationIDs(database, masterIDs);
@@ -240,7 +272,7 @@ namespace PixelCrushers.DialogueSystem
 
         private void ProcessDatabase(DialogueDatabase database, MasterIDs masterIDs)
         {
-            if (verbose) Debug.Log(string.Format("{0}: Converting IDs in database {1}", DialogueDebug.Prefix, database.name));
+            if (verbose) report += "\nConverting IDs in database " + database.name;
             ProcessConversations(database, masterIDs);
             ProcessActors(database, masterIDs);
             ProcessItems(database, masterIDs);
@@ -383,7 +415,9 @@ namespace PixelCrushers.DialogueSystem
             }
             else
             {
-                if (verbose) Debug.Log(string.Format("{0}: Warning: No ID conversion entry found for {1}", DialogueDebug.Prefix, name));
+                var s = "Warning: No ID conversion entry found for " + name;
+                Debug.LogWarning(name);
+                report += "\n" + s;
                 return oldID;
             }
         }
@@ -395,7 +429,7 @@ namespace PixelCrushers.DialogueSystem
                 int newID = FindIDConversion(actor.Name, masterIDs.actors, actor.id);
                 if (newID != actor.id)
                 {
-                    if (verbose) Debug.Log(string.Format("{0}: Actor {1}: ID [{2}]-->[{3}]", DialogueDebug.Prefix, actor.Name, actor.id, newID));
+                    if (verbose) report += string.Format("\nActor {0}: ID [{1}]-->[{2}]", actor.Name, actor.id, newID);
                     actor.id = newID;
                 }
                 ProcessFieldIDs(database, actor.fields, masterIDs);
@@ -409,7 +443,7 @@ namespace PixelCrushers.DialogueSystem
                 int newID = FindIDConversion(item.Name, masterIDs.items, item.id);
                 if (newID != item.id)
                 {
-                    if (verbose) Debug.Log(string.Format("{0}: Item {1}: ID [{2}]-->[{3}]", DialogueDebug.Prefix, item.Name, item.id, newID));
+                    if (verbose) report += string.Format("\nItem {0}: ID [{1}]-->[{2}]", item.Name, item.id, newID);
                     item.id = newID;
                 }
                 ProcessFieldIDs(database, item.fields, masterIDs);
@@ -423,7 +457,7 @@ namespace PixelCrushers.DialogueSystem
                 int newID = FindIDConversion(location.Name, masterIDs.locations, location.id);
                 if (newID != location.id)
                 {
-                    if (verbose) Debug.Log(string.Format("{0}: Location {1}: ID [{2}]-->[{3}]", DialogueDebug.Prefix, location.Name, location.id, newID));
+                    if (verbose) report += string.Format("\nLocation {0}: ID [{1}]-->[{2}]", location.Name, location.id, newID);
                     location.id = newID;
                 }
                 ProcessFieldIDs(database, location.fields, masterIDs);
@@ -437,7 +471,7 @@ namespace PixelCrushers.DialogueSystem
                 int newID = FindIDConversion(variable.Name, masterIDs.variables, variable.id);
                 if (newID != variable.id)
                 {
-                    if (verbose) Debug.Log(string.Format("{0}: Variable {1}: ID [{2}]-->[{3}]", DialogueDebug.Prefix, variable.Name, variable.id, newID));
+                    if (verbose) report += string.Format("Variable {0}: ID [{1}]-->[{2}]", variable.Name, variable.id, newID);
                     variable.id = newID;
                 }
                 ProcessFieldIDs(database, variable.fields, masterIDs);
@@ -451,7 +485,7 @@ namespace PixelCrushers.DialogueSystem
             {
                 if (newIDs.ContainsKey(conversation.id))
                 {
-                    if (verbose) Debug.Log(string.Format("{0}: Conversation '{1}': ID [{2}]-->[{3}]", DialogueDebug.Prefix, conversation.Title, conversation.id, newIDs[conversation.id]));
+                    if (verbose) report += string.Format("\nConversation '{0}': ID [{1}]-->[{2}]", conversation.Title, conversation.id, newIDs[conversation.id]);
                     conversation.id = newIDs[conversation.id];
                     ProcessFieldIDs(database, conversation.fields, masterIDs);
                     foreach (DialogueEntry entry in conversation.dialogueEntries)
@@ -478,7 +512,16 @@ namespace PixelCrushers.DialogueSystem
                 {
                     masterIDs.highestConversationID++;
                     newID = masterIDs.highestConversationID;
-                    newIDs.Add(conversation.id, newID);
+                    if (!newIDs.ContainsKey(conversation.id))
+                    {
+                        newIDs.Add(conversation.id, newID);
+                    }
+                    else
+                    {
+                        var s = "Unique ID Tool error: In '" + database + "' more than one conversation uses ID " + conversation.id + ".";
+                        Debug.LogError(s, database);
+                        report += "\n" + s;
+                    }
                 }
                 else
                 {

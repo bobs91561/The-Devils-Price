@@ -5,7 +5,7 @@ public class ME_DemoGUI1 : MonoBehaviour
 {
     public int Current = 0;
 	public AE_PrefabEffects[] Effects;
-  
+    public bool isMobile;
     public Light Sun;
     public ReflectionProbe ReflectionProbe;
     public Light[] NightLights = new Light[0];
@@ -59,9 +59,10 @@ public class ME_DemoGUI1 : MonoBehaviour
 	    startReflectionIntencity = RenderSettings.reflectionIntensity;
 	    startLightShadows = Sun.shadows;
 
-	    //RFX1_DistortionAndBloom = Camera.main.GetComponent<RFX1_DistortionAndBloom>();
+        if(isMobile) ChangeLight();
+        //RFX1_DistortionAndBloom = Camera.main.GetComponent<RFX1_DistortionAndBloom>();
 
-	}
+    }
 
     bool isButtonPressed;
 
@@ -99,20 +100,7 @@ public class ME_DemoGUI1 : MonoBehaviour
         //}
         if (GUI.Button(new Rect(10*dpiScale, 63*dpiScale + offset, 285*dpiScale, 37*dpiScale), "Day / Night") || (!isButtonPressed && Input.GetKeyDown(KeyCode.DownArrow)))
         {
-            isButtonPressed = true;
-            if (ReflectionProbe != null) ReflectionProbe.RenderProbe();
-            Sun.intensity = !isDay ? 0.05f : startSunIntensity;
-            Sun.shadows = isDay ? startLightShadows : LightShadows.None;
-            foreach (var nightLight in NightLights)
-            {
-                nightLight.shadows = !isDay ? startLightShadows : LightShadows.None;
-            }
-            Sun.transform.rotation = isDay ? startSunRotation : Quaternion.Euler(350, 30, 90);
-            RenderSettings.ambientLight = !isDay ? new Color(0.1f, 0.1f, 0.1f) : startAmbientLight;
-            var lightInten = !UseMobileVersion ? 1 : 0.2f;
-            RenderSettings.ambientIntensity = isDay ? startAmbientIntencity : lightInten;
-            RenderSettings.reflectionIntensity = isDay ? startReflectionIntencity : 0.2f;
-            isDay = !isDay;
+            ChangeLight();
         }
       
         GUI.Label(new Rect(400*dpiScale, 15*dpiScale + offset / 2, 100*dpiScale, 20*dpiScale),
@@ -159,6 +147,25 @@ public class ME_DemoGUI1 : MonoBehaviour
             }
 
         }
+    }
+
+    private void ChangeLight()
+    {
+        isButtonPressed = true;
+        if (ReflectionProbe != null) ReflectionProbe.RenderProbe();
+        Sun.intensity = !isDay ? 0.05f : startSunIntensity;
+        Sun.shadows = isDay ? startLightShadows : LightShadows.None;
+        foreach (var nightLight in NightLights)
+        {
+            nightLight.shadows = !isDay ? startLightShadows : LightShadows.None;
+        }
+
+        Sun.transform.rotation = isDay ? startSunRotation : Quaternion.Euler(350, 30, 90);
+        RenderSettings.ambientLight = !isDay ? new Color(0.1f, 0.1f, 0.1f) : startAmbientLight;
+        var lightInten = !UseMobileVersion ? 1 : 0.2f;
+        RenderSettings.ambientIntensity = isDay ? startAmbientIntencity : lightInten;
+        RenderSettings.reflectionIntensity = isDay ? startReflectionIntencity : 0.2f;
+        isDay = !isDay;
     }
 
     private GameObject instanceShieldProjectile;

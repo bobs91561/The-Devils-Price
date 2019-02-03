@@ -97,7 +97,6 @@ namespace PixelCrushers.DialogueSystem
 
         private UnityEngine.UI.Text control;
         private bool started = false;
-        private bool paused = false;
         private string original = null;
         private string frontSkippedText = string.Empty;
         private Coroutine typewriterCoroutine = null;
@@ -284,6 +283,18 @@ namespace PixelCrushers.DialogueSystem
                                     if (!IsSilentCharacter(token.character)) PlayCharacterAudio();
                                     onCharacter.Invoke();
                                     charactersTyped++;
+                                    if (IsFullPauseCharacter(token.character))
+                                    {
+                                        isCodeNext = (tokens.Count > 0) && (tokens[0].tokenType != TokenType.Character);
+                                        control.text = frontSkippedText + GetCurrentText(current, openTokenTypes, tokens);
+                                        yield return PauseForDuration(fullPauseDuration);
+                                    }
+                                    else if (IsQuarterPauseCharacter(token.character))
+                                    {
+                                        isCodeNext = (tokens.Count > 0) && (tokens[0].tokenType != TokenType.Character);
+                                        control.text = frontSkippedText + GetCurrentText(current, openTokenTypes, tokens);
+                                        yield return PauseForDuration(quarterPauseDuration);
+                                    }
                                     break;
                                 case TokenType.BoldOpen:
                                 case TokenType.ItalicOpen:
@@ -302,15 +313,7 @@ namespace PixelCrushers.DialogueSystem
                                     break;
                                 case TokenType.Pause:
                                     control.text = GetCurrentText(current, openTokenTypes, tokens);
-                                    paused = true;
-                                    var continueTime = DialogueTime.time + token.duration;
-                                    int pauseSafeguard = 0;
-                                    while (DialogueTime.time < continueTime && pauseSafeguard < 999)
-                                    {
-                                        pauseSafeguard++;
-                                        yield return null;
-                                    }
-                                    paused = false;
+                                    yield return PauseForDuration(token.duration);
                                     break;
                                 case TokenType.InstantOpen:
                                     AddInstantText(current, openTokenTypes, tokens);
@@ -339,37 +342,6 @@ namespace PixelCrushers.DialogueSystem
                 }
             }
             Stop();
-        }
-
-        private void PlayCharacterAudio()
-        {
-            if (audioClip == null || audioSource == null) return;
-            AudioClip randomClip = null;
-            if (alternateAudioClips != null && alternateAudioClips.Length > 0)
-            {
-                var randomIndex = UnityEngine.Random.Range(0, alternateAudioClips.Length + 1);
-                randomClip = (randomIndex < alternateAudioClips.Length) ? alternateAudioClips[randomIndex] : audioClip;
-            }
-            if (interruptAudioClip)
-            {
-                if (audioSource.isPlaying) audioSource.Stop();
-                if (randomClip != null) audioSource.clip = randomClip;
-                audioSource.Play();
-            }
-            else
-            {
-                if (!audioSource.isPlaying)
-                {
-                    if (randomClip != null) audioSource.clip = randomClip;
-                    audioSource.Play();
-                }
-            }
-        }
-
-        private bool IsSilentCharacter(char c)
-        {
-            if (string.IsNullOrEmpty(silentCharacters)) return false;
-            return silentCharacters.Contains(c.ToString());
         }
 
         private Token GetNextToken(List<Token> tokens)

@@ -716,7 +716,7 @@ namespace PixelCrushers.DialogueSystem.Articy
                     else
                     {
                         ArticyConverter.ConvertArticyDataToDatabase(articyData, prefs, template, database);
-                        ArticyEditorTools.FindPortraitTexturesInAssetDatabase(database, prefs.PortraitFolder);
+                        ArticyEditorTools.FindPortraitTexturesInAssetDatabase(articyData, prefs.PortraitFolder, database);
                         EditorUtility.SetDirty(database);
                         ConvertTextTable(assetName);
                         AssetDatabase.SaveAssets();
@@ -728,6 +728,7 @@ namespace PixelCrushers.DialogueSystem.Articy
                 {
                     ArticyConverter.onProgressCallback -= OnProgressCallback;
                     EditorUtility.ClearProgressBar();
+                    if (DialogueEditor.DialogueEditorWindow.instance != null) DialogueEditor.DialogueEditorWindow.instance.Reset();
                 }
         }
 

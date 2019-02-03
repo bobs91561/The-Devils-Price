@@ -490,10 +490,7 @@ namespace PixelCrushers.DialogueSystem
 
         protected virtual void DeselectTarget()
         {
-            if (usable != null)
-            {
-                OnDeselectedUsableObject(usable);
-            }
+            OnDeselectedUsableObject(usable);
             usable = null;
             selection = null;
             heading = string.Empty;

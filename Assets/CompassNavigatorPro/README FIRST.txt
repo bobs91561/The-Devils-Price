@@ -1,0 +1,150 @@
+************************************
+*      COMPASS NAVIGATOR PRO       *
+* (C) Copyright 2016-2019 Kronnect * 
+*            README FILE           *
+************************************
+
+
+How to use this asset
+---------------------
+
+Thanks for purchasing Compass Navigator Pro!
+
+Using Compass Navigator Pro is very easy! Please take a moment to read the Quick Start Guide located in the Documentation folder.
+
+
+
+Future updates
+--------------
+
+All our assets follow an incremental development process by which a few beta releases are published on our support forum (kronnect.com).
+We encourage you to signup and engage our forum. The forum is the primary support and feature discussions medium.
+
+Of course, all updates of Compass Navigator Pro be eventually available on the Asset Store.
+
+
+
+Other Cool Assets!
+------------------
+
+Check our other assets on the Asset Store publisher page:
+https://www.assetstore.unity3d.com/en/#!/search/page=1/sortby=popularity/query=publisher:15018
+
+
+
+
+Version history
+---------------
+
+V3.5.1
+- [Fix] Fixed CompassPro singleton not found if gameobject is renamed
+
+V3.5
+- Added compass bending option. Demo: https://youtu.be/y-9jNIaU6Wc
+
+V3.2.2
+- Resorted Minimap hierarchy to allow background images
+
+V3.2.1
+- [Fix] Compass animation text improvements
+
+V3.2
+- Added "Text Shadow" and "Title Shadow" options
+- [Fix] Fixed text alignment in Edit mode
+
+V3.1
+- Added "Idle Update Mode" property to Compass Bar inspector
+- Added "Visible Distance Override" property to POI component
+- Improved "Torn Paper" mini-map border
+
+V3.0
+- Added Mini-Map
+- Added tint color to POIs
+- Optional color for beacons
+
+V2.5.1
+- Minor improvements and fixes
+
+V2.5
+- Added POI Visibility property (always visible, when in range, always hidden)
+
+V2.4.1
+- POIs retain positions in compass bar when looking up/down
+
+V2.4
+- Added North position
+
+V2.3
+- Added Label Hot Zone parameter to define the distance from the center of the compass bar where a POI's label can be shown
+- [Fix] POI references were lost if compass bar was disabled/enabled
+
+V2.2
+- Added "Show Ordinal Points" (intercardinals: NW, NE, SW, SE)
+- Added "Show Half Winds"
+- Added "Full 360 Degrees" option to World Mapping Mode
+- Internal optimizations
+- [Fix] Fixed minor issues with cardinals positions
+
+V2.1
+- Heartbeat effects can be added to custom POIs. Sound will play at variable interval based on distance!
+- Added "String Format" option for the distance shown on top of compass bar
+- Added "canBeVisited" property to POIs
+
+V2.0.1
+- [Fix] Fixed demo scene namespace compiler issue with Unity 5.6+
+
+V2.0
+- Demo scene included.
+- Added World Mapping Modes for different horizontal POI positioning on the compass bar
+- Added "Scale In Duration" to add a scaling animation for icons when they appear on the compass bar
+- Added options to change Font for titles and texts in Compass Bar inspector
+- Added option to enable/disable text revealing effect
+- Added title visibility parameter
+
+V1.6
+- Improved canvas UI handling so it now supports World Space Canvas properly (also useful for VR)
+
+V1.5.1
+- [Fix] Fixed Editor warning with DontDestroyOnLoad call
+
+V1.5
+- Added DontDestroyOnLoad support to Compass Bar and POIs so they preserve their states between scene changes
+- New menu item GameObject > UI > Compass Navigator Pro to quickly add the compass bar to the scene for convenience
+
+V 1.4.3 
+- Added public method ShowAnimatedText()
+- [Fix] Fixed text shadow positioning
+
+V 1.4.2 Release 10/Feb/2017
+- [Fix] Prevented null error if no main camera is found
+
+V 1.4.1	Release 1/Feb/2017
+-   Fixed POI icon not being removed when POI gameobject was destroyed
+
+V 1.4	Release – 18/April/2016
+-   New POI beacon effect (API: POIShowBeacon).
+-   Added hideWhenVisited to POIs.
+-   Automatically hide/make visible POI when parent game object is enabled/disabled.
+-   Added clampPosition to POIs (forces POI icon to stay in the bar, possible on the edges if it's outside player view).
+
+V 1.3	Release – 18/April/2016
+-	Added smooth alpha transition when a POI gets in visible distance range.
+-	Added autohide property
+
+V 1.2	Release – 31/March/2016
+-	Added compatibility with Gaia for automatic population of POIs
+-	Fixes
+
+V 1.1	Release – 31/March/2016
+-	Added optional audio clip support
+-	New OnPOIVisible and ONPOIHide events
+
+V 1.0	First Release – 30/March/2016
+
+
+
+
+
+
+
+

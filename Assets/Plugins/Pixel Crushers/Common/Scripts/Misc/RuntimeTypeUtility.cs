@@ -43,7 +43,7 @@ namespace PixelCrushers
             try
             {
                 var wrapperName = type.Namespace + ".Wrappers." + type.Name;
-#if NET_STANDARD_2_0
+#if NET_STANDARD_2_0 || UNITY_IOS
                 var assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(p => !(p.IsDynamic)); // Exclude dynamic assemblies.
 #else
                 var assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(p => !(p.ManifestModule is System.Reflection.Emit.ModuleBuilder)); // Exclude dynamic assemblies.
@@ -63,7 +63,7 @@ namespace PixelCrushers
                     }
                     catch (System.Reflection.ReflectionTypeLoadException e)
                     {
-                        Debug.LogWarning("PixelCrushers.RuntimeTypeUtility.GetWrapperType(" + type.Name + ") was unable to load an assembly. You may have a DLL that's incompatible with your version of Unity. Message: " + e.Message);
+                        Debug.LogWarning("PixelCrushers.RuntimeTypeUtility.GetWrapperType(" + type.Name + ") was unable to load assembly '" + assembly.FullName + "'. You may have a DLL that's incompatible with your version of Unity. Message: " + e.Message);
                     }
                     catch (System.Exception)
                     {

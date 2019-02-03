@@ -57,7 +57,7 @@ namespace PixelCrushers.DialogueSystem
             /// Specifies whether to should show NPC subtitles while presenting the player's follow-up
             /// responses.
             /// </summary>
-            [Tooltip("Show NPC subtitle reminder text while showing the player response menu.")]
+            [Tooltip("Show NPC subtitle reminder text while showing the player response menu. If you're using Standard Dialogue UI, the subtitle panel's Visiblity value takes precedenece over this.")]
             public bool showNPCSubtitlesWithResponses = true;
 
             /// <summary>
@@ -512,7 +512,12 @@ namespace PixelCrushers.DialogueSystem
         /// <summary>
         /// Auto-select current menu choice.
         /// </summary>
-        ChooseCurrentResponse
+        ChooseCurrentResponse,
+
+        /// <summary>
+        /// Auto-select the last menu choice.
+        /// </summary>
+        ChooseLastResponse
     };
 
     public enum EmTag

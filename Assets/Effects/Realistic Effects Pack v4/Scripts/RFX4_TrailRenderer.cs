@@ -71,15 +71,14 @@ public class RFX4_TrailRenderer : MonoBehaviour
         prevPosition = t.position;
         startPosition = t.position;
         lineRenderer = GetComponent<LineRenderer>();
-#if !UNITY_5_6_OR_NEWER
-        lineRenderer.SetVertexCount(0);
-        lineRenderer.SetColors(Color.white, Color.white);
-#else
-       
+#if UNITY_5_6_OR_NEWER
         lineRenderer.positionCount = 0;
-        lineRenderer.startColor = Color.white;
-        lineRenderer.endColor = Color.white;
+#else
+        lineRenderer.numPositions = 0;
 #endif
+        //lineRenderer.startColor = Color.white;
+        //lineRenderer.endColor = Color.white;
+
         positions.Add(t.position);
         currentTimes.Add(currentLifeTime);
         velocities.Add(Vector3.zero);
@@ -88,6 +87,7 @@ public class RFX4_TrailRenderer : MonoBehaviour
 
     private void Update()
     {
+        if (Time.timeScale < 0.001) return;
         UpdatePositionsCount();
 
         UpdateForce();
@@ -101,7 +101,7 @@ public class RFX4_TrailRenderer : MonoBehaviour
             InterpolateBezier(positions, SmoothCurvesScale);
             var bezierPositions = GetDrawingPoints();
 #if !UNITY_5_6_OR_NEWER
-            lineRenderer.SetVertexCount(bezierPositions.Count);
+            lineRenderer.numPositions = bezierPositions.Count;
 #else
             lineRenderer.positionCount  = bezierPositions.Count;
 #endif
@@ -110,7 +110,7 @@ public class RFX4_TrailRenderer : MonoBehaviour
         else
         {
 #if !UNITY_5_6_OR_NEWER
-            lineRenderer.SetVertexCount(positions.Count);
+            lineRenderer.numPositions = positions.Count;
 #else
             lineRenderer.positionCount = positions.Count;
 #endif

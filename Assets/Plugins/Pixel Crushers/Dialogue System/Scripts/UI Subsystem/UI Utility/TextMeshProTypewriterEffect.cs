@@ -91,7 +91,6 @@ namespace PixelCrushers.DialogueSystem
         }
 
         private bool started = false;
-        private bool paused = false;
         private int charactersTyped = 0;
         private Coroutine typewriterCoroutine = null;
         private MonoBehaviour coroutineController = null;
@@ -280,10 +279,13 @@ namespace PixelCrushers.DialogueSystem
                                     }
                                 }
                             }
-                            if (charactersTyped < totalVisibleCharacters && !IsSilentCharacter(textComponent.text[charactersTyped])) PlayCharacterAudio();
+                            var typedCharacter = textComponent.text[charactersTyped];
+                            if (charactersTyped < totalVisibleCharacters && !IsSilentCharacter(typedCharacter)) PlayCharacterAudio();
                             onCharacter.Invoke();
                             charactersTyped++;
                             textComponent.maxVisibleCharacters = charactersTyped;
+                            if (IsFullPauseCharacter(typedCharacter)) yield return new WaitForSeconds(fullPauseDuration);
+                            else if (IsQuarterPauseCharacter(typedCharacter)) yield return new WaitForSeconds(quarterPauseDuration);
                         }
                     }
                     textComponent.maxVisibleCharacters = charactersTyped;
@@ -363,37 +365,6 @@ namespace PixelCrushers.DialogueSystem
             }
             source = source.Remove(0, 2);
             return true;
-        }
-
-        private bool IsSilentCharacter(char c)
-        {
-            if (string.IsNullOrEmpty(silentCharacters)) return false;
-            return silentCharacters.Contains(c.ToString());
-        }
-
-        private void PlayCharacterAudio()
-        {
-            if (audioClip == null || audioSource == null) return;
-            AudioClip randomClip = null;
-            if (alternateAudioClips != null && alternateAudioClips.Length > 0)
-            {
-                var randomIndex = UnityEngine.Random.Range(0, alternateAudioClips.Length + 1);
-                randomClip = (randomIndex < alternateAudioClips.Length) ? alternateAudioClips[randomIndex] : audioClip;
-            }
-            if (interruptAudioClip)
-            {
-                if (audioSource.isPlaying) audioSource.Stop();
-                if (randomClip != null) audioSource.clip = randomClip;
-                audioSource.Play();
-            }
-            else
-            {
-                if (!audioSource.isPlaying)
-                {
-                    if (randomClip != null) audioSource.clip = randomClip;
-                    audioSource.Play();
-                }
-            }
         }
 
         private void StopTypewriterCoroutine()

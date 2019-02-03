@@ -7,5 +7,8 @@ public enum RFX4_ShaderProperties
     _MaskPow,
     _Cutout,
     _Speed,
-    _BumpAmt
+    _BumpAmt,
+    _MainColor,
+    _Distortion,
+    _FresnelColor
 }

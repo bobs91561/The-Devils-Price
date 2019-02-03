@@ -1042,6 +1042,9 @@ namespace PixelCrushers.DialogueSystem
                     case ResponseTimeoutAction.ChooseCurrentResponse:
                         m_conversationController.GotoCurrentResponse();
                         break;
+                    case ResponseTimeoutAction.ChooseLastResponse:
+                        m_conversationController.GotoLastResponse();
+                        break;
                 }
             }
         }

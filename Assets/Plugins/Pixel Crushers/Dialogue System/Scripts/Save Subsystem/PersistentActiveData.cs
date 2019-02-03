@@ -34,7 +34,7 @@ namespace PixelCrushers.DialogueSystem
         /// <summary>
         /// When the script starts, check the condition and set the target GameObject active/inactive.
         /// </summary>
-        [Tooltip("When script starts, check condition & set target GameObject active/inactive.")]
+        [Tooltip("When script starts, check condition & set target GameObject active/inactive. Otherwise it only checks when a game is loaded or entering from another scene.")]
         public bool checkOnStart;
 
         protected virtual void Start()

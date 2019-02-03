@@ -196,6 +196,13 @@ public class SkillSet : MonoBehaviour {
         return isAttacking;
     }
 
+    public void OnRespawn()
+    {
+        SheatheWeapons();
+        combat = false;
+        m_Animator.SetBool("Combat", combat);
+    }
+
     #region Levelling Settings
     public void ModifyDamage(float multiplier)
     {

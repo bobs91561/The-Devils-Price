@@ -42,7 +42,12 @@ namespace PixelCrushers
             set { m_spawnpointNameInDestinationScene = value; }
         }
 
-        public void UsePortal()
+        public virtual void UsePortal()
+        {
+            LoadScene();
+        }
+
+        protected void LoadScene()
         {
             SaveSystem.LoadScene(string.IsNullOrEmpty(spawnpointNameInDestinationScene) ? destinationSceneName : destinationSceneName + "@" + spawnpointNameInDestinationScene);
         }

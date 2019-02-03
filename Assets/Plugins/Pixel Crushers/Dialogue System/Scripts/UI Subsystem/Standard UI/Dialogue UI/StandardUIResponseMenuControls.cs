@@ -1,7 +1,7 @@
 // Copyright (c) Pixel Crushers. All rights reserved.
 
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace PixelCrushers.DialogueSystem
 {
@@ -51,6 +51,25 @@ namespace PixelCrushers.DialogueSystem
             m_actorPanelCache.Clear();
         }
 
+        /// <summary>
+        /// Changes a dialogue actor's menu panel for the current conversation.
+        /// </summary>
+        public virtual void SetActorMenuPanelNumber(DialogueActor dialogueActor, MenuPanelNumber menuPanelNumber)
+        {
+            if (dialogueActor == null) return;
+            OverrideActorMenuPanel(dialogueActor.transform, menuPanelNumber, dialogueActor.standardDialogueUISettings.customMenuPanel);
+        }
+
+        /// <summary>
+        /// For speakers who do not have DialogueActor components, this method overrides the
+        /// actor's default panel.
+        /// </summary>
+        public void OverrideActorMenuPanel(Transform actorTransform, MenuPanelNumber menuPanelNumber, StandardUIMenuPanel customPanel)
+        {
+            if (actorTransform == null) return;
+            m_actorPanelCache[actorTransform] = GetPanelFromNumber(menuPanelNumber, customPanel);
+        }
+
         private StandardUIMenuPanel GetPanel(Subtitle lastSubtitle)
         {
             // Find player's DialogueActor:
@@ -59,17 +78,18 @@ namespace PixelCrushers.DialogueSystem
             if (m_actorPanelCache.ContainsKey(playerTransform)) return m_actorPanelCache[playerTransform];
             var dialogueActor = DialogueActor.GetDialogueActorComponent(playerTransform);
 
-            // If player is configured to use default menu panel, check NPC for non-default menu panel:
-            if (dialogueActor == null || (dialogueActor != null && dialogueActor.standardDialogueUISettings.menuPanelNumber == MenuPanelNumber.Default))
+            // Check NPC for non-default menu panel:
+            var playerUsesDefaultMenuPanel = dialogueActor == null || dialogueActor.standardDialogueUISettings.menuPanelNumber == MenuPanelNumber.Default;
+            var otherTransform = (lastSubtitle != null && lastSubtitle.speakerInfo.isNPC) ? lastSubtitle.speakerInfo.transform : DialogueManager.currentConversant;
+            if (playerUsesDefaultMenuPanel && otherTransform != null && m_actorPanelCache.ContainsKey(otherTransform)) return m_actorPanelCache[otherTransform];
+            var otherDialogueActor = DialogueActor.GetDialogueActorComponent(otherTransform);
+            if (otherDialogueActor != null &&
+                (otherDialogueActor.standardDialogueUISettings.useMenuPanelFor == DialogueActor.UseMenuPanelFor.MeAndResponsesToMe ||
+                (otherDialogueActor.standardDialogueUISettings.menuPanelNumber != MenuPanelNumber.Default && playerUsesDefaultMenuPanel)))
             {
-                var otherTransform = (lastSubtitle != null && lastSubtitle.speakerInfo.isNPC) ? lastSubtitle.speakerInfo.transform : DialogueManager.currentConversant;
                 if (otherTransform != null && m_actorPanelCache.ContainsKey(otherTransform)) return m_actorPanelCache[otherTransform];
-                var otherDialogueActor = DialogueActor.GetDialogueActorComponent(otherTransform);
-                if (otherDialogueActor != null && otherDialogueActor.standardDialogueUISettings.menuPanelNumber != MenuPanelNumber.Default)
-                {
-                    var otherPanel = GetDialogueActorPanel(otherDialogueActor);
-                    if (otherPanel != null) return otherPanel;
-                }
+                var otherPanel = GetDialogueActorPanel(otherDialogueActor);
+                if (otherPanel != null) return otherPanel;
             }
 
             // Otherwise use player's menu panel:
@@ -82,14 +102,19 @@ namespace PixelCrushers.DialogueSystem
         private StandardUIMenuPanel GetDialogueActorPanel(DialogueActor dialogueActor)
         {
             if (dialogueActor == null) return null;
-            switch (dialogueActor.standardDialogueUISettings.menuPanelNumber)
+            return GetPanelFromNumber(dialogueActor.standardDialogueUISettings.menuPanelNumber, dialogueActor.standardDialogueUISettings.customMenuPanel);
+        }
+
+        private StandardUIMenuPanel GetPanelFromNumber(MenuPanelNumber menuPanelNumber, StandardUIMenuPanel customMenuPanel)
+        { 
+            switch (menuPanelNumber)
             {
                 case MenuPanelNumber.Default:
                     return m_defaultPanel;
                 case MenuPanelNumber.Custom:
-                    return dialogueActor.standardDialogueUISettings.customMenuPanel;
+                    return customMenuPanel;
                 default:
-                    var index = PanelNumberUtility.GetMenuPanelIndex(dialogueActor.standardDialogueUISettings.menuPanelNumber);
+                    var index = PanelNumberUtility.GetMenuPanelIndex(menuPanelNumber);
                     return (0 <= index && index < m_builtinPanels.Count) ? m_builtinPanels[index] : null;
             }
         }
@@ -130,7 +155,7 @@ namespace PixelCrushers.DialogueSystem
         }
 
         #endregion
-        
+
         #region Show & Hide Responses 
 
         protected override void ClearResponseButtons() { } // Unused. Handled by StandardUIMenuPanel.

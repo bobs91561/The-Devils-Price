@@ -1,24 +1,31 @@
-﻿using UnityEngine;
-using System.Collections;
+using UnityEngine;
 
-public class RFX4_StartDelay : MonoBehaviour {
+public class RFX4_StartDelay : MonoBehaviour
+{
 
     public GameObject ActivatedGameObject;
     public float Delay = 1;
 
-	// Use this for initialization
-	void OnEnable () {
-        ActivatedGameObject.SetActive(false);
-        Invoke("ActivateGO", Delay);
-	}
-	
-	// Update is called once per frame
-	void ActivateGO () {
-        ActivatedGameObject.SetActive(true);
-	}
+    private float currentTime = 0;
+    private bool isEnabled;
 
-    void OnDisable()
+    // Use this for initialization
+    void OnEnable()
     {
-        CancelInvoke("ActivateGO");
+        ActivatedGameObject.SetActive(false);
+        isEnabled = false;
+        // Invoke("ActivateGO", Delay);
+        currentTime = 0;
+    }
+
+    void Update()
+    {
+        currentTime += Time.deltaTime;
+        if (!isEnabled && currentTime >= Delay)
+        {
+            isEnabled = true;
+            ActivatedGameObject.SetActive(true);
+          
+        }
     }
 }

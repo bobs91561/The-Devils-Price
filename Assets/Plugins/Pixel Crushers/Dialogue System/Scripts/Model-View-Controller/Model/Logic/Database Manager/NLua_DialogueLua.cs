@@ -19,6 +19,12 @@ namespace PixelCrushers.DialogueSystem
     public static class DialogueLua
     {
 
+        // SimStatus values:
+        public const string SimStatus = "SimStatus";
+        public const string Untouched = "Untouched";
+        public const string WasDisplayed = "WasDisplayed";
+        public const string WasOffered = "WasOffered";
+
         /// <summary>
         /// Gets or sets a value indicating whether to record SimStatus in the Lua environment.
         /// SimStatus comes from Chat Mapper, and is a way to remember whether a dialogue entry
@@ -160,7 +166,7 @@ namespace PixelCrushers.DialogueSystem
         /// </param>
         public static void MarkDialogueEntryUntouched(DialogueEntry dialogueEntry)
         {
-            MarkDialogueEntry(dialogueEntry, "Untouched");
+            MarkDialogueEntry(dialogueEntry, DialogueLua.Untouched);
         }
 
         /// <summary>
@@ -175,7 +181,7 @@ namespace PixelCrushers.DialogueSystem
         public static void MarkDialogueEntryDisplayed(DialogueEntry dialogueEntry)
         {
             if (!includeSimStatus) return;
-            MarkDialogueEntry(dialogueEntry, "WasDisplayed");
+            MarkDialogueEntry(dialogueEntry, DialogueLua.WasDisplayed);
         }
 
         /// <summary>
@@ -195,9 +201,9 @@ namespace PixelCrushers.DialogueSystem
                 try
                 {
                     string simStatus = Lua.Run(string.Format("return Conversation[{0}].Dialog[{1}].SimStatus", new System.Object[] { dialogueEntry.conversationID, dialogueEntry.id })).AsString;
-                    if (!string.Equals(simStatus, "WasDisplayed"))
+                    if (!string.Equals(simStatus, DialogueLua.WasDisplayed))
                     {
-                        MarkDialogueEntry(dialogueEntry, "WasOffered");
+                        MarkDialogueEntry(dialogueEntry, DialogueLua.WasOffered);
                     }
                 }
                 catch (System.Exception)

@@ -2,7 +2,7 @@
 
 using UnityEngine;
 using System.Collections.Generic;
-#if UNITY_EDITOR || UNITY_STANDALONE
+#if !(UNITY_WEBGL || UNITY_WSA)
 using System.IO;
 #endif
 
@@ -16,7 +16,7 @@ namespace PixelCrushers
     public class DiskSavedGameDataStorer : SavedGameDataStorer
     {
 
-#if UNITY_EDITOR || UNITY_STANDALONE
+#if !(UNITY_WEBGL || UNITY_WSA)
 
         [Tooltip("Encrypt saved game files.")]
         public bool encrypt = true;
@@ -185,29 +185,29 @@ namespace PixelCrushers
 #else
         void Start()
         {
-            Debug.LogError("DiskSavedGameDataStorer is currently only supported in Standalone (desktop) builds.");
+            Debug.LogError("DiskSavedGameDataStorer is not supported on this build platform.");
         }
 
         public override bool HasDataInSlot(int slotNumber)
         {
-            Debug.LogError("DiskSavedGameDataStorer is currently only supported in Standalone (desktop) builds.");
+            Debug.LogError("DiskSavedGameDataStorer is not supported on this build platform.");
             return false;
         }
 
         public override SavedGameData RetrieveSavedGameData(int slotNumber)
         {
-            Debug.LogError("DiskSavedGameDataStorer is currently only supported in Standalone (desktop) builds.");
+            Debug.LogError("DiskSavedGameDataStorer is not supported on this build platform.");
             return null;
         }
 
         public override void StoreSavedGameData(int slotNumber, SavedGameData savedGameData)
         {
-            Debug.LogError("DiskSavedGameDataStorer is currently only supported in Standalone (desktop) builds.");
+            Debug.LogError("DiskSavedGameDataStorer is not supported on this build platform.");
         }
 
         public override void DeleteSavedGameData(int slotNumber)
         {
-            Debug.LogError("DiskSavedGameDataStorer is currently only supported in Standalone (desktop) builds.");
+            Debug.LogError("DiskSavedGameDataStorer is not supported on this build platform.");
         }
 
 #endif

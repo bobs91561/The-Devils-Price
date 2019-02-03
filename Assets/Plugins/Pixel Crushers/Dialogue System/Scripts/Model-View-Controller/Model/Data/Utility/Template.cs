@@ -92,6 +92,9 @@ namespace PixelCrushers.DialogueSystem
             return template;
         }
 
+        /// <summary>
+        /// Creates a new actor with the fields defined in the template.
+        /// </summary>
         public Actor CreateActor(int id, string name, bool isPlayer)
         {
             Actor actor = new Actor();
@@ -102,6 +105,9 @@ namespace PixelCrushers.DialogueSystem
             return actor;
         }
 
+        /// <summary>
+        /// Creates a new item with the fields defined in the template.
+        /// </summary>
         public Item CreateItem(int id, string name)
         {
             Item item = new Item();
@@ -111,6 +117,21 @@ namespace PixelCrushers.DialogueSystem
             return item;
         }
 
+        /// <summary>
+        /// Creates a new quest with the fields defined in the template.
+        /// </summary>
+        public Item CreateQuest(int id, string name)
+        {
+            Item item = new Item();
+            item.id = id;
+            item.fields = CreateFields(questFields);
+            item.Name = name;
+            return item;
+        }
+
+        /// <summary>
+        /// Creates a new location with the fields defined in the template.
+        /// </summary>
         public Location CreateLocation(int id, string name)
         {
             Location location = new Location();
@@ -120,6 +141,9 @@ namespace PixelCrushers.DialogueSystem
             return location;
         }
 
+        /// <summary>
+        /// Creates a new variable (Text type) with the fields defined in the template.
+        /// </summary>
         public Variable CreateVariable(int id, string name, string value)
         {
             Variable variable = new Variable();
@@ -130,6 +154,9 @@ namespace PixelCrushers.DialogueSystem
             return variable;
         }
 
+        /// <summary>
+        /// Creates a new variable with the fields defined in the template.
+        /// </summary>
         public Variable CreateVariable(int id, string name, string value, FieldType type)
         {
             Variable variable = new Variable();
@@ -141,6 +168,9 @@ namespace PixelCrushers.DialogueSystem
             return variable;
         }
 
+        /// <summary>
+        /// Creates a new conversation with the fields defined in the template.
+        /// </summary>
         public Conversation CreateConversation(int id, string title)
         {
             Conversation conversation = new Conversation();
@@ -150,6 +180,9 @@ namespace PixelCrushers.DialogueSystem
             return conversation;
         }
 
+        /// <summary>
+        /// Creates a new dialogue entry with the fields defined in the template.
+        /// </summary>
         public DialogueEntry CreateDialogueEntry(int id, int conversationID, string title)
         {
             DialogueEntry entry = new DialogueEntry();
@@ -170,6 +203,62 @@ namespace PixelCrushers.DialogueSystem
             return fields;
         }
 
-    }
+        /// <returns>A value 1 higher than the highest actor ID in the database.</returns>
+        public int GetNextActorID(DialogueDatabase database)
+        {
+            return (database != null) ? GetNextAssetID<Actor>(database.actors) : 0;
+        }
 
+        /// <returns>A value 1 higher than the highest item/quest ID in the database.</returns>
+        public int GetNextItemID(DialogueDatabase database)
+        {
+            return (database != null) ? GetNextAssetID<Item>(database.items) : 0;
+        }
+
+        /// <returns>A value 1 higher than the highest item/quest ID in the database.</returns>
+        public int GetNextQuestID(DialogueDatabase database)
+        {
+            return GetNextItemID(database);
+        }
+
+        /// <returns>A value 1 higher than the highest location ID in the database.</returns>
+        public int GetNextLocationID(DialogueDatabase database)
+        {
+            return (database != null) ? GetNextAssetID<Location>(database.locations) : 0;
+        }
+
+        /// <returns>A value 1 higher than the highest variable ID in the database.</returns>
+        public int GetNextVariableID(DialogueDatabase database)
+        {
+            return (database != null) ? GetNextAssetID<Variable>(database.variables) : 0;
+        }
+
+        /// <returns>A value 1 higher than the highest conversation ID in the database.</returns>
+        public int GetNextConversationID(DialogueDatabase database)
+        {
+            return (database != null) ? GetNextAssetID<Conversation>(database.conversations) : 0;
+        }
+
+        private int GetNextAssetID<T>(List<T> assets) where T : Asset
+        {
+            int highest = -1;
+            for (int i = 0; i < assets.Count; i++)
+            {
+                highest = Mathf.Max(highest, assets[i].id);
+            }
+            return highest + 1;
+        }
+
+        /// <returns>A value 1 higher than the highest dialogue entry ID in the conversation.</returns>
+        public int GetNextDialogueEntryID(Conversation conversation)
+        {
+            if (conversation == null) return 0;
+            int highest = -1;
+            for (int i = 0; i < conversation.dialogueEntries.Count; i++)
+            {
+                highest = Mathf.Max(highest, conversation.dialogueEntries[i].id);
+            }
+            return highest + 1;
+        }
+    }
 }

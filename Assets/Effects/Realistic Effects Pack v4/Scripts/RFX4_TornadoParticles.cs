@@ -36,6 +36,8 @@ public class RFX4_TornadoParticles : MonoBehaviour
 	// Update is called once per frame
     private void Update()
     {
+        if (materialID != -1)
+            _twistScale = TornadoMaterial.GetVector(materialID);
         if (particleSys!=null) {
             var numParticlesAlive = particleSys.GetParticles(particleArray);
 

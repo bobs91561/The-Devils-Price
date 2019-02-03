@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Pixel Crushers. All rights reserved.
 
 using UnityEngine;
+using System.Collections;
 
 namespace PixelCrushers.DialogueSystem
 {
@@ -56,6 +57,18 @@ namespace PixelCrushers.DialogueSystem
         public string silentCharacters = string.Empty;
 
         /// <summary>
+        /// Play a full pause on these characters.
+        /// </summary>
+        [Tooltip("Play a full pause on these characters.")]
+        public string fullPauseCharacters = string.Empty;
+
+        /// <summary>
+        /// Play a quarter pause on these characters.
+        /// </summary>
+        [Tooltip("Play a quarter pause on these characters.")]
+        public string quarterPauseCharacters = string.Empty;
+
+        /// <summary>
         /// Duration to pause on when text contains '\\.'
         /// </summary>
         [Tooltip("Duration to pause on when text contains '\\.'")]
@@ -92,6 +105,8 @@ namespace PixelCrushers.DialogueSystem
         public bool stopOnConversationEnd = false;
 
         public abstract bool isPlaying { get; }
+
+        protected bool paused = false;
 
         /// <summary>
         /// Returns the typewriter's charactersPerSecond.
@@ -144,6 +159,69 @@ namespace PixelCrushers.DialogueSystem
         public static string StripRPGMakerCodes(string s) // Moved to UITools, but kept for compatibility with third party code.
         {
             return UITools.StripRPGMakerCodes(s);
+        }
+
+        protected bool IsFullPauseCharacter(char c)
+        {
+            return IsCharacterInString(c, fullPauseCharacters);
+        }
+
+        protected bool IsQuarterPauseCharacter(char c)
+        {
+            return IsCharacterInString(c, quarterPauseCharacters);
+        }
+
+        protected bool IsSilentCharacter(char c)
+        {
+            return IsCharacterInString(c, silentCharacters);
+        }
+
+        protected bool IsCharacterInString(char c, string s)
+        {
+            if (string.IsNullOrEmpty(s)) return false;
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (s[i] == c) return true;
+            }
+            return false;
+        }
+
+        protected void PlayCharacterAudio()
+        {
+            if (audioClip == null || audioSource == null) return;
+            AudioClip randomClip = null;
+            if (alternateAudioClips != null && alternateAudioClips.Length > 0)
+            {
+                var randomIndex = UnityEngine.Random.Range(0, alternateAudioClips.Length + 1);
+                randomClip = (randomIndex < alternateAudioClips.Length) ? alternateAudioClips[randomIndex] : audioClip;
+            }
+            if (interruptAudioClip)
+            {
+                if (audioSource.isPlaying) audioSource.Stop();
+                if (randomClip != null) audioSource.clip = randomClip;
+                audioSource.Play();
+            }
+            else
+            {
+                if (!audioSource.isPlaying)
+                {
+                    if (randomClip != null) audioSource.clip = randomClip;
+                    audioSource.Play();
+                }
+            }
+        }
+
+        protected IEnumerator PauseForDuration(float duration)
+        {
+            paused = true;
+            var continueTime = DialogueTime.time + duration;
+            int pauseSafeguard = 0;
+            while (DialogueTime.time < continueTime && pauseSafeguard < 999)
+            {
+                pauseSafeguard++;
+                yield return null;
+            }
+            paused = false;
         }
 
     }

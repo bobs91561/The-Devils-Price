@@ -1,10 +1,10 @@
 // Copyright (c) Pixel Crushers. All rights reserved.
 
-using UnityEngine;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using UnityEngine;
 
 namespace PixelCrushers.DialogueSystem
 {
@@ -19,6 +19,8 @@ namespace PixelCrushers.DialogueSystem
     /// </summary>
     public static class PersistentDataManager
     {
+
+        #region Variables
 
         /// <summary>
         /// Set <c>true</c> to include actor data in save data, <c>false</c> to exclude.
@@ -51,13 +53,17 @@ namespace PixelCrushers.DialogueSystem
 
         /// <summary>
         /// Optional field to use when saving a conversation's SimStatus info (e.g., Title). 
-        /// If blank, uses conversation ID.
+        /// This feature is handy if you can't guarantee that conversation IDs will be the 
+        /// same across saved games. If set, saves the conversation's SimStatus info into
+        /// a field. If blank, uses conversation ID. 
         /// </summary>
         public static string saveConversationSimStatusWithField = string.Empty;
 
         /// <summary>
         /// Optional field to use when saving a dialogue entry's SimStatus info (e.g,. Title).
-        /// If blank, uses entry's ID.
+        /// This feature is handy if you can't guarantee that dialogue entry IDs will be the 
+        /// same across saved games. If set, saves the entry's SimStatus value into a field.
+        /// If blank, uses entry's ID. 
         /// </summary>
         public static string saveDialogueEntrySimStatusWithField = string.Empty;
 
@@ -107,6 +113,10 @@ namespace PixelCrushers.DialogueSystem
 
         private static HashSet<GameObject> listeners = new HashSet<GameObject>();
 
+        #endregion
+
+        #region Register Persistent Data Components
+
         /// <summary>
         /// 
         /// </summary>
@@ -126,6 +136,10 @@ namespace PixelCrushers.DialogueSystem
             if (!Application.isPlaying) return;
             listeners.Remove(go);
         }
+
+        #endregion
+
+        #region Main Data Management Methods
 
         /// <summary>
         /// Resets the Lua environment -- for example, when starting a new game.
@@ -157,7 +171,7 @@ namespace PixelCrushers.DialogueSystem
         /// </summary>
         public static void Record()
         {
-            if (DialogueDebug.logInfo) Debug.Log(string.Format("{0}: Recording persistent data to Lua environment.", new System.Object[] { DialogueDebug.Prefix }));
+            if (DialogueDebug.LogInfo) Debug.Log(string.Format("{0}: Recording persistent data to Lua environment.", new System.Object[] { DialogueDebug.Prefix }));
             SendPersistentDataMessage("OnRecordPersistentData");
         }
 
@@ -170,7 +184,7 @@ namespace PixelCrushers.DialogueSystem
         /// </summary>
         public static void Apply()
         {
-            if (DialogueDebug.logInfo) Debug.Log(string.Format("{0}: Applying persistent data from Lua environment.", new System.Object[] { DialogueDebug.Prefix }));
+            if (DialogueDebug.LogInfo) Debug.Log(string.Format("{0}: Applying persistent data from Lua environment.", new System.Object[] { DialogueDebug.Prefix }));
             SendPersistentDataMessage("OnApplyPersistentData");
             DialogueManager.SendUpdateTracker(); // Update quest tracker HUD.
         }
@@ -201,7 +215,7 @@ namespace PixelCrushers.DialogueSystem
         /// </summary>
         public static void LevelWillBeUnloaded()
         {
-            if (DialogueDebug.logInfo) Debug.Log(string.Format("{0}: Broadcasting that level will be unloaded.", new System.Object[] { DialogueDebug.Prefix }));
+            if (DialogueDebug.LogInfo) Debug.Log(string.Format("{0}: Broadcasting that level will be unloaded.", new System.Object[] { DialogueDebug.Prefix }));
             SendPersistentDataMessage("OnLevelWillBeUnloaded");
         }
 
@@ -216,26 +230,20 @@ namespace PixelCrushers.DialogueSystem
         /// </param>
         public static void ApplySaveData(string saveData, DatabaseResetOptions databaseResetOptions = DatabaseResetOptions.KeepAllLoaded)
         {
-            if (DialogueDebug.logInfo) Debug.Log(string.Format("{0}: Resetting Lua environment.", new System.Object[] { DialogueDebug.Prefix }));
+            if (DialogueDebug.LogInfo) Debug.Log(string.Format("{0}: Resetting Lua environment.", new System.Object[] { DialogueDebug.Prefix }));
             DialogueManager.ResetDatabase(databaseResetOptions);
-            if (DialogueDebug.logInfo) Debug.Log(string.Format("{0}: Updating Lua environment with saved data.", new System.Object[] { DialogueDebug.Prefix }));
-            Lua.Run(saveData, DialogueDebug.logInfo);
+            if (DialogueDebug.LogInfo) Debug.Log(string.Format("{0}: Updating Lua environment with saved data.", new System.Object[] { DialogueDebug.Prefix }));
+            Lua.Run(saveData, DialogueDebug.LogInfo);
             ExpandCompressedSimStatusData();
             RefreshRelationshipAndStatusTablesFromLua();
             if (initializeNewVariables)
             {
                 InitializeNewVariablesFromDatabase();
                 InitializeNewQuestEntriesFromDatabase();
-                if (includeSimStatus) InitializeNewSimStatusFromDatabase();
+                InitializeNewSimStatusFromDatabase();
             }
             Apply();
         }
-
-        // Previously limited save data to 1 MB, since this was webplayer's PlayerPrefs limit.
-        // Save data can now be unlimited size.
-        //---Was:
-        //private const int stringDataStartCapacity = 10240;
-        //private const int stringDataMaxCapacity = 1048576;
 
         /// <summary>
         /// Saves a game by retrieving the Lua environment and returning it as a saved-game string. 
@@ -259,12 +267,17 @@ namespace PixelCrushers.DialogueSystem
         public static string GetSaveData()
         {
             Record();
-            var sb = new StringBuilder(); //---Was: new StringBuilder(stringDataStartCapacity, stringDataMaxCapacity);
+            string saveData;
+            var sb = new StringBuilder();
             AppendDialogueSystemData(sb);
-            string saveData = sb.ToString();
-            if (DialogueDebug.logInfo) Debug.Log(string.Format("{0}: Saved data: {1}", new System.Object[] { DialogueDebug.Prefix, saveData }));
+            saveData = sb.ToString();
+            if (DialogueDebug.LogInfo) Debug.Log(string.Format("{0}: Saved data: {1}", new System.Object[] { DialogueDebug.Prefix, saveData }));
             return saveData;
         }
+
+        #endregion
+
+        #region Save (Non-Conversation Data)
 
         public static void AppendDialogueSystemData(StringBuilder sb)
         {
@@ -285,15 +298,15 @@ namespace PixelCrushers.DialogueSystem
         {
             try
             {
-                LuaTableWrapper variableTable = Lua.Run("return Variable").asTable;
+                LuaTableWrapper variableTable = Lua.Run("return Variable").AsTable;
                 if (variableTable == null)
                 {
-                    if (DialogueDebug.logErrors) Debug.LogError(string.Format("{0}: Persistent Data Manager couldn't access Lua Variable[] table", new System.Object[] { DialogueDebug.Prefix }));
+                    if (DialogueDebug.LogErrors) Debug.LogError(string.Format("{0}: Persistent Data Manager couldn't access Lua Variable[] table", new System.Object[] { DialogueDebug.Prefix }));
                     return;
                 }
                 sb.Append("Variable={");
                 var first = true;
-                foreach (var key in variableTable.keys)
+                foreach (var key in variableTable.Keys)
                 {
                     if (!first) sb.Append(", ");
                     first = false;
@@ -315,22 +328,22 @@ namespace PixelCrushers.DialogueSystem
         {
             try
             {
-                LuaTableWrapper itemTable = Lua.Run("return Item").asTable;
+                LuaTableWrapper itemTable = Lua.Run("return Item").AsTable;
                 if (itemTable == null)
                 {
-                    if (DialogueDebug.logErrors) Debug.LogError(string.Format("{0}: Persistent Data Manager couldn't access Lua Item[] table", new System.Object[] { DialogueDebug.Prefix }));
+                    if (DialogueDebug.LogErrors) Debug.LogError(string.Format("{0}: Persistent Data Manager couldn't access Lua Item[] table", new System.Object[] { DialogueDebug.Prefix }));
                     return;
                 }
-                foreach (var title in itemTable.keys)
+                foreach (var title in itemTable.Keys)
                 {
                     LuaTableWrapper fields = itemTable[title.ToString()] as LuaTableWrapper;
-                    bool onlySaveQuestData = !includeAllItemData && (DialogueManager.masterDatabase.items.Find(i => string.Equals(DialogueLua.StringToTableIndex(i.Name), title)) != null);
+                    bool onlySaveQuestData = !includeAllItemData && (DialogueManager.MasterDatabase.items.Find(i => string.Equals(DialogueLua.StringToTableIndex(i.Name), title)) != null);
                     if (fields != null)
                     {
                         if (onlySaveQuestData)
                         {
                             // If in the database, just record quest statuses and tracking:
-                            foreach (var fieldKey in fields.keys)
+                            foreach (var fieldKey in fields.Keys)
                             {
                                 string fieldTitle = fieldKey.ToString();
                                 if (fieldTitle.EndsWith("State"))
@@ -365,7 +378,7 @@ namespace PixelCrushers.DialogueSystem
             {
                 if (fields != null)
                 {
-                    foreach (var key in fields.keys)
+                    foreach (var key in fields.Keys)
                     {
                         var value = fields[key.ToString()];
                         sb.AppendFormat("{0}={1}, ", new System.Object[] { GetFieldKeyString(key), GetFieldValueString(value) });
@@ -380,13 +393,10 @@ namespace PixelCrushers.DialogueSystem
         }
 
         // Faster to check manually than use Regex:
-        // private static Regex matchValidVarName = new Regex("^[a-zA-Z_][a-zA-Z0-9_]*$");
-
         private static string GetFieldKeyString(string key)
         {
             key = DialogueLua.StringToTableIndex(key);
             return IsValidVarName(key) ? key : ("[\"" + key + "\"]");
-            //---Was: return matchValidVarName.IsMatch(key) ? key : ("[\"" + key + "\"]");
         }
 
         private static bool IsValidVarName(string key)
@@ -435,15 +445,15 @@ namespace PixelCrushers.DialogueSystem
             if (!includeLocationData) return;
             try
             {
-                LuaTableWrapper locationTable = Lua.Run("return Location").asTable;
+                LuaTableWrapper locationTable = Lua.Run("return Location").AsTable;
                 if (locationTable == null)
                 {
-                    if (DialogueDebug.logErrors) Debug.LogError(string.Format("{0}: Persistent Data Manager couldn't access Lua Location[] table", new System.Object[] { DialogueDebug.Prefix }));
+                    if (DialogueDebug.LogErrors) Debug.LogError(string.Format("{0}: Persistent Data Manager couldn't access Lua Location[] table", new System.Object[] { DialogueDebug.Prefix }));
                     return;
                 }
                 sb.Append("Location={");
                 var first = true;
-                foreach (var key in locationTable.keys)
+                foreach (var key in locationTable.Keys)
                 {
                     LuaTableWrapper fields = locationTable[key.ToString()] as LuaTableWrapper;
                     if (!first) sb.Append(", ");
@@ -474,15 +484,15 @@ namespace PixelCrushers.DialogueSystem
         {
             try
             {
-                LuaTableWrapper actorTable = Lua.Run("return Actor").asTable;
+                LuaTableWrapper actorTable = Lua.Run("return Actor").AsTable;
                 if (actorTable == null)
                 {
-                    if (DialogueDebug.logErrors) Debug.LogError(string.Format("{0}: Persistent Data Manager couldn't access Lua Actor[] table", new System.Object[] { DialogueDebug.Prefix }));
+                    if (DialogueDebug.LogErrors) Debug.LogError(string.Format("{0}: Persistent Data Manager couldn't access Lua Actor[] table", new System.Object[] { DialogueDebug.Prefix }));
                     return;
                 }
                 sb.Append("Actor={");
                 var first = true;
-                foreach (var key in actorTable.keys)
+                foreach (var key in actorTable.Keys)
                 {
                     LuaTableWrapper fields = actorTable[key.ToString()] as LuaTableWrapper;
                     if (!first) sb.Append(", ");
@@ -513,7 +523,7 @@ namespace PixelCrushers.DialogueSystem
         {
             if (fields == null) return;
             var first = true;
-            foreach (var key in fields.keys)
+            foreach (var key in fields.Keys)
             {
                 if (!first) sb.Append(", ");
                 first = false;
@@ -523,17 +533,49 @@ namespace PixelCrushers.DialogueSystem
         }
 
         /// <summary>
+        /// Appends the relationship and status tables to a (saved-game) string.
+        /// </summary>
+        /// <param name="sb">StringBuilder to append to.</param>
+        public static void AppendRelationshipAndStatusTables(StringBuilder sb)
+        {
+            try
+            {
+                sb.Append(DialogueLua.GetStatusTableAsLua());
+                sb.Append(DialogueLua.GetRelationshipTableAsLua());
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(string.Format("{0}: GetSaveData() failed to get relationship and status data: {1}", new System.Object[] { DialogueDebug.Prefix, e.Message }));
+            }
+        }
+
+        /// <summary>
+        /// Instructs the Dialogue System to refresh its internal relationship and status tables
+        /// from the values in the Lua environment. Call this after putting new values in the
+        /// Lua environment, such as when loading a saved game.
+        /// </summary>
+        public static void RefreshRelationshipAndStatusTablesFromLua()
+        {
+            DialogueLua.RefreshStatusTableFromLua();
+            DialogueLua.RefreshRelationshipTableFromLua();
+        }
+
+        #endregion
+
+        #region Save (Conversation Data)
+
+        /// <summary>
         /// Appends the conversation table to a (saved-game) string. To conserve space, only the
         /// SimStatus is recorded. If includeSimStatus is <c>false</c>, nothing is recorded.
         /// The exception is if includeAllConversationFields is true.
         /// </summary>
         public static void AppendConversationData(StringBuilder sb)
         {
-            if (includeAllConversationFields || DialogueManager.instance.persistentDataSettings.includeAllConversationFields)
+            if (includeAllConversationFields || DialogueManager.Instance.persistentDataSettings.includeAllConversationFields)
             {
                 AppendAllConversationFields(sb);
             }
-            if (includeSimStatus && DialogueManager.instance.includeSimStatus)
+            if (includeSimStatus && DialogueManager.Instance.includeSimStatus)
             {
                 AppendSimStatus(sb);
             }
@@ -548,21 +590,21 @@ namespace PixelCrushers.DialogueSystem
         {
             try
             {
-                LuaTableWrapper conversationTable = Lua.Run("return Conversation").asTable;
+                LuaTableWrapper conversationTable = Lua.Run("return Conversation").AsTable;
                 if (conversationTable == null)
                 {
-                    if (DialogueDebug.logErrors) Debug.LogError(string.Format("{0}: Persistent Data Manager couldn't access Lua Conversation[] table", new System.Object[] { DialogueDebug.Prefix }));
+                    if (DialogueDebug.LogErrors) Debug.LogError(string.Format("{0}: Persistent Data Manager couldn't access Lua Conversation[] table", new System.Object[] { DialogueDebug.Prefix }));
                     return;
                 }
-                foreach (var convIndex in conversationTable.keys) // Loop through conversations:
+                foreach (var convIndex in conversationTable.Keys) // Loop through conversations:
                 {
-                    LuaTableWrapper fields = Lua.Run("return Conversation[" + convIndex + "]").asTable;
+                    LuaTableWrapper fields = Lua.Run("return Conversation[" + convIndex + "]").AsTable;
                     if (fields == null) continue;
                     sb.Append("Conversation[" + convIndex + "]={");
                     try
                     {
                         var first = true;
-                        foreach (var key in fields.keys)
+                        foreach (var key in fields.Keys)
                         {
                             if (string.Equals(key, "Dialog")) continue;
                             if (!first) sb.Append(", ");
@@ -619,7 +661,7 @@ namespace PixelCrushers.DialogueSystem
                             first = false;
                             sb.Append(useEntryID ? entryID.ToString() : Field.LookupValue(entry.fields, saveDialogueEntrySimStatusWithField));
                             sb.Append(";");
-                            var simStatus = dialogFields["SimStatus"].ToString();
+                            var simStatus = dialogFields[DialogueLua.SimStatus].ToString();
                             sb.Append(SimStatusToChar(simStatus));
                         }
                     }
@@ -714,12 +756,12 @@ namespace PixelCrushers.DialogueSystem
         /// Appends SimStatus for all conversations.
         /// </summary>
         private static void AppendSimStatus(StringBuilder sb)
-        { 
+        {
             try
             {
                 useConversationID = string.IsNullOrEmpty(saveConversationSimStatusWithField);
                 useEntryID = string.IsNullOrEmpty(saveDialogueEntrySimStatusWithField);
-                var conversationTable = Lua.environment.GetValue("Conversation") as Language.Lua.LuaTable;
+                var conversationTable = Lua.Environment.GetValue("Conversation") as Language.Lua.LuaTable;
                 if (conversationTable == null) return;
                 for (int i = 0; i < conversationTable.List.Count; i++)
                 {
@@ -741,6 +783,8 @@ namespace PixelCrushers.DialogueSystem
             }
         }
 
+        private static Dictionary<int, string> s_dialogueEntrySimStatusFieldLookupTable = new Dictionary<int, string>();
+
         /// <summary>
         /// Appends the SimStatus info for a single conversation.
         /// </summary>
@@ -750,7 +794,7 @@ namespace PixelCrushers.DialogueSystem
             if (sb == null || conversationTable == null || fieldTable == null) return 0;
             var dialogTable = fieldTable.GetValue("Dialog") as Language.Lua.LuaTable;
             if (dialogTable == null) return 0;
-            var conversation = DialogueManager.masterDatabase.GetConversation(conversationID);
+            var conversation = DialogueManager.MasterDatabase.GetConversation(conversationID);
             if (conversation == null) return 0;
             if (useConversationID)
             {
@@ -779,13 +823,26 @@ namespace PixelCrushers.DialogueSystem
                     sb.Append(fieldName);
                 }
                 sb.Append(";");
-                var simStatus = simStatusTable.GetValue("SimStatus").ToString();
+                var simStatus = simStatusTable.GetValue(DialogueLua.SimStatus).ToString();
                 sb.Append(SimStatusToChar(simStatus));
             }
+
+            if (!useEntryID)
+            {
+                // Create a lookup table to speed up lookups of each dialogue entry's SimStatus field:
+                s_dialogueEntrySimStatusFieldLookupTable.Clear();
+                for (int i = 0; i < conversation.dialogueEntries.Count; i++)
+                {
+                    var entry = conversation.dialogueEntries[i];
+                    var field = Field.Lookup(entry.fields, saveDialogueEntrySimStatusWithField);
+                    var fieldName = (field != null) ? field.value : entry.id.ToString();
+                    s_dialogueEntrySimStatusFieldLookupTable.Add(entry.id, fieldName);
+                }
+            }
+
             foreach (var kvp2 in dialogTable.KeyValuePairs)
             {
                 var entryIDString = kvp2.Key.ToString();
-                var entryID = Tools.StringToInt(entryIDString);
                 var simStatusTable = kvp2.Value as Language.Lua.LuaTable;
                 if (!first) sb.Append(";");
                 first = false;
@@ -795,16 +852,17 @@ namespace PixelCrushers.DialogueSystem
                 }
                 else
                 {
-                    var entry = conversation.GetDialogueEntry(entryID);
-                    var field = (entry != null) ? Field.Lookup(entry.fields, saveDialogueEntrySimStatusWithField) : null;
-                    var fieldName = (field != null) ? field.value : entryIDString;
-                    sb.Append(fieldName);
+                    var entryID = Tools.StringToInt(entryIDString);
+                    sb.Append(s_dialogueEntrySimStatusFieldLookupTable[entryID]);
                 }
                 sb.Append(";");
-                var simStatus = simStatusTable.GetValue("SimStatus").ToString();
+                var simStatus = simStatusTable.GetValue(DialogueLua.SimStatus).ToString();
                 sb.Append(SimStatusToChar(simStatus));
             }
             sb.Append("\"; ");
+
+            s_dialogueEntrySimStatusFieldLookupTable.Clear();
+
             return conversation.dialogueEntries.Count;
         }
 
@@ -813,44 +871,62 @@ namespace PixelCrushers.DialogueSystem
         /// </summary>
         private static void ExpandCompressedSimStatusData()
         {
-            if (!(includeSimStatus && DialogueManager.instance.includeSimStatus)) return;
-            try
+            if (!(includeSimStatus && DialogueManager.Instance.includeSimStatus)) return;
+            // Track conversations so we know which ones were added after the saved game:
+            var conversationsLeft = new HashSet<int>();
+            var conversations = DialogueManager.MasterDatabase.conversations;
+            for (int i = 0; i < conversations.Count; i++)
             {
-                var luaStringSimX = new Language.Lua.LuaString("SimX");
-                useConversationID = string.IsNullOrEmpty(saveConversationSimStatusWithField);
-                useEntryID = string.IsNullOrEmpty(saveDialogueEntrySimStatusWithField);
-                var conversationTable = Lua.environment.GetValue("Conversation") as Language.Lua.LuaTable;
-                if (conversationTable == null) return;
-                var sb = new StringBuilder();
-                for (int i = 0; i < conversationTable.List.Count; i++)
-                {
-                    var conversationID = i + 1;
-                    var fieldTable = conversationTable.List[i] as Language.Lua.LuaTable;
-                    ExpandSimStatusForConversation(sb, conversationID, conversationID.ToString(), fieldTable, luaStringSimX);
-                }
-                foreach (var kvp in conversationTable.Dict)
-                {
-                    if (kvp.Key == null || kvp.Value == null || !(kvp.Value is Language.Lua.LuaTable)) continue;
-                    var conversationIDString = kvp.Key.ToString();
-                    var conversationID = Tools.StringToInt(conversationIDString);
-                    var fieldTable = kvp.Value as Language.Lua.LuaTable;
-                    ExpandSimStatusForConversation(sb, conversationID, conversationIDString, fieldTable, luaStringSimX);
-                }
-                Lua.Run(sb.ToString());
-
-
+                conversationsLeft.Add(conversations[i].id);
             }
-            catch (System.Exception e)
+
+            // Reusable dialogue entry cache used by ExpandSimStatusForConversation:
+            var dialogueEntryCache = new Dictionary<int, DialogueEntry>();
+
+            var luaStringSimX = new Language.Lua.LuaString("SimX");
+            useConversationID = string.IsNullOrEmpty(saveConversationSimStatusWithField);
+            useEntryID = string.IsNullOrEmpty(saveDialogueEntrySimStatusWithField);
+            var conversationTable = Lua.Environment.GetValue("Conversation") as Language.Lua.LuaTable;
+            if (conversationTable == null) return;
+            var sb = new StringBuilder(16384, System.Int32.MaxValue);
+            for (int i = 0; i < conversationTable.List.Count; i++)
             {
-                Debug.LogError(string.Format("{0}: ApplySaveData() failed to re-expand compressed SimStatus data: {1}", new System.Object[] { DialogueDebug.Prefix, e.Message }));
+                var conversationID = i + 1;
+                conversationsLeft.Remove(conversationID);
+                var fieldTable = conversationTable.List[i] as Language.Lua.LuaTable;
+                ExpandSimStatusForConversation(sb, conversationID, conversationID.ToString(), fieldTable, luaStringSimX, dialogueEntryCache);
+            }
+            foreach (var kvp in conversationTable.Dict)
+            {
+                if (kvp.Key == null || kvp.Value == null || !(kvp.Value is Language.Lua.LuaTable)) continue;
+                var conversationIDString = kvp.Key.ToString();
+                var conversationID = Tools.StringToInt(conversationIDString);
+                conversationsLeft.Remove(conversationID);
+                var fieldTable = kvp.Value as Language.Lua.LuaTable;
+                ExpandSimStatusForConversation(sb, conversationID, conversationIDString, fieldTable, luaStringSimX, dialogueEntryCache);
+            }
+            Lua.Run(sb.ToString());
+
+            // Add SimStatus for new conversations:
+            if (conversationsLeft.Count > 0)
+            {
+                var enumerator = conversationsLeft.GetEnumerator();
+                while (enumerator.MoveNext())
+                {
+                    var conversationID = enumerator.Current;
+                    var conversation = DialogueManager.MasterDatabase.GetConversation(conversationID);
+                    if (conversation == null) continue;
+                    DialogueLua.AddToConversationTable(conversationTable, conversation, true);
+                }
             }
         }
 
         /// <summary>
         /// Expands SimX for a conversation.
         /// </summary>
-        private static void ExpandSimStatusForConversation(StringBuilder sb, int conversationID, string conversationIDString, Language.Lua.LuaTable fieldTable, Language.Lua.LuaString luaStringSimX)
+        private static void ExpandSimStatusForConversation(StringBuilder sb, int conversationID, string conversationIDString, Language.Lua.LuaTable fieldTable, Language.Lua.LuaString luaStringSimX, Dictionary<int, DialogueEntry> dialogueEntryCache)
         {
+            // Find our Lua Dialog[] table and conversation asset:
             var dialogTable = fieldTable.GetValue("Dialog") as Language.Lua.LuaTable;
             if (dialogTable == null)
             {
@@ -859,9 +935,10 @@ namespace PixelCrushers.DialogueSystem
             }
             dialogTable.List.Clear();
             dialogTable.Dict.Clear();
-            var conversation = DialogueManager.masterDatabase.GetConversation(conversationID);
+            var conversation = DialogueManager.MasterDatabase.GetConversation(conversationID);
             if (conversation == null) return;
 
+            // Get the compressed SimStatus string:
             string simX;
             if (useConversationID)
             {
@@ -874,36 +951,48 @@ namespace PixelCrushers.DialogueSystem
             {
                 var fieldValue = DialogueLua.StringToTableIndex(conversation.LookupValue(saveConversationSimStatusWithField));
                 if (string.IsNullOrEmpty(fieldValue)) fieldValue = conversation.id.ToString();
-                simX = Lua.Run("return Variable[\"Conversation_SimX_" + fieldValue + "\"]").asString;
+                simX = Lua.Run("return Variable[\"Conversation_SimX_" + fieldValue + "\"]").AsString;
                 sb.Append("Variable[\"Conversation_SimX_" + fieldValue + "\"]=nil;");
             }
-            if (string.IsNullOrEmpty(simX) || string.Equals(simX, "nil")) Debug.Log("ERR " + conversationID); //!!!
             if (string.IsNullOrEmpty(simX) || string.Equals(simX, "nil")) return;
 
             var simXFields = simX.Split(';');
             var numFields = simXFields.Length / 2;
 
+            // Index dialogue entries by ID: (don't worry about unused old entries; this conversation shouldn't reference them)
+            DialogueEntry entry;
+            for (int i = 0; i < conversation.dialogueEntries.Count; i++)
+            {
+                entry = conversation.dialogueEntries[i];
+                dialogueEntryCache[entry.id] = entry;
+            }
+
+            // Make table of SimStatus fields to entry IDs.
             Dictionary<string, int> simStatusFieldValueToID = null;
             if (!useEntryID)
             {
                 simStatusFieldValueToID = new Dictionary<string, int>();
                 for (int i = 0; i < conversation.dialogueEntries.Count; i++)
                 {
-                    var entry = conversation.dialogueEntries[i];
+                    entry = conversation.dialogueEntries[i];
                     var field = (entry != null) ? Field.Lookup(entry.fields, saveDialogueEntrySimStatusWithField) : null;
                     simStatusFieldValueToID[(field != null) ? field.value : entry.id.ToString()] = entry.id;
                 }
             }
 
+            // Iterate through fields of compressed SimStatus string:
             for (int i = 0; i < numFields; i++)
             {
                 var simXEntryIDValue = simXFields[2 * i];
                 var simStatus = CharToSimStatus(simXFields[(2 * i) + 1][0]);
                 var simStatusTable = new Language.Lua.LuaTable();
-                simStatusTable.AddRaw("SimStatus", new Language.Lua.LuaString(simStatus));
+                simStatusTable.AddRaw(DialogueLua.SimStatus, new Language.Lua.LuaString(simStatus));
+                if (!simStatusFieldValueToID.ContainsKey(simXEntryIDValue)) continue;
+                var entryID = useEntryID ? Tools.StringToInt(simXEntryIDValue) : simStatusFieldValueToID[simXEntryIDValue];
+                dialogueEntryCache[entryID] = null; // Mark that SimStatus has been added for this entry.
                 if (useEntryID)
                 {
-                    dialogTable.AddRaw(Tools.StringToInt(simXEntryIDValue), simStatusTable);
+                    dialogTable.AddRaw(entryID, simStatusTable);
                 }
                 else
                 {
@@ -911,6 +1000,19 @@ namespace PixelCrushers.DialogueSystem
                     {
                         dialogTable.AddRaw(simStatusFieldValueToID[simXEntryIDValue], simStatusTable);
                     }
+                }
+            }
+
+            // Backfill any new entries that weren't included in the compressed SimStatus string:
+            for (int i = 0; i < conversation.dialogueEntries.Count; i++)
+            {
+                entry = conversation.dialogueEntries[i];
+                if (dialogueEntryCache[entry.id] != null)
+                {
+                    // Missing. Need to add:
+                    var simStatusTable = new Language.Lua.LuaTable();
+                    simStatusTable.AddRaw(DialogueLua.SimStatus, new Language.Lua.LuaString(DialogueLua.Untouched));
+                    dialogTable.AddRaw(entry.id, simStatusTable);
                 }
             }
         }
@@ -923,11 +1025,11 @@ namespace PixelCrushers.DialogueSystem
             {
                 default:
                     return 'X';
-                case "Untouched":
+                case DialogueLua.Untouched:
                     return 'u';
-                case "WasDisplayed":
+                case DialogueLua.WasDisplayed:
                     return 'd';
-                case "WasOffered":
+                case DialogueLua.WasOffered:
                     return 'o';
             }
         }
@@ -939,41 +1041,17 @@ namespace PixelCrushers.DialogueSystem
                 default:
                     return "ERROR";
                 case 'u':
-                    return "Untouched";
+                    return DialogueLua.Untouched;
                 case 'd':
-                    return "WasDisplayed";
+                    return DialogueLua.WasDisplayed;
                 case 'o':
-                    return "WasOffered";
+                    return DialogueLua.WasOffered;
             }
         }
 
-        /// <summary>
-        /// Appends the relationship and status tables to a (saved-game) string.
-        /// </summary>
-        /// <param name="sb">StringBuilder to append to.</param>
-        public static void AppendRelationshipAndStatusTables(StringBuilder sb)
-        {
-            try
-            {
-                sb.Append(DialogueLua.GetStatusTableAsLua());
-                sb.Append(DialogueLua.GetRelationshipTableAsLua());
-            }
-            catch (System.Exception e)
-            {
-                Debug.LogError(string.Format("{0}: GetSaveData() failed to get relationship and status data: {1}", new System.Object[] { DialogueDebug.Prefix, e.Message }));
-            }
-        }
+        #endregion
 
-        /// <summary>
-        /// Instructs the Dialogue System to refresh its internal relationship and status tables
-        /// from the values in the Lua environment. Call this after putting new values in the
-        /// Lua environment, such as when loading a saved game.
-        /// </summary>
-        public static void RefreshRelationshipAndStatusTablesFromLua()
-        {
-            DialogueLua.RefreshStatusTableFromLua();
-            DialogueLua.RefreshRelationshipTableFromLua();
-        }
+        #region Initialize New Fields After Load
 
         /// <summary>
         /// Instructs the Dialogue System to add any missing variables that are in the master 
@@ -983,15 +1061,15 @@ namespace PixelCrushers.DialogueSystem
         {
             try
             {
-                LuaTableWrapper variableTable = Lua.Run("return Variable").asTable;
+                LuaTableWrapper variableTable = Lua.Run("return Variable").AsTable;
                 if (variableTable == null)
                 {
-                    if (DialogueDebug.logErrors) Debug.LogError(string.Format("{0}: Persistent Data Manager couldn't access Lua Variable[] table", new System.Object[] { DialogueDebug.Prefix }));
+                    if (DialogueDebug.LogErrors) Debug.LogError(string.Format("{0}: Persistent Data Manager couldn't access Lua Variable[] table", new System.Object[] { DialogueDebug.Prefix }));
                     return;
                 }
-                var database = DialogueManager.masterDatabase;
+                var database = DialogueManager.MasterDatabase;
                 if (database == null) return;
-                var inLua = new HashSet<string>(variableTable.keys);
+                var inLua = new HashSet<string>(variableTable.Keys);
                 for (int i = 0; i < database.variables.Count; i++)
                 {
                     var variable = database.variables[i];
@@ -1069,6 +1147,9 @@ namespace PixelCrushers.DialogueSystem
         /// </summary>
         public static void InitializeNewSimStatusFromDatabase()
         {
+            // For LuaInterpreter, ExpandSimStatusForConversation also initializes new SimStatus, 
+            // so we only need this for NLua:
+#if NLUA
             if (!(includeSimStatus && initializeNewSimStatus)) return;
             try
             {
@@ -1107,7 +1188,12 @@ namespace PixelCrushers.DialogueSystem
             {
                 Debug.LogError("Dialogue System: InitializeNewSimStatusFromDatabase() failed: " + e.Message);
             }
+#endif
         }
+
+        #endregion
+
+        #region Async Saving
 
         //======================================================================
         // Asynchronous saving:
@@ -1124,18 +1210,18 @@ namespace PixelCrushers.DialogueSystem
         public static AsyncSaveOperation GetSaveDataAsync()
         {
             var asyncOp = new AsyncSaveOperation();
-            DialogueManager.instance.StartCoroutine(GetSaveDataAsyncCoroutine(asyncOp));
+            DialogueManager.Instance.StartCoroutine(GetSaveDataAsyncCoroutine(asyncOp));
             return asyncOp;
         }
 
         private static IEnumerator GetSaveDataAsyncCoroutine(AsyncSaveOperation asyncOp)
         {
-            if (DialogueDebug.logInfo) Debug.Log(string.Format("{0}: Saving data asynchronously...", new System.Object[] { DialogueDebug.Prefix, asyncGameObjectBatchSize }));
+            if (DialogueDebug.LogInfo) Debug.Log(string.Format("{0}: Saving data asynchronously...", new System.Object[] { DialogueDebug.Prefix, asyncGameObjectBatchSize }));
 
             switch (recordPersistentDataOn)
             {
                 case RecordPersistentDataOn.AllGameObjects:
-                    yield return DialogueManager.instance.StartCoroutine(Tools.SendMessageToEveryoneAsync("OnRecordPersistentData", asyncGameObjectBatchSize));
+                    yield return DialogueManager.Instance.StartCoroutine(Tools.SendMessageToEveryoneAsync("OnRecordPersistentData", asyncGameObjectBatchSize));
                     break;
                 case RecordPersistentDataOn.OnlyRegisteredGameObjects:
                     int count = 0;
@@ -1156,7 +1242,7 @@ namespace PixelCrushers.DialogueSystem
                 default:
                     break;
             }
-            StringBuilder sb = new StringBuilder(); //---Was: new StringBuilder(stringDataStartCapacity, stringDataMaxCapacity);
+            StringBuilder sb = new StringBuilder();
             AppendVariableData(sb);
             yield return null;
             AppendItemData(sb);
@@ -1165,12 +1251,12 @@ namespace PixelCrushers.DialogueSystem
             yield return null;
             if (includeActorData) AppendActorData(sb);
             yield return null;
-            yield return DialogueManager.instance.StartCoroutine(AppendConversationDataAsync(sb));
+            yield return DialogueManager.Instance.StartCoroutine(AppendConversationDataAsync(sb));
             yield return null;
             if (includeRelationshipAndStatusData) AppendRelationshipAndStatusTables(sb);
             if (GetCustomSaveData != null) sb.Append(GetCustomSaveData());
             string saveData = sb.ToString();
-            if (DialogueDebug.logInfo) Debug.Log(string.Format("{0}: Saved data asynchronously: {1}", new System.Object[] { DialogueDebug.Prefix, saveData }));
+            if (DialogueDebug.LogInfo) Debug.Log(string.Format("{0}: Saved data asynchronously: {1}", new System.Object[] { DialogueDebug.Prefix, saveData }));
             asyncOp.content = saveData;
             asyncOp.isDone = true;
         }
@@ -1178,21 +1264,21 @@ namespace PixelCrushers.DialogueSystem
         /// <summary>
         /// Sends the OnRecordPersistentData message to all game objects in the scene to give them 
         /// an opportunity to record their state in the Lua environment. Runs in batches specified
-        /// by  the value of asyncGameObjectBatchSize.
+        /// by the value of asyncGameObjectBatchSize.
         /// </summary>
         public static void RecordAsync()
         {
-            if (DialogueDebug.logInfo) Debug.Log(string.Format("{0}: Recording persistent data to Lua environment in batches of {1} GameObjects.", new System.Object[] { DialogueDebug.Prefix, asyncGameObjectBatchSize }));
-            DialogueManager.instance.StartCoroutine(Tools.SendMessageToEveryoneAsync("OnRecordPersistentData", asyncGameObjectBatchSize));
+            if (DialogueDebug.LogInfo) Debug.Log(string.Format("{0}: Recording persistent data to Lua environment in batches of {1} GameObjects.", new System.Object[] { DialogueDebug.Prefix, asyncGameObjectBatchSize }));
+            DialogueManager.Instance.StartCoroutine(Tools.SendMessageToEveryoneAsync("OnRecordPersistentData", asyncGameObjectBatchSize));
         }
 
         private static IEnumerator AppendConversationDataAsync(StringBuilder sb)
         {
-            if (includeAllConversationFields || DialogueManager.instance.persistentDataSettings.includeAllConversationFields)
+            if (includeAllConversationFields || DialogueManager.Instance.persistentDataSettings.includeAllConversationFields)
             {
                 AppendAllConversationFields(sb);
             }
-            if (includeSimStatus && DialogueManager.instance.includeSimStatus)
+            if (includeSimStatus && DialogueManager.Instance.includeSimStatus)
             {
                 var count = 0;
 #if USE_NLUA
@@ -1225,7 +1311,7 @@ namespace PixelCrushers.DialogueSystem
                                 first = false;
                                 sb.Append(useEntryID ? entryID.ToString() : Field.LookupValue(entry.fields, saveDialogueEntrySimStatusWithField));
                                 sb.Append(";");
-                                var simStatus = dialogFields["SimStatus"].ToString();
+                                var simStatus = dialogFields[DialogueLua.SimStatus].ToString();
                                 sb.Append(SimStatusToChar(simStatus));
                             }
                         }
@@ -1245,7 +1331,7 @@ namespace PixelCrushers.DialogueSystem
 #else
                 useConversationID = string.IsNullOrEmpty(saveConversationSimStatusWithField);
                 useEntryID = string.IsNullOrEmpty(saveDialogueEntrySimStatusWithField);
-                var conversationTable = Lua.environment.GetValue("Conversation") as Language.Lua.LuaTable;
+                var conversationTable = Lua.Environment.GetValue("Conversation") as Language.Lua.LuaTable;
                 if (conversationTable == null) yield break;
                 for (int i = 0; i < conversationTable.List.Count; i++)
                 {
@@ -1273,6 +1359,436 @@ namespace PixelCrushers.DialogueSystem
 #endif
             }
         }
+
+        #endregion
+
+        #region Raw Dump
+
+#if !USE_NLUA
+
+        // Note: Raw dump is only implemented for LuaInterpreter (the default Lua implementation).
+
+        public class AsyncRawDataOperation
+        {
+            public bool isDone = false;
+            public byte[] content = null;
+        }
+
+        public static byte[] GetRawData()
+        {
+            Record();
+            using (var ms = new MemoryStream())
+            {
+                var writer = new BinaryWriter(ms);
+                var conversationTable = Lua.Run("return Conversation").AsTable.luaTable;
+                PrepSimStatusForRawData(conversationTable);
+                WriteValue(writer, Lua.Run("return Actor").AsTable.luaTable);
+                WriteValue(writer, Lua.Run("return Item").AsTable.luaTable);
+                WriteValue(writer, Lua.Run("return Location").AsTable.luaTable);
+                WriteValue(writer, Lua.Run("return Variable").AsTable.luaTable);
+                WriteValue(writer, conversationTable);
+                WriteExtraData(writer);
+                writer.Flush();
+                return ms.GetBuffer();
+            }
+        }
+
+        public static AsyncRawDataOperation GetRawDataAsync()
+        {
+            var asyncOp = new AsyncRawDataOperation();
+            DialogueManager.Instance.StartCoroutine(GetRawDataAsyncCoroutine(asyncOp));
+            return asyncOp;
+        }
+
+        private static IEnumerator GetRawDataAsyncCoroutine(AsyncRawDataOperation asyncOp)
+        {
+            if (DialogueDebug.LogInfo) Debug.Log("Dialogue System: Saving raw Lua data asynchronously...");
+
+            // Record persistent data objects async:
+            switch (recordPersistentDataOn)
+            {
+                case RecordPersistentDataOn.AllGameObjects:
+                    yield return DialogueManager.Instance.StartCoroutine(Tools.SendMessageToEveryoneAsync("OnRecordPersistentData", asyncGameObjectBatchSize));
+                    break;
+                case RecordPersistentDataOn.OnlyRegisteredGameObjects:
+                    int count = 0;
+                    foreach (var go in listeners)
+                    {
+                        if (go != null)
+                        {
+                            go.SendMessage("OnRecordPersistentData", SendMessageOptions.DontRequireReceiver);
+                            count++;
+                            if (count > asyncGameObjectBatchSize)
+                            {
+                                count = 0;
+                                yield return null;
+                            }
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            using (var ms = new MemoryStream())
+            {
+                var writer = new BinaryWriter(ms);
+                var conversationTable = Lua.Run("return Conversation").AsTable.luaTable;
+                yield return DialogueManager.Instance.StartCoroutine(PrepSimStatusForRawDataAsync(conversationTable));
+                WriteValue(writer, Lua.Run("return Actor").AsTable.luaTable);
+                yield return null;
+                WriteValue(writer, Lua.Run("return Item").AsTable.luaTable);
+                yield return null;
+                WriteValue(writer, Lua.Run("return Location").AsTable.luaTable);
+                yield return null;
+                WriteValue(writer, Lua.Run("return Variable").AsTable.luaTable);
+                yield return null;
+                WriteValue(writer, conversationTable);
+                yield return null;
+                WriteExtraData(writer);
+                writer.Flush();
+                asyncOp.content = ms.GetBuffer();
+            }
+            asyncOp.isDone = true;
+        }
+
+        private static void WriteValue(BinaryWriter writer, Language.Lua.LuaValue value)
+        {
+            if (value is Language.Lua.LuaTable)
+            {
+                WriteTable(writer, value as Language.Lua.LuaTable);
+            }
+            else if (value is Language.Lua.LuaString)
+            {
+                writer.Write('S');
+                writer.Write((value as Language.Lua.LuaString).Text);
+            }
+            else if (value is Language.Lua.LuaNumber)
+            {
+                writer.Write('N');
+                writer.Write((value as Language.Lua.LuaNumber).Number);
+            }
+            else if (value is Language.Lua.LuaBoolean)
+            {
+                writer.Write('B');
+                writer.Write((value as Language.Lua.LuaBoolean).BoolValue);
+            }
+            else if (value is Language.Lua.LuaNil)
+            {
+                writer.Write('X');
+            }
+            else
+            {
+                Debug.LogError("WriteValue unhandled " + value.GetType().Name + ": " + value.ToString());
+            }
+        }
+
+        private static void WriteTable(BinaryWriter writer, Language.Lua.LuaTable table)
+        {
+            writer.Write('T');
+            if (table.List == null)
+            {
+                writer.Write((int)0);
+            }
+            else
+            {
+                writer.Write(table.List.Count);
+                for (int i = 0; i < table.List.Count; i++)
+                {
+                    WriteValue(writer, table.List[i]);
+                }
+            }
+            if (table.Dict == null)
+            {
+                writer.Write((int)0);
+            }
+            else
+            {
+                writer.Write(table.Dict.Count);
+                var enumerator = table.Dict.GetEnumerator(); // Enumerates manually to avoid garbage.
+                while (enumerator.MoveNext())
+                {
+                    WriteValue(writer, enumerator.Current.Key);
+                    WriteValue(writer, enumerator.Current.Value);
+                }
+            }
+        }
+
+        public static void ApplyRawData(byte[] bytes)
+        {
+            using (var ms = new MemoryStream(bytes))
+            {
+                using (var reader = new BinaryReader(ms))
+                {
+                    Lua.Run("Actor = {}; Item = {}; Location = {}; Variable = {}; Conversation = {}");
+                    ReadTable(reader, Lua.Run("return Actor").AsTable.luaTable);
+                    ReadTable(reader, Lua.Run("return Item").AsTable.luaTable);
+                    ReadTable(reader, Lua.Run("return Location").AsTable.luaTable);
+                    ReadTable(reader, Lua.Run("return Variable").AsTable.luaTable);
+                    ReadTable(reader, Lua.Run("return Conversation").AsTable.luaTable);
+                    ApplySimStatusFromRawData();
+                    ApplyExtraData(reader);
+                    RefreshRelationshipAndStatusTablesFromLua();
+                    if (initializeNewVariables)
+                    {
+                        InitializeNewVariablesFromDatabase();
+                        InitializeNewQuestEntriesFromDatabase();
+                        // Do not need this. It's done implicitly when expanding SimX: InitializeNewSimStatusFromDatabase();
+                    }
+                }
+            }
+            Apply();
+        }
+
+        private static Language.Lua.LuaValue ReadValue(BinaryReader reader)
+        {
+            if ((char)reader.PeekChar() == 'T')
+            {
+                var luaTable = new Language.Lua.LuaTable();
+                ReadTable(reader, luaTable);
+                return luaTable;
+            }
+            var typeChar = reader.ReadChar();
+            if (typeChar == 'S')
+            {
+                var s = reader.ReadString();
+                return new Language.Lua.LuaString(s);
+            }
+            else if (typeChar == 'N')
+            {
+                var n = reader.ReadDouble();
+                return new Language.Lua.LuaNumber(n);
+            }
+            else if (typeChar == 'B')
+            {
+                var b = reader.ReadBoolean();
+                return (b == true) ? Language.Lua.LuaBoolean.True : Language.Lua.LuaBoolean.False;
+            }
+            else if (typeChar == 'X')
+            {
+                return Language.Lua.LuaNil.Nil;
+            }
+            else
+            {
+                Debug.LogError("ReadValue unhandled type code " + typeChar);
+                return Language.Lua.LuaNil.Nil;
+            }
+        }
+
+        private static void ReadTable(BinaryReader reader, Language.Lua.LuaTable table)
+        {
+            reader.Read(); // 'T'
+
+            int listLength = reader.ReadInt32();
+            for (int i = 0; i < listLength; i++)
+            {
+                var value = ReadValue(reader);
+                table.List.Add(value);
+            }
+
+            int dictLength = reader.ReadInt32();
+            for (int i = 0; i < dictLength; i++)
+            {
+                var key = ReadValue(reader);
+                var value = ReadValue(reader);
+                table.Dict.Add(key, value);
+            }
+        }
+
+        // Save relationship & status tables, and custom save data delegate.
+        private static void WriteExtraData(BinaryWriter writer)
+        {
+            if (includeRelationshipAndStatusData)
+            {
+                var sb = new StringBuilder();
+                AppendRelationshipAndStatusTables(sb);
+                writer.Write(sb.ToString());
+            }
+            if (GetCustomSaveData != null)
+            {
+                writer.Write(GetCustomSaveData());
+            }
+        }
+
+        private static void ApplyExtraData(BinaryReader reader)
+        {
+            if (includeRelationshipAndStatusData)
+            {
+                Lua.Run(reader.ReadString());
+            }
+            if (GetCustomSaveData != null)
+            {
+                Lua.Run(reader.ReadString(), DialogueDebug.LogInfo);
+            }
+        }
+
+        // If saveConversationSimStatusWithField or saveDialogueEntrySimStatusWithField are set,
+        // copy the current SimStatus into the specified variables/fields.
+        private static void PrepSimStatusForRawData(Language.Lua.LuaTable conversationTable)
+        {
+            // Only need to do if saving to fields:
+            if (!(includeSimStatus && DialogueManager.Instance.includeSimStatus && conversationTable != null)) return;
+            useConversationID = string.IsNullOrEmpty(saveConversationSimStatusWithField);
+            useEntryID = string.IsNullOrEmpty(saveDialogueEntrySimStatusWithField);
+            if (useConversationID && useEntryID) return;
+            // Reuse these vars to reduce GC:
+            var dialogueEntryCache = new Dictionary<int, DialogueEntry>();
+            var sb = new StringBuilder(16384, System.Int32.MaxValue);
+
+            for (int i = 0; i < conversationTable.List.Count; i++)
+            {
+                var conversationID = i + 1;
+                var fieldTable = conversationTable.List[i] as Language.Lua.LuaTable;
+                PrepConversationSimStatusForRawData(conversationTable, conversationID, fieldTable, dialogueEntryCache, sb);
+            }
+            foreach (var kvp in conversationTable.Dict)
+            {
+                if (kvp.Key == null || kvp.Value == null || !(kvp.Value is Language.Lua.LuaTable)) continue;
+                var conversationID = Tools.StringToInt(kvp.Key.ToString());
+                var fieldTable = kvp.Value as Language.Lua.LuaTable;
+                PrepConversationSimStatusForRawData(conversationTable, conversationID, fieldTable, dialogueEntryCache, sb);
+            }
+        }
+
+        // Async version:
+        private static IEnumerator PrepSimStatusForRawDataAsync(Language.Lua.LuaTable conversationTable)
+        {
+            // Only need to do if saving to fields:
+            if (!(includeSimStatus && DialogueManager.Instance.includeSimStatus && conversationTable != null)) yield break;
+            useConversationID = string.IsNullOrEmpty(saveConversationSimStatusWithField);
+            useEntryID = string.IsNullOrEmpty(saveDialogueEntrySimStatusWithField);
+            if (useConversationID && useEntryID) yield break;
+
+            // Reuse these vars to reduce GC:
+            var dialogueEntryCache = new Dictionary<int, DialogueEntry>();
+            var sb = new StringBuilder(16384, System.Int32.MaxValue);
+            int numEntriesDone = 0;
+
+            for (int i = 0; i < conversationTable.List.Count; i++)
+            {
+                var conversationID = i + 1;
+                var fieldTable = conversationTable.List[i] as Language.Lua.LuaTable;
+                numEntriesDone += PrepConversationSimStatusForRawData(conversationTable, conversationID, fieldTable, dialogueEntryCache, sb);
+                if (numEntriesDone >= asyncDialogueEntryBatchSize)
+                {
+                    numEntriesDone = 0;
+                    yield return null;
+                }
+            }
+            foreach (var kvp in conversationTable.Dict)
+            {
+                if (kvp.Key == null || kvp.Value == null || !(kvp.Value is Language.Lua.LuaTable)) continue;
+                var conversationID = Tools.StringToInt(kvp.Key.ToString());
+                var fieldTable = kvp.Value as Language.Lua.LuaTable;
+                numEntriesDone += PrepConversationSimStatusForRawData(conversationTable, conversationID, fieldTable, dialogueEntryCache, sb);
+                if (numEntriesDone >= asyncDialogueEntryBatchSize)
+                {
+                    numEntriesDone = 0;
+                    yield return null;
+                }
+            }
+        }
+
+        private static int PrepConversationSimStatusForRawData(Language.Lua.LuaTable conversationTable, int conversationID,
+            Language.Lua.LuaTable fieldTable, Dictionary<int, DialogueEntry> dialogueEntryCache, StringBuilder sb)
+        {
+            if (conversationTable == null || fieldTable == null) return 0;
+            var dialogTable = fieldTable.GetValue("Dialog") as Language.Lua.LuaTable;
+            if (dialogTable == null) return 0;
+            var conversation = DialogueManager.MasterDatabase.GetConversation(conversationID);
+            if (conversation == null) return 0;
+            sb.Length = 0;
+
+            // Index dialogue entries by ID: (don't worry about unused old entries; this conversation shouldn't reference them)
+            DialogueEntry entry;
+            for (int i = 0; i < conversation.dialogueEntries.Count; i++)
+            {
+                entry = conversation.dialogueEntries[i];
+                dialogueEntryCache[entry.id] = entry;
+            }
+
+            var first = true;
+
+            // Handle Dialog table's List:
+            for (int i = 0; i < dialogTable.List.Count; i++)
+            {
+                var entryID = i + 1;
+                var simStatusTable = dialogTable.List[i] as Language.Lua.LuaTable;
+                if (!first) sb.Append(";");
+                first = false;
+                if (!useEntryID && dialogueEntryCache.TryGetValue(entryID, out entry))
+                {
+                    sb.Append(Field.LookupValue(entry.fields, saveDialogueEntrySimStatusWithField));
+                }
+                else
+                {
+                    sb.Append(entryID);
+                }
+                sb.Append(";");
+                //--- Optimization since we know table only has one field. Was: var simStatus = simStatusTable.GetValue(DialogueLua.SimStatus).ToString();
+                var enumerator = simStatusTable.Dict.GetEnumerator();
+                enumerator.MoveNext();
+                var simStatus = enumerator.Current.Value.ToString();
+                sb.Append(SimStatusToChar(simStatus));
+            }
+
+            // Handle Dialog table's Dict:
+            foreach (var kvp2 in dialogTable.KeyValuePairs)
+            {
+                var simStatusTable = kvp2.Value as Language.Lua.LuaTable;
+                if (!first) sb.Append(";");
+                first = false;
+                if (!useEntryID)
+                {
+                    var entryID = (kvp2.Key is Language.Lua.LuaNumber) ? (int)((kvp2.Key as Language.Lua.LuaNumber).Number) : Tools.StringToInt(kvp2.Key.ToString());
+                    if (dialogueEntryCache.TryGetValue(entryID, out entry))
+                    {
+                        sb.Append(Field.LookupValue(entry.fields, saveDialogueEntrySimStatusWithField));
+                    }
+                    else
+                    {
+                        sb.Append(entryID);
+                    }
+                }
+                else
+                {
+                    sb.Append(kvp2.Key.ToString());
+                }
+                sb.Append(";");
+                //--- Optimization since we know table only has one field. Was: var simStatus = simStatusTable.GetValue(DialogueLua.SimStatus).ToString();
+                var enumerator = simStatusTable.Dict.GetEnumerator();
+                enumerator.MoveNext();
+                var simStatus = enumerator.Current.Value.ToString();
+                sb.Append(SimStatusToChar(simStatus));
+            }
+
+            if (useConversationID)
+            {
+                Lua.Run("Conversation[" + conversationID + "].SimX=\"" + sb.ToString() + "\"");
+            }
+            else
+            {
+                var fieldName = DialogueLua.StringToTableIndex(conversation.LookupValue(saveConversationSimStatusWithField));
+                Lua.Run("Variable[\"Conversation_SimX_" + fieldName + "\"]=\"" + sb.ToString() + "\"");
+
+            }
+            return conversation.dialogueEntries.Count;
+        }
+
+        // If saveConversationSimStatusWithField or saveDialogueEntrySimStatusWithField are set,
+        // repopoulate SimStatus from the values in the specified variables/fields.
+        private static void ApplySimStatusFromRawData()
+        {
+            if (includeSimStatus && DialogueManager.Instance.includeSimStatus &&
+                (!string.IsNullOrEmpty(saveConversationSimStatusWithField) || !string.IsNullOrEmpty(saveDialogueEntrySimStatusWithField)))
+            {
+                ExpandCompressedSimStatusData();
+            }
+        }
+
+#endif
+
+        #endregion
 
     }
 

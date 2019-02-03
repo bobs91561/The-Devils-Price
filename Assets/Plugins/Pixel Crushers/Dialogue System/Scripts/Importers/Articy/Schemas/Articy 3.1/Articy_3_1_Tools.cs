@@ -491,7 +491,6 @@ namespace PixelCrushers.DialogueSystem.Articy.Articy_3_1
             {
                 if (item is EntityType && string.Equals((item as EntityType).Id, idRef)) return GetDefaultLocalizedString((item as EntityType).DisplayName);
                 if (item is FlowFragmentType && string.Equals((item as FlowFragmentType).Id, idRef)) return GetDefaultLocalizedString((item as FlowFragmentType).DisplayName);
-                else if (item is DialogueType && string.Equals((item as DialogueType).Id, idRef)) return GetDefaultLocalizedString((item as DialogueType).DisplayName);
                 else if (item is DialogueFragmentType && string.Equals((item as DialogueFragmentType).Id, idRef)) return (item as DialogueFragmentType).DisplayName;
                 else if (item is HubType && string.Equals((item as HubType).Id, idRef)) return GetDefaultLocalizedString((item as HubType).DisplayName);
                 else if (item is JumpType && string.Equals((item as JumpType).Id, idRef)) return (item as JumpType).DisplayName;
@@ -500,8 +499,38 @@ namespace PixelCrushers.DialogueSystem.Articy.Articy_3_1
                 else if (item is SpotType && string.Equals((item as SpotType).Id, idRef)) return GetDefaultLocalizedString((item as SpotType).DisplayName);
                 else if (item is JourneyType && string.Equals((item as JourneyType).Id, idRef)) return GetDefaultLocalizedString((item as JourneyType).DisplayName);
                 else if (item is AssetType && string.Equals((item as AssetType).Id, idRef)) return GetDefaultLocalizedString((item as AssetType).DisplayName);
+                //---Was: else if (item is DialogueType && string.Equals((item as DialogueType).Id, idRef)) return GetDefaultLocalizedString((item as DialogueType).DisplayName);
+                else if (item is DialogueType && string.Equals((item as DialogueType).Id, idRef))
+                { // Need to prepend conversation path:
+                    return GetNameWithHierarchyPath(item as DialogueType);
+                }
             }
             return idRef;
+        }
+
+        private static string GetNameWithHierarchyPath(DialogueType item)
+        {
+            var s = GetNameWithHierarchyPathRecursion(item, _currentExport.Hierarchy.Node, 0);
+            return !string.IsNullOrEmpty(s) ? s : GetDefaultLocalizedString(item.DisplayName);
+        }
+
+        private static string GetNameWithHierarchyPathRecursion(DialogueType item, NodeType node, int safeguard)
+        {
+            if (safeguard > 999 || node == null) return null;
+            if (node.IdRef == item.Id) return GetDefaultLocalizedString(item.DisplayName);
+            if (node.Node != null)
+            {
+                foreach (NodeType childNode in node.Node)
+                {
+                    var s = GetNameWithHierarchyPathRecursion(item, childNode, safeguard + 1);
+                    if (!string.IsNullOrEmpty(s))
+                    {
+                        var myName = GetDisplayName(node.IdRef);
+                        return myName.StartsWith("0x") ? s : (myName + "/" + s); // Omit top level hierarchy nodes that have no name.
+                    }
+                }
+            }
+            return null;
         }
 
         private static string GetDefaultLocalizedString(LocalizableTextType localizableText)

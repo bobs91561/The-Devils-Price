@@ -6,10 +6,13 @@ public class RFX4_LightCurves : MonoBehaviour
     public AnimationCurve LightCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
     public float GraphTimeMultiplier = 1, GraphIntensityMultiplier = 1;
     public bool IsLoop;
+    public bool UseShadowsIfPossible;
 
     [HideInInspector] public bool canUpdate;
+
     private float startTime;
     private Light lightSource;
+    
 
     private void Awake()
     {
@@ -29,6 +32,7 @@ public class RFX4_LightCurves : MonoBehaviour
         if (canUpdate) {
             var eval = LightCurve.Evaluate(time / GraphTimeMultiplier) * GraphIntensityMultiplier;
             lightSource.intensity = eval;
+            lightSource.shadows = UseShadowsIfPossible ? LightShadows.Soft : LightShadows.None;
         }
         if (time >= GraphTimeMultiplier) {
             if (IsLoop) startTime = Time.time;

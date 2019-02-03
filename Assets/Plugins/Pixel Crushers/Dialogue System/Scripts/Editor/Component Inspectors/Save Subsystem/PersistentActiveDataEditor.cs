@@ -21,6 +21,7 @@ namespace PixelCrushers.DialogueSystem
             EditorGUILayout.PropertyField(serializedObject.FindProperty("target"), true);
             EditorTools.DrawReferenceDatabase();
             EditorGUILayout.PropertyField(serializedObject.FindProperty("condition"), true);
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("checkOnStart"), true);
             serializedObject.ApplyModifiedProperties();
         }
 

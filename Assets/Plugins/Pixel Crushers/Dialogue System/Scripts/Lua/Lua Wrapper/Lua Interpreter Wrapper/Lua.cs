@@ -84,6 +84,7 @@ namespace PixelCrushers.DialogueSystem
         /// </summary>
         /// <value>The Interpreter environment.</value>
         public static Language.Lua.LuaTable environment { get { return m_environment; } }
+        public static Language.Lua.LuaTable Environment { get { return m_environment; } }
 
         /// <summary>
         /// The Lua Interpreter environment.

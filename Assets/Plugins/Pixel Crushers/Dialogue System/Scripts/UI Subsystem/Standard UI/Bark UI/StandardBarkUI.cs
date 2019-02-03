@@ -90,6 +90,8 @@ namespace PixelCrushers.DialogueSystem
 
         private Vector3 originalCanvasLocalPosition { get; set; }
 
+        private int numSequencesActive = 0;
+
         /// <summary>
         /// Indicates whether a bark is currently playing.
         /// </summary>
@@ -192,6 +194,7 @@ namespace PixelCrushers.DialogueSystem
                 CancelInvoke("Hide");
                 var barkDuration = Mathf.Approximately(0, duration) ? DialogueManager.GetBarkDuration(subtitleText) : duration;
                 if (!(waitUntilSequenceEnds || waitForContinueButton)) Invoke("Hide", barkDuration);
+                if (waitUntilSequenceEnds) numSequencesActive++;
                 doneTime = DialogueTime.time + barkDuration;
             }
         }
@@ -206,7 +209,11 @@ namespace PixelCrushers.DialogueSystem
 
         public void OnBarkEnd(Transform actor)
         {
-            if (waitUntilSequenceEnds && !waitForContinueButton) Hide();
+            if (waitUntilSequenceEnds && !waitForContinueButton)
+            {
+                numSequencesActive--;
+                if (numSequencesActive <= 0) Hide();
+            }
         }
 
         public void OnContinue()
@@ -216,6 +223,7 @@ namespace PixelCrushers.DialogueSystem
 
         public override void Hide()
         {
+            numSequencesActive = 0;
             if (canvas != null)
             {
                 if (canvas.enabled && CanTriggerAnimations() && !string.IsNullOrEmpty(animationTransitions.hideTrigger))

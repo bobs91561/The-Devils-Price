@@ -150,6 +150,24 @@ public static class RFX4_ColorHelper
             }
         }
 
+        var psRenderers = go.GetComponentsInChildren<ParticleSystemRenderer>(true);
+        foreach (var rend in psRenderers)
+        {
+            var mat = rend.trailMaterial;
+            if (mat == null)
+                continue;
+
+            mat = new Material(mat) { name = mat.name + " (Instance)" };
+            rend.trailMaterial = mat;
+            foreach (var colorProperty in colorProperties)
+            {
+                if (mat.HasProperty(colorProperty))
+                {
+                    setMatHUEColor(mat, colorProperty, hue);
+                }
+            }
+        }
+
         var skinRenderers = go.GetComponentsInChildren<SkinnedMeshRenderer>(true);
         foreach (var skinRend in skinRenderers)
         {
@@ -165,23 +183,7 @@ public static class RFX4_ColorHelper
             }
         }
 
-        var projectors = go.GetComponentsInChildren<Projector>(true);
-        foreach (var proj in projectors)
-        {
-            if (!proj.material.name.EndsWith("(Instance)"))
-                proj.material = new Material(proj.material) { name = proj.material.name + " (Instance)" };
-            var mat = proj.material;
-            if (mat == null )
-                continue;
-            foreach (var colorProperty in colorProperties)
-            {
-                if (mat.HasProperty(colorProperty))
-                {
-                    proj.material = setMatHUEColor(mat, colorProperty, hue);
-                }
-            }
-        }
-
+       
         var lights = go.GetComponentsInChildren<Light>(true);
         foreach (var light in lights)
         {
@@ -193,45 +195,46 @@ public static class RFX4_ColorHelper
         var particles = go.GetComponentsInChildren<ParticleSystem>(true);
         foreach (var ps in particles)
         {
-#if !UNITY_5_5_OR_NEWER
-            var hsv = ColorToHSV(ps.startColor);
-            hsv.H = hue;
-            ps.startColor = HSVToColor(hsv);
-#else
+
             var main = ps.main;
             var hsv = ColorToHSV(ps.main.startColor.color);
             hsv.H = hue;
             main.startColor = HSVToColor(hsv);
-#endif
-        }
 
-        var rfx4_trails = go.GetComponentsInChildren<RFX4_ParticleTrail>(true);
-        foreach (var rfx4_trail in rfx4_trails)
-        {
-            var mat = rfx4_trail.TrailMaterial;
-            if (mat == null)
-                continue;
-            mat = new Material(rfx4_trail.TrailMaterial);
-            rfx4_trail.TrailMaterial = mat;
+            var colorProperty = ps.colorOverLifetime;
+            var colorPS = colorProperty.color;
+            var gradient = colorProperty.color.gradient;
+            var keys = colorProperty.color.gradient.colorKeys;
 
-            foreach (var colorProperty in colorProperties)
+            float offsetGradient = 0;
+            hsv = ColorToHSV(keys[0].color);
+            var hsv2 = ColorToHSV(keys[1].color);
+            offsetGradient = Math.Abs(hsv2.H - hsv.H);
+            hsv.H = hue;
+            keys[0].color = HSVToColor(hsv);
+            for (var i = 1; i < keys.Length; i++)
             {
-                if (mat.HasProperty(colorProperty))
-                {
-                    setMatHUEColor(mat, colorProperty, hue);
-                }
+                hsv = ColorToHSV(keys[i].color);
+                hsv.H = Mathf.Repeat(hsv.H + offsetGradient, 1.0f);
+                keys[i].color = HSVToColor(hsv);
             }
+            gradient.colorKeys = keys;
+            colorPS.gradient = gradient;
+            colorProperty.color = colorPS;
+
+
         }
 
         var rfx4_shaderColorGradients = go.GetComponentsInChildren<RFX4_ShaderColorGradient>(true);
-        
+
         foreach (var rfx4_shaderColorGradient in rfx4_shaderColorGradients)
         {
             rfx4_shaderColorGradient.HUE = hue;
         }
 
-        
+
     }
+
 
     static Material setMatHUEColor(Material mat, String name, float hueColor)
     {

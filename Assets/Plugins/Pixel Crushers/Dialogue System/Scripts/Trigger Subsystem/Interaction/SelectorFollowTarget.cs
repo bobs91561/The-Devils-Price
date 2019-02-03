@@ -1,7 +1,7 @@
 // Copyright (c) Pixel Crushers. All rights reserved.
 
-using UnityEngine;
 using PixelCrushers.DialogueSystem.UnityGUI;
+using UnityEngine;
 
 namespace PixelCrushers.DialogueSystem
 {
@@ -10,6 +10,9 @@ namespace PixelCrushers.DialogueSystem
     /// This component modifies the behavior of a Selector or ProximitySelector to 
     /// draw the heading and reticle on top of the selection instead an absolute
     /// screen position.
+    /// 
+    /// If you're using this with Standard UI, size the Main Graphic appropriately so
+    /// this script can determine its size.
     /// </summary>
     [AddComponentMenu("")] // Use wrapper.
     public class SelectorFollowTarget : MonoBehaviour
@@ -30,10 +33,13 @@ namespace PixelCrushers.DialogueSystem
         private Vector2 selectionHeadingSize = Vector2.zero;
         private Vector2 selectionUseMessageSize = Vector2.zero;
 
+        private SelectorUseStandardUIElements selectorUseStandardUIElements = null;
+
         void Awake()
         {
             selector = GetComponent<Selector>();
             proximitySelector = GetComponent<ProximitySelector>();
+            selectorUseStandardUIElements = GetComponent<SelectorUseStandardUIElements>();
 
         }
 
@@ -64,10 +70,39 @@ namespace PixelCrushers.DialogueSystem
         }
 
         /// <summary>
-        /// Draws the selection UI on top of the selection target.
+        /// If using Standard UI, positions the UI elements on top of the usable target.
+        /// </summary>
+        public virtual void Update()
+        {
+            if (selectorUseStandardUIElements == null || !selectorUseStandardUIElements.enabled || StandardUISelectorElements.instance == null) return;
+            Usable usable = null;
+            if (selector != null && selector.enabled)
+            {
+                usable = selector.CurrentUsable;
+            }
+            else if (proximitySelector != null && proximitySelector.enabled)
+            {
+                usable = proximitySelector.CurrentUsable;
+            }
+            if (usable == null) return;
+            var mainGraphic = StandardUISelectorElements.instance.mainGraphic;
+            var selection = usable.gameObject;
+            var screenPos = UnityEngine.Camera.main.WorldToScreenPoint(selection.transform.position + (Vector3.up * selectionHeight));
+            screenPos += offset;
+            screenPos += new Vector3(-mainGraphic.rectTransform.sizeDelta.x / 2, mainGraphic.rectTransform.sizeDelta.y / 2, 0);
+            if (screenPos.z < 0) return;
+            mainGraphic.rectTransform.position = screenPos;
+        }
+
+        /// <summary>
+        /// If using legacy Unity GUI, draws the selection UI on top of the selection target.
         /// </summary>
         public virtual void OnGUI()
         {
+            // Use using Standard UI elements, don't draw legacy Unity GUI:
+            if (selectorUseStandardUIElements != null && selectorUseStandardUIElements.enabled) return;
+
+            // Otherwise draw it at usable's position:
             if (selector != null)
             {
                 DrawOnSelection(selector.CurrentUsable, selector.CurrentDistance, selector.reticle, selector.GuiStyle, selector.defaultUseMessage, selector.inRangeColor, selector.outOfRangeColor, selector.textStyle, selector.textStyleColor);

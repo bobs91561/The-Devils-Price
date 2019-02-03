@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 
 public class RFX4_WindCurves : MonoBehaviour
 {
@@ -15,6 +14,11 @@ public class RFX4_WindCurves : MonoBehaviour
     {
         windZone = GetComponent<WindZone>();
         windZone.windMain = WindCurve.Evaluate(0);
+#if UNITY_2018_1_OR_NEWER //thanks unity for one more fucking change of standard behaviour...
+        windZone.windMain = -WindCurve.Evaluate(0);
+#else
+        windZone.windMain = WindCurve.Evaluate(0);
+#endif
     }
 
     private void OnEnable()
@@ -26,11 +30,17 @@ public class RFX4_WindCurves : MonoBehaviour
     private void Update()
     {
         var time = Time.time - startTime;
-        if (canUpdate) {
+        if (canUpdate)
+        {
             var eval = WindCurve.Evaluate(time / GraphTimeMultiplier) * GraphIntensityMultiplier;
+#if UNITY_2018_1_OR_NEWER
+            windZone.windMain = -eval;
+#else
             windZone.windMain = eval;
+#endif
         }
-        if (time >= GraphTimeMultiplier) {
+        if (time >= GraphTimeMultiplier)
+        {
             if (IsLoop) startTime = Time.time;
             else canUpdate = false;
         }

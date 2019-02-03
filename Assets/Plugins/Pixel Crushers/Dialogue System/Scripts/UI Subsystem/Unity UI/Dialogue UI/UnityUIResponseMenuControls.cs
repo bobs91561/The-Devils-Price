@@ -469,7 +469,8 @@ namespace PixelCrushers.DialogueSystem
         {
             if (selectCurrentOnTimeout || DialogueManager.displaySettings.inputSettings.responseTimeoutAction == ResponseTimeoutAction.ChooseCurrentResponse)
             {
-                var currentButton = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.GetComponent<UnityUIResponseButton>();
+                var currentButton = (UnityEngine.EventSystems.EventSystem.current != null && UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject != null)
+                    ? UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.GetComponent<UnityUIResponseButton>() : null;
                 if (currentButton != null)
                 {
                     currentButton.OnClick();

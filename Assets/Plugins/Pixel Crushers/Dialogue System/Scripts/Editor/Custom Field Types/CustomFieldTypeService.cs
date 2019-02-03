@@ -49,13 +49,15 @@ namespace PixelCrushers.DialogueSystem
         public static string DrawField(Field field, DialogueDatabase dataBase)
         {
             TryConvertType(field);
-            return GetFieldCustomType(field.typeString).Draw(field.value, dataBase);
+            var fieldCustomType = GetFieldCustomType(field.typeString);
+            return (fieldCustomType != null) ? fieldCustomType.Draw(field.value, dataBase) : field.value;
         }
 
         public static string DrawField(Rect rect, Field field, DialogueDatabase dataBase)
         {
             TryConvertType(field);
-            return GetFieldCustomType(field.typeString).Draw(rect, field.value, dataBase);
+            var fieldCustomType = GetFieldCustomType(field.typeString);
+            return (fieldCustomType != null) ? fieldCustomType.Draw(rect, field.value, dataBase) : field.value;
         }
 
         public static void DrawFieldType(Field field)
@@ -193,11 +195,13 @@ namespace PixelCrushers.DialogueSystem
         {
             classTypeName = "PixelCrushers.DialogueSystem." + classTypeName;
             Type t = Type.GetType(classTypeName) ??
+                Type.GetType(classTypeName + ",DialogueSystemEditor", false, false) ??
                 Type.GetType(classTypeName + ",DialogueSystemEditors", false, false) ??
-                    Type.GetType(classTypeName + ",Assembly-CSharp-Editor", false, false);
+                Type.GetType(classTypeName + ",Assembly-CSharp-Editor", false, false);
             if (t == null)
             {
-                throw new Exception("Type " + classTypeName + " not found.");
+                t = typeof(CustomFieldType_Text);
+                //---Was: throw new Exception("Type " + classTypeName + " not found.");
             }
             return Activator.CreateInstance(t);
         }
@@ -225,12 +229,25 @@ namespace PixelCrushers.DialogueSystem
 
                 //--- Now gets from all assemblies:
                 var derivedType = typeof(T);
+#if NET_STANDARD_2_0 || UNITY_IOS
+                var assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(p => !(p.IsDynamic)); // Exclude dynamic assemblies.
+#else
                 var assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(p => !(p.ManifestModule is System.Reflection.Emit.ModuleBuilder)); // Exclude dynamic assemblies.
-                var wrapperList = (from domainAssembly in assemblies
-                                   from assemblyType in domainAssembly.GetExportedTypes()
-                                   where derivedType.IsAssignableFrom(assemblyType) && assemblyType != derivedType
-                                   select assemblyType).ToArray();
-                list.AddRange(wrapperList);
+#endif
+                foreach (var assembly in assemblies)
+                {
+                    try
+                    {
+                        var wrapperList = (from assemblyType in assembly.GetExportedTypes()
+                                           where derivedType.IsAssignableFrom(assemblyType) && assemblyType != derivedType
+                                           select assemblyType).ToArray();
+                        list.AddRange(wrapperList);
+                    }
+                    catch (System.Exception)
+                    {
+                        // If error, ignore assembly and move on.
+                    }
+                }
             }
             catch (Exception e)
             {
@@ -256,7 +273,7 @@ namespace PixelCrushers.DialogueSystem
             else
             {
                 Debug.Log("Can't find type: " + typeString + ". Define a class with this type inside an Editor folder.");
-                return typesMapping["CustomFieldType_Text"];
+                return typesMapping.ContainsKey("CustomFieldType_Text") ? typesMapping["CustomFieldType_Text"] : null;
             }
         }
 

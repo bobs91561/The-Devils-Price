@@ -186,6 +186,14 @@ namespace PixelCrushers.DialogueSystem
             conversationUIElements.standardSubtitleControls.SetActorSubtitlePanelNumber(dialogueActor, subtitlePanelNumber);
         }
 
+        /// <summary>
+        /// Changes a dialogue actor's menu panel for the currently active conversation.
+        /// </summary>
+        public virtual void SetActorMenuPanelNumber(DialogueActor dialogueActor, MenuPanelNumber menuPanelNumber)
+        {
+            conversationUIElements.standardMenuControls.SetActorMenuPanelNumber(dialogueActor, menuPanelNumber);
+        }
+
         #endregion
 
         #region Response Menu

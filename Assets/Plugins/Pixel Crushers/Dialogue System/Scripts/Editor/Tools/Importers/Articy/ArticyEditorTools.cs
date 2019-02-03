@@ -1,9 +1,9 @@
 ﻿#if USE_ARTICY
 // Copyright (c) Pixel Crushers. All rights reserved.
 
-using UnityEngine;
-using UnityEditor;
 using System.IO;
+using UnityEditor;
+using UnityEngine;
 
 namespace PixelCrushers.DialogueSystem.Articy
 {
@@ -46,36 +46,59 @@ namespace PixelCrushers.DialogueSystem.Articy
         /// </summary>
         /// <param name="database">Dialogue database.</param>
         /// <param name="portraitFolder">Portrait folder in Assets, typically provided from ConverterPrefs.PortraitFolder.</param>
-        public static void FindPortraitTexturesInAssetDatabase(DialogueDatabase database, string portraitFolder)
+        public static void FindPortraitTexturesInAssetDatabase(ArticyData articyData, string portraitFolder, DialogueDatabase database)
         {
             if (database == null) return;
             foreach (var actor in database.actors)
             {
-                FindPortraitTextureInAssetDatabase(actor, portraitFolder);
+                FindPortraitTextureInAssetDatabase(articyData, portraitFolder, actor);
             }
         }
 
-        public static void FindPortraitTextureInAssetDatabase(Actor actor, string portraitFolder)
+        public static void FindPortraitTextureInAssetDatabase(ArticyData articyData, string portraitFolder, Actor actor)
         {
             if (actor == null || actor.portrait != null) return;
             string textureName = actor.textureName;
-            if (!string.IsNullOrEmpty(textureName))
+            actor.portrait = LoadTexture(portraitFolder, textureName, actor.Name);
+
+            // Alternate portraits:
+            var s = actor.LookupValue("SUBTABLE__AlternatePortraits");
+            if (!string.IsNullOrEmpty(s))
             {
-                string filename = Path.GetFileName(textureName).Replace('\\', '/');
-                string assetPath1 = string.Format("{0}/{1}", portraitFolder, filename);
-                int pathStart = textureName.IndexOf("/Assets/", System.StringComparison.OrdinalIgnoreCase);
-                string assetPath2 = (0 <= pathStart && pathStart < textureName.Length) ? textureName.Substring(pathStart) : string.Empty;
-                Texture2D texture = AssetDatabase.LoadAssetAtPath(assetPath1, typeof(Texture2D)) as Texture2D;
-                if (texture == null && !string.IsNullOrEmpty(assetPath2))
+                var alternatePortraitIDs = s.Split(';');
+                foreach (var alternatePortraitID in alternatePortraitIDs)
                 {
-                    texture = AssetDatabase.LoadAssetAtPath(assetPath2, typeof(Texture2D)) as Texture2D;
+                    if (articyData.assets.ContainsKey(alternatePortraitID))
+                    {
+                        var imageAsset = articyData.assets[alternatePortraitID];
+                        textureName = imageAsset.displayName.DefaultText + Path.GetExtension(imageAsset.assetFilename);
+                        var portrait = LoadTexture(portraitFolder, textureName, actor.Name);
+                        if (portrait != null)
+                        { 
+                            actor.alternatePortraits.Add(portrait);
+                        }
+                    }
                 }
-                if (texture == null)
-                {
-                    Debug.LogWarning(string.Format("{0}: Can't find portrait texture {1} for {2} at '{3}' or '{4}'.", DialogueDebug.Prefix, filename, actor.Name, assetPath1, assetPath2));
-                }
-                actor.portrait = texture;
             }
+        }
+
+        private static Texture2D LoadTexture(string portraitFolder, string textureName, string actorName)
+        {
+            if (string.IsNullOrEmpty(textureName)) return null;
+            string filename = Path.GetFileName(textureName).Replace('\\', '/');
+            string assetPath1 = string.Format("{0}/{1}", portraitFolder, filename);
+            int pathStart = textureName.IndexOf("/Assets/", System.StringComparison.OrdinalIgnoreCase);
+            string assetPath2 = (0 <= pathStart && pathStart < textureName.Length) ? textureName.Substring(pathStart) : string.Empty;
+            Texture2D texture = AssetDatabase.LoadAssetAtPath(assetPath1, typeof(Texture2D)) as Texture2D;
+            if (texture == null && !string.IsNullOrEmpty(assetPath2))
+            {
+                texture = AssetDatabase.LoadAssetAtPath(assetPath2, typeof(Texture2D)) as Texture2D;
+            }
+            if (texture == null)
+            {
+                Debug.LogWarning(string.Format("{0}: Can't find portrait texture {1} for {2} at '{3}' or '{4}'.", DialogueDebug.Prefix, filename, actorName, assetPath1, assetPath2));
+            }
+            return texture;
         }
 
     }

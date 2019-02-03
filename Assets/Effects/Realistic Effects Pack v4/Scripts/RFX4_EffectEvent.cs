@@ -5,74 +5,71 @@ public class RFX4_EffectEvent : MonoBehaviour
 {
     public GameObject CharacterEffect;
     public Transform CharacterAttachPoint;
+    public float CharacterEffect_DestroyTime = 10;
+    [Space]
+
     public GameObject CharacterEffect2;
     public Transform CharacterAttachPoint2;
-    public GameObject Effect;
+    public float CharacterEffect2_DestroyTime = 10;
+    [Space]
+
+    public GameObject MainEffect;
     public Transform AttachPoint;
+    public float Effect_DestroyTime = 10;
+    [Space]
+
     public GameObject AdditionalEffect;
     public Transform AdditionalEffectAttachPoint;
+    public float AdditionalEffect_DestroyTime = 10;
 
-    void OnEnable()
-    {
-        if (Effect!=null) {
-            Effect.SetActive(false);
-        }
-        if (AdditionalEffect != null)
-        {
-            AdditionalEffect.SetActive(false);
-        }
-        if (CharacterEffect != null)
-        {
-            CharacterEffect.SetActive(false);
-        }
-        if (CharacterEffect2 != null)
-        {
-            CharacterEffect2.SetActive(false);
-        }
-    }
-
+    [HideInInspector] public bool IsMobile;
     public void ActivateEffect()
     {
-        if(Effect == null) return;
-        Effect.SetActive(true);
+        if(MainEffect == null) return;
+        var instance = Instantiate(MainEffect, AttachPoint.transform.position, AttachPoint.transform.rotation);
+        UpdateEffectForMobileIsNeed(instance);
+        if (Effect_DestroyTime > 0.01f) Destroy(instance, Effect_DestroyTime);
     }
 
     public void ActivateAdditionalEffect()
     {
         if (AdditionalEffect == null) return;
-        AdditionalEffect.SetActive(true);
+        if (AdditionalEffectAttachPoint != null)
+        {
+            var instance = Instantiate(AdditionalEffect, AdditionalEffectAttachPoint.transform.position, AdditionalEffectAttachPoint.transform.rotation);
+            UpdateEffectForMobileIsNeed(instance);
+            if (AdditionalEffect_DestroyTime > 0.01f) Destroy(instance, AdditionalEffect_DestroyTime);
+        }
+        else AdditionalEffect.SetActive(true);
     }
 
     public void ActivateCharacterEffect()
     {
         if (CharacterEffect == null) return;
-        CharacterEffect.SetActive(true);
+        var instance = Instantiate(CharacterEffect, CharacterAttachPoint.transform.position, CharacterAttachPoint.transform.rotation, CharacterAttachPoint.transform);
+        UpdateEffectForMobileIsNeed(instance);
+        if (CharacterEffect_DestroyTime > 0.01f) Destroy(instance, CharacterEffect_DestroyTime);
     }
     
     public void ActivateCharacterEffect2()
     {
         if (CharacterEffect2 == null) return;
-        CharacterEffect2.SetActive(true);
+        var instance = Instantiate(CharacterEffect2, CharacterAttachPoint2.transform.position, CharacterAttachPoint2.transform.rotation, CharacterAttachPoint2);
+        UpdateEffectForMobileIsNeed(instance);
+        if (CharacterEffect2_DestroyTime > 0.01f) Destroy(instance, CharacterEffect2_DestroyTime);
     }
 
-
-    void LateUpdate()
+    void UpdateEffectForMobileIsNeed(GameObject instance)
     {
-        if (Effect != null && AttachPoint != null)
+        //if (IsMobile)
         {
-            Effect.transform.position = AttachPoint.position;
-        }
-        if (AdditionalEffect != null && AdditionalEffectAttachPoint != null)
-        {
-            AdditionalEffect.transform.position = AdditionalEffectAttachPoint.position;
-        }
-        if (CharacterEffect != null && CharacterAttachPoint != null)
-        {
-            CharacterEffect.transform.position = CharacterAttachPoint.position;
-        }
-        if (CharacterEffect2 != null && CharacterAttachPoint2 != null)
-        {
-            CharacterEffect2.transform.position = CharacterAttachPoint2.position;
+            var effectSettings = instance.GetComponent<RFX4_EffectSettings>();
+            if (effectSettings != null)
+            {
+                //effectSettings.EffectQuality = IsMobile ? RFX4_EffectSettings.Quality.Mobile : RFX4_EffectSettings.Quality.PC;
+                //effectSettings.ForceInitialize();
+            }
         }
     }
+
 }

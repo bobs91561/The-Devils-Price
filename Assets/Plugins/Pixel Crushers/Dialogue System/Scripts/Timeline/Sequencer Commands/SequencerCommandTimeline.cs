@@ -30,6 +30,11 @@ namespace PixelCrushers.DialogueSystem.SequencerCommands
 
         public IEnumerator Start()
         {
+            if (parameters == null || parameters.Length == 0)
+            {
+                Stop();
+                yield break;
+            }
             var mode = GetParameter(0).ToLower();
             var subject = GetSubject(1, Sequencer.Speaker);
             var nowait = string.Equals(GetParameter(2), "nowait", System.StringComparison.OrdinalIgnoreCase) ||

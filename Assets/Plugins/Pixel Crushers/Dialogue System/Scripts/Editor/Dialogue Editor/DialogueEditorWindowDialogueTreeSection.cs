@@ -1175,6 +1175,9 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
             if (conversation != null)
             {
                 var useSubmenus = conversation.dialogueEntries.Count > MaxEntriesForCrossConversationPopupNoSubmenus;
+#if UNITY_EDITOR_OSX
+                useSubmenus = false; // There may be a bug in Unity editor's call to NSMenuItem on MacOS.
+#endif
                 for (int i = 0; i < conversation.dialogueEntries.Count; i++)
                 {
                     var entry = conversation.dialogueEntries[i];

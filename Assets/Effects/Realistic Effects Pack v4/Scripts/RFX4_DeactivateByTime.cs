@@ -1,28 +1,30 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class RFX4_DeactivateByTime : MonoBehaviour {
 
+    public GameObject DeactivatedGameObject;
     public float DeactivateTime = 3;
 
-    private bool canUpdateState;
-	// Use this for initialization
+    private bool isActiveState;
+    private float currentTime;
+	
 	void OnEnable ()
 	{
-	    canUpdateState = true;
-	}
+        currentTime = 0;
+        isActiveState = true;
+	    //DeactivatedGameObject.SetActive(true);
+    }
 
     private void Update()
     {
-        if (canUpdateState) {
-            canUpdateState = false;
-            Invoke("DeactivateThis", DeactivateTime);
+        currentTime += Time.deltaTime;
+        if (isActiveState && currentTime >= DeactivateTime)
+        {
+            isActiveState = false;
+            DeactivatedGameObject.SetActive(false);
+           
         }
-    }
 
-    // Update is called once per frame
-    void DeactivateThis()
-    {
-        gameObject.SetActive(false);
-	}
+    }
 }

@@ -1,10 +1,10 @@
 // Copyright (c) Pixel Crushers. All rights reserved.
 
 #if !(USE_NLUA || OVERRIDE_LUA)
-using UnityEngine;
-using System.Text;
-using System.Collections.Generic;
 using Language.Lua;
+using System.Collections.Generic;
+using System.Text;
+using UnityEngine;
 
 namespace PixelCrushers.DialogueSystem
 {
@@ -19,6 +19,12 @@ namespace PixelCrushers.DialogueSystem
     /// </summary>
     public static class DialogueLua
     {
+
+        // SimStatus values:
+        public const string SimStatus = "SimStatus";
+        public const string Untouched = "Untouched";
+        public const string WasDisplayed = "WasDisplayed";
+        public const string WasOffered = "WasOffered";
 
         /// <summary>
         /// Gets or sets a value indicating whether to record SimStatus in the Lua environment.
@@ -58,7 +64,7 @@ namespace PixelCrushers.DialogueSystem
         /// </summary>
         public static void InitializeChatMapperVariables()
         {
-            Lua.Run("Actor = {}; Item = {}; Quest = Item; Location = {}; Conversation = {}; Variable = {}; Variable[\"Alert\"] = \"\"", DialogueDebug.logInfo);
+            Lua.Run("Actor = {}; Item = {}; Quest = Item; Location = {}; Conversation = {}; Variable = {}; Variable[\"Alert\"] = \"\"", DialogueDebug.LogInfo);
         }
 
         /// <summary>
@@ -80,7 +86,7 @@ namespace PixelCrushers.DialogueSystem
             AddToTable<Location>("Location", database.locations, loadedDatabases, first);
             AddToVariableTable(database.variables, loadedDatabases, first);
             AddToConversationTable(database.conversations, loadedDatabases, first);
-            if (!string.IsNullOrEmpty(database.globalUserScript)) Lua.Run(database.globalUserScript, DialogueDebug.logInfo);
+            if (!string.IsNullOrEmpty(database.globalUserScript)) Lua.Run(database.globalUserScript, DialogueDebug.LogInfo);
         }
 
         /// <summary>
@@ -137,18 +143,28 @@ namespace PixelCrushers.DialogueSystem
         {
             if (includeSimStatus)
             {
-                bool luaExceptionOccurred = false;
-                try
-                {
-                    return Lua.Run(string.Format("return Conversation[{0}].Dialog[{1}].SimStatus", new System.Object[] { conversationID, entryID }), false, true).asString;
-                }
-                catch (System.Exception)
-                {
-                    luaExceptionOccurred = true;
-                }
-                if (luaExceptionOccurred && DialogueDebug.logErrors) Debug.LogError(string.Format("{0}: The Lua exception above indicates a dialogue database inconsistency. Is an invalid conversation ID recorded in a dialogue entry? Is the database loaded?", new System.Object[] { DialogueDebug.Prefix }));
+                var simStatusTable = GetSimStatusTable(conversationID, entryID);
+                var result = simStatusTable.GetValue(DialogueLua.SimStatus) as LuaString;
+                if (result != null) return result.Text;
             }
-            return string.Empty;
+            return Untouched;
+        }
+
+        private static LuaTable GetSimStatusTable(int conversationID, int entryID)
+        {
+            LuaTable conversationTable = Lua.Environment.GetValue("Conversation") as LuaTable;
+            LuaTable conversationFieldsTable = conversationTable.GetValue(conversationID) as LuaTable;
+            LuaTable dialogTable = (conversationFieldsTable != null)
+                ? conversationFieldsTable.GetValue("Dialog") as LuaTable
+                : AddToConversationTable(conversationTable, DialogueManager.MasterDatabase.GetConversation(conversationID), true);
+            var simStatusTable = dialogTable.GetValue(entryID) as LuaTable;
+            if (simStatusTable == null)
+            {
+                simStatusTable = new LuaTable();
+                simStatusTable.AddRaw(SimStatus, new LuaString(DialogueLua.Untouched));
+                dialogTable.AddRaw(entryID, simStatusTable);
+            }
+            return simStatusTable;
         }
 
         /// <summary>
@@ -162,7 +178,7 @@ namespace PixelCrushers.DialogueSystem
         /// </param>
         public static void MarkDialogueEntryUntouched(DialogueEntry dialogueEntry)
         {
-            MarkDialogueEntry(dialogueEntry, "Untouched");
+            MarkDialogueEntry(dialogueEntry, DialogueLua.Untouched);
         }
 
         /// <summary>
@@ -176,7 +192,7 @@ namespace PixelCrushers.DialogueSystem
         /// </param>
         public static void MarkDialogueEntryDisplayed(DialogueEntry dialogueEntry)
         {
-            MarkDialogueEntry(dialogueEntry, "WasDisplayed");
+            MarkDialogueEntry(dialogueEntry, DialogueLua.WasDisplayed);
         }
 
         /// <summary>
@@ -193,17 +209,10 @@ namespace PixelCrushers.DialogueSystem
         {
             if (includeSimStatus && (dialogueEntry != null))
             {
-                try
+                string simStatus = GetSimStatus(dialogueEntry);
+                if (!string.Equals(simStatus, DialogueLua.WasDisplayed))
                 {
-                    string simStatus = Lua.Run(string.Format("return Conversation[{0}].Dialog[{1}].SimStatus", new System.Object[] { dialogueEntry.conversationID, dialogueEntry.id })).asString;
-                    if (!string.Equals(simStatus, "WasDisplayed"))
-                    {
-                        MarkDialogueEntry(dialogueEntry, "WasOffered");
-                    }
-                }
-                catch (System.Exception)
-                {
-                    if (DialogueDebug.logErrors) Debug.LogError(string.Format("{0}: The Lua exception above indicates a dialogue database inconsistency. Is an invalid conversation ID recorded in a dialogue entry? Is the database loaded?", new System.Object[] { DialogueDebug.Prefix }));
+                    MarkDialogueEntry(dialogueEntry, DialogueLua.WasOffered);
                 }
             }
         }
@@ -219,24 +228,16 @@ namespace PixelCrushers.DialogueSystem
         {
             if (includeSimStatus && (dialogueEntry != null))
             {
-                bool luaExceptionOccurred = false;
-                try
-                {
-                    Lua.Run(string.Format("Conversation[{0}].Dialog[{1}].SimStatus = \"{2}\"", new System.Object[] { dialogueEntry.conversationID, dialogueEntry.id, status }), false, true);
-                }
-                catch (System.Exception)
-                {
-                    luaExceptionOccurred = true;
-                }
-                if (luaExceptionOccurred && DialogueDebug.logErrors) Debug.LogError(string.Format("{0}: The Lua exception above indicates a dialogue database inconsistency. Is an invalid conversation ID recorded in a dialogue entry? Is the database loaded?", new System.Object[] { DialogueDebug.Prefix }));
+                var simStatusTable = GetSimStatusTable(dialogueEntry.conversationID, dialogueEntry.id);
+                simStatusTable.SetNameValue(SimStatus, new LuaString(status));
             }
         }
 
         private static void AddToTable<T>(string arrayName, List<T> assets, List<DialogueDatabase> loadedDatabases, bool addRaw) where T : Asset
         {
             // Note: Optimized: Overwrite existing values.
-            Lua.wasInvoked = true;
-            LuaTable assetTable = Lua.environment.GetValue(arrayName) as LuaTable;
+            Lua.WasInvoked = true;
+            LuaTable assetTable = Lua.Environment.GetValue(arrayName) as LuaTable;
             if (assetTable == null) return;
 
             for (int i = 0; i < assets.Count; i++)
@@ -264,8 +265,8 @@ namespace PixelCrushers.DialogueSystem
         private static void AddToVariableTable(List<Variable> variables, List<DialogueDatabase> loadedDatabases, bool addRaw)
         {
             // Note: Optimized: Overwrite existing values.
-            Lua.wasInvoked = true;
-            LuaTable assetTable = Lua.environment.GetValue("Variable") as LuaTable;
+            Lua.WasInvoked = true;
+            LuaTable assetTable = Lua.Environment.GetValue("Variable") as LuaTable;
             if (assetTable == null) return;
             for (int i = 0; i < variables.Count; i++)
             {
@@ -285,48 +286,55 @@ namespace PixelCrushers.DialogueSystem
         public static void AddToConversationTable(List<Conversation> conversations, List<DialogueDatabase> loadedDatabases, bool addRaw = false)
         {
             // Note: Optimized: Overwrite existing values.
-            Lua.wasInvoked = true;
-            LuaTable conversationTable = Lua.environment.GetValue("Conversation") as LuaTable;
+            Lua.WasInvoked = true;
+            LuaTable conversationTable = Lua.Environment.GetValue("Conversation") as LuaTable;
             if (conversationTable == null) return;
-
             for (int i = 0; i < conversations.Count; i++)
             {
                 var conversation = conversations[i];
-
-                // Add fields to new conversation field table:
-                LuaTable fieldTable = new LuaTable();
-                for (int j = 0; j < conversation.fields.Count; j++)
-                {
-                    var field = conversation.fields[j];
-                    var fieldIndex = StringToTableIndex(field.title);
-                    fieldTable.AddRaw(fieldIndex, GetFieldLuaValue(field));
-                }
-
-                // Add Dialog SimStatus sub-table as a field to the new conversation field table:
-                if (includeSimStatus)
-                {
-                    LuaTable dialogTable = new LuaTable();
-                    for (int j = 0; j < conversation.dialogueEntries.Count; j++)
-                    {
-                        var dialogueEntry = conversation.dialogueEntries[j];
-                        // [NOTE] To reduce Lua memory use, we only record SimStatus of dialogue entries:
-                        var simStatusTable = new LuaTable();
-                        simStatusTable.AddRaw("SimStatus", new LuaString("Untouched"));
-                        dialogTable.AddRaw(dialogueEntry.id, simStatusTable);
-                    }
-                    fieldTable.AddRaw("Dialog", dialogTable);
-                }
-
-                // Add conversation to Conversation[] table:
-                if (addRaw)
-                {
-                    conversationTable.AddRaw(conversation.id, fieldTable);
-                }
-                else
-                {
-                    conversationTable.SetKeyValue(new LuaNumber(conversation.id), fieldTable);
-                }
+                AddToConversationTable(conversationTable, conversation, addRaw);
             }
+        }
+
+        // Returns Dialog table if applicable.
+        public static LuaTable AddToConversationTable(LuaTable conversationTable, Conversation conversation, bool addRaw = false)
+        {
+            LuaTable dialogTable = null;
+
+            // Add fields to new conversation field table:
+            LuaTable fieldTable = new LuaTable();
+            for (int j = 0; j < conversation.fields.Count; j++)
+            {
+                var field = conversation.fields[j];
+                var fieldIndex = StringToTableIndex(field.title);
+                fieldTable.AddRaw(fieldIndex, GetFieldLuaValue(field));
+            }
+
+            // Add Dialog SimStatus sub-table as a field to the new conversation field table:
+            if (includeSimStatus)
+            {
+                dialogTable = new LuaTable();
+                for (int j = 0; j < conversation.dialogueEntries.Count; j++)
+                {
+                    var dialogueEntry = conversation.dialogueEntries[j];
+                    // [NOTE] To reduce Lua memory use, we only record SimStatus of dialogue entries:
+                    var simStatusTable = new LuaTable();
+                    simStatusTable.AddRaw(DialogueLua.SimStatus, new LuaString(DialogueLua.Untouched));
+                    dialogTable.AddRaw(dialogueEntry.id, simStatusTable);
+                }
+                fieldTable.AddRaw("Dialog", dialogTable);
+            }
+
+            // Add conversation to Conversation[] table:
+            if (addRaw)
+            {
+                conversationTable.AddRaw(conversation.id, fieldTable);
+            }
+            else
+            {
+                conversationTable.SetKeyValue(new LuaNumber(conversation.id), fieldTable);
+            }
+            return dialogTable;
         }
 
         private static LuaValue GetFieldLuaValue(Field field)
@@ -376,7 +384,7 @@ namespace PixelCrushers.DialogueSystem
             }
             if (!string.IsNullOrEmpty(extraField)) sb.Append(extraField);
             sb.Append('}');
-            Lua.Run(sb.ToString(), DialogueDebug.logInfo);
+            Lua.Run(sb.ToString(), DialogueDebug.LogInfo);
         }
 
         /// <summary>
@@ -433,11 +441,11 @@ namespace PixelCrushers.DialogueSystem
                 {
                     if (asset is Conversation)
                     {
-                        Lua.Run(string.Format("{0}[{1}] = nil", new System.Object[] { arrayName, asset.id }), DialogueDebug.logInfo);
+                        Lua.Run(string.Format("{0}[{1}] = nil", new System.Object[] { arrayName, asset.id }), DialogueDebug.LogInfo);
                     }
                     else
                     {
-                        Lua.Run(string.Format("{0}[\"{1}\"] = nil", new System.Object[] { arrayName, StringToTableIndex(asset.Name) }), DialogueDebug.logInfo);
+                        Lua.Run(string.Format("{0}[\"{1}\"] = nil", new System.Object[] { arrayName, StringToTableIndex(asset.Name) }), DialogueDebug.LogInfo);
                     }
                 }
             }
@@ -478,7 +486,7 @@ namespace PixelCrushers.DialogueSystem
         /// <param name="fieldName">Field name.</param>
         public static string GetLocalizedText(string tableName, string elementName, string fieldName)
         {
-            return GetLocalizedTableField(tableName, elementName, fieldName).asString;
+            return GetLocalizedTableField(tableName, elementName, fieldName).AsString;
         }
 
         /// <summary>
@@ -509,7 +517,7 @@ namespace PixelCrushers.DialogueSystem
         {
             if ((asset1 == null) || (asset2 == null))
             {
-                if (DialogueDebug.logWarnings) Debug.LogWarning(DialogueDebug.Prefix + ": Syntax error in status function");
+                if (DialogueDebug.LogWarnings) Debug.LogWarning(DialogueDebug.Prefix + ": Syntax error in status function");
                 return "INVALID";
             }
             string asset1Name = StringToTableIndex(asset1.GetValue("Name").ToString());
@@ -524,7 +532,7 @@ namespace PixelCrushers.DialogueSystem
         {
             if ((actor1 == null) || (actor2 == null) || (relationshipType == null))
             {
-                if (DialogueDebug.logWarnings) Debug.LogWarning(DialogueDebug.Prefix + ": Syntax error in relationship function");
+                if (DialogueDebug.LogWarnings) Debug.LogWarning(DialogueDebug.Prefix + ": Syntax error in relationship function");
                 return "INVALID";
             }
             string actor1Name = StringToTableIndex(actor1.GetValue("Name").ToString());
@@ -667,7 +675,7 @@ namespace PixelCrushers.DialogueSystem
         public static void RefreshStatusTableFromLua()
         {
             statusTable.Clear();
-            string statusTableString = Lua.Run("return StatusTable").asString;
+            string statusTableString = Lua.Run("return StatusTable").AsString;
             char[] semicolons = new char[] { ';' };
             char[] commas = new char[] { ',' };
             foreach (var entry in statusTableString.Split(semicolons))
@@ -685,7 +693,7 @@ namespace PixelCrushers.DialogueSystem
         public static void RefreshRelationshipTableFromLua()
         {
             relationshipTable.Clear();
-            string relationshipTableString = Lua.Run("return RelationshipTable").asString;
+            string relationshipTableString = Lua.Run("return RelationshipTable").AsString;
             char[] semicolons = new char[] { ';' };
             char[] commas = new char[] { ',' };
             foreach (var entry in relationshipTableString.Split(semicolons))
@@ -762,13 +770,13 @@ namespace PixelCrushers.DialogueSystem
         /// <param name="s">The original asset/field name.</param>
         public static string StringToLocalizedTableIndex(string s)
         {
-            if (Localization.isDefaultLanguage || string.IsNullOrEmpty(s))
+            if (Localization.IsDefaultLanguage || string.IsNullOrEmpty(s))
             {
                 return StringToTableIndex(s);
             }
             else
             {
-                return StringToTableIndex(s + "_" + Localization.language);
+                return StringToTableIndex(s + "_" + Localization.Language);
             }
         }
 
@@ -789,7 +797,7 @@ namespace PixelCrushers.DialogueSystem
         /// <param name="element">Element name (e.g., "Player").</param>
         public static bool DoesTableElementExist(string table, string element)
         {
-            LuaTable luaTable = Lua.environment.GetValue(table) as LuaTable;
+            LuaTable luaTable = Lua.Environment.GetValue(table) as LuaTable;
             return (luaTable != null) ? (luaTable.GetKey(StringToTableIndex(element)) != LuaNil.Nil) : false;
             //--- Was (unoptimized):
             //LuaTableWrapper luaTable = SafeGetLuaResult(string.Format("return {0}", new System.Object[] { table })).AsTable;
@@ -811,12 +819,12 @@ namespace PixelCrushers.DialogueSystem
         /// <param name="field">Name of a field in the element.</param>
         public static Lua.Result GetTableField(string table, string element, string field)
         {
-            LuaTable luaTable = Lua.environment.GetValue(table) as LuaTable;
-            if (luaTable == null) return Lua.noResult;
+            LuaTable luaTable = Lua.Environment.GetValue(table) as LuaTable;
+            if (luaTable == null) return Lua.NoResult;
             LuaTable elementTable = luaTable.GetValue(StringToTableIndex(element)) as LuaTable;
-            if (elementTable == null) return Lua.noResult;
+            if (elementTable == null) return Lua.NoResult;
             LuaValue luaValue = elementTable.GetValue(StringToTableIndex(field));
-            return (luaValue != null && luaValue != LuaNil.Nil) ? new Lua.Result(luaValue) : Lua.noResult;
+            return (luaValue != null && luaValue != LuaNil.Nil) ? new Lua.Result(luaValue) : Lua.NoResult;
             //--- Was (unoptimized):
             //string tableIndex = StringToTableIndex(element);
             //LuaTableWrapper luaTable = SafeGetLuaResult(string.Format("return {0}", new System.Object[] { table })).AsTable;
@@ -838,8 +846,8 @@ namespace PixelCrushers.DialogueSystem
         /// <param name="value">The value to set the field to.</param>
         public static void SetTableField(string table, string element, string field, object value)
         {
-            Lua.wasInvoked = true;
-            LuaTable luaTable = Lua.environment.GetValue(table) as LuaTable;
+            Lua.WasInvoked = true;
+            LuaTable luaTable = Lua.Environment.GetValue(table) as LuaTable;
             if (luaTable == null) throw new System.NullReferenceException("Table not found in Lua environment: " + table);
             LuaTable elementTable = luaTable.GetValue(StringToTableIndex(element)) as LuaTable;
             if (elementTable == null)
@@ -963,8 +971,8 @@ namespace PixelCrushers.DialogueSystem
         /// <example><code>int numKills = GetVariable("Kills").AsInt</code></example>
         public static Lua.Result GetVariable(string variable)
         {
-            LuaTable luaTable = Lua.environment.GetValue("Variable") as LuaTable;
-            return (luaTable != null) ? new Lua.Result(luaTable.GetValue(StringToTableIndex(variable))) : Lua.noResult;
+            LuaTable luaTable = Lua.Environment.GetValue("Variable") as LuaTable;
+            return (luaTable != null) ? new Lua.Result(luaTable.GetValue(StringToTableIndex(variable))) : Lua.NoResult;
             //--- Was (unoptimized):
             //return SafeGetLuaResult(string.Format("return Variable[\"{0}\"]", new System.Object[] { StringToTableIndex(variable) }));
         }
@@ -977,8 +985,8 @@ namespace PixelCrushers.DialogueSystem
         /// <example><code>SetVariable("Met_Wizard", true);</code></example>
         public static void SetVariable(string variable, object value)
         {
-            Lua.wasInvoked = true;
-            LuaTable luaTable = Lua.environment.GetValue("Variable") as LuaTable;
+            Lua.WasInvoked = true;
+            LuaTable luaTable = Lua.Environment.GetValue("Variable") as LuaTable;
             if (luaTable == null) return;
             luaTable.SetNameValue(StringToTableIndex(variable), LuaInterpreterExtensions.ObjectToLuaValue(value));
         }
@@ -994,7 +1002,7 @@ namespace PixelCrushers.DialogueSystem
         {
             //---Was: return GetTableField(table, element, StringToLocalizedTableIndex(field));
             var result = GetTableField(table, element, StringToLocalizedTableIndex(field));
-            if (Localization.useDefaultIfUndefined && ((result.luaValue == null) || (result.luaValue is LuaNil) || (result.luaValue is LuaString) && string.IsNullOrEmpty((result.luaValue as LuaString).Text)))
+            if (Localization.UseDefaultIfUndefined && ((result.luaValue == null) || (result.luaValue is LuaNil) || (result.luaValue is LuaString) && string.IsNullOrEmpty((result.luaValue as LuaString).Text)))
             {
                 return GetTableField(table, element, field);
             }

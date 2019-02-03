@@ -1098,6 +1098,7 @@ MonoBehaviour:
   textTable: {fileID: 0}
   noActiveQuestsText: No Active Quests
   noCompletedQuestsText: No Completed Quests
+  checkVisibleField: 0
   questHeadingSource: 0
   abandonQuestState: 1
   pauseWhileOpen: 1
@@ -1114,6 +1115,9 @@ MonoBehaviour:
   questGroupTemplate: {fileID: 11462688}
   activeQuestHeadingTemplate: {fileID: 11491532}
   completedQuestHeadingTemplate: {fileID: 11481438}
+  showNoQuestsText: 1
+  showDetailsOnSelect: 0
+  keepGroupsExpanded: 0
   questDetailsContentContainer: {fileID: 22469798}
   questHeadingTextTemplate: {fileID: 11484122}
   questDescriptionTextTemplate: {fileID: 11421068}
@@ -1123,7 +1127,20 @@ MonoBehaviour:
   abandonButtonTemplate: {fileID: 11494650}
   abandonQuestPanel: {fileID: 11436604}
   abandonQuestTitleText:
-    m_uiText: {fileID: 11467252}
+    m_uiText: {fileID: 11485500}
+  onOpen:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  onClose:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  addEventSystemIfNeeded: 1
+  foldoutToSelect: 
+  questTitleToSelect: 
 --- !u!114 &11401308
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2251,6 +2268,7 @@ MonoBehaviour:
   firstSelected: {fileID: 195742}
   focusCheckFrequency: 0.2
   refreshSelectablesFrequency: 0
+  selectPreviousOnDisable: 1
   showAnimationTrigger: Show
   hideAnimationTrigger: Hide
   startState: 0
@@ -2687,6 +2705,7 @@ MonoBehaviour:
   firstSelected: {fileID: 195372}
   focusCheckFrequency: 0.2
   refreshSelectablesFrequency: 0
+  selectPreviousOnDisable: 1
   showAnimationTrigger: Show
   hideAnimationTrigger: Hide
   startState: 2

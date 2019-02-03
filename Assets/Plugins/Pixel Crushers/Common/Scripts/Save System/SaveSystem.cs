@@ -486,6 +486,8 @@ namespace PixelCrushers
         /// <param name="savedGameData">Saved game data.</param>
         public static void ApplySavedGameData(SavedGameData savedGameData)
         {
+            if (savedGameData == null) return;
+            m_savedGameData = savedGameData;
             if (m_savers.Count <= 0) return;
             for (int i = m_savers.Count - 1; i >= 0; i--) // A saver may remove itself from list during apply.
             {
@@ -550,7 +552,11 @@ namespace PixelCrushers
         /// <param name="savedGameData"></param>
         public static void LoadGame(SavedGameData savedGameData)
         {
-            if (saveCurrentScene)
+            if (savedGameData == null)
+            {
+                if (Debug.isDebugBuild) Debug.LogWarning("SaveSystem.LoadGame received null saved game data. Not loading.");
+            }
+            else if (saveCurrentScene)
             {
                 instance.StartCoroutine(LoadSceneCoroutine(savedGameData, null));
             }

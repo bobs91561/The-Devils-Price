@@ -1,18 +1,19 @@
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class RFX4_UVAnimation : MonoBehaviour
 {
     public int TilesX = 4;
     public int TilesY = 4;
-    public int FPS = 30;
+    [Range(1, 360)]
+    public int FPS = 32;
     public int StartFrameOffset;
     public bool IsLoop = true;
-    public float StartDelay = 0;
     public bool IsReverse;
-    public bool IsInterpolateFrames;
+    public bool IsInterpolateFrames = true;
     public RFX4_TextureShaderProperties[] TextureNames = { RFX4_TextureShaderProperties._MainTex };
 
-    public AnimationCurve FrameOverTime = AnimationCurve.Linear(0, 1, 1, 1);
+   // public AnimationCurve FrameOverTime = AnimationCurve.Linear(0, 1, 1, 1);
 
     private int count;
     private Renderer currentRenderer;
@@ -38,18 +39,20 @@ public class RFX4_UVAnimation : MonoBehaviour
         isInitialized = true;
     }
 
+    private void OnWillRenderObject()
+    {
+        if (!Application.isPlaying) ManualUpdate();
+    }
+
     void Update()
     {
-        if (!canUpdate) return;
-        UpdateMaterial();
-        SetSpriteAnimation();
-        if (IsInterpolateFrames)
-            SetSpriteAnimationIterpolated();
+        if (Application.isPlaying) ManualUpdate();
     }
 
     private void InitDefaultVariables()
     {
-        InitializeMaterial();
+        currentRenderer = GetComponent<Renderer>();
+        UpdateMaterial();
 
         totalFrames = TilesX * TilesY;
         previousIndex = 0;
@@ -58,7 +61,7 @@ public class RFX4_UVAnimation : MonoBehaviour
         var offset = Vector3.zero;
         StartFrameOffset = StartFrameOffset - (StartFrameOffset / count) * count;
         size = new Vector2(1f / TilesX, 1f / TilesY);
-        animationStartTime = Time.time;
+        animationStartTime = Application.isPlaying ? Time.time : Time.realtimeSinceStartup ;
         if (instanceMaterial != null)
         {
             foreach (var textureName in TextureNames) {
@@ -68,41 +71,28 @@ public class RFX4_UVAnimation : MonoBehaviour
         }
     }
 
-    private void InitializeMaterial()
+    private void ManualUpdate()
     {
-        currentRenderer = GetComponent<Renderer>();
-        if (currentRenderer == null)
-        {
-            projector = GetComponent<Projector>();
-            if (projector != null)
-            {
-                if (!projector.material.name.EndsWith("(Instance)"))
-                    projector.material = new Material(projector.material) {name = projector.material.name + " (Instance)"};
-                instanceMaterial = projector.material;
-            }
-        }
-        else
-            instanceMaterial = currentRenderer.material;
+        if (!canUpdate) return;
+        UpdateMaterial();
+        SetSpriteAnimation();
+        if (IsInterpolateFrames)
+            SetSpriteAnimationIterpolated();
     }
 
     private void UpdateMaterial()
     {
-        if (currentRenderer == null)
-        {
-            if (projector != null)
-            {
-                if (!projector.material.name.EndsWith("(Instance)"))
-                    projector.material = new Material(projector.material) { name = projector.material.name + " (Instance)" };
-                instanceMaterial = projector.material;
-            }
-        }
-        else
-            instanceMaterial = currentRenderer.material;
+        if (currentRenderer == null) return;
+        if (Application.isPlaying) instanceMaterial = currentRenderer.material;
+        instanceMaterial = currentRenderer.sharedMaterial;
+        if (IsInterpolateFrames) instanceMaterial.EnableKeyword("USE_SCRIPT_FRAMEBLENDING");
+        else instanceMaterial.DisableKeyword("USE_SCRIPT_FRAMEBLENDING");
     }
 
     void SetSpriteAnimation()
     {
-        int index = (int)((Time.time - animationStartTime) * FPS);
+        var time = Application.isPlaying ? Time.time : Time.realtimeSinceStartup;
+        int index = (int)((time - animationStartTime) * FPS);
         index = index % totalFrames;
 
         if (!IsLoop && index < previousIndex)
@@ -137,9 +127,26 @@ public class RFX4_UVAnimation : MonoBehaviour
         }
     }
 
+    float prevRealTime;
+    public float DeltaTime()
+    {
+        if (Application.isPlaying)
+        {
+            return Time.deltaTime;
+        }
+        else
+        {
+            var delta = Time.realtimeSinceStartup - prevRealTime;
+            prevRealTime = Time.realtimeSinceStartup;
+            return delta;
+        }
+    }
+
+
+
     private void SetSpriteAnimationIterpolated()
     {
-        currentInterpolatedTime += Time.deltaTime;
+        currentInterpolatedTime += DeltaTime();
 
         var nextIndex = previousIndex + 1;
         if (nextIndex == totalFrames)
@@ -155,7 +162,7 @@ public class RFX4_UVAnimation : MonoBehaviour
         var offset = new Vector2(offsetX, offsetY);
         if (instanceMaterial != null)
         {
-            instanceMaterial.SetVector("_Tex_NextFrame", new Vector4(size.x, size.y, offset.x, offset.y));
+            instanceMaterial.SetVector("_MainTex_NextFrame", new Vector4(size.x, size.y, offset.x, offset.y));
             instanceMaterial.SetFloat("InterpolationValue", Mathf.Clamp01(currentInterpolatedTime*FPS));
         }
     }

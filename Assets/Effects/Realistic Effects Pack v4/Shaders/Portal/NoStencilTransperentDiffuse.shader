@@ -1,5 +1,6 @@
-// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
 // Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
 
 // Upgrade NOTE: replaced '_Object2World' with '_Object2World'
 
@@ -23,7 +24,7 @@ Tags { "Queue"="Transparent" "IgnoreProjector"="True" "RenderType"="Transparent"
 			CGPROGRAM
 			#pragma vertex vert
 			#pragma fragment frag
-#pragma target 3.0
+
 			#include "UnityCG.cginc"
 
 			sampler2D _MainTex;

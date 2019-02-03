@@ -215,7 +215,7 @@ namespace PixelCrushers.DialogueSystem
         /// <param name='e'>
         /// Event args.
         /// </param>
-        private void OnFinishedSubtitle(object sender, EventArgs e)
+        public void OnFinishedSubtitle(object sender, EventArgs e)
         {
             var randomize = randomizeNextEntry;
             randomizeNextEntry = false;
@@ -252,7 +252,7 @@ namespace PixelCrushers.DialogueSystem
         /// <param name='e'>
         /// Selected response event args.
         /// </param>
-        private void OnSelectedResponse(object sender, SelectedResponseEventArgs e)
+        public void OnSelectedResponse(object sender, SelectedResponseEventArgs e)
         {
             GotoState(m_model.GetState(e.DestinationEntry));
         }
@@ -267,6 +267,20 @@ namespace PixelCrushers.DialogueSystem
                 if (state.pcResponses.Length > 0)
                 {
                     m_view.SelectResponse(new SelectedResponseEventArgs(state.pcResponses[0]));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Follows the last PC response in the current state.
+        /// </summary>
+        public void GotoLastResponse()
+        {
+            if (state != null)
+            {
+                if (state.pcResponses.Length > 0)
+                {
+                    m_view.SelectResponse(new SelectedResponseEventArgs(state.pcResponses[state.pcResponses.Length - 1]));
                 }
             }
         }

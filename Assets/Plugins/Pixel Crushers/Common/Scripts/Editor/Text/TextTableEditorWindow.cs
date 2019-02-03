@@ -59,6 +59,7 @@ namespace PixelCrushers
         private ReorderableList m_languageList = null;
         private ReorderableList m_fieldList = null;
         private SerializedObject m_serializedObject = null;
+        private GUIStyle textAreaStyle = null;
 
         private const string EncodingTypeEditorPrefsKey = "PixelCrushers.EncodingType";
 
@@ -322,9 +323,14 @@ namespace PixelCrushers
         {
             var columnWidth = (rect.width / 2) - 1;
 
+            var nameControl = "Field" + index;
+            var valueControl = "Value" + index;
+
+
             var fieldValuesProperty = m_serializedObject.FindProperty("m_fieldValues");
             var fieldValueProperty = fieldValuesProperty.GetArrayElementAtIndex(index);
             var fieldNameProperty = fieldValueProperty.FindPropertyRelative("m_fieldName");
+            GUI.SetNextControlName(nameControl);
             EditorGUI.PropertyField(new Rect(rect.x, rect.y + 1, columnWidth, EditorGUIUtility.singleLineHeight), fieldNameProperty, GUIContent.none, false);
             var keysProperty = fieldValueProperty.FindPropertyRelative("m_keys");
             var valuesProperty = fieldValueProperty.FindPropertyRelative("m_values");
@@ -346,7 +352,14 @@ namespace PixelCrushers
                 valuesProperty.GetArrayElementAtIndex(valueIndex).stringValue = string.Empty;
             }
             var valueProperty = valuesProperty.GetArrayElementAtIndex(valueIndex);
+            GUI.SetNextControlName(valueControl);
             EditorGUI.PropertyField(new Rect(rect.x + rect.width - columnWidth, rect.y + 1, columnWidth, EditorGUIUtility.singleLineHeight), valueProperty, GUIContent.none, false);
+            var focusedControl = GUI.GetNameOfFocusedControl();
+            if (string.Equals(nameControl, focusedControl) || string.Equals(valueControl, focusedControl))
+            {
+                m_selectedFieldListElement = index;
+                m_fieldList.index = index;
+            }
         }
 
         private void OnAddFieldListElement(ReorderableList list)
@@ -419,8 +432,13 @@ namespace PixelCrushers
                 valuesProperty.arraySize++;
                 valuesProperty.GetArrayElementAtIndex(valueIndex).stringValue = string.Empty;
             }
+            if (textAreaStyle == null)
+            {
+                textAreaStyle = new GUIStyle(EditorStyles.textField);
+                textAreaStyle.wordWrap = true;
+            }
             var valueProperty = valuesProperty.GetArrayElementAtIndex(valueIndex);
-            valueProperty.stringValue = EditorGUI.TextArea(rect, valueProperty.stringValue);
+            valueProperty.stringValue = EditorGUI.TextArea(rect, valueProperty.stringValue, textAreaStyle);
         }
 
         #endregion

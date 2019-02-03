@@ -29,6 +29,9 @@ namespace PixelCrushers.DialogueSystem
         // If a entry overrides the actor's panel using the [panel=#] tag, we record it here so we know to hide the panel when we switch back:
         private Dictionary<Transform, StandardUISubtitlePanel> m_actorOverridePanel = new Dictionary<Transform, StandardUISubtitlePanel>();
 
+        // If the speaker has no DialogueActor, we can also override by actor ID:
+        private Dictionary<int, StandardUISubtitlePanel> m_actorIdOverridePanel = new Dictionary<int, StandardUISubtitlePanel>();
+
         // Actor ID of last actor to use each panel:
         private Dictionary<int, StandardUISubtitlePanel> m_lastPanelUsedByActor = new Dictionary<int, StandardUISubtitlePanel>();
         private Dictionary<StandardUISubtitlePanel, int> m_lastActorToUsePanel = new Dictionary<StandardUISubtitlePanel, int>();
@@ -71,20 +74,28 @@ namespace PixelCrushers.DialogueSystem
         {
             m_actorPanelCache.Clear();
             m_actorOverridePanel.Clear();
+            m_actorIdOverridePanel.Clear();
             m_lastPanelUsedByActor.Clear();
             m_lastActorToUsePanel.Clear();
             m_dialogueActorCache.Clear();
             m_useBarkUIs.Clear();
         }
 
+        /// <summary>
+        /// For speakers who do not have DialogueActor components, this method overrides the
+        /// actor's default panel.
+        /// </summary>
+        public void OverrideActorPanel(Actor actor, SubtitlePanelNumber subtitlePanelNumber)
+        {
+            if (actor == null) return;
+            var customPanel = actor.IsPlayer ? m_defaultPCPanel : m_defaultNPCPanel;
+            m_actorIdOverridePanel[actor.id] = GetPanelFromNumber(subtitlePanelNumber, customPanel);
+        }
+
         private StandardUISubtitlePanel GetPanel(Subtitle subtitle, out DialogueActor dialogueActor)
         {
             dialogueActor = null;
             if (subtitle == null) return m_defaultNPCPanel;
-
-            // Get actor's panel:
-            var speakerTransform = subtitle.speakerInfo.transform;
-            var panel = GetActorTransformPanel(speakerTransform, subtitle.speakerInfo.isNPC ? m_defaultNPCPanel : m_defaultPCPanel, out dialogueActor);
 
             // Check [panel=#] tag:
             var overrideIndex = subtitle.formattedText.subtitlePanelNumber;
@@ -93,10 +104,17 @@ namespace PixelCrushers.DialogueSystem
                 var overridePanel = m_builtinPanels[overrideIndex];
                 return overridePanel;
             }
-            else
+
+            // Check actor ID override:
+            if (m_actorIdOverridePanel.ContainsKey(subtitle.speakerInfo.id))
             {
-                return panel;
+                return m_actorIdOverridePanel[subtitle.speakerInfo.id];
             }
+
+            // Get actor's panel:
+            var speakerTransform = subtitle.speakerInfo.transform;
+            var panel = GetActorTransformPanel(speakerTransform, subtitle.speakerInfo.isNPC ? m_defaultNPCPanel : m_defaultPCPanel, out dialogueActor);
+            return panel;
         }
 
         private StandardUISubtitlePanel GetActorTransformPanel(Transform speakerTransform, StandardUISubtitlePanel defaultPanel, out DialogueActor dialogueActor)
@@ -128,27 +146,34 @@ namespace PixelCrushers.DialogueSystem
             }
         }
 
-        private StandardUISubtitlePanel GetDialogueActorPanel(DialogueActor dialogueActor)
-        {
-            if (dialogueActor == null) return null;
-            switch (dialogueActor.standardDialogueUISettings.subtitlePanelNumber)
-            {
-                case SubtitlePanelNumber.Default:
-                    return null;
-                case SubtitlePanelNumber.Custom:
-                    return dialogueActor.standardDialogueUISettings.customSubtitlePanel;
-                case SubtitlePanelNumber.UseBarkUI:
-                    return null;
-                default:
-                    var index = PanelNumberUtility.GetSubtitlePanelIndex(dialogueActor.standardDialogueUISettings.subtitlePanelNumber);
-                    return (0 <= index && index < m_builtinPanels.Count) ? m_builtinPanels[index] : null;
-            }
-        }
 
         private bool DialogueActorUsesBarkUI(DialogueActor dialogueActor)
         {
             return dialogueActor != null && dialogueActor.GetSubtitlePanelNumber() == SubtitlePanelNumber.UseBarkUI;
         }
+
+        private StandardUISubtitlePanel GetDialogueActorPanel(DialogueActor dialogueActor)
+        {
+            if (dialogueActor == null) return null;
+            return GetPanelFromNumber(dialogueActor.standardDialogueUISettings.subtitlePanelNumber, dialogueActor.standardDialogueUISettings.customSubtitlePanel);
+        }
+
+        private StandardUISubtitlePanel GetPanelFromNumber(SubtitlePanelNumber subtitlePanelNumber, StandardUISubtitlePanel customPanel)
+        {
+            switch (subtitlePanelNumber)
+            {
+                case SubtitlePanelNumber.Default:
+                    return null;
+                case SubtitlePanelNumber.Custom:
+                    return customPanel;
+                case SubtitlePanelNumber.UseBarkUI:
+                    return null;
+                default:
+                    var index = PanelNumberUtility.GetSubtitlePanelIndex(subtitlePanelNumber);
+                    return (0 <= index && index < m_builtinPanels.Count) ? m_builtinPanels[index] : null;
+            }
+        }
+
 
         private bool SubtitleUsesBarkUI(Subtitle subtitle)
         {
@@ -392,7 +417,10 @@ namespace PixelCrushers.DialogueSystem
             }
             DialogueActor dialogueActor;
             var panel = GetActorTransformPanel(actorTransform, actor.IsPlayer ? m_defaultPCPanel : m_defaultNPCPanel, out dialogueActor);
-            if (panel == null) return;
+            if (m_actorIdOverridePanel.ContainsKey(actor.id))
+            {
+                panel = m_actorIdOverridePanel[actor.id];
+            }
             if (checkedPanels.Contains(panel)) return;
             checkedPanels.Add(panel);
             if (panel.visibility == UIVisibility.AlwaysFromStart)

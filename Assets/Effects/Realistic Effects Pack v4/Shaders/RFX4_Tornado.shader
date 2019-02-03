@@ -1,5 +1,4 @@
 // Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
-// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
 
 // Upgrade NOTE: replaced '_Object2World' with '_Object2World'
 
@@ -14,10 +13,9 @@ Properties {
 
 Category {
 	Tags { "Queue"="Transparent" "IgnoreProjector"="True" "RenderType"="Transparent" }
-	Blend SrcAlpha OneMinusSrcAlpha
+	//Blend SrcAlpha OneMinusSrcAlpha
 	Cull Back 
-	Lighting Off 
-	ZWrite Off
+	ZWrite On
 
 	SubShader {
 		Pass {
@@ -63,20 +61,25 @@ Category {
 				v2f o;
 
 				///////////////////////////////////////////////////////////////////////////////////////////////////////////
-				float3 wpos = mul(unity_ObjectToWorld, v.vertex).xyz;
+				//float3 wpos = mul(unity_ObjectToWorld, v.vertex).xyz;
+				float3 wpos = v.vertex.xyz;
 				float4 pivot = mul(unity_ObjectToWorld, float4(0,0,0,1));
 				//v.vertex.xyz += offsetNoise;
+
+#ifndef UNITY_COLORSPACE_GAMMA
+				_TwistScale = pow(_TwistScale, 0.4545);
+#endif
+				
+
 				float height = (wpos.y - pivot.y + _TwistScale.w) * _TwistScale.y;
 				v.vertex.x += sin(_Time.y*_TwistScale.z + wpos.y * _TwistScale.x) * height;
 				v.vertex.z += sin(_Time.y*_TwistScale.z + wpos.y * _TwistScale.x + 3.1415/2) * height;
 				v.vertex.xz += (v.normal.xz/_WavesScale.x + v.normal.xz * sin(-_Time.y * _WavesScale.z + wpos.y*_WavesScale.x)*_WavesScale.y)* height;
 				///////////////////////////////////////////////////////////////////////////////////////////////////////////
 				o.height = height;
-#if UNITY_VERSION >= 550
+
 				o.vertex = UnityObjectToClipPos(v.vertex);
-#else 
-				o.vertex = UnityObjectToClipPos(v.vertex);
-#endif
+
 				#ifdef SOFTPARTICLES_ON
 				o.projPos = ComputeScreenPos (o.vertex);
 				COMPUTE_EYEDEPTH(o.projPos.z);
@@ -89,12 +92,18 @@ Category {
 
 			half4 frag (v2f i) : SV_Target
 			{
-				half4 col = 2.0f * i.color * _TintColor * tex2D(_MainTex, i.texcoord - _FireOffsetSpeed.xy * _Time.y);
+				half4 noise = tex2D(_MainTex, i.texcoord - _FireOffsetSpeed.xy * _Time.y);
+#ifndef UNITY_COLORSPACE_GAMMA
+				noise = pow(noise, 0.4545);
+				
+#endif
+				
+				half4 col = 2.0f * i.color * _TintColor * noise;
 				//clip(_TintColor.a - col.r / 3);
 				//col.rgb = lerp(col.rgb  + col.rgb *  (0.85-_TintColor.a)*5, col.rgb, _TintColor.a);
 				UNITY_APPLY_FOG(i.fogCoord, col);
 				//col.a = 1;
-				col.a = saturate(col.a);
+				//col.a = saturate(col.a);
 				return col;
 			}
 			ENDCG 

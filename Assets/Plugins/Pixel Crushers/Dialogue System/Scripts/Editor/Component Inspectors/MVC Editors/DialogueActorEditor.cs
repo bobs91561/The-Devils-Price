@@ -57,6 +57,10 @@ namespace PixelCrushers.DialogueSystem
                 {
                     EditorGUILayout.PropertyField(standardUISettingsProperty.FindPropertyRelative("customMenuPanel"), true);
                 }
+                if (menuPanelNumberProperty.enumValueIndex != (int)MenuPanelNumber.Default)
+                {
+                    EditorGUILayout.PropertyField(standardUISettingsProperty.FindPropertyRelative("useMenuPanelFor"), true);
+                }
                 EditorGUILayout.PropertyField(standardUISettingsProperty.FindPropertyRelative("portraitAnimatorController"));
                 var setSubtitleColorProperty = standardUISettingsProperty.FindPropertyRelative("setSubtitleColor");
                 EditorGUILayout.PropertyField(setSubtitleColorProperty, true);

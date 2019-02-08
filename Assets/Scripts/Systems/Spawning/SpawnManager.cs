@@ -63,7 +63,7 @@ public class SpawnManager : MonoBehaviour {
     {
         //if (!request.zone.PlayerInZone) return true;
         var dist = Vector3.Distance(request.gameObject.transform.position, GameManager.Player.transform.position);
-        return dist >= MinimumDistanceFromPlayer;
+        return dist >= MinimumDistanceFromPlayer * request.zone.Data.SpawnRate;
     }
 
     private bool DelayRequest(RespawnsOnDeath request)

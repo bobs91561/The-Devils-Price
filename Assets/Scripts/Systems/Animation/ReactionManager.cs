@@ -21,6 +21,7 @@ public class ReactionManager : MonoBehaviour
     private int m_HitDirZ = Animator.StringToHash("HitDirZ");
 
     private int m_MajorReact = Animator.StringToHash("MajorReact");
+    private int m_ParryReact = Animator.StringToHash("ParryReact");
     private int m_React = Animator.StringToHash("React");
 
     private Vector3 m_HitDirection;
@@ -118,6 +119,7 @@ public class ReactionManager : MonoBehaviour
         React();
     }
 
+    #region Special Reactions
     /// <summary>
     /// Call for special reaction, that always occurs as a part of an attack hit
     /// </summary>
@@ -127,6 +129,18 @@ public class ReactionManager : MonoBehaviour
         m_TriggerToSet = m_MajorReact;
         React();
     }
+
+    /// <summary>
+    /// Call for a parry react. This does not include logic for determining a valid parry or interrupt any attacks.
+    /// </summary>
+    public void ParryReact()
+    {
+        if (!AcceptReaction(m_MinForceToConsider * 2f)) return;
+        //Set the trigger
+        m_TriggerToSet = m_ParryReact;
+        React();
+    }
+    #endregion
 
     #region Determine Hit Location
     public void ReactAt(RaycastHit hit)
@@ -178,6 +192,12 @@ public class ReactionManager : MonoBehaviour
         m_Animator.ResetTrigger(m_DodgeKey);
         m_Animator.ResetTrigger(m_JumpKey);
         //m_Animator.ResetTrigger(m_TriggerToSet);
+    }
+
+    public void OnRespawn()
+    {
+        //Ensure move scripts are active
+        FinishReact();
     }
 
 }

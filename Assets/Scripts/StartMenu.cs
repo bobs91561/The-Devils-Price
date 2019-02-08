@@ -13,10 +13,17 @@ public class StartMenu : MonoBehaviour
     public GameObject ContinueBtn;
     public List<GameObject> objectsToDisableOnIntro = new List<GameObject>();
 
+    public bool ContinueOn = false;
+
     public void NewGame()
     {
         GameManager.HandleFadeManually = true;
         StartCoroutine(WaitToLoad());
+    }
+
+    public void Continue()
+    {
+        ContinueOn = true;
     }
 
     private IEnumerator WaitToLoad()
@@ -30,7 +37,7 @@ public class StartMenu : MonoBehaviour
         }
         yield return new WaitForSeconds(3.5f);
         if (ContinueBtn) ContinueBtn.SetActive(true);
-        yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Joystick1Button0));
+        yield return new WaitUntil(() => ContinueOn);
         yield return new WaitForSeconds(1.5f);
         SceneManager.LoadScene(1);
     }

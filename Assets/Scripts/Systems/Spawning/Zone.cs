@@ -11,6 +11,8 @@ public class Zone : MonoBehaviour {
     public bool PlayerInZone;
     public bool ActiveZone;
 
+    public ZoningData Data;
+
     public Transform RespawnPoint;
     private BoxCollider _collider;
 
@@ -21,6 +23,8 @@ public class Zone : MonoBehaviour {
             var rp = GetComponentInChildren<RespawnPoint>();
             if (rp) RespawnPoint = rp.transform;
         }
+
+        if (!Data) Data = GetComponent<ZoningData>();
         _collider = GetComponent<BoxCollider>();
         _collider.enabled = true;
         _collider.isTrigger = true;

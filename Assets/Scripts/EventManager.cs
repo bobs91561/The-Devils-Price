@@ -21,6 +21,10 @@ public class EventManager {
     public static event VoidDelegate SubscribeToPlayer;
 
     public static event VoidDelegate RankUp;
+
+    public static event VoidDelegate PrinceDealAccepted;
+    public static event VoidDelegate PrinceDealRejected;
+
 	
     public static void Death()
     {

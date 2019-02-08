@@ -7,6 +7,7 @@ using com.ootii.Cameras;
 using UnityEngine.UI;
 using Devdog.InventoryPro.UnityStandardAssets;
 using System;
+using CustomManager;
 
 public class GameManager : MonoBehaviour {
     public static GameObject Player;
@@ -40,7 +41,6 @@ public class GameManager : MonoBehaviour {
 
     private void Start()
     {
-        Debug.Log("started");
         CurrentSceneData = GameObject.FindGameObjectWithTag("SceneInfo").GetComponent<SceneInfo>();
         ClipPlaying = CurrentSceneData.SceneEntryAudio;
         _mAudioSource = GetComponent<AudioSource>();
@@ -60,11 +60,6 @@ public class GameManager : MonoBehaviour {
     {
         yield return new WaitForEndOfFrame();
         SetUpPlayer();
-    }
-
-    private void PauseGame()
-    {
-
     }
 
     public static void SetPlayerInput(bool active)
@@ -181,7 +176,7 @@ public class GameManager : MonoBehaviour {
         }
         else if (Player)
             Player.GetComponent<ThirdPersonUserControl>().SetCamera();
-
+        InputManager.SetSelectorUseKey(Player);
         SetPlayerInput(true);
     }
 
@@ -191,6 +186,7 @@ public class GameManager : MonoBehaviour {
         var go = GameObject.Find("Dialogue Manager");
         if (!go) go = Instantiate(DialogueMangerPrefab);
         DialogueManager = go;
+        InputManager.SetDialogueCancelKeys(DialogueManager);
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)

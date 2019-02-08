@@ -184,6 +184,12 @@ public class SkillSet : MonoBehaviour {
         if(_mTargeting) TargetAttack();
     }
 
+    public void InterruptAttack()
+    {
+        if (!currentAttack || !CheckAttack()) return;
+        EndAttack();
+    }
+
     public void EndAttack()
     {
         if (m_userControl) m_userControl.MoveTowardCameraForward(false);
@@ -195,14 +201,12 @@ public class SkillSet : MonoBehaviour {
     {
         return isAttacking;
     }
-
     public void OnRespawn()
     {
         SheatheWeapons();
         combat = false;
         m_Animator.SetBool("Combat", combat);
     }
-
     #region Levelling Settings
     public void ModifyDamage(float multiplier)
     {

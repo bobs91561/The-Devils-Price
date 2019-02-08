@@ -68,7 +68,7 @@ public class HealthManager : MonoBehaviour {
     public void ModifyHealth(float change)
     {
         Health += change;
-        if (_friendly) SendMessage("OnAggression");
+        if (_friendly) SendMessage("OnAggression", true);
         if (_decider && !_decider.combat) SendMessage("EnterCombat");
         if (healthBar) healthBar.UpdateHealth();
     }

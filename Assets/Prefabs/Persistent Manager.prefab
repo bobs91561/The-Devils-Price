@@ -290,6 +290,7 @@ MonoBehaviour:
   DialogueMangerPrefab: {fileID: 125852, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
   CurrentSceneData: {fileID: 0}
   ClipPlaying: {fileID: 0}
+  DeveloperMode: 0
 --- !u!82 &1339208473
 AudioSource:
   m_ObjectHideFlags: 0
@@ -398,6 +399,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 357bbe4953e80854d9ab71036b8174ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  WindowsOS: {fileID: 11400000, guid: 5c5fae7ccd3fa324188b7831fd9c0896, type: 2}
+  MacOS: {fileID: 11400000, guid: f32de2696130cda4698b7b9f69ce5a0b, type: 2}
+  Keyboard: {fileID: 11400000, guid: bb70e852499a4fd4bb18fbb13e2ed77c, type: 2}
+  UseKeyboard: 0
   RightTrigger: Attack
   LeftTrigger: Attack2
   LeftBumper: 334
@@ -406,7 +411,9 @@ MonoBehaviour:
   KeyTwo: 331
   KeyThree: 332
   KeyFour: 333
-  MenuKey: 0
+  MenuKey: 55
   MapKey: 0
   SprintKey: 338
   JumpKey: 333
+  UseKey: 0
+  CancelKey: 0

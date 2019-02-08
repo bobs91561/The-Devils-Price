@@ -136,7 +136,7 @@ public class AIActionDecider: MonoBehaviour {
         skillSet.Combat();
         GetComponent<AIAttackController>().enabled = false;
         GetComponent<HealthManager>().ExitCombat();
-        
+
         Collider[] cs = Physics.OverlapSphere(transform.position, 100f, 1 << LayerMask.NameToLayer("Enemy"));
 
         foreach (Collider c in cs)

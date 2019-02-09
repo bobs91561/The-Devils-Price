@@ -5,7 +5,8 @@ Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_Name: Spikes 2
   m_Shader: {fileID: 4800000, guid: dfe6e51c0ffb87246af0df6ac28d4a6e, type: 3}
   m_ShaderKeywords: BlendAlpha Clip_OFF FrameBlend_ON SoftParticles_OFF USE_FRESNEL
@@ -13,7 +14,7 @@ Material:
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3001
+  m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -109,6 +110,7 @@ Material:
     - _UseCutout: 0
     - _UseFresnel: 1
     - _UseHeight: 0
+    - _UseMainTex: 0
     - _UseRefractive: 1
     - _UseSoft: 0
     - _ZWrite: 1

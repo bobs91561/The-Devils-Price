@@ -5,10 +5,11 @@ Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_Name: Shield4Mobile
   m_Shader: {fileID: 4800000, guid: c2cda6cd890f38a478222ea1a4e822ea, type: 3}
-  m_ShaderKeywords: USE_CUTOUT USE_FRESNEL _EMISSION _ZWRITEMODE_ON
+  m_ShaderKeywords: USE_CUTOUT USE_FRESNEL USE_REFRACTIVE _EMISSION
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -64,7 +65,7 @@ Material:
     - _Height: 0.05
     - _InvFade: 2
     - _R0: 0.05
-    - _RefractiveStrength: 0.18
+    - _RefractiveStrength: 0.1
     - _SoftFresnel: 1
     - _UseAlphaCliping: 0
     - _UseBlending: 0
@@ -72,15 +73,15 @@ Material:
     - _UseFresnel: 1
     - _UseHeight: 0
     - _UseMainTex: 0
-    - _UseRefractive: 0
+    - _UseRefractive: 1
     - _UseSoft: 0
-    - _ZWriteMode: 1
+    - _ZWriteMode: 0
     m_Colors:
     - _Color: {r: 1.0147059, g: 1.0773226, b: 1.2, a: 1}
     - _CutoutColor: {r: 0, g: 0, b: 0, a: 1}
     - _FresnelColor: {r: 0.575, g: 0.90862167, b: 1.6999999, a: 1}
     - _FresnelDistort: {r: 8, g: 12, b: 1, a: 1500}
     - _HeightUVScrollDistort: {r: 0, g: 0, b: 0, a: 0}
-    - _MainColor: {r: 1.256542, g: 1.2718947, b: 1.3455882, a: 0.7}
+    - _MainColor: {r: 1.0514705, g: 1.1251724, b: 1.3, a: 1}
     - _TintColor: {r: 1, g: 1, b: 1, a: 1}
     - _UVScrollDistort: {r: 8, g: 12, b: 1, a: 1500}

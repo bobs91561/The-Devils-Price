@@ -5,14 +5,16 @@ Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_Name: AddMobile
   m_Shader: {fileID: 4800000, guid: 4cf1b524f741bda4eaae09b0959bc68e, type: 3}
-  m_ShaderKeywords: BlendAlpha Clip_OFF FrameBlend_OFF SoftParticles_OFF VertLight_OFF
+  m_ShaderKeywords: BlendAlpha Clip_OFF FrameBlend_OFF FresnelFade_OFF SoftParticles_OFF
+    VertLight_OFF
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2999
+  m_CustomRenderQueue: 3001
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -108,5 +110,5 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FresnelColor: {r: 1, g: 1, b: 1, a: 0.5}
     - _Offset: {r: 0, g: 0, b: 0, a: 0}
-    - _TintColor: {r: 0.25140575, g: 0.40432855, b: 3.4191177, a: 1}
+    - _TintColor: {r: 1.3235294, g: 1.549288, b: 6, a: 1}
     - _UVScrollFadeDistort: {r: 8, g: 12, b: 1, a: 1500}

@@ -2516,8 +2516,8 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: fcced1f3a3fa3bf40afc7b57b3f83a8b, type: 2}
-  - {fileID: 2100000, guid: fcced1f3a3fa3bf40afc7b57b3f83a8b, type: 2}
+  - {fileID: 2100000, guid: 01d86e077e5596e4c8ab2328913d9497, type: 2}
+  - {fileID: 2100000, guid: 01d86e077e5596e4c8ab2328913d9497, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2701,7 +2701,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Hitbox: {fileID: 3001502611327506474, guid: 8d571a46941cf2c49a7491bd25f84ce7, type: 3}
-  Damage: 0
+  Damage: 20
   MeshEffect: {fileID: 198776, guid: ff6f0f6ed5fb04648a63068803ce172a, type: 3}
   AdditionalEffectDamage: 0
 --- !u!1 &6912041460546586753
@@ -2748,7 +2748,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ExperienceGainedOnDeath: 100
-  DeathFlourish: {fileID: 0}
+  DeathFlourish: {fileID: 198776, guid: ff6f0f6ed5fb04648a63068803ce172a, type: 3}
   triggerToEnable: {fileID: 0}
 --- !u!1 &6912041460546586754
 GameObject:
@@ -2799,6 +2799,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cb37064a8e9c674e9e171cc8411ba3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CastDamageMultiplier: 1
 --- !u!1 &6912041460546586755
 GameObject:
   m_ObjectHideFlags: 0
@@ -2835,9 +2836,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6912041460546586755}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 89.940674, y: 48.09057, z: 65.49158}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5000003, y: 0.5, z: 0.5000003}
   m_Children:
   - {fileID: 1612060818981781569}
   - {fileID: 1612118984585606167}
@@ -2866,13 +2867,13 @@ MonoBehaviour:
   combatMoveActive: 0
   CombatNearby: 0
   RecentCombat: 0
+  PlayerContact: 0
   Friendly: 0
   actions:
   - {fileID: 11400000, guid: 7737bf21e7fc9a040ab12f8833542f8b, type: 2}
   - {fileID: 11400000, guid: 3c295a567305e0e47b406faae808fc7a, type: 2}
   - {fileID: 11400000, guid: b4573e29b05d6b4499a454a5d043716d, type: 2}
-  - {fileID: 11400000, guid: 9e8b0cd820578f14cafcf84f0f9f6332, type: 2}
-  - {fileID: 11400000, guid: a08a1dd0e37a9544eb55e495022cb39c, type: 2}
+  - {fileID: 11400000, guid: 0c28eae9f4195444980e1ccd75c00a0a, type: 2}
   - {fileID: 11400000, guid: 3cc8190648d13e041a4b071ad5d7d51d, type: 2}
   patrolPoints: []
   patrolPoint: 0
@@ -2894,6 +2895,7 @@ MonoBehaviour:
   MaxDemonicPower: 0
   ConsiderMove: 0
   AverageMaxDistance: 0
+  MinimumAttackTimeDifference: 2
 --- !u!114 &1607640414602681058
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2907,7 +2909,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Level: 1
-  MinimumAttackTimeDifference: 5
   attacks: []
   Decider: {fileID: 0}
   Moving: 0
@@ -2945,6 +2946,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Reputation: 250
+  CurrentRank: 0
 --- !u!114 &1607640414602681061
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2981,12 +2983,15 @@ MonoBehaviour:
   HitboxToGenerateSecondary: {fileID: 0}
   WeaponDamage1: 0
   WeaponDamage2: 0
+  CastingDamage: 0
   castingObject: {fileID: 0}
   characterCenter: {fileID: 1606391647035089883}
   objectsSheathe: []
   currentAttack: {fileID: 0}
   isAttacking: 0
   combat: 0
+  _mTargeting: 0
+  _mTargetObject: {fileID: 0}
 --- !u!114 &3325977839750747355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3008,16 +3013,16 @@ NavMeshAgent:
   m_GameObject: {fileID: 6912041460546586755}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 1
-  m_Speed: 3.5
-  m_Acceleration: 8
+  m_Radius: 0.5
+  m_Speed: 2
+  m_Acceleration: 5
   avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 3
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 4
+  m_Height: 2
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
@@ -3160,7 +3165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_key: 
-  m_appendSaverTypeToKey: 0
+  m_appendSaverTypeToKey: 1
   m_saveAcrossSceneChanges: 1
   m_mode: 0
   m_destroyMode: 1
@@ -3186,8 +3191,9 @@ MonoBehaviour:
   m_AnimSpeedMultiplier: 1
   m_GroundCheckDistance: 0.2
   footstep: {fileID: 0}
-  m_IsReacting: 0
   IsRotating: 0
+  m_IsJumping: 0
+  m_ReadyToJump: 0
   raycastLayerMask:
     serializedVersion: 2
     m_Bits: 1

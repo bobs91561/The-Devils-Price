@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class ME_FPS : MonoBehaviour
+public class RFX1_FPS : MonoBehaviour
 {
     public GUIStyle guiStyleHeader = new GUIStyle();
     float timeleft;

@@ -5,16 +5,18 @@ Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_Name: Particles
-  m_Shader: {fileID: 4800000, guid: 20f8cfc92f42e9441aa40da02224d12a, type: 3}
+  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: BlendAlpha Clip_OFF FrameBlend_OFF SoftParticles_OFF VertLight_OFF
-    _EMISSION
+    _ALPHATEST_ON _EMISSION
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
+  m_CustomRenderQueue: 2450
+  stringTagMap:
+    RenderType: TransparentCutout
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
@@ -95,7 +97,7 @@ Material:
     - _GlossyReflections: 1
     - _InvFade: 3
     - _Metallic: 1
-    - _Mode: 0
+    - _Mode: 1
     - _OcclusionStrength: 1
     - _Opacity: -0.03571428
     - _Parallax: 0.02

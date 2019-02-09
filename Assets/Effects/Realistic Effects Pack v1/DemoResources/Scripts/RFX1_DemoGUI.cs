@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class RFX1_DemoGUI : MonoBehaviour
 {
+    public bool isMobile;
     public int Current = 0;
 	public GameObject[] Prefabs;
     public bool[] IsShield;
@@ -17,7 +18,7 @@ public class RFX1_DemoGUI : MonoBehaviour
     public GameObject MobileCharacter;
     public GameObject Target;
     public Color guiColor = Color.red;
-    public RFX1_DistortionAndBloom RFX1_DistortionAndBloom;
+   // public RFX1_DistortionAndBloom RFX1_DistortionAndBloom;
 
     private int currentNomber;
 	private GameObject currentInstance;
@@ -52,7 +53,8 @@ public class RFX1_DemoGUI : MonoBehaviour
 	    startReflectionIntencity = RenderSettings.reflectionIntensity;
 	    startLightShadows = Sun.shadows;
 
-	    RFX1_DistortionAndBloom = Camera.main.GetComponent<RFX1_DistortionAndBloom>();
+	    if (isMobile) ChangeLight();
+	    // RFX1_DistortionAndBloom = Camera.main.GetComponent<RFX1_DistortionAndBloom>();
 
 	}
 
@@ -92,43 +94,30 @@ public class RFX1_DemoGUI : MonoBehaviour
         //}
         if (GUI.Button(new Rect(10*dpiScale, 63*dpiScale + offset, 285*dpiScale, 37*dpiScale), "Day / Night") || (!isButtonPressed && Input.GetKeyDown(KeyCode.DownArrow)))
         {
-            isButtonPressed = true;
-            if (ReflectionProbe != null) ReflectionProbe.RenderProbe();
-            Sun.intensity = !isDay ? 0.05f : startSunIntensity;
-            Sun.shadows = isDay ? startLightShadows : LightShadows.None;
-            foreach (var nightLight in NightLights)
-            {
-                nightLight.shadows = !isDay ? startLightShadows : LightShadows.None;
-            }
-            Sun.transform.rotation = isDay ? startSunRotation : Quaternion.Euler(350, 30, 90);
-            RenderSettings.ambientLight = !isDay ? new Color(0.1f, 0.1f, 0.1f) : startAmbientLight;
-            var lightInten = !UseMobileVersion ? 1 : 0.2f;
-            RenderSettings.ambientIntensity = isDay ? startAmbientIntencity : lightInten;
-            RenderSettings.reflectionIntensity = isDay ? startReflectionIntencity : 0.2f;
-            isDay = !isDay;
+            ChangeLight();
         }
       
         GUI.Label(new Rect(400*dpiScale, 15*dpiScale + offset / 2, 100*dpiScale, 20*dpiScale),
             "Prefab name is \"" + Prefabs[currentNomber].name +
             "\"  \r\nHold any mouse button that would move the camera", guiStyleHeader);
         
-        if (!IsShield[currentNomber] && !UseMobileVersion)
-        {
-            GUI.Label(new Rect(12 * dpiScale, 110 * dpiScale + offset, 50 * dpiScale, 20 * dpiScale), "Projectile Speed: " + Mathf.Round(currentSpeed * 10f) / 10f, guiStyleHeader);
-            float oldCurrentSpeed = currentSpeed;
-            if (!UseMobileVersion) currentSpeed = GUI.HorizontalSlider(new Rect(154 * dpiScale, 114 * dpiScale + offset, 135 * dpiScale, 15 * dpiScale), currentSpeed, 0.1f, 10);
+        //if (!IsShield[currentNomber] && !UseMobileVersion)
+        //{
+        //    GUI.Label(new Rect(12 * dpiScale, 110 * dpiScale + offset, 50 * dpiScale, 20 * dpiScale), "Projectile Speed: " + Mathf.Round(currentSpeed * 10f) / 10f, guiStyleHeader);
+        //    float oldCurrentSpeed = currentSpeed;
+        //    if (!UseMobileVersion) currentSpeed = GUI.HorizontalSlider(new Rect(154 * dpiScale, 114 * dpiScale + offset, 135 * dpiScale, 15 * dpiScale), currentSpeed, 0.1f, 10);
            
-            if (Math.Abs(oldCurrentSpeed - currentSpeed) > 0.001)
-            {
-                var animator = currentInstance.GetComponent<RFX1_AnimatorEvents>();
-                if (animator != null)
-                {
-                    animator.Speed = currentSpeed;
-                }
-            }
+        //    if (Math.Abs(oldCurrentSpeed - currentSpeed) > 0.001)
+        //    {
+        //        var animator = currentInstance.GetComponent<RFX1_AnimatorEvents>();
+        //        if (animator != null)
+        //        {
+        //            animator.Speed = currentSpeed;
+        //        }
+        //    }
 
             
-        }
+        //}
 
         GUI.DrawTexture(new Rect(12*dpiScale, 140*dpiScale + offset, 285*dpiScale, 15*dpiScale), HUETexture, ScaleMode.StretchToFill, false, 0);
 
@@ -174,6 +163,25 @@ public class RFX1_DemoGUI : MonoBehaviour
             //    }
             //}
         }
+    }
+
+    private void ChangeLight()
+    {
+        isButtonPressed = true;
+        if (ReflectionProbe != null) ReflectionProbe.RenderProbe();
+        Sun.intensity = !isDay ? 0.15f : startSunIntensity;
+        Sun.shadows = isDay ? startLightShadows : LightShadows.None;
+        foreach (var nightLight in NightLights)
+        {
+            nightLight.shadows = !isDay ? startLightShadows : LightShadows.None;
+        }
+
+        Sun.transform.rotation = isDay ? startSunRotation : Quaternion.Euler(350, 30, 90);
+        RenderSettings.ambientLight = !isDay ? new Color(0.1f, 0.1f, 0.1f) : startAmbientLight;
+        var lightInten = !UseMobileVersion ? 1 : 0.2f;
+        RenderSettings.ambientIntensity = isDay ? startAmbientIntencity : lightInten;
+        RenderSettings.reflectionIntensity = isDay ? startReflectionIntencity : 0.2f;
+        isDay = !isDay;
     }
 
     private GameObject instanceShieldProjectile;

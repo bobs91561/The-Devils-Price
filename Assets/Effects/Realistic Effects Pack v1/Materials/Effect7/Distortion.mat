@@ -5,7 +5,8 @@ Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_Name: Distortion
   m_Shader: {fileID: 4800000, guid: dfe6e51c0ffb87246af0df6ac28d4a6e, type: 3}
   m_ShaderKeywords: USE_ALPHA_CLIPING USE_BLENDING _EMISSION
@@ -71,6 +72,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _AlphaClip: 10
     - _BumpAmt: -40
     - _BumpScale: 1
     - _CullMode: 2
@@ -78,7 +80,7 @@ Material:
     - _Cutout: 1
     - _CutoutThreshold: 0.015
     - _DetailNormalMapScale: 1
-    - _Distortion: -40
+    - _Distortion: -50
     - _DstBlend: 0
     - _FresnelDistort: 1500
     - _FresnelPow: 5
@@ -102,6 +104,7 @@ Material:
     - _UseCutout: 0
     - _UseFresnel: 0
     - _UseHeight: 0
+    - _UseMainTex: 0
     - _UseRefractive: 0
     - _UseSoft: 0
     - _ZWrite: 1
@@ -113,3 +116,4 @@ Material:
     - _FresnelColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _HeightUVScrollDistort: {r: 8, g: 12, b: 0, a: 0}
     - _MainColor: {r: 1, g: 1, b: 1, a: 1}
+    - _TintColor: {r: 1, g: 1, b: 1, a: 1}

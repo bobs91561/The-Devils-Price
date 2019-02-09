@@ -5,10 +5,11 @@ Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_Name: Decal 1
-  m_Shader: {fileID: 4800000, guid: 34dbda9ad5507be46b72b8bb6504415f, type: 3}
-  m_ShaderKeywords: 
+  m_Shader: {fileID: 4800000, guid: 32ed75d04da1d2348baeac9738ccd729, type: 3}
+  m_ShaderKeywords: USE_ALPHA_POW USE_CUTOUT USE_CUTOUT_TEX USE_NOISE_DISTORTION _BLENDMODE_BLEND
   m_LightmapFlags: 5
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -20,6 +21,10 @@ Material:
     m_TexEnvs:
     - _BumpMap:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _CutoutTex:
+        m_Texture: {fileID: 2800000, guid: dda2079e46dbf8743ae7c35651f90026, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -54,6 +59,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _NoiseTex:
+        m_Texture: {fileID: 2800000, guid: 95978163fe8ecd946bd2716cf81f8e05, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -64,10 +73,16 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _AlphaPow: 10
+    - _BlendMode: 1
     - _BumpScale: 1
     - _Cutoff: 0
+    - _Cutout: 0
+    - _CutoutAlphaMul: 1.5
     - _DetailNormalMapScale: 1
+    - _DistortScale: 0.4
+    - _DistortSpeed: 4
     - _DstBlend: 0
+    - _DstMode: 10
     - _Glossiness: 0.5
     - _MaskPow: 0.5
     - _Metallic: 0
@@ -77,9 +92,19 @@ Material:
     - _Scale: 2
     - _Speed: 3
     - _SrcBlend: 1
+    - _SrcMode: 5
     - _UVSec: 0
+    - _UseAlphaPow: 1
+    - _UseCutout: 1
+    - _UseCutoutTex: 1
+    - _UseCutoutThreshold: 0
+    - _UseFrameBlending: 0
+    - _UseNoiseDistortion: 1
+    - _UseWorldSpaceUV: 0
+    - _ZTest1: 5
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _CutoutColor: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _TintColor: {r: 1.6, g: 0.5411765, b: 0.5411765, a: 1}

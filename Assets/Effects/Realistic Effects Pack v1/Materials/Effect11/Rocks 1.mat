@@ -5,9 +5,10 @@ Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_Name: Rocks 1
-  m_Shader: {fileID: 4800000, guid: c2cda6cd890f38a478222ea1a4e822ea, type: 3}
+  m_Shader: {fileID: 4800000, guid: dfe6e51c0ffb87246af0df6ac28d4a6e, type: 3}
   m_ShaderKeywords: USE_FRESNEL USE_REFRACTIVE _EMISSION _SPECGLOSSMAP
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
@@ -106,6 +107,7 @@ Material:
     - _UseCutout: 0
     - _UseFresnel: 1
     - _UseHeight: 0
+    - _UseMainTex: 0
     - _UseRefractive: 1
     - _UseSoft: 0
     - _ZWrite: 1
@@ -120,3 +122,4 @@ Material:
     - _MainColor: {r: 0.9220588, g: 1.0042801, b: 1.1, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
     - _TexColor: {r: 0.34018168, g: 0.36490273, b: 0.38235295, a: 0.5}
+    - _TintColor: {r: 1, g: 1, b: 1, a: 1}

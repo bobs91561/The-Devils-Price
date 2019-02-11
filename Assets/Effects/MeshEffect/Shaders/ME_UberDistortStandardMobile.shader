@@ -57,11 +57,11 @@ Shader "KriptoFX/ME/DistortionMobile"
 		Cull [_CullMode]
 		LOD 100
 		Blend SrcAlpha OneMinusSrcAlpha
-		
+			Offset -1, -1
 		Pass
 		{
 			CGPROGRAM
-			#pragma glsl
+
 			#pragma target 3.0
 			#pragma vertex vert
 			#pragma fragment frag
@@ -78,19 +78,15 @@ Shader "KriptoFX/ME/DistortionMobile"
 			#pragma shader_feature USE_ALPHA_CLIPING
 			#pragma shader_feature USE_BLENDING
 			#pragma multi_compile _ DISTORT_OFF
-			
-			float4 _GrabTexture_TexelSize;
-			half _GrabTextureScale;
-
-			float2 GetGrabTexelSize(){ return _GrabTexture_TexelSize.xy * _GrabTextureScale; }
-
-			half2 GrabScreenPosXY(float4 vertex)
-			{ 
-				return (float2(vertex.x, vertex.y*_ProjectionParams.x) + vertex.w) * 0.5;
-			}
 
 			#include "UnityCG.cginc"
-			#include "ME_DistortPasses.cginc"
+
+			float4 CustomGrabScreenPos(float4 vertex)
+			{ 
+				return ComputeGrabScreenPos (vertex);
+			}
+
+			#include "ME_DistortionPasses.cginc"
 
 			ENDCG
 		}

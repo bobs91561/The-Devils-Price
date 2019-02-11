@@ -55,7 +55,7 @@ Shader "KriptoFX/ME/Distortion"
 		Tags { "Queue"="Transparent" "IgnoreProjector"="True" "RenderType"="Transparent"}
 		ZWrite [_ZWriteMode]
 		Cull [_CullMode]
-		LOD 100
+			Offset -1, -1
 		Blend SrcAlpha OneMinusSrcAlpha
 		
 		Pass
@@ -79,19 +79,13 @@ Shader "KriptoFX/ME/Distortion"
 			#pragma shader_feature USE_BLENDING
 			#pragma shader_feature USE_MAINTEX
 			
-			float4 _GrabTexture_TexelSize;
-			float2 GetGrabTexelSize(){ return _GrabTexture_TexelSize.xy; }
+			#include "UnityCG.cginc"
 
-			half2 GrabScreenPosXY(float4 vertex)
-			{ 
-				#if UNITY_UV_STARTS_AT_TOP
-					return (float2(vertex.x, -vertex.y) + vertex.w) * 0.5;
-				#else
-					return (float2(vertex.x, vertex.y) + vertex.w) * 0.5;
-				#endif 
+			float4 CustomGrabScreenPos(float4 vertex)
+			{
+				return ComputeGrabScreenPos(vertex);
 			}
 
-			#include "UnityCG.cginc"
 			#include "ME_DistortPasses.cginc"
 
 			ENDCG

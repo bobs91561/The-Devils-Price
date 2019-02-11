@@ -1,4 +1,4 @@
-﻿Shader "KriptoFX/RFX1/DistortionMobile"
+Shader "KriptoFX/RFX1/DistortionMobile"
 {
 	Properties
 	{	[Header(Main Settings)]
@@ -52,17 +52,15 @@
 		//	"_GrabTexture"
  		//}
 
-		Tags { "Queue"="Transparent" "IgnoreProjector"="True" "RenderType"="Transparent" }
+		Tags { "Queue"="Transparent-1" "IgnoreProjector"="True" "RenderType"="Transparent" }
 		ZWrite [_ZWriteMode]
 		Cull [_CullMode]
-		LOD 100
 		Blend SrcAlpha OneMinusSrcAlpha
 		
 		Pass
 		{
 			CGPROGRAM
-			#pragma glsl
-			#pragma target 3.0
+
 			#pragma vertex vert
 			#pragma fragment frag
 			#pragma multi_compile_fog
@@ -79,18 +77,15 @@
 			#pragma shader_feature USE_BLENDING
 			#pragma multi_compile DISTORT_ON DISTORT_OFF
 			
-			float4 _GrabTexture_TexelSize;
-			half _GrabTextureScale;
+#include "UnityCG.cginc"
 
-			float2 GetGrabTexelSize(){ return _GrabTexture_TexelSize.xy * _GrabTextureScale; }
+			float4 CustomGrabScreenPos(float4 vertex)
+		{
+			return ComputeGrabScreenPos(vertex);
+		}
 
-			half2 GrabScreenPosXY(float4 vertex)
-			{ 
-				return (float2(vertex.x, vertex.y*_ProjectionParams.x) + vertex.w) * 0.5;
-			}
+#include "DistortPasses.cginc"
 
-			#include "UnityCG.cginc"
-			#include "DistortPasses.cginc"
 
 			ENDCG
 		}

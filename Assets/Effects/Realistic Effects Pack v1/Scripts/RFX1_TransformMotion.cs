@@ -162,14 +162,6 @@ public class RFX1_TransformMotion : MonoBehaviour
         oldPos = t.position;
     }
 
-    Vector3 SlerpForward(Vector3 currentFwdVector)
-    {
-        Vector3 fwd = currentFwdVector;
-        
-        
-        return fwd;
-    }
-
     Vector3 GetRadiusRandomVector()
     {
         var x = Time.time * RandomMoveSpeedScale + randomTimeOffset.x;
@@ -187,8 +179,9 @@ public class RFX1_TransformMotion : MonoBehaviour
 
     void OnCollisionBehaviour(RaycastHit hit)
     {
-        if(GetComponent<DamageForPreSetupObjects>())
+        if (GetComponent<DamageForPreSetupObjects>())
             GetComponent<DamageForPreSetupObjects>().CollideWith(hit);
+
         var handler = CollisionEnter;
         if (handler != null)
             handler(this, new RFX1_CollisionInfo {Hit = hit});

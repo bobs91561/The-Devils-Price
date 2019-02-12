@@ -36,8 +36,9 @@ namespace PixelCrushers.DialogueSystem
 
         private bool started = false;
 
-        void Start()
+        protected override void Start()
         {
+            base.Start();
             started = true;
             StartBarkLoop();
         }

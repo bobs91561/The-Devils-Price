@@ -154,9 +154,18 @@ namespace PixelCrushers.DialogueSystem
         {
             LuaTable conversationTable = Lua.Environment.GetValue("Conversation") as LuaTable;
             LuaTable conversationFieldsTable = conversationTable.GetValue(conversationID) as LuaTable;
+            if (conversationFieldsTable == null) // Missing conversation.
+            {
+                AddToConversationTable(conversationTable, DialogueManager.masterDatabase.GetConversation(conversationID), true);
+                conversationFieldsTable = conversationTable.GetValue(conversationID) as LuaTable;
+            }
             LuaTable dialogTable = (conversationFieldsTable != null)
                 ? conversationFieldsTable.GetValue("Dialog") as LuaTable
                 : AddToConversationTable(conversationTable, DialogueManager.MasterDatabase.GetConversation(conversationID), true);
+            if (dialogTable == null) // Missing Dialog[] table.
+            {
+                dialogTable = AddNewDialogTableToConversationFields(conversationFieldsTable, DialogueManager.masterDatabase.GetConversation(conversationID));
+            }
             var simStatusTable = dialogTable.GetValue(entryID) as LuaTable;
             if (simStatusTable == null)
             {
@@ -313,16 +322,7 @@ namespace PixelCrushers.DialogueSystem
             // Add Dialog SimStatus sub-table as a field to the new conversation field table:
             if (includeSimStatus)
             {
-                dialogTable = new LuaTable();
-                for (int j = 0; j < conversation.dialogueEntries.Count; j++)
-                {
-                    var dialogueEntry = conversation.dialogueEntries[j];
-                    // [NOTE] To reduce Lua memory use, we only record SimStatus of dialogue entries:
-                    var simStatusTable = new LuaTable();
-                    simStatusTable.AddRaw(DialogueLua.SimStatus, new LuaString(DialogueLua.Untouched));
-                    dialogTable.AddRaw(dialogueEntry.id, simStatusTable);
-                }
-                fieldTable.AddRaw("Dialog", dialogTable);
+                dialogTable = AddNewDialogTableToConversationFields(fieldTable, conversation);
             }
 
             // Add conversation to Conversation[] table:
@@ -334,6 +334,21 @@ namespace PixelCrushers.DialogueSystem
             {
                 conversationTable.SetKeyValue(new LuaNumber(conversation.id), fieldTable);
             }
+            return dialogTable;
+        }
+
+        private static LuaTable AddNewDialogTableToConversationFields(LuaTable fieldTable, Conversation conversation)
+        {
+            var dialogTable = new LuaTable();
+            for (int j = 0; j < conversation.dialogueEntries.Count; j++)
+            {
+                var dialogueEntry = conversation.dialogueEntries[j];
+                // [NOTE] To reduce Lua memory use, we only record SimStatus of dialogue entries:
+                var simStatusTable = new LuaTable();
+                simStatusTable.AddRaw(DialogueLua.SimStatus, new LuaString(DialogueLua.Untouched));
+                dialogTable.AddRaw(dialogueEntry.id, simStatusTable);
+            }
+            fieldTable.AddRaw("Dialog", dialogTable);
             return dialogTable;
         }
 

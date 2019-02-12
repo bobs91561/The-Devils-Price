@@ -276,13 +276,14 @@ namespace PixelCrushers
 
         private static bool ShouldLogSender(object sender)
         {
+            if (sender is UnityEngine.Object && (sender as UnityEngine.Object) == null) return false;
             return (sender is GameObject && s_sendersToLog.Contains(sender as GameObject)) ||
                 (sender is Component && s_sendersToLog.Contains((sender as Component).gameObject));
         }
 
         private static bool ShouldLogReceiver(IMessageHandler receiver)
         {
-            return (receiver is Component && s_listenersToLog.Contains((receiver as Component).gameObject));
+            return (receiver is Component && (receiver as Component) != null && s_listenersToLog.Contains((receiver as Component).gameObject));
         }
 
         /// <summary>

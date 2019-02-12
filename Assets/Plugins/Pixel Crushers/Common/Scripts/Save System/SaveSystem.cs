@@ -50,6 +50,8 @@ namespace PixelCrushers
 
         private static int m_currentSceneIndex = NoSceneIndex;
 
+        private static AsyncOperation m_currentAsyncOperation = null;
+
         /// <summary>
         /// When loading a game, load the scene that the game was saved in.
         /// </summary>
@@ -148,6 +150,16 @@ namespace PixelCrushers
                 }
                 return m_sceneTransitionManager;
             }
+        }
+
+        /// <summary>
+        /// Current asynchronous scene load operation, or null if none. Loading scenes can use this
+        /// value to update a progress bar.
+        /// </summary>
+        public static AsyncOperation currentAsyncOperation
+        {
+            get { return m_currentAsyncOperation; }
+            set { m_currentAsyncOperation = value; }
         }
 
         /// <summary>
@@ -279,7 +291,12 @@ namespace PixelCrushers
         private static IEnumerator LoadSceneInternalTransitionCoroutine(string sceneName)
         {
             yield return instance.StartCoroutine(sceneTransitionManager.LeaveScene());
-            yield return UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneName);
+            m_currentAsyncOperation = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneName);
+            while (m_currentAsyncOperation != null && !m_currentAsyncOperation.isDone)
+            {
+                yield return null;
+            }
+            m_currentAsyncOperation = null;
             instance.StartCoroutine(sceneTransitionManager.EnterScene());
         }
 #else

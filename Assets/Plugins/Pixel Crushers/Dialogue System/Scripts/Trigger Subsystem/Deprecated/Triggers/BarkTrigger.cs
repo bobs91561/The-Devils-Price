@@ -102,8 +102,9 @@ namespace PixelCrushers.DialogueSystem
 
 #endif
 
-        public void Start()
+        protected override void Start()
         {
+            base.Start();
             // Waits one frame to allow all other components to finish their Start() methods.
             if (trigger == DialogueTriggerEvent.OnStart) StartCoroutine(BarkAfterOneFrame());
         }

@@ -5364,6 +5364,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MeshObject: {fileID: 563493115630395922}
+  StartScaleMultiplier: 1
   Color: {r: 0.6367924, g: 1, b: 0.9667813, a: 1}
   IsActive: 1
   FadeTime: 1.5
@@ -7572,10 +7573,10 @@ MonoBehaviour:
   allowBarksDuringConversations: 0
   skipBarkIfNoValidEntries: 0
   cacheBarkLines: 0
-  conversation: 
+  conversation: Chapter1/Awoken/Player-Soul
   conversationConversant: {fileID: 0}
   conversationActor: {fileID: 0}
-  exclusive: 0
+  exclusive: 1
   skipIfNoValidEntries: 1
   stopConversationOnTriggerExit: 1
   stopConversationIfTooFar: 1
@@ -7598,7 +7599,7 @@ MonoBehaviour:
   onExecute:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: PixelCrushers.GameObjectUnityEvent, Assembly-CSharp-firstpass, Version=0.0.0.0,
+    m_TypeName: PixelCrushers.GameObjectUnityEvent, PixelCrushers, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   useConversationTitlePicker: 1
   useBarkTitlePicker: 1

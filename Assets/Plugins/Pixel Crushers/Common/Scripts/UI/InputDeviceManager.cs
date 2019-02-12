@@ -2,6 +2,7 @@
 
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 namespace PixelCrushers
@@ -140,12 +141,27 @@ namespace PixelCrushers
                     DontDestroyOnLoad(gameObject);
                 }
             }
+#if !UNITY_5_3
+            SceneManager.sceneLoaded += OnSceneLoaded;
+#endif
+        }
+
+        public void OnDestroy()
+        {
+#if !UNITY_5_3
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+#endif
         }
 
         public void Start()
         {
             m_lastMousePosition = Input.mousePosition;
             SetInputDevice(inputDevice);
+            BrieflyIgnoreMouseMovement();
+        }
+
+        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
             BrieflyIgnoreMouseMovement();
         }
 
@@ -344,14 +360,21 @@ namespace PixelCrushers
         public void SetCursor(bool visible)
         {
             if (!controlCursorState) return;
-#if UNITY_4_6 || UNITY_4_7 || UNITY_4_8
-            Screen.showCursor = visible;
-            Screen.lockCursor = !visible;
-#else
+            ForceCursor(visible);
+        }
+
+        public void ForceCursor(bool visible)
+        {
             Cursor.visible = visible;
             Cursor.lockState = visible ? CursorLockMode.None : CursorLockMode.Locked;
-#endif
+            StartCoroutine(ForceCursorAfterOneFrameCoroutine(visible));
+        }
 
+        private IEnumerator ForceCursorAfterOneFrameCoroutine(bool visible)
+        {
+            yield return new WaitForEndOfFrame();
+            Cursor.visible = visible;
+            Cursor.lockState = visible ? CursorLockMode.None : CursorLockMode.Locked;
         }
 
     }

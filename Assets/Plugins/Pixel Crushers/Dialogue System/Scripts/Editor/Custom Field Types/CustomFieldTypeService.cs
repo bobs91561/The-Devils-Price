@@ -211,29 +211,8 @@ namespace PixelCrushers.DialogueSystem
             var list = new List<Type>();
             try
             {
-                //--- Was:
-                //try
-                //{
-                //    var dsList = FindAllDerivedTypes<T>(Assembly.Load("DialogueSystemEditors"));
-                //    list.AddRange(dsList);
-                //}
-                //catch (System.IO.FileNotFoundException) { }
-                //try
-                //{
-                //    var unityList = FindAllDerivedTypes<T>(Assembly.Load("Assembly-CSharp-Editor"));
-                //    list.AddRange(unityList);
-                //}
-                //catch (System.IO.FileNotFoundException) { }
-
-                //var wrapperName = "PixelCrushers.QuestMachine.Wrappers." + type.Name;
-
-                //--- Now gets from all assemblies:
                 var derivedType = typeof(T);
-#if NET_STANDARD_2_0 || UNITY_IOS
-                var assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(p => !(p.IsDynamic)); // Exclude dynamic assemblies.
-#else
-                var assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(p => !(p.ManifestModule is System.Reflection.Emit.ModuleBuilder)); // Exclude dynamic assemblies.
-#endif
+                var assemblies = RuntimeTypeUtility.GetAssemblies();
                 foreach (var assembly in assemblies)
                 {
                     try
@@ -251,7 +230,7 @@ namespace PixelCrushers.DialogueSystem
             }
             catch (Exception e)
             {
-                Debug.LogWarning("Dialogue Editor: FindAllDerivedTypes error: " + e.Message);
+                Debug.LogWarning("Dialogue Editor: FindAllDerivedTypes error: " + e.Message + ". Please contact support@pixelcrushers.com.");
             }
             return list;
         }

@@ -342,12 +342,14 @@ namespace PixelCrushers.DialogueSystem
 
         protected BarkHistory barkHistory;
         protected ConversationState cachedState = null;
+        protected BarkGroupMember barkGroupMember = null;
         protected IBarkUI barkUI = null;
         protected float earliestTimeToAllowTriggerExit = 0;
         protected const float MarginToAllowTriggerExit = 0.2f;
         protected Coroutine monitorDistanceCoroutine = null;
         protected bool wasCursorVisible;
         protected CursorLockMode savedLockState;
+        protected bool didIPause = false;
         protected float preConversationTimeScale = 1;
         protected bool tryingToStart = false;
 
@@ -380,6 +382,7 @@ namespace PixelCrushers.DialogueSystem
                 // Wait until end of frame to allow all other components to finish their Start() methods:
                 StartCoroutine(StartAtEndOfFrame());
             }
+            barkGroupMember = GetBarker(barkConversation).GetComponent<BarkGroupMember>();
         }
 
         public void OnBarkStart(Transform actor)
@@ -402,8 +405,9 @@ namespace PixelCrushers.DialogueSystem
                 savedLockState = Cursor.lockState;
                 StartCoroutine(ShowCursorAfterOneFrame());
             }
-            if (pauseGameDuringConversation)
+            if (pauseGameDuringConversation && string.Equals(DialogueManager.lastConversationStarted, conversation))
             {
+                didIPause = true;
                 preConversationTimeScale = Time.timeScale;
                 Time.timeScale = 0;
             }
@@ -426,8 +430,9 @@ namespace PixelCrushers.DialogueSystem
                 Cursor.visible = wasCursorVisible;
                 Cursor.lockState = savedLockState;
             }
-            if (pauseGameDuringConversation)
+            if (pauseGameDuringConversation && didIPause)
             {
+                didIPause = false;
                 Time.timeScale = preConversationTimeScale;
             }
         }
@@ -701,7 +706,14 @@ namespace PixelCrushers.DialogueSystem
                     }
                     else
                     {
-                        DialogueManager.Bark(barkConversation, GetBarker(barkConversation), Tools.Select(barkTarget, actor), barkHistory);
+                        if (barkGroupMember != null)
+                        {
+                            barkGroupMember.GroupBark(barkConversation, Tools.Select(barkTarget, actor), barkHistory);
+                        }
+                        else
+                        {
+                            DialogueManager.Bark(barkConversation, GetBarker(barkConversation), Tools.Select(barkTarget, actor), barkHistory);
+                        }
                         sequencer = BarkController.LastSequencer;
                     }
                     break;
@@ -713,7 +725,14 @@ namespace PixelCrushers.DialogueSystem
                     }
                     else
                     {
-                        DialogueManager.BarkString(barkText, GetBarker(null), Tools.Select(barkTarget, actor), barkTextSequence);
+                        if (barkGroupMember != null)
+                        {
+                            barkGroupMember.GroupBarkString(barkText, Tools.Select(barkTarget, actor), barkTextSequence);
+                        }
+                        else
+                        {
+                            DialogueManager.BarkString(barkText, GetBarker(null), Tools.Select(barkTarget, actor), barkTextSequence);
+                        }
                         sequencer = BarkController.LastSequencer;
                     }
                     break;
@@ -769,7 +788,14 @@ namespace PixelCrushers.DialogueSystem
                 {
                     Subtitle subtitle = new Subtitle(cachedState.subtitle.listenerInfo, cachedState.subtitle.speakerInfo, new FormattedText(barkEntry.currentDialogueText), string.Empty, string.Empty, barkEntry);
                     if (DialogueDebug.logInfo) Debug.Log(string.Format("{0}: Bark (speaker={1}, listener={2}): '{3}'", new System.Object[] { DialogueDebug.Prefix, speaker, listener, subtitle.formattedText.text }), speaker);
-                    StartCoroutine(BarkController.Bark(subtitle, speaker, listener, barkUI));
+                    if (barkGroupMember != null)
+                    {
+                        barkGroupMember.GroupBarkString(subtitle.formattedText.text, listener, subtitle.sequence);
+                    }
+                    else
+                    {
+                        StartCoroutine(BarkController.Bark(subtitle, speaker, listener, barkUI));
+                    }
                 }
             }
         }

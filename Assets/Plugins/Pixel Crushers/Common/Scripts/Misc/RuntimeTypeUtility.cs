@@ -24,10 +24,27 @@ namespace PixelCrushers
             for (int i = 0; i < assemblies.Length; i++)
             {
                 var assembly = assemblies[i];
-                var type = assembly.GetType(typeName);
-                if (type != null) return type;
+                try
+                {
+                    var type = assembly.GetType(typeName);
+                    if (type != null) return type;
+                }
+                catch (Exception)
+                {
+                    // Ignore exceptions.
+                }
             }
             return null;
+        }
+
+        public static System.Reflection.Assembly[] GetAssemblies()
+        {
+#if NET_STANDARD_2_0 || UNITY_IOS
+            return AppDomain.CurrentDomain.GetAssemblies(); // Used to exclude dynamic assemblies, but unsupported in some iOS.
+#else
+            //---Was: return AppDomain.CurrentDomain.GetAssemblies().Where(p => !(p.ManifestModule is System.Reflection.Emit.ModuleBuilder)).ToArray(); // Exclude dynamic assemblies.
+            return AppDomain.CurrentDomain.GetAssemblies(); // Allows evaluation version to build to iOS.
+#endif
         }
 
         /// <summary>
@@ -43,11 +60,7 @@ namespace PixelCrushers
             try
             {
                 var wrapperName = type.Namespace + ".Wrappers." + type.Name;
-#if NET_STANDARD_2_0 || UNITY_IOS
-                var assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(p => !(p.IsDynamic)); // Exclude dynamic assemblies.
-#else
-                var assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(p => !(p.ManifestModule is System.Reflection.Emit.ModuleBuilder)); // Exclude dynamic assemblies.
-#endif
+                var assemblies = GetAssemblies();
                 foreach (var assembly in assemblies)
                 {
                     try
@@ -57,26 +70,11 @@ namespace PixelCrushers
                                            select assemblyType).ToArray();
                         if (wrapperList.Length > 0) return wrapperList[0];
                     }
-                    catch (NotSupportedException)
+                    catch (System.Exception)
                     {
                         // If an assembly complains, ignore it and move on.
                     }
-                    catch (System.Reflection.ReflectionTypeLoadException e)
-                    {
-                        Debug.LogWarning("PixelCrushers.RuntimeTypeUtility.GetWrapperType(" + type.Name + ") was unable to load assembly '" + assembly.FullName + "'. You may have a DLL that's incompatible with your version of Unity. Message: " + e.Message);
-                    }
-                    catch (System.Exception)
-                    {
-                    }
                 }
-            }
-            catch (NotSupportedException)
-            {
-                // If an assembly complains, ignore it and move on.
-            }
-            catch (System.Reflection.ReflectionTypeLoadException e)
-            {
-                Debug.LogError("PixelCrushers.RuntimeTypeUtility.GetWrapperType(" + type.Name + ") was unable to load an assembly. You may have a DLL that's incompatible with your version of Unity. Message: " + e.Message);
             }
             catch (System.Exception)
             {

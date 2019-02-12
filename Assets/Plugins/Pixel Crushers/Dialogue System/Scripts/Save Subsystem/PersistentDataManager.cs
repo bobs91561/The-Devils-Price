@@ -916,6 +916,10 @@ namespace PixelCrushers.DialogueSystem
                     var conversationID = enumerator.Current;
                     var conversation = DialogueManager.MasterDatabase.GetConversation(conversationID);
                     if (conversation == null) continue;
+                    if (DialogueDebug.logInfo)
+#if SAFE_SIMSTATUS
+                    if (DialogueDebug.logInfo) Debug.Log("DEBUG: Add SimStatus for new conversation [" + conversationID + "]: " + conversation.Title);
+#endif
                     DialogueLua.AddToConversationTable(conversationTable, conversation, true);
                 }
             }
@@ -987,7 +991,7 @@ namespace PixelCrushers.DialogueSystem
                 var simStatus = CharToSimStatus(simXFields[(2 * i) + 1][0]);
                 var simStatusTable = new Language.Lua.LuaTable();
                 simStatusTable.AddRaw(DialogueLua.SimStatus, new Language.Lua.LuaString(simStatus));
-                if (!simStatusFieldValueToID.ContainsKey(simXEntryIDValue)) continue;
+                if (!useEntryID && !simStatusFieldValueToID.ContainsKey(simXEntryIDValue)) continue;
                 var entryID = useEntryID ? Tools.StringToInt(simXEntryIDValue) : simStatusFieldValueToID[simXEntryIDValue];
                 dialogueEntryCache[entryID] = null; // Mark that SimStatus has been added for this entry.
                 if (useEntryID)
@@ -1009,6 +1013,9 @@ namespace PixelCrushers.DialogueSystem
                 entry = conversation.dialogueEntries[i];
                 if (dialogueEntryCache[entry.id] != null)
                 {
+#if SAFE_SIMSTATUS
+                    if (DialogueDebug.logInfo) Debug.Log("DEBUG: Adding SimStatus for new entry [" + entry.id + "] in existing conversation [" + conversation.id + "]: " + conversation.Title);
+#endif
                     // Missing. Need to add:
                     var simStatusTable = new Language.Lua.LuaTable();
                     simStatusTable.AddRaw(DialogueLua.SimStatus, new Language.Lua.LuaString(DialogueLua.Untouched));
@@ -1019,7 +1026,7 @@ namespace PixelCrushers.DialogueSystem
 
 #endif
 
-        private static char SimStatusToChar(string simStatus)
+                    private static char SimStatusToChar(string simStatus)
         {
             switch (simStatus)
             {
@@ -1149,7 +1156,7 @@ namespace PixelCrushers.DialogueSystem
         {
             // For LuaInterpreter, ExpandSimStatusForConversation also initializes new SimStatus, 
             // so we only need this for NLua:
-#if NLUA
+#if NLUA || SAFE_SIMSTATUS
             if (!(includeSimStatus && initializeNewSimStatus)) return;
             try
             {

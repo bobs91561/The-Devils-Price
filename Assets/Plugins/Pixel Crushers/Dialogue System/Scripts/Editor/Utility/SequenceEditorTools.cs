@@ -326,7 +326,7 @@ namespace PixelCrushers.DialogueSystem
         private static void AddAllSequencerCommands(GenericMenu menu)
         {
             var list = new List<string>(InternalSequencerCommands);
-            var assemblies = System.AppDomain.CurrentDomain.GetAssemblies();
+            var assemblies = RuntimeTypeUtility.GetAssemblies();
             for (int i = 0; i < assemblies.Length; i++)
             {
                 var assembly = assemblies[i];

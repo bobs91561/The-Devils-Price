@@ -331,22 +331,34 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                 var nodeColorField = actor.fields.Find(x => string.Equals(x.title, NodeColorFieldTitle));
                 if (nodeColorField != null)
                 {
-                    int index = 0;
-                    for (int i = 0; i < EditorTools.StylesColorStrings.Length; i++)
+                    EditorGUI.BeginChangeCheck();
+#if UNITY_5 || UNITY_2017
+                    var nodeColor = EditorGUILayout.ColorField(GUIContent.none, EditorTools.NodeColorStringToColor(nodeColorField.value), true, true, false, null);
+#else
+                    var nodeColor = EditorGUILayout.ColorField(GUIContent.none, EditorTools.NodeColorStringToColor(nodeColorField.value), true, true, false);
+#endif
+                    if (EditorGUI.EndChangeCheck())
                     {
-                        if (string.Equals(nodeColorField.value, EditorTools.StylesColorStrings[i]))
-                        {
-                            index = i;
-                        }
+                        nodeColorField.value = Tools.ToWebColor(nodeColor);
                     }
-                    var newIndex = EditorGUILayout.Popup(index, EditorTools.StylesColorStrings);
-                    if (newIndex != index)
-                    {
-                        ClearActorInfoCaches();
-                        nodeColorField.value = (0 <= newIndex && newIndex < EditorTools.StylesColorStrings.Length)
-                            ? EditorTools.StylesColorStrings[newIndex]
-                            : (actor.LookupBool("IsPlayer") ? "Blue" : "Gray");
-                    }
+
+                    //---Was: (Used to use Unity's built-in node style, but it had limited color options.)
+                    //int index = 0;
+                    //for (int i = 0; i < EditorTools.StylesColorStrings.Length; i++)
+                    //{
+                    //    if (string.Equals(nodeColorField.value, EditorTools.StylesColorStrings[i]))
+                    //    {
+                    //        index = i;
+                    //    }
+                    //}
+                    //var newIndex = EditorGUILayout.Popup(index, EditorTools.StylesColorStrings);
+                    //if (newIndex != index)
+                    //{
+                    //    ClearActorInfoCaches();
+                    //    nodeColorField.value = (0 <= newIndex && newIndex < EditorTools.StylesColorStrings.Length)
+                    //        ? EditorTools.StylesColorStrings[newIndex]
+                    //        : (actor.LookupBool("IsPlayer") ? "Blue" : "Gray");
+                    //}
                 }
             }
             EditorGUILayout.EndHorizontal();

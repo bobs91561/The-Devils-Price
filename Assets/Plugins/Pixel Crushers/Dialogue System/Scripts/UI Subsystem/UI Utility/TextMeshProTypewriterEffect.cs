@@ -46,7 +46,7 @@ namespace PixelCrushers.DialogueSystem
         /// @cond FOR_V1_COMPATIBILITY
         public bool IsPlaying { get { return isPlaying; } }
         /// @endcond
-        
+
         private const string RPGMakerCodeQuarterPause = @"\,";
         private const string RPGMakerCodeFullPause = @"\.";
         private const string RPGMakerCodeSkipToEnd = @"\^";
@@ -97,7 +97,7 @@ namespace PixelCrushers.DialogueSystem
 
         public override void Awake()
         {
-            
+
             if (removeDuplicateTypewriterEffects) RemoveIfDuplicate();
         }
 
@@ -279,7 +279,7 @@ namespace PixelCrushers.DialogueSystem
                                     }
                                 }
                             }
-                            var typedCharacter = textComponent.text[charactersTyped];
+                            var typedCharacter = (0 <= charactersTyped && charactersTyped < textComponent.text.Length) ? textComponent.text[charactersTyped] : ' ';
                             if (charactersTyped < totalVisibleCharacters && !IsSilentCharacter(typedCharacter)) PlayCharacterAudio();
                             onCharacter.Invoke();
                             charactersTyped++;

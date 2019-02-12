@@ -97,6 +97,7 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
             EditorApplication.playmodeStateChanged -= OnPlaymodeStateChanged;
             EditorApplication.playmodeStateChanged += OnPlaymodeStateChanged;
 #endif
+            nodeStyle = null;
             LoadEditorSettings();
         }
 
@@ -111,6 +112,7 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
             TemplateTools.SaveToEditorPrefs(template);
             inspectorSelection = null;
             instance = null;
+            nodeStyle = null;
             SaveEditorSettings();
         }
 

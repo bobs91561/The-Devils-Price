@@ -23,7 +23,7 @@ namespace PixelCrushers.DialogueSystem
         /// Evaluate Group Id before every bark. Useful if Id is a Lua expression that can change value.
         /// </summary>
         [Tooltip("Evaluate Group Id before every bark. Useful if Id is a Lua expression that can change value.")]
-        public bool evaluateIdEveryBark = true;
+        public bool evaluateIdEveryBark = false;
 
         /// <summary>
         /// When another group member forces this member's bark to hide, delay this many seconds before hiding.
@@ -31,7 +31,18 @@ namespace PixelCrushers.DialogueSystem
         [Tooltip("When another group member forces this member's bark to hide, delay this many seconds before hiding.")]
         public float forcedHideDelay = 0;
 
+        /// <summary>
+        /// If another group member is barking, wait in a queue to bark.
+        /// </summary>
+        [Tooltip("If another group member is barking, wait in a queue to bark instead of cancelling the other member's bark.")]
+        public bool queueBarks = false;
+
+        public float minDelayBetweenQueuedBarks = 0;
+        public float maxDelayBetweenQueuedBarks = 1;
+
         private string m_currentIdValue = string.Empty;
+        public string currentIdValue { get { return m_currentIdValue; } }
+
         private IBarkUI m_barkUI = null;
         private bool m_ignoreOnDisable = false;
 
@@ -42,6 +53,11 @@ namespace PixelCrushers.DialogueSystem
                 if (m_barkUI == null) m_barkUI = GetComponentInChildren(typeof(IBarkUI)) as IBarkUI;
                 return m_barkUI;
             }
+        }
+
+        protected virtual void Awake()
+        {
+            m_currentIdValue = groupId;
         }
 
         private void OnApplicationQuit()
@@ -58,6 +74,16 @@ namespace PixelCrushers.DialogueSystem
         {
             if (m_ignoreOnDisable || BarkGroupManager.instance == null) return;
             BarkGroupManager.instance.RemoveFromGroup(m_currentIdValue, this);
+        }
+
+        public void GroupBark(string conversation, Transform listener, BarkHistory barkHistory, float delayTime = -1)
+        {
+            BarkGroupManager.instance.GroupBark(conversation, this, listener, barkHistory, delayTime);
+        }
+
+        public void GroupBarkString(string barkText, Transform listener, string sequence, float delayTime = -1)
+        {
+            BarkGroupManager.instance.GroupBarkString(barkText, this, listener, sequence, delayTime);
         }
 
         private void OnBarkStart(Transform listener)

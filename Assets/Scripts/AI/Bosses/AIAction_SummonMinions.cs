@@ -8,6 +8,7 @@ using UnityEngine;
 /// </summary>
 [CreateAssetMenu(menuName ="AIAction/Special/SummonMinions")]
 public class AIAction_SummonMinions : AIAction {
+
     public int MaxCalls;
     public float[] ThresholdLevels;
     public float TimeBetweenCalls;

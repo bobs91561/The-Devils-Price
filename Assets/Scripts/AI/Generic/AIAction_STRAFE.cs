@@ -4,10 +4,14 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [CreateAssetMenu(menuName = "AIAction/STRAFE")]
-public class AIAction_STRAFE : AIAction {
-    
+public class AIAction_STRAFE : AIAction
+{
+
     private int _direction;             //-1 for left, 1 for right
     private bool _directionChosen;
+    private Vector3 g_position;
+    private Vector3 n_position;
+    private NavMeshHit _hit;
 
     public float MinStrafeRange, MaxStrafeRange;
     public string StrafeAnimation;
@@ -15,7 +19,7 @@ public class AIAction_STRAFE : AIAction {
     public override bool ActionFeasible()
     {
         //Feasible if in combat, within a distance range of player
-        if(!IsPlayerPresent()) return false;
+        if (!IsPlayerPresent()) return false;
         return decider.combat && CheckRange() && !_skillSet.CheckAttack();
     }
 
@@ -38,14 +42,32 @@ public class AIAction_STRAFE : AIAction {
 
     private void SetDirection()
     {
-        _agent.velocity = new Vector3(_direction*2f, 0, 0);
+        _agent.velocity = new Vector3(_direction * 2f, 0, 0);
     }
 
     private void ChooseDirection()
     {
         //Randomly pick between left or right strife direction
         //Set the direction
-        _direction = Random.Range(-1,1);
+        g_position = g.transform.position;
+        _direction = Random.Range(-1, 1);
+        if (_direction == 0) _direction++;
+        n_position = g_position + new Vector3(_direction, 0, 0);
+        bool _blocked = NavMesh.Raycast(g_position, n_position, out _hit, NavMesh.AllAreas);
+        Debug.Log("original direction" + _direction);
+        if (_blocked == true)
+        {
+            Debug.Log("path blocked, checking other side");
+            if (_direction == 1)
+                _direction = -1;
+            else
+                _direction = 1;
+            n_position = g_position + new Vector3(_direction, 0, 0);
+            _blocked = NavMesh.Raycast(g_position, n_position, out _hit, NavMesh.AllAreas);
+            if (_blocked == true)
+                _direction = 0;
+        }
+        Debug.Log("final direction" + _direction);
         _directionChosen = true;
     }
 

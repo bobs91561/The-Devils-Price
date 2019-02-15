@@ -87,7 +87,7 @@ Shader "KriptoFX/AE/DistortionMobile"
 			return ComputeGrabScreenPos(vertex);
 		}
 
-#include "AE_DistortPasses.cginc"
+#include "AE_DistortionPasses.cginc"
 
 			ENDCG
 		}

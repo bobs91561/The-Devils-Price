@@ -1,4 +1,4 @@
-//RFX1_KriptoFX
+﻿
 	sampler2D _GrabTexture;
 	sampler2D _MainTex;
 	sampler2D _NormalTex;
@@ -126,21 +126,26 @@
 
 		o.color = v.color;
 
-	
-		o.uvgrab = CustomGrabScreenPos(o.vertex);
+		/////////////////////////////////////// GRABPASS ////////////////////////////////////////
+		
+		o.uvgrab.xy = GrabScreenPosXY(o.vertex);
 		
 #ifdef USE_REFRACTIVE
 		float3 binormal = cross(v.normal, v.tangent.xyz) * v.tangent.w;
 		float3x3 rotation = float3x3(v.tangent.xyz, binormal, v.normal);
 		o.uvgrab.xy += refract(normalize(mul(rotation, ObjSpaceViewDir(v.vertex))), 0, _RefractiveStrength) * v.color.a * v.color.a;
 #endif
-
+		o.uvgrab.zw = o.vertex.w;
+#if UNITY_SINGLE_PASS_STEREO
+		o.uvgrab.xy = TransformStereoScreenSpaceTex(o.uvgrab.xy, o.uvgrab.w);
+#endif
+		o.uvgrab.z /= distance(_WorldSpaceCameraPos, mul(unity_ObjectToWorld, v.vertex));
 
 #if defined (USE_SOFT_PARTICLES)  && defined (SOFTPARTICLES_ON)
 		o.projPos = ComputeScreenPos (o.vertex);
 		COMPUTE_EYEDEPTH(o.projPos.z);
 #endif
-		
+		////////////////////////////////////////////////////////////////////////////////////////////
 
 #ifdef USE_FRESNEL
 	#if  defined (USE_HEIGHT)
@@ -174,7 +179,9 @@
 #endif
 		
 #ifdef USE_ALPHA_CLIPING
-		half alphaBump = saturate((0.94 - pow(dist.z, 127)) * _AlphaClip * 0.2);
+		half alphaBump = saturate((abs(dist.r + dist.g) - 0.01) * _AlphaClip);
+		clip(step(0.5, alphaBump) - 0.1);
+
 #endif
 
 #if defined (USE_SOFT_PARTICLES)  && defined (SOFTPARTICLES_ON)
@@ -185,7 +192,7 @@
 		i.color.a *= lerp(1, fade, step(0.001, _InvFade));
 #endif
 
-		half2 texelSize = 0.001;
+		half2 texelSize = GetGrabTexelSize();
 		half2 offset = dist.rg * _Distortion * texelSize;
 		
 		half3 fresnelCol = 0;
@@ -220,10 +227,9 @@
 #ifdef USE_ALPHA_CLIPING
 		offset *= alphaBump;
 #endif
-		i.uvgrab.xy = offset * i.color.a + i.uvgrab.xy;
+		i.uvgrab.xy = offset * i.uvgrab.z * i.color.a + i.uvgrab.xy;
+		half4 grabColor = tex2Dproj(_GrabTexture, UNITY_PROJ_COORD(i.uvgrab));;
 		
-		half4 grabColor = tex2Dlod(_GrabTexture, float4(i.uvgrab.xy / i.uvgrab.w, 0, 0));
-
 		half4 result;
 		result.rgb = grabColor * lerp(1, _MainColor,  i.color.a) + fresnelCol * grabColor + cutoutCol.rgb;
 

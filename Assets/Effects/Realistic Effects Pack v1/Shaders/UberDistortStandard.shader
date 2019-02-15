@@ -1,4 +1,4 @@
-Shader "KriptoFX/RFX1/Distortion"
+﻿Shader "KriptoFX/RFX1/Distortion"
 {
 	Properties
 	{	
@@ -52,15 +52,17 @@ Shader "KriptoFX/RFX1/Distortion"
 			"_GrabTexture"
  		}
 
-		Tags { "Queue"="Transparent+1" "IgnoreProjector"="True" "RenderType"="Transparent"}
+		Tags { "Queue"="Transparent" "IgnoreProjector"="True" "RenderType"="Transparent"}
 		ZWrite [_ZWriteMode]
 		Cull [_CullMode]
+		LOD 100
 		Blend SrcAlpha OneMinusSrcAlpha
 		
 		Pass
 		{
 			CGPROGRAM
-
+			#pragma glsl
+			#pragma target 3.0
 
 			#pragma vertex vert
 			#pragma fragment frag
@@ -76,15 +78,20 @@ Shader "KriptoFX/RFX1/Distortion"
 			#pragma shader_feature USE_ALPHA_CLIPING
 			#pragma shader_feature USE_BLENDING
 			
-#include "UnityCG.cginc"
+			float4 _GrabTexture_TexelSize;
+			float2 GetGrabTexelSize(){ return _GrabTexture_TexelSize.xy; }
 
-			float4 CustomGrabScreenPos(float4 vertex)
-		{
-			return ComputeGrabScreenPos(vertex);
-		}
+			half2 GrabScreenPosXY(float4 vertex)
+			{ 
+				#if UNITY_UV_STARTS_AT_TOP
+					return (float2(vertex.x, -vertex.y) + vertex.w) * 0.5;
+				#else
+					return (float2(vertex.x, vertex.y) + vertex.w) * 0.5;
+				#endif 
+			}
 
-#include "DistortPasses.cginc"
-
+			#include "UnityCG.cginc"
+			#include "DistortPasses.cginc"
 
 			ENDCG
 		}

@@ -26,6 +26,7 @@ public class AIActionDecider: MonoBehaviour {
 
     public List<AIAction> actions;
     public List<GameObject> patrolPoints;
+    public List<GameObject> spawnPoints;
     public int patrolPoint;
 
 	// Use this for initialization
@@ -119,7 +120,7 @@ public class AIActionDecider: MonoBehaviour {
         FaceTarget(Player.transform.position);
 
         //Send out combat alerts to nearby allies
-        Collider[] cs = Physics.OverlapSphere(transform.position, 100f, 1 << LayerMask.NameToLayer("Enemy"));
+        Collider[] cs = Physics.OverlapSphere(transform.position, 7f, 1 << LayerMask.NameToLayer("Enemy"));
         
         foreach (Collider c in cs)
         {
@@ -135,15 +136,20 @@ public class AIActionDecider: MonoBehaviour {
         CombatNearby = false;
         skillSet.Combat();
         GetComponent<AIAttackController>().enabled = false;
+        
+        Collider[] cs = Physics.OverlapSphere(transform.position, 7f, 1 << LayerMask.NameToLayer("Enemy"));
         GetComponent<HealthManager>().ExitCombat();
-
-        Collider[] cs = Physics.OverlapSphere(transform.position, 100f, 1 << LayerMask.NameToLayer("Enemy"));
-
-        foreach (Collider c in cs)
+        
+                foreach (Collider c in cs)
         {
             if (c.gameObject.GetComponent<AIActionDecider>())
                 c.gameObject.SendMessage("UpdatePlayerContact");
         }
+
+        Vector3 _lastPlayerPosition = new Vector3();
+        _lastPlayerPosition = Player.transform.position;
+        NavMeshAgent _agent = AI.GetComponent<NavMeshAgent>();
+        _agent.destination = _lastPlayerPosition;
     }
 
     public void UpdatePlayerContact()

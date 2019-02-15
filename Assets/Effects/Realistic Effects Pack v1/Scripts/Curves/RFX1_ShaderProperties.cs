@@ -10,6 +10,5 @@ public enum RFX1_ShaderProperties
     _BumpAmt,
     _AlphaPow,
     _Distortion,
-    _MainColor,
-    _CutoutAlphaMul
+    _MainColor
 }

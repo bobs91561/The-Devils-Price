@@ -4521,7 +4521,7 @@ ParticleSystem:
 --- !u!199 &199249845914164104
 ParticleSystemRenderer:
   serializedVersion: 6
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -4770,7 +4770,7 @@ Transform:
   - {fileID: 4957354961262720}
   - {fileID: 4021808348853524}
   m_Father: {fileID: 4937582884249322}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &198940253177041166
 ParticleSystem:
@@ -9159,7 +9159,7 @@ ParticleSystem:
 --- !u!199 &199851824197365678
 ParticleSystemRenderer:
   serializedVersion: 6
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -9298,7 +9298,7 @@ Transform:
   - {fileID: 4356626519584726}
   - {fileID: 4121940677665200}
   m_Father: {fileID: 4937582884249322}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 40.006, y: -49.987003, z: 6.8830004}
 --- !u!95 &95967843983176190
 Animator:
@@ -9412,7 +9412,7 @@ Transform:
   - {fileID: 4303638537682652}
   - {fileID: 4721549784678706}
   m_Father: {fileID: 4937582884249322}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 2.2680001, y: 0.001, z: -10.218}
 --- !u!95 &95972339831553154
 Animator:
@@ -13852,7 +13852,7 @@ ParticleSystem:
 --- !u!199 &199695054180077868
 ParticleSystemRenderer:
   serializedVersion: 6
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -18375,7 +18375,7 @@ ParticleSystem:
 --- !u!199 &199101561780904972
 ParticleSystemRenderer:
   serializedVersion: 6
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -18859,6 +18859,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 4214135399350148}
   - {fileID: 4688785324211004}
   - {fileID: 4982287495159646}
   - {fileID: 4261250902541904}
@@ -23480,7 +23481,7 @@ ParticleSystem:
 --- !u!199 &199321762619819124
 ParticleSystemRenderer:
   serializedVersion: 6
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -23604,7 +23605,7 @@ Transform:
   - {fileID: 4938149463255504}
   - {fileID: 4181570443753506}
   m_Father: {fileID: 4937582884249322}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &198440703446315466
 ParticleSystem:
@@ -27992,7 +27993,7 @@ ParticleSystem:
 --- !u!199 &199630860364074690
 ParticleSystemRenderer:
   serializedVersion: 6
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -28190,7 +28191,7 @@ Transform:
   - {fileID: 4597318642753046}
   - {fileID: 4683326278980030}
   m_Father: {fileID: 4937582884249322}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 26.070002, y: 2.651, z: -4.616}
 --- !u!95 &95136295198824882
 Animator:
@@ -33252,7 +33253,7 @@ ParticleSystem:
 --- !u!199 &199863329427861434
 ParticleSystemRenderer:
   serializedVersion: 6
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -33497,7 +33498,7 @@ Transform:
   - {fileID: 4285717922128024}
   - {fileID: 4996941361390994}
   m_Father: {fileID: 4937582884249322}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: -2.3850002, y: 1.6840001, z: 22.834002}
 --- !u!95 &95776865570370316
 Animator:
@@ -33580,6 +33581,52 @@ Transform:
   m_Father: {fileID: 4455048316018674}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1693285740151010
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4214135399350148}
+  - component: {fileID: 114852682771711224}
+  m_Layer: 0
+  m_Name: PerPlatfromSettings
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4214135399350148
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1693285740151010}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4937582884249322}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114852682771711224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1693285740151010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 583dfd8e4440c404cac2cade0a3edece, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DisableOnMobiles: 0
+  RenderMobileDistortion: 1
+  ParticleBudgetForMobiles: 1
 --- !u!1 &1725863536829604
 GameObject:
   m_ObjectHideFlags: 0
@@ -33769,7 +33816,7 @@ Transform:
   - {fileID: 4108456152832834}
   - {fileID: 4191009683105598}
   m_Father: {fileID: 4937582884249322}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &198120091441916510
 ParticleSystem:
@@ -38158,7 +38205,7 @@ ParticleSystem:
 --- !u!199 &199206767298018336
 ParticleSystemRenderer:
   serializedVersion: 6
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -42684,7 +42731,7 @@ ParticleSystem:
 --- !u!199 &199227515591221804
 ParticleSystemRenderer:
   serializedVersion: 6
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -47686,7 +47733,7 @@ ParticleSystem:
 --- !u!199 &199152382118816400
 ParticleSystemRenderer:
   serializedVersion: 6
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}

@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 829fe9ad8469f61479a2f7a76074d54a, type: 3}
+  m_Name: SPAWN
+  m_EditorClassIdentifier: 
+  priority: 0
+  isActive: 0
+  g: {fileID: 0}
+  decider: {fileID: 0}
+  DependsOnPlayer: 0
+  radius: 40
+  PortalType: {fileID: 2018615573063175863, guid: a43f7acdebe4eb44ead21150a3ce7695,
+    type: 3}
+  EnemyType: {fileID: 1596172426242602, guid: 710e7385e7489ed4cac00ac4ec0f42e9, type: 3}
+  ThresholdLevels:
+  - 1
+  - 2
+  - 3
+  Spawn: {fileID: 11400000}
+  mintime: 10
+  DependentOn: 3

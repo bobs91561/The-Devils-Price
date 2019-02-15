@@ -16,7 +16,7 @@ namespace Devdog.InventoryPro.UnityStandardAssets
 		[SerializeField] public float m_MoveSpeedMultiplier = 1f;
 		[SerializeField] public float m_AnimSpeedMultiplier = 1f;
 		[SerializeField] public float m_GroundCheckDistance = 0.1f;
-
+        [SerializeField] public float m_DodgeSpeedMultiplier = 2f;
 
         public AudioClip footstep;
 
@@ -33,10 +33,19 @@ namespace Devdog.InventoryPro.UnityStandardAssets
 		CapsuleCollider m_Capsule;
 		bool m_Crouching;
 
+
+        private int _dodgeID = Animator.StringToHash("Dodge");
+        private int _sprintID = Animator.StringToHash("SprintKey");
+        private int _jumpID = Animator.StringToHash("JumpTrigger");
+        private int _forwardID = Animator.StringToHash("Forward");
+
         //public bool m_IsReacting;
         public bool IsRotating;
         [SerializeField]private bool m_IsJumping;
         [SerializeField] private bool m_ReadyToJump;
+
+        public bool m_IsDodging;
+        private bool m_ReadyToDodge;
 
 	    public LayerMask raycastLayerMask;
 
@@ -68,11 +77,11 @@ namespace Devdog.InventoryPro.UnityStandardAssets
 	    {
 	        m_ForwardAmount = 0;
             if(m_Animator)
-                m_Animator.SetFloat("Forward", 0f);
+                m_Animator.SetFloat(_forwardID, 0f);
 	    }
         
 
-		public void Move(Vector3 move, bool crouch, bool jump, bool restrictForward = false, bool sprint = false)
+		public void Move(Vector3 move, bool crouch, bool jump, bool restrictForward = false, bool sprint = false, bool dodge = false)
 		{
 #if UMA
 			if(m_Animator == null)
@@ -105,9 +114,16 @@ namespace Devdog.InventoryPro.UnityStandardAssets
             
             if (jump && !m_IsJumping && m_IsGrounded)
             {
-                m_Animator.SetTrigger("JumpTrigger");
+                m_Animator.SetTrigger(_jumpID);
                 m_IsJumping = true;
                 m_ReadyToJump = false;
+            }
+
+            if(dodge && !m_IsDodging)
+            {
+                var id = DetermineDodgeDirection(move);
+                m_Animator.SetTrigger(id);
+                m_IsDodging = true;
             }
 
             ScaleCapsuleForCrouching(crouch);
@@ -115,7 +131,7 @@ namespace Devdog.InventoryPro.UnityStandardAssets
 
             // send input and other state parameters to the animator
 
-            m_Animator.SetBool("SprintKey", sprint);
+            m_Animator.SetBool(_sprintID, sprint);
             UpdateAnimator(move);
 		}
 
@@ -162,7 +178,7 @@ namespace Devdog.InventoryPro.UnityStandardAssets
 		void UpdateAnimator(Vector3 move)
 		{
 			// update the animator parameters
-			m_Animator.SetFloat("Forward", Mathf.Abs(m_ForwardAmount), 0.1f, Time.deltaTime);
+			m_Animator.SetFloat(_forwardID, Mathf.Abs(m_ForwardAmount), 0.1f, Time.deltaTime);
 			m_Animator.SetFloat("Turn", m_TurnAmount, 0.1f, Time.deltaTime);
 			m_Animator.SetBool("Crouch", m_Crouching);
 			m_Animator.SetBool("OnGround", m_IsGrounded);
@@ -245,6 +261,14 @@ namespace Devdog.InventoryPro.UnityStandardAssets
                 m_IsJumping = false;
                 m_ReadyToJump = false;
             }
+            else if(m_IsDodging && Time.deltaTime > 0)
+            {
+                v = (m_Animator.deltaPosition * m_DodgeSpeedMultiplier) / Time.deltaTime;
+
+                // we preserve the existing y part of the current velocity.
+                v.y = m_Rigidbody.velocity.y;
+                m_Rigidbody.velocity = v;
+            }
             else if (m_IsGrounded && Time.deltaTime > 0)
 			{
 				v = (m_Animator.deltaPosition * m_MoveSpeedMultiplier) / Time.deltaTime;
@@ -286,6 +310,23 @@ namespace Devdog.InventoryPro.UnityStandardAssets
         public void Jump()
         {
             m_ReadyToJump = true;
+        }
+
+        private int DetermineDodgeDirection(Vector3 move)
+        {
+            //if the x-z vector components are both 0, dodge backwards
+
+            //if z is 0 and x is positive, dodge right
+
+            //if z is 0 and x is negative, dodge left
+
+            //otherwise, dodge-roll
+            return _dodgeID;
+        }
+
+        public void EndDodge()
+        {
+            m_IsDodging = false;
         }
     }
 }

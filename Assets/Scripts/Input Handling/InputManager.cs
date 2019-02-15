@@ -47,6 +47,7 @@ namespace CustomManager {
 
         [HideInInspector] public KeyCode SprintKey;
         [HideInInspector] public KeyCode JumpKey;
+        [HideInInspector] public KeyCode DodgeKey;
         [HideInInspector] public KeyCode UseKey;
         [HideInInspector] public KeyCode CancelKey;
 
@@ -95,6 +96,7 @@ namespace CustomManager {
             MapKey = map.MapKey;
             JumpKey = map.JumpKey;
             SprintKey = map.SprintKey;
+            DodgeKey = map.DodgeKey;
             UseKey = map.UseKey;
             CancelKey = map.CancelKey;
         }

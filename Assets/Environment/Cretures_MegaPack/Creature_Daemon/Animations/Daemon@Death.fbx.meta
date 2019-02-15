@@ -125,7 +125,7 @@ ModelImporter:
     400118: Mesh_Sphere001
     4300000: Mesh_Object001
     4300002: Mesh_Sphere001
-    7400000: Take 001
+    7400000: Death
     9500000: //RootNode
     13700000: Mesh_Object001
     13700002: Mesh_Sphere001
@@ -160,7 +160,9 @@ ModelImporter:
       improve retargeting quality.\n\t'Bind_LeftEye' has translation animation that
       will be discarded.\n\t'Bind_RightEye' has translation animation that will be
       discarded.\n"
-    animationRetargetingWarnings: 
+    animationRetargetingWarnings: "\nRetargeting quality report for clip 'Take 001':\n\tRightLowerLeg
+      average position error 0.2 mm and maximum position error 2.1 mm at time 0:23
+      (33.8%) Frame 23\n"
     animationDoRetargetingWarnings: 1
     importAnimatedCustomProperties: 0
     importConstraints: 0
@@ -171,7 +173,35 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Death
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 68
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 0
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 1
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []

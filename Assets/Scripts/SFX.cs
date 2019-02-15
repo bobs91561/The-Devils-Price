@@ -49,7 +49,7 @@ namespace Assets.Scripts
             source.PlayOneShot(c);
         }
 
-        public void React()
+        public void ReactFX()
         {
             if (reactSounds.Count <= 0) return;
             AudioClip c = reactSounds[UnityEngine.Random.Range(0, reactSounds.Count)];

@@ -214,7 +214,7 @@ public class SkillSet : MonoBehaviour {
         WeaponDamage2 += WeaponDamage2 * multiplier;
 
         CastingDamage += multiplier;
-        if (CastingDamage <= 0f) CastingDamage = 0.5f;
+        if (CastingDamage <= 0.5f) CastingDamage = 0.5f;
     }
     #endregion
 }

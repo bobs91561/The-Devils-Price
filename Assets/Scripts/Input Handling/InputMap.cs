@@ -23,4 +23,5 @@ public class InputMap : ScriptableObject
     public KeyCode JumpKey;
     public KeyCode UseKey;
     public KeyCode CancelKey;
+    public KeyCode DodgeKey;
 }

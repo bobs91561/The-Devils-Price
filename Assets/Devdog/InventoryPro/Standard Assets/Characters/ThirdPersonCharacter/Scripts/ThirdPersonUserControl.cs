@@ -21,6 +21,7 @@ namespace Devdog.InventoryPro.UnityStandardAssets
 
         private KeyCode m_SprintKey;
         private KeyCode m_JumpKey;
+        private KeyCode m_DodgeKey;
 
         public float walkSpeedMultilpier = 0.5f;
 
@@ -68,6 +69,7 @@ namespace Devdog.InventoryPro.UnityStandardAssets
             yield return new WaitWhile(() => !CustomManager.InputManager.instance);
             m_SprintKey = CustomManager.InputManager.instance.SprintKey;
             m_JumpKey = CustomManager.InputManager.instance.JumpKey;
+            m_DodgeKey = CustomManager.InputManager.instance.DodgeKey;
         }
 
         private void CharacterCollectionOnOnStatChanged(IStat stat)
@@ -161,8 +163,14 @@ namespace Devdog.InventoryPro.UnityStandardAssets
             if ((isSimplePlayer || m_PlayerControl.Mode != PlayerMode.COMBAT) && Input.GetKeyDown(m_JumpKey))
                 jump = true;
 
+            bool dodge = false;
+            if (Input.GetKeyDown(m_DodgeKey))
+            {
+                dodge = true;
+            }
+
             // pass all parameters to the character control script
-            m_Character.Move(m_Move, false, jump, sprint: sprint);
+            m_Character.Move(m_Move, false, jump, sprint: sprint, dodge: dodge);
         }
 
         void OnDisable()
@@ -179,6 +187,6 @@ namespace Devdog.InventoryPro.UnityStandardAssets
         {
             enabled = true;
         }
-        
+
     }
 }

@@ -29,7 +29,6 @@ public class PlayerController : AttackController {
     public PlayerMode Mode;
 
     private int _attackID =  Animator.StringToHash("Attack");
-    private int _dodgeID = Animator.StringToHash("Dodge");
     private int _blockID = Animator.StringToHash("Block");
     private int _chargedID = Animator.StringToHash("ChargedMelee");
 
@@ -144,11 +143,10 @@ public class PlayerController : AttackController {
         ///     LT -> Light Attack Left
         ///     RT + LT -> Block
 
-        // Check for no input or input not handled by this script (Use and jump)
-        if ((!Input.anyKeyDown && DetermineAxis().Count == 0) || Input.GetKeyDown(AttackKeys[0]) || Input.GetKeyDown(AttackKeys[3])) return;
+        // Check for no input or input not handled by this script (Use, dodge and jump)
+        if ((!Input.anyKeyDown && DetermineAxis().Count == 0) || Input.GetKeyDown(AttackKeys[0]) || Input.GetKeyDown(AttackKeys[3]) || Input.GetKeyDown(DodgeKey)) return;
 
         if (Input.GetKeyDown(DrawKey)) _skillSet.Combat();
-        else if (Input.GetKeyDown(DodgeKey)) DetermineDodge();
         else
         {
             var axes = DetermineAxis();
@@ -261,14 +259,6 @@ public class PlayerController : AttackController {
         }
         else if (id == _blockID) return;
 
-    }
-
-    /// <summary>
-    /// Decide which direction to dodge in based on axes input
-    /// </summary>
-    private void DetermineDodge()
-    {
-        _anim.SetTrigger(_dodgeID);
     }
 
     public void OnDeath()

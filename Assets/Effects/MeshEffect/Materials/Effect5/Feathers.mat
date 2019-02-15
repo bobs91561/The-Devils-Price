@@ -7,9 +7,9 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Feathers
-  m_Shader: {fileID: 4800000, guid: adcfda7b7929cc349b00f2cd07f6de2a, type: 3}
+  m_Shader: {fileID: 4800000, guid: 3bc67cd3532d0b2429f1a3eddf7f22f7, type: 3}
   m_ShaderKeywords: BlendAlpha Clip_OFF FrameBlend_OFF FresnelFade_OFF SoftParticles_OFF
-    VertLight_OFF
+    VertLight_OFF _BLENDMODE_BLEND
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -20,6 +20,10 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _CutoutTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -51,6 +55,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _NoiseTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -73,12 +81,19 @@ Material:
     - SrcMode: 5
     - _AO: 1.56
     - _BaseLight: 0.997
+    - _BlendMode: 1
     - _BumpScale: 1
     - _ColorStrength: 1
+    - _CullMode: 0
     - _Cutoff: 0.046
     - _Cutout: 0.78
+    - _CutoutThreshold: 0.015
     - _DetailNormalMapScale: 1
     - _DstBlend: 10
+    - _DstMode: 10
+    - _FresnelFadeFactor: 3
+    - _FresnelPow: 5
+    - _FresnelR0: 0.04
     - _FresnelStr: 1
     - _GlossMapScale: 1
     - _Glossiness: 0
@@ -92,15 +107,34 @@ Material:
     - _ShadowStrength: 1
     - _Shininess: 0.078125
     - _SmoothnessTextureChannel: 0
+    - _SoftInverted: 0
     - _SpecularHighlights: 1
     - _SquashAmount: 1
     - _SrcBlend: 5
+    - _SrcMode: 5
     - _TranslucencyViewDependency: 0.761
     - _UVSec: 0
+    - _UseCutout: 0
+    - _UseCutoutTex: 0
+    - _UseCutoutThreshold: 0
+    - _UseFrameBlending: 0
+    - _UseFresnel: 0
+    - _UseFresnelFading: 0
+    - _UseNoiseDistortion: 0
+    - _UseParticlesAlphaCutout: 0
+    - _UseSoft: 0
+    - _UseSoftCutout: 0
+    - _UseVertexLight: 0
+    - _UseVertexStreamRandom: 0
     - _ZWrite: 0
+    - _ZWriteMode: 0
     m_Colors:
     - _Color: {r: 0.8308824, g: 0.8308824, b: 0.8308824, a: 1}
+    - _CutoutColor: {r: 1, g: 1, b: 1, a: 1}
+    - _DistortionSpeedScale: {r: 1, g: -1, b: 0.15, a: 0.15}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _FogColorMultiplier: {r: 0, g: 0, b: 0, a: 0}
+    - _FresnelColor: {r: 1, g: 1, b: 1, a: 1}
     - _TintColor: {r: 0.45588237, g: 0.684787, b: 1, a: 0.603}
     - _TranslucencyColor: {r: 1, g: 1, b: 1, a: 1}
     - _TreeInstanceColor: {r: 1, g: 1, b: 1, a: 1}

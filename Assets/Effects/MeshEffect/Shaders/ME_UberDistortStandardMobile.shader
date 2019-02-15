@@ -89,7 +89,10 @@ Shader "KriptoFX/ME/DistortionMobile"
 				return (float2(vertex.x, vertex.y*_ProjectionParams.x) + vertex.w) * 0.5;
 			}
 
+<<<<<<< HEAD
+=======
 			#include "UnityCG.cginc"
+>>>>>>> master
 			#include "ME_DistortPasses.cginc"
 
 			ENDCG

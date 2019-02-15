@@ -8,7 +8,7 @@ using System.Collections;
 
 namespace Devdog.InventoryPro.UnityStandardAssets
 {
-    [RequireComponent(typeof (ThirdPersonCharacter))]
+    [RequireComponent(typeof(ThirdPersonCharacter))]
     public class ThirdPersonUserControl : MonoBehaviour//, IPlayerInputCallbacks
     {
         private ThirdPersonCharacter m_Character; // A reference to the ThirdPersonCharacter on the object
@@ -21,6 +21,7 @@ namespace Devdog.InventoryPro.UnityStandardAssets
 
         private KeyCode m_SprintKey;
         private KeyCode m_JumpKey;
+        private KeyCode m_DodgeKey;
 
         public float walkSpeedMultilpier = 0.5f;
 
@@ -30,7 +31,7 @@ namespace Devdog.InventoryPro.UnityStandardAssets
 
         protected void Start()
         {
-            
+
 
             // get the transform of the main camera
             if (Camera.main != null)
@@ -52,7 +53,6 @@ namespace Devdog.InventoryPro.UnityStandardAssets
             if (player != null)
             {
                 player.inventoryPlayer.stats.OnStatValueChanged += CharacterCollectionOnOnStatChanged;
-
                 var stat = player.inventoryPlayer.stats.Get("Default", "Run speed");
                 if (stat != null)
                 {
@@ -68,6 +68,7 @@ namespace Devdog.InventoryPro.UnityStandardAssets
             yield return new WaitWhile(() => !CustomManager.InputManager.instance);
             m_SprintKey = CustomManager.InputManager.instance.SprintKey;
             m_JumpKey = CustomManager.InputManager.instance.JumpKey;
+            m_DodgeKey = CustomManager.InputManager.instance.DodgeKey;
         }
 
         private void CharacterCollectionOnOnStatChanged(IStat stat)
@@ -81,7 +82,7 @@ namespace Devdog.InventoryPro.UnityStandardAssets
         public void SetCamera()
         {
             var cam = Camera.main;
-            if(m_Cam)
+            if (m_Cam)
                 m_Cam = cam.transform;
             else
             {
@@ -99,10 +100,10 @@ namespace Devdog.InventoryPro.UnityStandardAssets
             this.enabled = active;
             if (!m_Character) m_Character = GetComponent<ThirdPersonCharacter>();
             m_Character.enabled = active;
-//            if (active == false)
-//            {
-//                GetComponent<Rigidbody>().velocity = Vector3.zero;
-//            }
+            //            if (active == false)
+            //            {
+            //                GetComponent<Rigidbody>().velocity = Vector3.zero;
+            //            }
         }
 
         public void MoveTowardCameraForward(bool move)
@@ -118,9 +119,9 @@ namespace Devdog.InventoryPro.UnityStandardAssets
             {
                 m_CamForward = Vector3.Scale(m_Cam.forward, new Vector3(1, 0, 1)).normalized;
                 //m_Move = m_CamForward;
-                
+
                 //m_Character.Move(m_Move, false, false, true);
-                transform.forward = Vector3.Lerp(transform.forward, m_CamForward, 12f*Time.fixedDeltaTime);
+                transform.forward = Vector3.Lerp(transform.forward, m_CamForward, 12f * Time.fixedDeltaTime);
                 if (!CrossHair.instance && !isSimplePlayer) CrossHair.FindInstance();
                 if (CrossHair.instance && !isSimplePlayer) CrossHair.instance.UpdateCrossHair(m_CamForward);
                 return;
@@ -139,12 +140,12 @@ namespace Devdog.InventoryPro.UnityStandardAssets
                 m_CamForward = Vector3.Scale(m_Cam.forward, new Vector3(1, 0, 1)).normalized;
                 if (!CrossHair.instance && !isSimplePlayer) CrossHair.FindInstance();
                 if (CrossHair.instance && !isSimplePlayer) CrossHair.instance.UpdateCrossHair(m_CamForward);
-                m_Move = v*m_CamForward + h*m_Cam.right;
+                m_Move = v * m_CamForward + h * m_Cam.right;
             }
             else
             {
                 // we use world-relative directions in the case of no main camera
-                m_Move = v*Vector3.forward + h*Vector3.right;
+                m_Move = v * Vector3.forward + h * Vector3.right;
             }
             bool sprint = false;
             // walk speed multiplier
@@ -161,8 +162,14 @@ namespace Devdog.InventoryPro.UnityStandardAssets
             if ((isSimplePlayer || m_PlayerControl.Mode != PlayerMode.COMBAT) && Input.GetKeyDown(m_JumpKey))
                 jump = true;
 
+            bool dodge = false;
+            if (Input.GetKeyDown(m_DodgeKey))
+            {
+                dodge = true;
+            }
+
             // pass all parameters to the character control script
-            m_Character.Move(m_Move, false, jump, sprint: sprint);
+            m_Character.Move(m_Move, false, jump, sprint: sprint, dodge: dodge);
         }
 
         void OnDisable()
@@ -179,6 +186,6 @@ namespace Devdog.InventoryPro.UnityStandardAssets
         {
             enabled = true;
         }
-        
+
     }
 }

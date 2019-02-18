@@ -35,9 +35,9 @@ namespace Devdog.InventoryPro.UnityStandardAssets
 
 
         private int _dodgeID = Animator.StringToHash("Dodge");
-        private int _backDodge = Animator.StringToHash("BackDodge");
-        private int _leftDodge = Animator.StringToHash("LeftDodge");
-        private int _rightDodge = Animator.StringToHash("RightDodge");
+        private int _backDodge = Animator.StringToHash("DodgeBack");
+        private int _leftDodge = Animator.StringToHash("DodgeLeft");
+        private int _rightDodge = Animator.StringToHash("DodgeRight");
         private int _sprintID = Animator.StringToHash("SprintKey");
         private int _jumpID = Animator.StringToHash("JumpTrigger");
         private int _forwardID = Animator.StringToHash("Forward");

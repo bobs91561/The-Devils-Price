@@ -19,6 +19,8 @@ namespace Systems.Combat
 
         private float timer;
 
+        private Weapon m_Weapon;
+
         void Start()
         {
             timer = 0f;
@@ -41,6 +43,7 @@ namespace Systems.Combat
             gameObject.layer = _mParent.layer;
             _mDamageDealt = damage;
             EndAfterDestroy = !dontEndAfterDestroy;
+            if(transform.parent) m_Weapon = transform.parent.gameObject.GetComponent<Weapon>();
         }
 
         private void OnDestroy()
@@ -55,6 +58,15 @@ namespace Systems.Combat
             friendly.OnAggression();
         }
 
+        private void ManageReactions()
+        {
+            //Play the sound associated with the weapon
+            if (m_Weapon)
+            {
+                m_Weapon.UseWeapon();
+            }
+        }
+
 
         void OnCollisionEnter(Collision collision)
         {
@@ -65,9 +77,10 @@ namespace Systems.Combat
             hm.hitBy = _mParent;
             hm.ModifyHealth(-_mDamageDealt);
 
-            /*ReactionManager rm = g.GetComponent<ReactionManager>();
+            ReactionManager rm = g.GetComponent<ReactionManager>();
             if (rm)
-                rm.ReactAt(collision);*/
+                rm.ReactAt(collision);
+            ManageReactions();
             if (DestroyAfterHit) Destroy(gameObject);
         }
 
@@ -78,9 +91,11 @@ namespace Systems.Combat
             if (!hm) return;
             CheckAggression(g);
             hm.hitBy = _mParent;
-           /* ReactionManager rm = g.GetComponent<ReactionManager>();
-            if (rm)
-                rm.ReactAt(transform.position);*/
+            ReactionManager rm = g.GetComponent<ReactionManager>();
+             if (rm)
+                 rm.ReactAt(transform.position);
+            ManageReactions();
+
             if (DestroyAfterHit) hm.ModifyHealth(-_mDamageDealt);
             else
                 hm.ModifyHealth(-_mDamageDealt * Time.deltaTime);
@@ -96,7 +111,7 @@ namespace Systems.Combat
             CheckAggression(g);
 
             hm.ModifyHealth(-_mDamageDealt*Time.deltaTime);
-            
+            ManageReactions();
         }
 
         void OnParticleCollision(GameObject other)
@@ -107,6 +122,7 @@ namespace Systems.Combat
             CheckAggression(g);
             float damagePercent = _mDamageDealt / GetComponent<ParticleSystem>().particleCount;
             hm.ModifyHealth(-damagePercent);
+            ManageReactions();
         }
 
     }

@@ -21,6 +21,11 @@ public class RespawnsOnDeath : OnDeathBase {
     public override void OnDeath()
     {
         GetComponent<Collider>().isTrigger = true;
+        if(!SpawnManager.instance)
+        {
+            Debug.Log("No SpawnManager present. Cannot respawn enemies.");
+            return;
+        }
         StartCoroutine("Die");
     }
 

@@ -1,6 +1,6 @@
 // Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
 
-Shader "KriptoFX/ME/SlimeMobile" {
+Shader "KriptoFX/ME/DistortionSlimeMobile" {
 	Properties{
 			_TintColor("Main Color", Color) = (1,1,1,1)
 			_MainTex("Base (RGB) Emission Tex (A)", 2D) = "white" {}
@@ -15,7 +15,7 @@ Shader "KriptoFX/ME/SlimeMobile" {
 						ZWrite Off
 						Offset -1,-1
 						Cull Off
-						Fog { Mode Off}
+						
 
 			SubShader {
 				Pass {

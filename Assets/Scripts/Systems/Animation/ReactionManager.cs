@@ -11,6 +11,7 @@ public class ReactionManager : MonoBehaviour
     private ThirdPersonCharacter m_ThirdPerson;
     private ThirdPersonUserControl m_UserControl;
     private PlayerController m_PlayerControl;
+    private SkillSet m_SkillSet;
 
     private Animator m_Animator;
     private int m_ForwardHash = Animator.StringToHash("Forward");
@@ -27,10 +28,10 @@ public class ReactionManager : MonoBehaviour
     private Vector3 m_HitDirection;
     private float m_HitForce;
 
-    private float m_MinForceToConsider;
+    private float m_MinForceToConsider = 1f;
 
     private float m_TimeOfLastReact;
-    private float m_MinimumTimeBetweenReacts;
+    private float m_MinimumTimeBetweenReacts = 3f;
 
     private bool m_ReactionStarted;
 
@@ -47,6 +48,9 @@ public class ReactionManager : MonoBehaviour
 
         m_PlayerControl = GetComponent<PlayerController>();
         if (!m_PlayerControl) m_PlayerControl = GetComponentInParent<PlayerController>();
+
+        m_SkillSet = GetComponent<SkillSet>();
+        if (!m_SkillSet) m_SkillSet = GetComponentInParent<SkillSet>();
 
         m_Animator = GetComponent<Animator>();
         if (!m_Animator) m_Animator = GetComponentInChildren<Animator>();
@@ -68,7 +72,7 @@ public class ReactionManager : MonoBehaviour
 
 
         //Interrupt any attacks
-
+        if (m_SkillSet.isAttacking) m_SkillSet.InterruptAttack();
 
         //Update the Animator
         UpdateAnimator();
@@ -95,6 +99,11 @@ public class ReactionManager : MonoBehaviour
         //Reset all triggers
         m_Animator.ResetTrigger(m_DodgeKey);
         m_Animator.ResetTrigger(m_JumpKey);
+
+        //Compare hit direction values
+        if (m_HitDirection.x > m_HitDirection.z) m_HitDirection.z = 0;
+        else if (m_HitDirection.x < m_HitDirection.z) m_HitDirection.x = 0;
+
 
         //Set reaction values
         m_Animator.SetFloat(m_HitDirX, m_HitDirection.x);
@@ -175,9 +184,16 @@ public class ReactionManager : MonoBehaviour
     /// <returns></returns>
     private bool AcceptReaction(float force)
     {
+        if (m_SkillSet.isAttacking && m_SkillSet.currentAttack.GetType() != typeof(Melee)) return false;
+        
         var curr = Time.time;
-        if (m_ReactionStarted || (curr - m_TimeOfLastReact) < m_MinimumTimeBetweenReacts || force < m_MinForceToConsider) return false;
+        //Modify the current minimum force to decrease based on the time since the last react and this call
+        m_MinForceToConsider -= (curr - m_TimeOfLastReact) * 0.1f;
 
+        if (m_ReactionStarted || (curr - m_TimeOfLastReact) < m_MinimumTimeBetweenReacts || force < m_MinForceToConsider) return false;
+        //Reaction will be accepted
+        //Modify the MinForceToConsider to be equal to the current force * 1.5f
+        m_MinForceToConsider = force * 1.5f;
         return true;
     }
 

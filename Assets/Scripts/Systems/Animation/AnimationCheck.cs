@@ -11,6 +11,7 @@ public class AnimationCheck : MonoBehaviour
     private NavMeshAgent _mAgent;
     private Animator _mAnimator;
     private AIActionDecider _mDecider;
+    private ReactionManager m_ReactionManager;
 
     private int _mForward = Animator.StringToHash("Forward");
 
@@ -32,6 +33,9 @@ public class AnimationCheck : MonoBehaviour
         if (!_mDecider) _mDecider = GetComponentInParent<AIActionDecider>();
         if (_mDecider) this.enabled = true;
         else enabled = false;
+
+        m_ReactionManager = GetComponent<ReactionManager>();
+        if (!m_ReactionManager) m_ReactionManager = GetComponentInParent<ReactionManager>();
     }
 
     private void LateUpdate()
@@ -109,5 +113,10 @@ public class AnimationCheck : MonoBehaviour
     public void EndAttack()
     {
         _mSkillSet.EndAttack();
+    }
+
+    public void FinishReact()
+    {
+        m_ReactionManager.FinishReact();
     }
 }

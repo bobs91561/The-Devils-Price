@@ -35,6 +35,9 @@ namespace Devdog.InventoryPro.UnityStandardAssets
 
 
         private int _dodgeID = Animator.StringToHash("Dodge");
+        private int _backDodge = Animator.StringToHash("DodgeBack");
+        private int _leftDodge = Animator.StringToHash("DodgeLeft");
+        private int _rightDodge = Animator.StringToHash("DodgeRight");
         private int _sprintID = Animator.StringToHash("SprintKey");
         private int _jumpID = Animator.StringToHash("JumpTrigger");
         private int _forwardID = Animator.StringToHash("Forward");
@@ -112,14 +115,14 @@ namespace Devdog.InventoryPro.UnityStandardAssets
                 HandleAirborneMovement();
             }
 
-            if (jump && !m_IsJumping && m_IsGrounded)
+            if (jump && !m_IsJumping && m_IsGrounded && !m_IsDodging)
             {
                 m_Animator.SetTrigger(_jumpID);
                 m_IsJumping = true;
                 m_ReadyToJump = false;
             }
 
-            if (dodge && !m_IsDodging)
+            if (dodge && !m_IsDodging && !m_IsJumping)
             {
                 var id = DetermineDodgeDirection(move);
                 m_Animator.SetTrigger(id);
@@ -314,14 +317,19 @@ namespace Devdog.InventoryPro.UnityStandardAssets
 
         private int DetermineDodgeDirection(Vector3 move)
         {
+            var id = _dodgeID;
             //if the x-z vector components are both 0, dodge backwards
-
+            if (move.x == 0 && move.z == 0)
+                id = _backDodge;
             //if z is 0 and x is positive, dodge right
-
+            else if (move.z == 0 && move.x > 0f)
+                id = _rightDodge;
             //if z is 0 and x is negative, dodge left
+            else if (move.z == 0 && move.x < 0f)
+                id = _leftDodge;
 
             //otherwise, dodge-roll
-            return _dodgeID;
+            return id;
         }
 
         public void EndDodge()

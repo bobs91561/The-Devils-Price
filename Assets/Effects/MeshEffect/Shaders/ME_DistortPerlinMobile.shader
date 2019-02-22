@@ -1,6 +1,6 @@
 // Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
 
-Shader "KriptoFX/ME/DistortPerlinMobile" {
+Shader "KriptoFX/ME/DistortionPerlinMobile" {
 	Properties{
 			_TintColor("Main Color", Color) = (1,1,1,1)
 			[HDR]_RimColor("Rim Color", Color) = (1,1,1,0.5)

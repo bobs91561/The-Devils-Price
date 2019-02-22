@@ -8,6 +8,7 @@ using UnityEngine.UI;
 using Devdog.InventoryPro.UnityStandardAssets;
 using System;
 using CustomManager;
+using CompassNavigatorPro;
 
 public class GameManager : MonoBehaviour {
     public static GameObject Player;
@@ -21,6 +22,7 @@ public class GameManager : MonoBehaviour {
     public GameObject DialogueMangerPrefab;
 
     private GameObject DialogueManager;
+    private GameObject Navigator;
 
     public SceneInfo CurrentSceneData;
 
@@ -189,10 +191,19 @@ public class GameManager : MonoBehaviour {
         InputManager.SetDialogueCancelKeys(DialogueManager);
     }
 
+    private void CheckForNavigator()
+    {
+        var go = GameObject.Find("CompassNavigatorPro");
+        if (!go) return;
+        Navigator = go;
+        go.GetComponent<CompassPro>().cameraMain = Camera.main;
+    }
+
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         Debug.Log("Loaded scene");
         CheckForDialogueManager();
+        CheckForNavigator();
         CurrentSceneData = GameObject.FindGameObjectWithTag("SceneInfo").GetComponent<SceneInfo>();
         StartCoroutine(TransitionNewAudio());
         ObjectsToActivate = CurrentSceneData.ObjectsToActivate;

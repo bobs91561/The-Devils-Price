@@ -2278,8 +2278,8 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1765163938578714}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 60
+  m_Drag: 5
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -2356,6 +2356,7 @@ MonoBehaviour:
   combatMoveActive: 0
   CombatNearby: 0
   RecentCombat: 0
+  PlayerContact: 0
   Friendly: 0
   actions:
   - {fileID: 11400000, guid: 7737bf21e7fc9a040ab12f8833542f8b, type: 2}
@@ -2364,6 +2365,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a08a1dd0e37a9544eb55e495022cb39c, type: 2}
   - {fileID: 11400000, guid: 3cc8190648d13e041a4b071ad5d7d51d, type: 2}
   patrolPoints: []
+  spawnPoints: []
   patrolPoint: 0
 --- !u!114 &114214049776046138
 MonoBehaviour:
@@ -2441,10 +2443,12 @@ MonoBehaviour:
   m_MoveSpeedMultiplier: 1
   m_AnimSpeedMultiplier: 1
   m_GroundCheckDistance: 1.5
+  m_DodgeSpeedMultiplier: 2
   footstep: {fileID: 0}
   IsRotating: 0
   m_IsJumping: 0
   m_ReadyToJump: 0
+  m_IsDodging: 0
   raycastLayerMask:
     serializedVersion: 2
     m_Bits: 1
@@ -2957,11 +2961,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4790243943083426}
     m_Modifications:
-    - target: {fileID: 5102755689553534401, guid: 18743b69643bb654ea782695bc46f137,
-        type: 3}
-      propertyPath: m_Name
-      value: Halberd (1)
-      objectReference: {fileID: 0}
     - target: {fileID: 5102755689553887717, guid: 18743b69643bb654ea782695bc46f137,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3031,6 +3030,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5102755689553534401, guid: 18743b69643bb654ea782695bc46f137,
+        type: 3}
+      propertyPath: m_Name
+      value: Halberd (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18743b69643bb654ea782695bc46f137, type: 3}

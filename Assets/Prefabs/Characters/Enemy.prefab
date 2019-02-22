@@ -1659,8 +1659,8 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1596172426242602}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 60
+  m_Drag: 5
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -1701,16 +1701,21 @@ MonoBehaviour:
   meleeCenter: {x: 0, y: 0, z: 0}
   castingPoint: {x: 0, y: 0, z: 0}
   meleeObject: {fileID: 1630597615613394}
+  HitboxToGenerate: {fileID: 0}
   meleeObjectSecondary: {fileID: 0}
+  HitboxToGenerateSecondary: {fileID: 0}
+  WeaponDamage1: 0
+  WeaponDamage2: 0
+  CastingDamage: 0
   castingObject: {fileID: 1898309259946008}
   characterCenter: {fileID: 0}
   objectsSheathe:
   - {fileID: 1582579699799592}
-  objectsDrawn:
-  - {fileID: 1630597615613394}
   currentAttack: {fileID: 0}
   isAttacking: 0
   combat: 0
+  _mTargeting: 0
+  _mTargetObject: {fileID: 0}
 --- !u!114 &114928158031723232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1733,6 +1738,7 @@ MonoBehaviour:
   combatMoveActive: 0
   CombatNearby: 0
   RecentCombat: 0
+  PlayerContact: 0
   Friendly: 0
   actions:
   - {fileID: 11400000, guid: 7737bf21e7fc9a040ab12f8833542f8b, type: 2}
@@ -1742,6 +1748,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0c28eae9f4195444980e1ccd75c00a0a, type: 2}
   - {fileID: 11400000, guid: a08a1dd0e37a9544eb55e495022cb39c, type: 2}
   patrolPoints: []
+  spawnPoints: []
   patrolPoint: 0
 --- !u!114 &114794459741897738
 MonoBehaviour:
@@ -1756,7 +1763,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Level: 1
-  MinimumAttackTimeDifference: 5
   attacks: []
   Decider: {fileID: 114928158031723232}
   Moving: 0
@@ -1800,9 +1806,7 @@ MonoBehaviour:
   isPlayer: 0
   maxHealth: 50
   hitBy: {fileID: 0}
-  healthSlider: {fileID: 0}
   healthBar: {fileID: 0}
-  hasFloatingBar: 1
   HealthBarPrefab: {fileID: 6160945041397555529, guid: ba65a06ba290ea44eac1cc0982e2d7e3,
     type: 3}
 --- !u!114 &114828066715328254
@@ -1825,9 +1829,12 @@ MonoBehaviour:
   m_MoveSpeedMultiplier: 1
   m_AnimSpeedMultiplier: 1
   m_GroundCheckDistance: 1.5
+  m_DodgeSpeedMultiplier: 2
   footstep: {fileID: 0}
-  m_IsReacting: 0
   IsRotating: 0
+  m_IsJumping: 0
+  m_ReadyToJump: 0
+  m_IsDodging: 0
   raycastLayerMask:
     serializedVersion: 2
     m_Bits: 1
@@ -1849,6 +1856,7 @@ MonoBehaviour:
   MaxDemonicPower: 0
   ConsiderMove: 0
   AverageMaxDistance: 0
+  MinimumAttackTimeDifference: 2
 --- !u!114 &114129303875195540
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1862,6 +1870,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Reputation: 10
+  CurrentRank: 0
 --- !u!114 &114228253232220576
 MonoBehaviour:
   m_ObjectHideFlags: 0

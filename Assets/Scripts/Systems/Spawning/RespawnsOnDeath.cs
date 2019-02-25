@@ -20,8 +20,9 @@ public class RespawnsOnDeath : OnDeathBase {
 
     public override void OnDeath()
     {
+        Flourish();
         GetComponent<Collider>().isTrigger = true;
-        if(!SpawnManager.instance)
+        if (!SpawnManager.instance)
         {
             Debug.Log("No SpawnManager present. Cannot respawn enemies.");
             return;
@@ -37,6 +38,11 @@ public class RespawnsOnDeath : OnDeathBase {
         GetComponent<Collider>().isTrigger = false;
         gameObject.SetActive(true);
         SendMessage("Life");
+
+        //destroy flourish mesh
+        GameObject g = GetComponentInChildren<PSMeshRendererUpdater>().gameObject;
+        if (g)
+            Destroy(g);
     }
 
     public IEnumerator Die()

@@ -13,9 +13,9 @@ public class UpdateQuestOnDeath : OnDeathBase {
 
     public override void OnDeath()
     {
-        
         if (!triggerToEnable) return;
         triggerToEnable.enabled = true;
+        Flourish();
     }
 
 

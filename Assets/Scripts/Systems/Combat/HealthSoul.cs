@@ -36,7 +36,7 @@ public class HealthSoul : MonoBehaviour
                 {
                     healthManager.ModifyHealth(missingHealth);
                     HealthSoulCapacity -= missingHealth;
-                    _mesh.Color = Color.LerpUnclamped(Color.red, _originalColor, HealthSoulCapacity / _maxCapacity);
+                    _mesh.Color = Color.Lerp(Color.red, _originalColor, HealthSoulCapacity / _maxCapacity);
                 }
                 return;
             }
@@ -45,7 +45,7 @@ public class HealthSoul : MonoBehaviour
             HealthSoulCapacity -= tick;
 
             //update color of health soul (to red as capacity decreases)
-            _mesh.Color = Color.LerpUnclamped(Color.red, _originalColor, HealthSoulCapacity/_maxCapacity);
+            _mesh.Color = Color.Lerp(Color.red, _originalColor, HealthSoulCapacity/_maxCapacity);
 
         }
     }

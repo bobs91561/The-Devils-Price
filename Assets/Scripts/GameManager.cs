@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour {
 
     public GameObject PlayerPrefab;
     public GameObject DialogueMangerPrefab;
+    public GameObject NavigatorPrefab;
 
     private GameObject DialogueManager;
     private GameObject Navigator;
@@ -178,13 +179,26 @@ public class GameManager : MonoBehaviour {
         }
         else if (Player)
             Player.GetComponent<ThirdPersonUserControl>().SetCamera();
+
+        //Check that the CrossHair is enabled when the Player has a SkillSet
+        if (Player && Player.GetComponent<SkillSet>() && CrossHair.instance) CrossHair.instance.Activate();
+        else if (Player && !Player.GetComponent<SkillSet>() && CrossHair.instance) CrossHair.instance.Deactivate();
+
         InputManager.SetSelectorUseKey(Player);
         SetPlayerInput(true);
+        CheckCrossHair();
+    }
+
+    private void CheckCrossHair()
+    {
+        if (!Player || !DialogueManager) return;
+        var go = DialogueManager.GetComponentInChildren<CrossHair>();
+        if (go && Player.GetComponent<ThirdPersonUserControl>().isSimplePlayer) go.Deactivate();
+        else go.Activate();
     }
 
     private void CheckForDialogueManager()
     {
-        Debug.Log("checking for dialogue manager");
         var go = GameObject.Find("Dialogue Manager");
         if (!go) go = Instantiate(DialogueMangerPrefab);
         DialogueManager = go;
@@ -194,7 +208,7 @@ public class GameManager : MonoBehaviour {
     private void CheckForNavigator()
     {
         var go = GameObject.Find("CompassNavigatorPro");
-        if (!go) return;
+        if (!go) go = Instantiate(NavigatorPrefab);
         Navigator = go;
         go.GetComponent<CompassPro>().cameraMain = Camera.main;
     }

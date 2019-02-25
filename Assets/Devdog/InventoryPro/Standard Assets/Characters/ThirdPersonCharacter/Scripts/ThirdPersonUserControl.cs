@@ -23,6 +23,8 @@ namespace Devdog.InventoryPro.UnityStandardAssets
         private KeyCode m_JumpKey;
         private KeyCode m_DodgeKey;
 
+        private CrossHair m_CrossHair;
+
         public float walkSpeedMultilpier = 0.5f;
 
         private bool MoveToCamera;
@@ -31,8 +33,6 @@ namespace Devdog.InventoryPro.UnityStandardAssets
 
         protected void Start()
         {
-
-
             // get the transform of the main camera
             if (Camera.main != null)
             {

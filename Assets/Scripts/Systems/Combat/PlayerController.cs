@@ -98,6 +98,9 @@ public class PlayerController : AttackController {
         //Add non-regular attacks
         a = _skillSet.ChargedAttack;
         if (a) _cooldowns.Add(a, a.coolDown);
+
+        a = _skillSet.BlockAttack;
+        if(a) _cooldowns.Add(a, a.coolDown);
     }
 
     public void SetInputActive(bool active)
@@ -108,7 +111,7 @@ public class PlayerController : AttackController {
     // Update is called once per frame
     void Update () {
         // Check to see if the player is holding down the combo key!
-        if (Input.GetKey(LeftBumper))
+        if (Input.GetKey(LeftBumper) && !_skillSet.CheckBlock())
         {
             Mode = PlayerMode.COMBAT;
         }
@@ -152,19 +155,20 @@ public class PlayerController : AttackController {
             var axes = DetermineAxis();
             Attack a = null;
             if (axes.Count == 2) AxisAction(_blockID);
+            else if (_skillSet.CheckBlock()) _skillSet.EndAttack();
             //Check for no RB and zero axes, return if true
             else if (axes.Count <= 0 && !Input.GetKeyDown(RightBumper)) return;
-            else if(axes.Count <= 0)
+            else if (axes.Count <= 0)
             {
                 try
                 {
                     a = availableAttacks[RightBumper.ToString()];
                 }
-                catch(KeyNotFoundException e)
+                catch (KeyNotFoundException e)
                 {
                     Debug.Log("Couldn't find " + RightBumper.ToString());
                 }
-                
+
             }
             else
             {
@@ -176,7 +180,7 @@ public class PlayerController : AttackController {
                 {
                     Debug.Log("Couldn't find " + axes[0].ToString());
                 }
-        }
+            }
 
             if (a && !_skillSet.CheckAttack() && a.CheckRequirements(_cooldowns[a], SoulStrength))
             {
@@ -257,7 +261,11 @@ public class PlayerController : AttackController {
             _skillSet.StartAttack(_skillSet.ChargedAttack);
             SendAttack(_skillSet.ChargedAttack);
         }
-        else if (id == _blockID) return;
+        else if (id == _blockID)
+        {
+            _skillSet.StartAttack(_skillSet.BlockAttack);
+            SendAttack(_skillSet.BlockAttack);
+        }
 
     }
 

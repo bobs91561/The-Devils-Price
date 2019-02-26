@@ -7,6 +7,7 @@ using UnityEngine;
 /// All of its children are part of the Zone and render/disable based on the Zone's status
 /// </summary>
 [RequireComponent(typeof(BoxCollider))]
+[RequireComponent(typeof(ZoningData))]
 public class Zone : MonoBehaviour {
     public bool PlayerInZone;
     public bool ActiveZone;

@@ -13,6 +13,7 @@ public class SkillSet : MonoBehaviour {
     public List<Attack> attacks;
     public Attack BasicAttack;
     public Attack ChargedAttack;
+    public Attack BlockAttack;
 
     public Vector3 meleeCenter;
     public Vector3 castingPoint;
@@ -37,6 +38,7 @@ public class SkillSet : MonoBehaviour {
     public Attack currentAttack;
 
     public bool isAttacking = false;
+    public bool isBlocking = false;
 
     public bool combat;
 
@@ -147,7 +149,13 @@ public class SkillSet : MonoBehaviour {
             StartCoroutine("WaitForTurnComplete");
         }
         else a.TriggerAnimation();
+
         isAttacking = true;
+
+        //if the current attack is a block
+        //  also update isBlocking to be true
+        if (currentAttack.GetType() == typeof(Block))
+            isBlocking = true;
     }
 
     public IEnumerator WaitForTurnComplete()
@@ -195,6 +203,14 @@ public class SkillSet : MonoBehaviour {
         if (m_userControl) m_userControl.MoveTowardCameraForward(false);
         currentAttack.End();
         isAttacking = false;
+        //if currentAttack is a block update isBlocking to be false
+        if (currentAttack.GetType() == typeof(Block))
+            isBlocking = false;
+    }
+
+    public bool CheckBlock()
+    {
+        return isBlocking;
     }
 
     public bool CheckAttack()

@@ -23,6 +23,7 @@ public class ReactionManager : MonoBehaviour
 
     private int m_MajorReact = Animator.StringToHash("MajorReact");
     private int m_ParryReact = Animator.StringToHash("ParryReact");
+    private int m_BlockReact = Animator.StringToHash("BlockReact");
     private int m_React = Animator.StringToHash("React");
 
     private Vector3 m_HitDirection;
@@ -72,7 +73,7 @@ public class ReactionManager : MonoBehaviour
 
 
         //Interrupt any attacks
-        if (m_SkillSet.isAttacking) m_SkillSet.InterruptAttack();
+        if (m_SkillSet.CheckAttack()) m_SkillSet.InterruptAttack();
 
         //Update the Animator
         UpdateAnimator();
@@ -147,6 +148,14 @@ public class ReactionManager : MonoBehaviour
         if (!AcceptReaction(m_MinForceToConsider * 2f)) return;
         //Set the trigger
         m_TriggerToSet = m_ParryReact;
+        React();
+    }
+
+    public void BlockReact()
+    {
+        if (!AcceptReaction(m_MinForceToConsider * 2f)) return;
+        //Set the trigger
+        m_TriggerToSet = m_BlockReact;
         React();
     }
     #endregion

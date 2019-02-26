@@ -16,7 +16,7 @@ namespace Systems.Combat
         private AudioSource m_source;
 
         [Tooltip("Sounds made when this weapon hits a character")]public List<AudioClip> hitSounds;
-        
+        [Tooltip("Sounds made when this weapon is used as a shield")] public List<AudioClip> shieldSounds;
         private void Start()
         {
             if (MeshEffect) ApplyEffect();
@@ -61,6 +61,14 @@ namespace Systems.Combat
         {
             if (!m_source || hitSounds.Count <= 0 || m_source.isPlaying) return;
             AudioClip c = hitSounds[UnityEngine.Random.Range(0, hitSounds.Count)];
+            m_source.PlayOneShot(c);
+        }
+
+        public void UseShield()
+        {
+
+            if (!m_source || shieldSounds.Count <= 0 || m_source.isPlaying) return;
+            AudioClip c = shieldSounds[UnityEngine.Random.Range(0, shieldSounds.Count)];
             m_source.PlayOneShot(c);
         }
     }

@@ -31,12 +31,10 @@ public class CrossHair : MonoBehaviour {
         instance = this;
         SceneManager.sceneLoaded += OnSceneLoaded;
         EventManager.SubscribeToPlayer += UpdatePlayer;
-        Debug.Log("Starting instance: " + instance);
     }
 
     private void Initialize()
     {
-        Debug.Log("Trying to initialize");
         if (Player == null)
         {
             Player = GameManager.Player;
@@ -78,7 +76,6 @@ public class CrossHair : MonoBehaviour {
 
     public static void FindInstance()
     {
-        Debug.Log("Trying to findinstance");
         GameObject go = GameObject.Find("CrossHair");
         if (!go)
         {
@@ -91,7 +88,6 @@ public class CrossHair : MonoBehaviour {
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Debug.Log("OnSceneLoadedCalled");
         if (instance == null) instance = this;
         Player = GameManager.Player;
         Initialize();
@@ -99,21 +95,17 @@ public class CrossHair : MonoBehaviour {
 
     public void UpdatePlayer()
     {
-        Debug.Log("update player called");
         Player = GameManager.Player;
         ObjectToProjectFrom = GameManager.Player.GetComponent<SkillSet>().characterCenter.transform;
     }
 
     public void Deactivate()
     {
-        Debug.Log("Trying to deactivate");
         GetComponent<Image>().enabled = false;
     }
 
     public void Activate()
     {
-        Debug.Log("Trying to activate");
-
         GetComponent<Image>().enabled = true;
     }
     

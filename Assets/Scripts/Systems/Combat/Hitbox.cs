@@ -46,6 +46,14 @@ namespace Systems.Combat
             if(transform.parent) m_Weapon = transform.parent.gameObject.GetComponent<Weapon>();
         }
 
+        public void Blocked()
+        {
+            //Tell the parent gameobject to interrupt their attack
+            var reaction = _mParent.GetComponent<ReactionManager>();
+            if (!reaction) return;
+            reaction.ParryReact();
+        }
+
         private void OnDestroy()
         {
             if(EndAfterDestroy) _mParent.GetComponent<SkillSet>().EndAttack();

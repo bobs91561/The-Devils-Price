@@ -181,7 +181,7 @@ public class PlayerController : AttackController {
                     Debug.Log("Couldn't find " + axes[0].ToString());
                 }
             }
-
+            if (_skillSet.CheckBlock() || _skillSet.CheckAttack()) return;
             if (a && !_skillSet.CheckAttack() && a.CheckRequirements(_cooldowns[a], SoulStrength))
             {
                 _skillSet.StartAttack(a);
@@ -249,7 +249,7 @@ public class PlayerController : AttackController {
 
     private void AxisAction(int id)
     {
-        if (_skillSet.CheckAttack()) return;
+        if (_skillSet.CheckAttack() || _skillSet.CheckBlock()) return;
 
         if (id == _attackID)
         {

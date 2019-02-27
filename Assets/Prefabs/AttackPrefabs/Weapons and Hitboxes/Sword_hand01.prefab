@@ -92,10 +92,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Hitbox: {fileID: 7138887701075067966, guid: 806c8ce679b94924886586fc699d2fd0, type: 3}
-  Damage: 0
+  BlockHitbox: {fileID: 4250899660294363608, guid: cb073a25316854c4aa0c166b20676a37,
+    type: 3}
+  Damage: 15
   MeshEffect: {fileID: 0}
   AdditionalEffectDamage: 0
   hitSounds: []
+  shieldSounds: []
 --- !u!82 &3114958816043489136
 AudioSource:
   m_ObjectHideFlags: 0

@@ -8,6 +8,7 @@ namespace Systems.Combat
     public class Weapon : MonoBehaviour
     {
         [SerializeField] private GameObject Hitbox;
+        [SerializeField] private GameObject BlockHitbox;
         [SerializeField] private float Damage;
 
         public GameObject MeshEffect;
@@ -26,6 +27,11 @@ namespace Systems.Combat
         public GameObject GetHitbox()
         {
             return Hitbox;
+        }
+
+        public GameObject GetBlockHitbox()
+        {
+            return BlockHitbox;
         }
 
         public float GetDamage()

@@ -18,6 +18,8 @@ public class ReactionManager : MonoBehaviour
     private int m_TurnAmount = Animator.StringToHash("Turn");
     private int m_DodgeKey = Animator.StringToHash("Dodge");
     private int m_JumpKey = Animator.StringToHash("JumpTrigger");
+    private int m_BlockKey = Animator.StringToHash("Block");
+    private int m_Blocking = Animator.StringToHash("isBlocking");
     private int m_HitDirX = Animator.StringToHash("HitDirX");
     private int m_HitDirZ = Animator.StringToHash("HitDirZ");
 
@@ -100,6 +102,10 @@ public class ReactionManager : MonoBehaviour
         //Reset all triggers
         m_Animator.ResetTrigger(m_DodgeKey);
         m_Animator.ResetTrigger(m_JumpKey);
+        m_Animator.ResetTrigger(m_BlockKey);
+
+        //Reset bools
+        m_Animator.SetBool(m_Blocking, false);
 
         //Compare hit direction values
         if (m_HitDirection.x > m_HitDirection.z) m_HitDirection.z = 0;

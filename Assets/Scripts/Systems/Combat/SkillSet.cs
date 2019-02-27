@@ -22,6 +22,7 @@ public class SkillSet : MonoBehaviour {
     [HideInInspector] public GameObject HitboxToGenerate;
     [HideInInspector] public GameObject meleeObjectSecondary;
     [HideInInspector] public GameObject HitboxToGenerateSecondary;
+    [HideInInspector] public GameObject BlockHitboxToGenerate;
 
     [HideInInspector] public float WeaponDamage1, WeaponDamage2;
     [HideInInspector] public float CastingDamage;
@@ -42,8 +43,8 @@ public class SkillSet : MonoBehaviour {
 
     public bool combat;
 
-    [SerializeField]private bool _mTargeting;
-    [SerializeField]private GameObject _mTargetObject;
+    private bool _mTargeting;
+    private GameObject _mTargetObject;
 
     private ThirdPersonUserControl m_userControl;
     private Animator m_Animator;
@@ -60,6 +61,7 @@ public class SkillSet : MonoBehaviour {
         }
         if (BasicAttack) BasicAttack.Initialize(gameObject);
         if (ChargedAttack) ChargedAttack.Initialize(gameObject);
+        if (BlockAttack) BlockAttack.Initialize(gameObject);
         SendMessage("SetAttacks");
         SheatheWeapons();
         m_userControl = GetComponent<ThirdPersonUserControl>();
@@ -85,11 +87,14 @@ public class SkillSet : MonoBehaviour {
                 HitboxToGenerate = weapons[1].GetHitbox();
                 WeaponDamage1 = weapons[1].GetDamage();
                 objectsDrawn.Add(weapons[1].gameObject);
+
+                BlockHitboxToGenerate = weapons[1].GetBlockHitbox();
                 return;
             }
 
             meleeObject = weapons[0].gameObject;
             HitboxToGenerate = weapons[0].GetHitbox();
+            BlockHitboxToGenerate = weapons[0].GetBlockHitbox();
             WeaponDamage1 = weapons[0].GetDamage();
             objectsDrawn.Add(weapons[0].gameObject);
             

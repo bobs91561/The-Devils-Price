@@ -770,6 +770,7 @@ MonoBehaviour:
   IsRotating: 0
   m_IsJumping: 0
   m_ReadyToJump: 0
+  m_IsDodging: 0
   raycastLayerMask:
     serializedVersion: 2
     m_Bits: 1
@@ -807,12 +808,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d0d73c4d782f72a47a391a59554bdf8b, type: 2}
   BasicAttack: {fileID: 11400000, guid: 8e5e8a53b0feb1c4db26aee4111d5e70, type: 2}
   ChargedAttack: {fileID: 11400000, guid: 4081589ebbed76147bd75ec0b02b429a, type: 2}
+  BlockAttack: {fileID: 11400000, guid: 6db4fbf31ff6907418cbe0c94ee74c0a, type: 2}
   meleeCenter: {x: 0, y: 0, z: 0}
   castingPoint: {x: 0, y: 0, z: 0}
   meleeObject: {fileID: 0}
   HitboxToGenerate: {fileID: 0}
   meleeObjectSecondary: {fileID: 0}
   HitboxToGenerateSecondary: {fileID: 0}
+  BlockHitboxToGenerate: {fileID: 0}
   WeaponDamage1: 0
   WeaponDamage2: 0
   CastingDamage: 0
@@ -823,6 +826,7 @@ MonoBehaviour:
   - {fileID: 1373962800}
   currentAttack: {fileID: 0}
   isAttacking: 0
+  isBlocking: 0
   combat: 0
   _mTargeting: 0
   _mTargetObject: {fileID: 0}

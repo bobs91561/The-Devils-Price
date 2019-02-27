@@ -21,7 +21,7 @@ namespace Systems.Combat
         void FixedUpdate()
         {
             m_BlockIntegrity = Mathf.Clamp01(m_BlockIntegrity - Time.fixedDeltaTime);
-            if (m_BlockIntegrity <= 0f) ForceBlockEnd(false);
+            //if (m_BlockIntegrity <= 0f) ForceBlockEnd(false);
         }
 
         public void Initialize(GameObject blocker, float blockRating, Weapon blockingObject = null)
@@ -32,6 +32,8 @@ namespace Systems.Combat
             m_ReactionManager = blocker.GetComponent<ReactionManager>();
             m_BlockObject = blockingObject;
             BlockRating = blockRating;
+
+            gameObject.layer = blocker.layer;
         }
 
         private void ManageReactions(Hitbox hb)

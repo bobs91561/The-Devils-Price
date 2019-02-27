@@ -147,7 +147,7 @@ public class PlayerController : AttackController {
         ///     RT + LT -> Block
 
         // Check for no input or input not handled by this script (Use, dodge and jump)
-        if ((!Input.anyKeyDown && DetermineAxis().Count == 0) || Input.GetKeyDown(AttackKeys[0]) || Input.GetKeyDown(AttackKeys[3]) || Input.GetKeyDown(DodgeKey)) return;
+        if ((!Input.anyKeyDown && DetermineAxis().Count == 0) || Input.GetKeyDown(AttackKeys[0]) || Input.GetKeyDown(AttackKeys[3]) || Input.GetKeyDown(DodgeKey) || Input.GetKey(InputManager.instance.SprintKey)) return;
 
         if (Input.GetKeyDown(DrawKey)) _skillSet.Combat();
         else

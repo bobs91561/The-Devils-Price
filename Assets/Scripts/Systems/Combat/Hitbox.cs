@@ -20,6 +20,7 @@ namespace Systems.Combat
         private float timer;
 
         private Weapon m_Weapon;
+        private ReactionManager m_ReactionManager;
 
         void Start()
         {
@@ -44,14 +45,15 @@ namespace Systems.Combat
             _mDamageDealt = damage;
             EndAfterDestroy = !dontEndAfterDestroy;
             if(transform.parent) m_Weapon = transform.parent.gameObject.GetComponent<Weapon>();
+            m_ReactionManager = _mParent.GetComponent<ReactionManager>();
+            if (!m_ReactionManager) m_ReactionManager = _mParent.GetComponentInChildren<ReactionManager>();
         }
 
         public void Blocked()
         {
             //Tell the parent gameobject to interrupt their attack
-            var reaction = _mParent.GetComponent<ReactionManager>();
-            if (!reaction) return;
-            reaction.ParryReact();
+            if (!m_ReactionManager) return;
+            m_ReactionManager.ParryReact();
         }
 
         private void OnDestroy()

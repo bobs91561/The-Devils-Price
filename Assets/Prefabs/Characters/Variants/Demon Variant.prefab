@@ -628,7 +628,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6452262872643367796
 Transform:
   m_ObjectHideFlags: 0
@@ -770,12 +770,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0dc3bfcc0ead0ee4880e4b2b3c6bd00a, type: 2}
   BasicAttack: {fileID: 0}
   ChargedAttack: {fileID: 0}
+  BlockAttack: {fileID: 0}
   meleeCenter: {x: 0, y: 0, z: 0}
   castingPoint: {x: 0, y: 0, z: 0}
   meleeObject: {fileID: 0}
   HitboxToGenerate: {fileID: 0}
   meleeObjectSecondary: {fileID: 0}
   HitboxToGenerateSecondary: {fileID: 0}
+  BlockHitboxToGenerate: {fileID: 0}
   WeaponDamage1: 0
   WeaponDamage2: 0
   CastingDamage: 0
@@ -784,9 +786,8 @@ MonoBehaviour:
   objectsSheathe: []
   currentAttack: {fileID: 0}
   isAttacking: 0
+  isBlocking: 0
   combat: 0
-  _mTargeting: 0
-  _mTargetObject: {fileID: 0}
 --- !u!195 &6452262872643367799
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2120,10 +2121,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Hitbox: {fileID: 8757334820455705906, guid: d52858682b77d8c4494f4ff5af70d009, type: 3}
+  BlockHitbox: {fileID: 0}
   Damage: 20
   MeshEffect: {fileID: 0}
   AdditionalEffectDamage: 0
   hitSounds: []
+  shieldSounds: []
 --- !u!1 &6452262873246570299
 GameObject:
   m_ObjectHideFlags: 0
@@ -2265,10 +2268,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Hitbox: {fileID: 8757334820455705906, guid: d52858682b77d8c4494f4ff5af70d009, type: 3}
+  BlockHitbox: {fileID: 0}
   Damage: 20
   MeshEffect: {fileID: 0}
   AdditionalEffectDamage: 0
   hitSounds: []
+  shieldSounds: []
 --- !u!1 &6452262873246583319
 GameObject:
   m_ObjectHideFlags: 0
@@ -2841,7 +2846,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6452262873246278619
 Transform:
   m_ObjectHideFlags: 0
@@ -2901,15 +2906,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82678a6a1af60004b90f075cdbc1c996, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WeaponSound: {fileID: 0}
+  WeaponSound: {fileID: 8300000, guid: 0f3fbe77479bca744a2d39974a7749e5, type: 3}
   DrawWeapon: {fileID: 0}
-  clips: []
+  clips:
+  - {fileID: 8300000, guid: f3e50e58721e02c4d8c3241ef24f4a0e, type: 3}
+  - {fileID: 8300000, guid: 6e2e7695f2503da4da90c9a8f810aeaa, type: 3}
+  - {fileID: 8300000, guid: 9b687cd413d36114f873926481c5944e, type: 3}
   attackSounds:
   - {fileID: 8300000, guid: 9c6e19771727aeb47baac8657ad8feb2, type: 3}
   reactSounds:
   - {fileID: 8300000, guid: 1cfdf6ced160001418f613eb0317d80d, type: 3}
   - {fileID: 8300000, guid: 19afc9bf26ea2084997134ae1347e2b7, type: 3}
-  shoutSounds: []
+  shoutSounds:
+  - {fileID: 8300000, guid: b14f5c7f0894124479b7f2698f0e9c67, type: 3}
+  - {fileID: 8300000, guid: e620fdd5654be494486e4f47dfb42fd5, type: 3}
 --- !u!1 &6452262873246617455
 GameObject:
   m_ObjectHideFlags: 0
@@ -3223,6 +3233,58 @@ PrefabInstance:
     - target: {fileID: 22465722, guid: d5a18ab9ec93e0d4284d6fbae4f557e0, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.0050000018
+      objectReference: {fileID: 0}
+    - target: {fileID: 22431650, guid: d5a18ab9ec93e0d4284d6fbae4f557e0, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22400914, guid: d5a18ab9ec93e0d4284d6fbae4f557e0, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22400914, guid: d5a18ab9ec93e0d4284d6fbae4f557e0, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22400914, guid: d5a18ab9ec93e0d4284d6fbae4f557e0, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22400914, guid: d5a18ab9ec93e0d4284d6fbae4f557e0, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22400914, guid: d5a18ab9ec93e0d4284d6fbae4f557e0, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22400914, guid: d5a18ab9ec93e0d4284d6fbae4f557e0, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22451302, guid: d5a18ab9ec93e0d4284d6fbae4f557e0, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22451302, guid: d5a18ab9ec93e0d4284d6fbae4f557e0, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22451302, guid: d5a18ab9ec93e0d4284d6fbae4f557e0, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22451302, guid: d5a18ab9ec93e0d4284d6fbae4f557e0, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22451302, guid: d5a18ab9ec93e0d4284d6fbae4f557e0, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22451302, guid: d5a18ab9ec93e0d4284d6fbae4f557e0, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d5a18ab9ec93e0d4284d6fbae4f557e0, type: 3}

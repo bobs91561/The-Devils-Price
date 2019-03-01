@@ -1414,12 +1414,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82678a6a1af60004b90f075cdbc1c996, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WeaponSound: {fileID: 0}
-  DrawWeapon: {fileID: 0}
-  clips: []
-  attackSounds: []
-  reactSounds: []
-  shoutSounds: []
+  WeaponSound: {fileID: 8300000, guid: 81704b6719eb08a4e9fda9d59a08d107, type: 3}
+  DrawWeapon: {fileID: 8300000, guid: 59acfb4e5f876b64a8e54f873c62f930, type: 3}
+  clips:
+  - {fileID: 8300000, guid: fbe5efbcc2349574c9dc2acf88f199c9, type: 3}
+  - {fileID: 8300000, guid: f41f9339fdeab694d8f37397bfbf3a76, type: 3}
+  - {fileID: 8300000, guid: f339e45954b2ce44ca2e0ed0317cf217, type: 3}
+  - {fileID: 8300000, guid: f9a0d5b4a896a16408895adc148ab720, type: 3}
+  - {fileID: 8300000, guid: d86c01a53513a63468e4437775d2a3fe, type: 3}
+  - {fileID: 8300000, guid: 3ad80133fd5a1bd48a8b1f49fe5ee85f, type: 3}
+  - {fileID: 8300000, guid: 61f9d76b6eaca044e9792ba8641cd1c6, type: 3}
+  - {fileID: 8300000, guid: 76ecf23c66ac7f84a8d52aaf8516a146, type: 3}
+  attackSounds:
+  - {fileID: 8300000, guid: 7b8285a6282d6f9498f6b71144ac2c54, type: 3}
+  - {fileID: 8300000, guid: 8c9fbab8a6f9b4741be96014d9bd788a, type: 3}
+  reactSounds:
+  - {fileID: 8300000, guid: f5557dc027b811c45a3021123e0591b4, type: 3}
+  - {fileID: 8300000, guid: a4e803a901dee444c82fbd45bba758a0, type: 3}
+  - {fileID: 8300000, guid: 0cd1f22ca145bf343a56187c1f9ac087, type: 3}
+  - {fileID: 8300000, guid: d03cb854194d8b948a9eff6065ea9728, type: 3}
+  shoutSounds:
+  - {fileID: 8300000, guid: dafdd2ff5be512d4ab668ef7803ad837, type: 3}
 --- !u!1 &1606345982997128915
 GameObject:
   m_ObjectHideFlags: 0
@@ -2701,10 +2716,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Hitbox: {fileID: 3001502611327506474, guid: 8d571a46941cf2c49a7491bd25f84ce7, type: 3}
+  BlockHitbox: {fileID: 0}
   Damage: 20
   MeshEffect: {fileID: 198776, guid: ff6f0f6ed5fb04648a63068803ce172a, type: 3}
   AdditionalEffectDamage: 0
   hitSounds: []
+  shieldSounds: []
 --- !u!1 &6912041460546586753
 GameObject:
   m_ObjectHideFlags: 0
@@ -2977,12 +2994,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cea962b8bffeb814ea815dbd3f7855d3, type: 2}
   BasicAttack: {fileID: 0}
   ChargedAttack: {fileID: 0}
+  BlockAttack: {fileID: 0}
   meleeCenter: {x: 0, y: 0, z: 0}
   castingPoint: {x: 0, y: 0, z: 0}
   meleeObject: {fileID: 0}
   HitboxToGenerate: {fileID: 0}
   meleeObjectSecondary: {fileID: 0}
   HitboxToGenerateSecondary: {fileID: 0}
+  BlockHitboxToGenerate: {fileID: 0}
   WeaponDamage1: 0
   WeaponDamage2: 0
   CastingDamage: 0
@@ -2991,9 +3010,8 @@ MonoBehaviour:
   objectsSheathe: []
   currentAttack: {fileID: 0}
   isAttacking: 0
+  isBlocking: 0
   combat: 0
-  _mTargeting: 0
-  _mTargetObject: {fileID: 0}
 --- !u!114 &3325977839750747355
 MonoBehaviour:
   m_ObjectHideFlags: 0

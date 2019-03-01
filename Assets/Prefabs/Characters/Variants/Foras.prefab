@@ -170,12 +170,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e53a891daebbf3e47b1681949f4aa0c1, type: 2}
   BasicAttack: {fileID: 0}
   ChargedAttack: {fileID: 0}
+  BlockAttack: {fileID: 0}
   meleeCenter: {x: 0, y: 0, z: 0}
   castingPoint: {x: 0, y: 0, z: 0}
   meleeObject: {fileID: 0}
   HitboxToGenerate: {fileID: 0}
   meleeObjectSecondary: {fileID: 0}
   HitboxToGenerateSecondary: {fileID: 0}
+  BlockHitboxToGenerate: {fileID: 0}
   WeaponDamage1: 0
   WeaponDamage2: 0
   CastingDamage: 0
@@ -184,9 +186,8 @@ MonoBehaviour:
   objectsSheathe: []
   currentAttack: {fileID: 0}
   isAttacking: 0
+  isBlocking: 0
   combat: 0
-  _mTargeting: 0
-  _mTargetObject: {fileID: 0}
 --- !u!114 &3613922646706025735
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -518,12 +519,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82678a6a1af60004b90f075cdbc1c996, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WeaponSound: {fileID: 0}
-  DrawWeapon: {fileID: 0}
-  clips: []
-  attackSounds: []
-  reactSounds: []
-  shoutSounds: []
+  WeaponSound: {fileID: 8300000, guid: bdc789c29020bb542a8f33d406d9b141, type: 3}
+  DrawWeapon: {fileID: 8300000, guid: 61b42c3c9860e6b4bba535e0a7086037, type: 3}
+  clips:
+  - {fileID: 8300000, guid: 374aa65caaabe234d974de2462c4318a, type: 3}
+  - {fileID: 8300000, guid: 16b490cfb367f50469456f577f5d2927, type: 3}
+  - {fileID: 8300000, guid: 08c321f27c69bd149aece1104508d576, type: 3}
+  - {fileID: 8300000, guid: 9b0f3251356d37f43959de10a92590b9, type: 3}
+  - {fileID: 8300000, guid: dde91c88d26e21f47abe5e9b26fd3c33, type: 3}
+  - {fileID: 8300000, guid: 303d767ecaa3b79419c1341f9140d45a, type: 3}
+  - {fileID: 8300000, guid: 88971cae9132d544998331fd2b970ee7, type: 3}
+  - {fileID: 8300000, guid: 5f44406fc13936f43b6d0cb9e35d5a54, type: 3}
+  attackSounds:
+  - {fileID: 8300000, guid: aa8e351f6dc0ee047a7016d0864bd9d0, type: 3}
+  - {fileID: 8300000, guid: 59c2a5726de72dd4d84bfdab02857263, type: 3}
+  reactSounds:
+  - {fileID: 8300000, guid: e72a870f1b5957b4a90e4b41ae2c37c5, type: 3}
+  - {fileID: 8300000, guid: 0f3932e6fe5456c46bd18228dd7f6564, type: 3}
+  shoutSounds:
+  - {fileID: 8300000, guid: cbbe590f4fc088342a62a7fcc8bf8b1b, type: 3}
+  - {fileID: 8300000, guid: 450d4cc347a5a2147b2b021a187c60e4, type: 3}
 --- !u!114 &8613400724244195697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -557,6 +572,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3613922646706025741}
     m_Modifications:
+    - target: {fileID: 100370, guid: cd4e415d16a25fe40b8d25200dcea69f, type: 3}
+      propertyPath: m_Name
+      value: Creature mutant
+      objectReference: {fileID: 0}
     - target: {fileID: 427542, guid: cd4e415d16a25fe40b8d25200dcea69f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -600,10 +619,6 @@ PrefabInstance:
     - target: {fileID: 427542, guid: cd4e415d16a25fe40b8d25200dcea69f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 100370, guid: cd4e415d16a25fe40b8d25200dcea69f, type: 3}
-      propertyPath: m_Name
-      value: Creature mutant
       objectReference: {fileID: 0}
     - target: {fileID: 435346, guid: cd4e415d16a25fe40b8d25200dcea69f, type: 3}
       propertyPath: m_LocalRotation.x

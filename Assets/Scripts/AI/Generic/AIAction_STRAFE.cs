@@ -54,10 +54,8 @@ public class AIAction_STRAFE : AIAction
         if (_direction == 0) _direction++;
         n_position = g_position + new Vector3(_direction, 0, 0);
         bool _blocked = NavMesh.Raycast(g_position, n_position, out _hit, NavMesh.AllAreas);
-        Debug.Log("original direction" + _direction);
         if (_blocked == true)
         {
-            Debug.Log("path blocked, checking other side");
             if (_direction == 1)
                 _direction = -1;
             else
@@ -67,7 +65,6 @@ public class AIAction_STRAFE : AIAction
             if (_blocked == true)
                 _direction = 0;
         }
-        Debug.Log("final direction" + _direction);
         _directionChosen = true;
     }
 

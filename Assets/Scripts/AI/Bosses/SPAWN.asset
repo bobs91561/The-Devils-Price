@@ -12,19 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 829fe9ad8469f61479a2f7a76074d54a, type: 3}
   m_Name: SPAWN
   m_EditorClassIdentifier: 
-  priority: 0
+  priority: 20
   isActive: 0
   g: {fileID: 0}
   decider: {fileID: 0}
   DependsOnPlayer: 0
+  spawner: {fileID: 0}
   radius: 40
   PortalType: {fileID: 2018615573063175863, guid: a43f7acdebe4eb44ead21150a3ce7695,
     type: 3}
-  EnemyType: {fileID: 1596172426242602, guid: 710e7385e7489ed4cac00ac4ec0f42e9, type: 3}
+  EnemyType: {fileID: 1765163938578714, guid: 5271d158ebfe7864590cb176ab5ba1e1, type: 3}
   ThresholdLevels:
   - 1
   - 2
   - 3
+  WaitTime: 40
+  audioToPlay: {fileID: 0}
+  animationKey: 
   Spawn: {fileID: 11400000}
-  mintime: 10
+  mintime: 3
   DependentOn: 3

@@ -16,7 +16,7 @@ public class RFX4_DemoGUI : MonoBehaviour
 
     private int currentNomber;
 	private GameObject currentInstance;
-	 GUIStyle guiStyleHeader = new GUIStyle();
+	public GUIStyle guiStyleHeader = new GUIStyle();
     GUIStyle guiStyleHeaderMobile = new GUIStyle();
     float dpiScale;
    

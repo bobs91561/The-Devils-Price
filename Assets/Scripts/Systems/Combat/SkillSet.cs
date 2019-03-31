@@ -142,7 +142,7 @@ public class SkillSet : MonoBehaviour {
 
     public void StartAttack(Attack a = null)
     {
-        if (!combat && a is Melee)
+        if (!combat && a is Melee && !_drawn)
         {
             Combat();
             DrawWeapons();

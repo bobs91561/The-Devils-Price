@@ -8,6 +8,7 @@ using UnityEngine;
 public class RespawnPoint : MonoBehaviour
 {
     public Vector3 offset;
+    public Vector3 RotationOffset;
 
     [SerializeField] private GameObject meshEffect;
     private GameObject Player;
@@ -25,6 +26,7 @@ public class RespawnPoint : MonoBehaviour
     {
         if (!Player) Player = GameManager.Player;
         Player.transform.position = transform.position + offset;
+        Player.transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + RotationOffset);
         Animate();
         ApplyEffect();
         EventManager.Respawn();

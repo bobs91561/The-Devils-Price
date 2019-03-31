@@ -2840,6 +2840,7 @@ GameObject:
   - component: {fileID: 6092209494349731958}
   - component: {fileID: 6912041460546586758}
   - component: {fileID: 8644855120705557309}
+  - component: {fileID: 3614631811940773664}
   m_Layer: 10
   m_Name: Eligos
   m_TagString: Untagged
@@ -2892,10 +2893,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3c295a567305e0e47b406faae808fc7a, type: 2}
   - {fileID: 11400000, guid: b4573e29b05d6b4499a454a5d043716d, type: 2}
   - {fileID: 11400000, guid: 0c28eae9f4195444980e1ccd75c00a0a, type: 2}
+  - {fileID: 11400000, guid: 9e8b0cd820578f14cafcf84f0f9f6332, type: 2}
+  - {fileID: 11400000, guid: a08a1dd0e37a9544eb55e495022cb39c, type: 2}
+  - {fileID: 11400000, guid: a40903449b17d834195af0a1e782c22e, type: 2}
   - {fileID: 11400000, guid: 3cc8190648d13e041a4b071ad5d7d51d, type: 2}
   patrolPoints: []
   spawnPoints: []
   patrolPoint: 0
+  followTarget: {fileID: 0}
 --- !u!114 &1607640414602681083
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2932,6 +2937,7 @@ MonoBehaviour:
   Decider: {fileID: 0}
   Moving: 0
   Frozen: 0
+  Dodge: 0
 --- !u!114 &1607640414602681059
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3219,3 +3225,17 @@ MonoBehaviour:
   raycastLayerMask:
     serializedVersion: 2
     m_Bits: 1
+--- !u!114 &3614631811940773664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6912041460546586755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7f271977d138714f8e82f61c8172fa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ExperienceGainedOnDeath: 50
+  DeathFlourish: {fileID: 0}

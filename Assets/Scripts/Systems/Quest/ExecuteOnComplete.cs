@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Assets.Scripts.Systems.Combat;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -57,17 +58,24 @@ public class ExecuteOnComplete : ScriptableObject {
     public void AddDemonicPower(float power)
     {
         //Add demonic power to player
-        
+        GameManager.Player.GetComponent<AttackController>().AddDemonicPower(power);
     }
 
     public void AddReputation(float reputation)
     {
         //Add reputation to player
+        GameManager.Player.GetComponent<Reputable>().IncreaseReputation(reputation);
     }
 
-    public void TakeBargain()
+    public void AcceptDeal()
     {
         //If player takes a bargain-based quest, add the bargainer to the final list
+        EventManager.AcceptDeal();
+    }
+
+    public void DeclineDeal()
+    {
+        EventManager.DeclineDeal();
     }
     /// <summary>
     /// Activates object in scene with name

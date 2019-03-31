@@ -5,6 +5,7 @@ using Devdog.InventoryPro;
 using UnityEngine;
 using CustomManager;
 using System.Collections;
+using com.ootii.Cameras;
 
 namespace Devdog.InventoryPro.UnityStandardAssets
 {
@@ -82,6 +83,11 @@ namespace Devdog.InventoryPro.UnityStandardAssets
         public void SetCamera()
         {
             var cam = Camera.main;
+            if (!cam.gameObject.GetComponent<CameraController>())
+            {
+                cam = FindObjectOfType<CameraController>().Camera;
+                return;
+            }
             if (m_Cam)
                 m_Cam = cam.transform;
             else

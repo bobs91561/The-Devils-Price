@@ -5,6 +5,7 @@ using UnityEngine.Events;
 using PixelCrushers.DialogueSystem.UnityGUI;
 using PixelCrushers.DialogueSystem;
 using PixelCrushers;
+using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
@@ -191,10 +192,10 @@ public class MainMenu : MonoBehaviour
     public void QuitGame()
     {
         //Tell the gamemanager to handle the fade
-
+        PersistentDataManager.LevelWillBeUnloaded();
+        GameManager.HandleFadeManually = true;
         //Load the main menu scene
-
-        //Destroy all objects
+        SceneManager.LoadScene(0);
     }
     #endregion
 }

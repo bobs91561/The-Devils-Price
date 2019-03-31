@@ -11,7 +11,7 @@ namespace Assets.Scripts
         private AudioSource source;
         public AudioClip WeaponSound;
         public AudioClip DrawWeapon;
-        public List<AudioClip> clips;
+        public List<AudioClip> footsteps;
         public List<AudioClip> attackSounds;
         public List<AudioClip> reactSounds;
         public List<AudioClip> shoutSounds;
@@ -24,8 +24,8 @@ namespace Assets.Scripts
 
         public void Step()
         {
-            if (clips.Count <= 0) return;
-            AudioClip c = clips[UnityEngine.Random.Range(0,clips.Count)];
+            if (footsteps.Count <= 0) return;
+            AudioClip c = footsteps[UnityEngine.Random.Range(0,footsteps.Count)];
             source.PlayOneShot(c);
         }
 

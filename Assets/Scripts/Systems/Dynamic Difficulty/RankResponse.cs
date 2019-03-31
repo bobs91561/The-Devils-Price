@@ -8,6 +8,7 @@ public class RankResponse : MonoBehaviour
 {
     private Reputable m_Reputable;
     private int m_Rank;
+    private RankUpController m_RankUpController;
 
     private HealthManager m_HealthManager;
     private AttackController m_AttackController;
@@ -24,6 +25,7 @@ public class RankResponse : MonoBehaviour
         m_HealthManager = GetComponent<HealthManager>();
         m_AttackController = GetComponent<AttackController>();
         m_SkillSet = GetComponent<SkillSet>();
+        m_RankUpController = FindObjectOfType<RankUpController>();
 
         m_AI = (GetComponent<AIController>());
         AddToRankUpEvent();

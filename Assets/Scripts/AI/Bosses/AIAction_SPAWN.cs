@@ -40,6 +40,7 @@ public class AIAction_SPAWN : AIAction
     private HealthManager Playerhm;
     private float lastCallTime;
     private int m_SpawnId;
+    private bool m_AnimationCalled;
 
     public override void Initialize(GameObject obj = null)
     {
@@ -52,53 +53,50 @@ public class AIAction_SPAWN : AIAction
         _mTimeSinceCall = 0;
         _noPortal = true;
         m_SpawnId = Animator.StringToHash("Spawn");
+        m_AnimationCalled = false;
     }
 
     public virtual void TriggerAnimation()
     {
-        Animator s = spawner.GetComponent<Animator>();
-        if (!s) s = spawner.GetComponentInChildren<Animator>();
+        Animator s = g.GetComponent<Animator>();
+        if (!s) s = g.GetComponentInChildren<Animator>();
         if (s)
-        {
-            s.SetTrigger(animationKey);
-        }
-        if (audioToPlay)
-        {
-            var audio = s.GetComponent<AudioSource>();
-            if (audio)
-            {
-                audio.clip = audioToPlay;
-            }
-        }
+            s.SetTrigger(m_SpawnId);
+        m_AnimationCalled = true;
     }
+
 
     public override bool Tick()
     {
         //If isAttacking, wait and return true
-        if (_mSkillSet.CheckAttack()) return true;
+        //if (_mSkillSet.CheckAttack()) return true;
         //when not attacking, start the spawn
-        //if the current action of the decider is spawn
-        //if (decider.currentAction == Spawn) 
         //  update the time and call number fields
+        if (!m_AnimationCalled)
         {
-            if (_noPortal)
-            {
-                foreach (var t in decider.spawnPoints)
-                    Instantiate(PortalType, t.transform.position, Quaternion.identity);
-                _mCallNumber++;
-                _mTimeSinceCall = 0f;
-                _noPortal = false;
-                return false;
-            }
-            if (_mTimeSinceCall > WaitTime)
-            {
-                _mTimeSinceCall = 0f;
-                foreach (var t in decider.spawnPoints)
-                {
-                    Instantiate(EnemyType, t.transform.position, t.transform.rotation);
-                }
-            }
+            TriggerAnimation();
+            return true;
         }
+
+        if (_noPortal)
+        {
+            foreach (var t in decider.spawnPoints)
+                Instantiate(PortalType, t.transform.position, Quaternion.identity);
+            _mCallNumber++;
+            _mTimeSinceCall = 0f;
+            _noPortal = false;
+            return true;
+        }
+        if (_mTimeSinceCall > WaitTime)
+        {
+            _mTimeSinceCall = 0f;
+            foreach (var t in decider.spawnPoints)
+            {
+                Instantiate(EnemyType, t.transform.position, t.transform.rotation);
+            }
+            return true;
+        }
+
         //else
         //    _mSkillSet.StartAttack(SpawnAttack);
         return false;
@@ -172,5 +170,11 @@ public class AIAction_SPAWN : AIAction
 
         return true;
     }
-    
+
+    public override void SetActive()
+    {
+        base.SetActive();
+        m_AnimationCalled = false;
+    }
+
 }

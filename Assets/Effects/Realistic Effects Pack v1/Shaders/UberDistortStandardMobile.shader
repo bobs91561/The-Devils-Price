@@ -84,7 +84,7 @@ Shader "KriptoFX/RFX1/DistortionMobile"
 			return ComputeGrabScreenPos(vertex);
 		}
 
-#include "DistortPasses.cginc"
+#include "RFX1_DistortionPasses.cginc"
 
 
 			ENDCG

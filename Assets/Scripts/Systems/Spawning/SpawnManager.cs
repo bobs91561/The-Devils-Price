@@ -29,7 +29,6 @@ public class SpawnManager : MonoBehaviour {
     IEnumerator ConsiderRequests()
     {
         yield return new WaitWhile(() => _mRespawnRequests.Count <= 0);
-        Debug.Log("Considering requests");
         AcceptRequests();
         Respawn();
         StartCoroutine(ConsiderRequests());
@@ -51,7 +50,7 @@ public class SpawnManager : MonoBehaviour {
             if (request.zone.ActiveZone)
             {
                 var accept = CheckPlayerDistance(request);
-                Debug.Log(accept);
+
                 if (accept) _mRespawns.Add(request);
                 else delayed.Enqueue(request);
             }
@@ -97,7 +96,6 @@ public class SpawnManager : MonoBehaviour {
     public void NewRequest(RespawnsOnDeath respawn)
     {
         _mRespawnRequests.Enqueue(respawn);
-        Debug.Log("Request received");
     }
 
     private void ResetPlayer()

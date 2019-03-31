@@ -31,7 +31,8 @@ public abstract class HealthBar : MonoBehaviour
         _slider.minValue = 0f;
         _slider.value = _hm.Health;
         gameObject.SetActive(true);
-        if (_slider.value <= 0f) Deactivate();
+        if (_slider.value <= 0f)
+            Deactivate();
     }
 
     public void Deactivate()

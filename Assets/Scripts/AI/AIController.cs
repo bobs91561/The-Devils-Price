@@ -26,6 +26,7 @@ public class AIController : MonoBehaviour
 
     public bool Moving;
     public bool Frozen;
+    public bool Dodge;
 
     private void Start()
     {
@@ -68,7 +69,8 @@ public class AIController : MonoBehaviour
         else
             _agent.updateRotation = true;
         if (!_skillSet.CheckAttack() || Frozen)
-            thirdPerson.Move(vel, false, false);
+            thirdPerson.Move(vel, false, false, dodge: Dodge);
+        Dodge = false;
     }
     
 

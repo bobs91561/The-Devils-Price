@@ -7,6 +7,66 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5426059435684547105, guid: 0122b99ca9eae7648a26bcbad2837961,
+        type: 3}
+      propertyPath: m_Name
+      value: ForgottenPlaneA
+      objectReference: {fileID: 0}
+    - target: {fileID: 5426059435684547104, guid: 0122b99ca9eae7648a26bcbad2837961,
+        type: 3}
+      propertyPath: PromptsText.Array.data[4]
+      value: Press X to dodge
+      objectReference: {fileID: 0}
+    - target: {fileID: 5426059435684547104, guid: 0122b99ca9eae7648a26bcbad2837961,
+        type: 3}
+      propertyPath: PromptsText.Array.data[3]
+      value: Press Y to jump
+      objectReference: {fileID: 0}
+    - target: {fileID: 5426059435684547104, guid: 0122b99ca9eae7648a26bcbad2837961,
+        type: 3}
+      propertyPath: PromptsText.Array.data[2]
+      value: Press Left Stick while moving to Sprint
+      objectReference: {fileID: 0}
+    - target: {fileID: 5426059435684547104, guid: 0122b99ca9eae7648a26bcbad2837961,
+        type: 3}
+      propertyPath: PromptsText.Array.data[1]
+      value: Use Right Stick to look around
+      objectReference: {fileID: 0}
+    - target: {fileID: 5426059435684547104, guid: 0122b99ca9eae7648a26bcbad2837961,
+        type: 3}
+      propertyPath: PromptsText.Array.data[0]
+      value: Use Left Stick to move
+      objectReference: {fileID: 0}
+    - target: {fileID: 5426059435684547104, guid: 0122b99ca9eae7648a26bcbad2837961,
+        type: 3}
+      propertyPath: PromptsInput.Array.data[3]
+      value: JumpKey
+      objectReference: {fileID: 0}
+    - target: {fileID: 5426059435684547104, guid: 0122b99ca9eae7648a26bcbad2837961,
+        type: 3}
+      propertyPath: PromptsInput.Array.data[4]
+      value: DodgeKey
+      objectReference: {fileID: 0}
+    - target: {fileID: 5426059435684547104, guid: 0122b99ca9eae7648a26bcbad2837961,
+        type: 3}
+      propertyPath: PromptsInput.Array.data[2]
+      value: SprintKey
+      objectReference: {fileID: 0}
+    - target: {fileID: 5426059435684547104, guid: 0122b99ca9eae7648a26bcbad2837961,
+        type: 3}
+      propertyPath: PromptsInput.Array.data[1]
+      value: None
+      objectReference: {fileID: 0}
+    - target: {fileID: 5426059435684547104, guid: 0122b99ca9eae7648a26bcbad2837961,
+        type: 3}
+      propertyPath: Display
+      value: 
+      objectReference: {fileID: 6781161662905326163}
+    - target: {fileID: 5426059435684547104, guid: 0122b99ca9eae7648a26bcbad2837961,
+        type: 3}
+      propertyPath: TimeBetweenPrompts
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 5426059435684547135, guid: 0122b99ca9eae7648a26bcbad2837961,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -62,10 +122,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5426059435684547105, guid: 0122b99ca9eae7648a26bcbad2837961,
+    - target: {fileID: 7522018424976854974, guid: 0122b99ca9eae7648a26bcbad2837961,
         type: 3}
-      propertyPath: m_Name
-      value: Tutorial Base
-      objectReference: {fileID: 0}
+      propertyPath: m_textInfo.textComponent
+      value: 
+      objectReference: {fileID: 6781161662905326163}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0122b99ca9eae7648a26bcbad2837961, type: 3}
+--- !u!114 &6781161662905326163 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7522018424976854974, guid: 0122b99ca9eae7648a26bcbad2837961,
+    type: 3}
+  m_PrefabInstance: {fileID: 3924910705211889133}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

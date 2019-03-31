@@ -11,6 +11,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Basic Soul
       objectReference: {fileID: 0}
+    - target: {fileID: 82339926536492750, guid: e20e834114448f246bc7b81211c90cca,
+        type: 3}
+      propertyPath: Priority
+      value: 182
+      objectReference: {fileID: 0}
+    - target: {fileID: 82339926536492750, guid: e20e834114448f246bc7b81211c90cca,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.103
+      objectReference: {fileID: 0}
     - target: {fileID: 400132, guid: e20e834114448f246bc7b81211c90cca, type: 3}
       propertyPath: m_LocalPosition.x
       value: 86.5
@@ -79,6 +89,28 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -0.656273
       objectReference: {fileID: 0}
+    - target: {fileID: 4149117411055720, guid: e20e834114448f246bc7b81211c90cca, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.09502737
+      objectReference: {fileID: 0}
+    - target: {fileID: 4149117411055720, guid: e20e834114448f246bc7b81211c90cca, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.29403687
+      objectReference: {fileID: 0}
+    - target: {fileID: 4149117411055720, guid: e20e834114448f246bc7b81211c90cca, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.03445895
+      objectReference: {fileID: 0}
+    - target: {fileID: 114318061066501496, guid: e20e834114448f246bc7b81211c90cca,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114318061066501496, guid: e20e834114448f246bc7b81211c90cca,
+        type: 3}
+      propertyPath: MeshObject
+      value: 
+      objectReference: {fileID: 8440418437585051553}
     - target: {fileID: 13700000, guid: e20e834114448f246bc7b81211c90cca, type: 3}
       propertyPath: m_Materials.Array.size
       value: 2
@@ -343,6 +375,16 @@ PrefabInstance:
       propertyPath: m_RootBone
       value: 
       objectReference: {fileID: 8440418437585273433}
+    - target: {fileID: 198672415524006180, guid: e20e834114448f246bc7b81211c90cca,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 3.6770537
+      objectReference: {fileID: 0}
+    - target: {fileID: 198672415524006180, guid: e20e834114448f246bc7b81211c90cca,
+        type: 3}
+      propertyPath: ShapeModule.m_SkinnedMeshRenderer
+      value: 
+      objectReference: {fileID: 8440418437573546813}
     - target: {fileID: 135385079473252542, guid: e20e834114448f246bc7b81211c90cca,
         type: 3}
       propertyPath: m_Radius
@@ -358,38 +400,6 @@ PrefabInstance:
       propertyPath: maxUseDistance
       value: 7
       objectReference: {fileID: 0}
-    - target: {fileID: 198672415524006180, guid: e20e834114448f246bc7b81211c90cca,
-        type: 3}
-      propertyPath: InitialModule.startSize.scalar
-      value: 3.6770537
-      objectReference: {fileID: 0}
-    - target: {fileID: 198672415524006180, guid: e20e834114448f246bc7b81211c90cca,
-        type: 3}
-      propertyPath: ShapeModule.m_SkinnedMeshRenderer
-      value: 
-      objectReference: {fileID: 8440418437573546813}
-    - target: {fileID: 4149117411055720, guid: e20e834114448f246bc7b81211c90cca, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.09502737
-      objectReference: {fileID: 0}
-    - target: {fileID: 4149117411055720, guid: e20e834114448f246bc7b81211c90cca, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.29403687
-      objectReference: {fileID: 0}
-    - target: {fileID: 4149117411055720, guid: e20e834114448f246bc7b81211c90cca, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.03445895
-      objectReference: {fileID: 0}
-    - target: {fileID: 114318061066501496, guid: e20e834114448f246bc7b81211c90cca,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114318061066501496, guid: e20e834114448f246bc7b81211c90cca,
-        type: 3}
-      propertyPath: MeshObject
-      value: 
-      objectReference: {fileID: 8440418437585051553}
     m_RemovedComponents:
     - {fileID: 114791714440012998, guid: e20e834114448f246bc7b81211c90cca, type: 3}
     - {fileID: 114520691064159934, guid: e20e834114448f246bc7b81211c90cca, type: 3}

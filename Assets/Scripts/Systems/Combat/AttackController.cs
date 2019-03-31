@@ -81,6 +81,11 @@ namespace Assets.Scripts.Systems.Combat
         {
             MaxSoulStrength = max;
         }
+
+        public void AddDemonicPower(float addition)
+        {
+            ChangeMaxPower(MaxDemonicPower + addition);
+        }
         #endregion
     }
 }

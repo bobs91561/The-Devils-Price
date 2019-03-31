@@ -72,7 +72,7 @@ public class ReactionManager : MonoBehaviour
         if (m_PlayerControl) m_PlayerControl.SetInputActive(false);
 
         //If no user control, tell the AI to halt until reaction completes
-
+        m_ThirdPerson.m_IsDodging = false;
 
         //Interrupt any attacks
         if (m_SkillSet.CheckAttack()) m_SkillSet.InterruptAttack();
@@ -88,6 +88,7 @@ public class ReactionManager : MonoBehaviour
         if (m_PlayerControl) m_PlayerControl.SetInputActive(true);
 
         //If no user control, allow the AI to continue
+        m_ThirdPerson.m_IsDodging = false;
 
         m_TimeOfLastReact = Time.time;
         m_ReactionStarted = false;

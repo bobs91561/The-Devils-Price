@@ -28,6 +28,9 @@ public class AIActionDecider: MonoBehaviour {
     public List<GameObject> patrolPoints;
     public List<GameObject> spawnPoints;
     public int patrolPoint;
+    public GameObject followTarget;
+
+    public Vector3 LastKnownPosition;
 
 	// Use this for initialization
 	void Start()
@@ -49,6 +52,7 @@ public class AIActionDecider: MonoBehaviour {
         tiredness = 0f;
         combat = false;
 	    PlayerContact = false;
+        EventManager.DeathAction += PlayerDeath;
 	}
 
     public void Tick()
@@ -127,6 +131,8 @@ public class AIActionDecider: MonoBehaviour {
             if (c.gameObject.GetComponent<AIActionDecider>())
                 c.gameObject.SendMessage("CombatIsNearby");
         }
+
+        CombatManager.EnterCombat(gameObject);
     }
 
     public void ExitCombat()
@@ -139,17 +145,15 @@ public class AIActionDecider: MonoBehaviour {
         
         Collider[] cs = Physics.OverlapSphere(transform.position, 7f, 1 << LayerMask.NameToLayer("Enemy"));
         GetComponent<HealthManager>().ExitCombat();
-        
-                foreach (Collider c in cs)
+
+        LastKnownPosition = Player.transform.position;
+        foreach (Collider c in cs)
         {
             if (c.gameObject.GetComponent<AIActionDecider>())
                 c.gameObject.SendMessage("UpdatePlayerContact");
         }
 
-        Vector3 _lastPlayerPosition = new Vector3();
-        _lastPlayerPosition = Player.transform.position;
-        NavMeshAgent _agent = AI.GetComponent<NavMeshAgent>();
-        _agent.destination = _lastPlayerPosition;
+        CombatManager.ExitCombat(gameObject);
     }
 
     public void UpdatePlayerContact()
@@ -173,12 +177,27 @@ public class AIActionDecider: MonoBehaviour {
         PlayerContact = false;
         SendMessage("EnterCombat");
         FaceTarget(Player.transform.position);
+
+        CombatManager.EnterCombat(gameObject);
     }
 
     private void OnDeath()
     {
         ExitCombat();
         patrolPoint = 0;
+    }
+
+    private void PlayerDeath()
+    {
+        PlayerContact = false;
+        RecentCombat = false;
+        CombatNearby = false;
+        ExitCombat();
+    }
+
+    public void OnDestroy()
+    {
+        EventManager.DeathAction -= PlayerDeath;
     }
 
     /*void OnDrawGizmosSelected()

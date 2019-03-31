@@ -733,6 +733,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5500727475313867208}
+  - component: {fileID: 5831808559797612456}
   m_Layer: 10
   m_Name: Bip01 R Hand
   m_TagString: Untagged
@@ -760,6 +761,19 @@ Transform:
   m_Father: {fileID: 5497075453107160592}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5831808559797612456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5494658679993356128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cb37064a8e9c674e9e171cc8411ba3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CastDamageMultiplier: 1
 --- !u!1 &5494658784138569844
 GameObject:
   m_ObjectHideFlags: 0
@@ -832,7 +846,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5500678181226832788}
   - component: {fileID: 5608047658491756362}
-  m_Layer: 10
+  m_Layer: 16
   m_Name: Dialogue_Items
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2776,10 +2790,18 @@ MonoBehaviour:
   RecentCombat: 0
   PlayerContact: 0
   Friendly: 0
-  actions: []
+  actions:
+  - {fileID: 11400000, guid: 7737bf21e7fc9a040ab12f8833542f8b, type: 2}
+  - {fileID: 11400000, guid: 3c295a567305e0e47b406faae808fc7a, type: 2}
+  - {fileID: 11400000, guid: b4573e29b05d6b4499a454a5d043716d, type: 2}
+  - {fileID: 11400000, guid: 0c28eae9f4195444980e1ccd75c00a0a, type: 2}
+  - {fileID: 11400000, guid: 9e8b0cd820578f14cafcf84f0f9f6332, type: 2}
+  - {fileID: 11400000, guid: a08a1dd0e37a9544eb55e495022cb39c, type: 2}
+  - {fileID: 11400000, guid: 3cc8190648d13e041a4b071ad5d7d51d, type: 2}
   patrolPoints: []
   spawnPoints: []
   patrolPoint: 0
+  followTarget: {fileID: 0}
 --- !u!114 &5496164464318434680
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2816,6 +2838,7 @@ MonoBehaviour:
   Decider: {fileID: 0}
   Moving: 0
   Frozen: 0
+  Dodge: 0
 --- !u!114 &5496164464318434656
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2831,7 +2854,7 @@ MonoBehaviour:
   isAlive: 0
   Respawns: 0
   isPlayer: 0
-  maxHealth: 0
+  maxHealth: 50
   hitBy: {fileID: 0}
   healthBar: {fileID: 0}
   HealthBarPrefab: {fileID: 6160945041397555529, guid: ba65a06ba290ea44eac1cc0982e2d7e3,
@@ -2865,12 +2888,14 @@ MonoBehaviour:
   attacks: []
   BasicAttack: {fileID: 0}
   ChargedAttack: {fileID: 0}
+  BlockAttack: {fileID: 0}
   meleeCenter: {x: 0, y: 0, z: 0}
   castingPoint: {x: 0, y: 0, z: 0}
   meleeObject: {fileID: 0}
   HitboxToGenerate: {fileID: 0}
   meleeObjectSecondary: {fileID: 0}
   HitboxToGenerateSecondary: {fileID: 0}
+  BlockHitboxToGenerate: {fileID: 0}
   WeaponDamage1: 0
   WeaponDamage2: 0
   CastingDamage: 0
@@ -2879,9 +2904,8 @@ MonoBehaviour:
   objectsSheathe: []
   currentAttack: {fileID: 0}
   isAttacking: 0
+  isBlocking: 0
   combat: 0
-  _mTargeting: 0
-  _mTargetObject: {fileID: 0}
 --- !u!114 &8367986335437095768
 MonoBehaviour:
   m_ObjectHideFlags: 0

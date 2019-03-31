@@ -273,6 +273,7 @@ public class PlayerController : AttackController {
     {
         enabled = false;
         EventManager.Death();
+        DifficultyManager.UpdatePlayerDeath();
     }
 
     public void OnRespawn()

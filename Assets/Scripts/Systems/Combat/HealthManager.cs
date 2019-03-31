@@ -70,7 +70,11 @@ public class HealthManager : MonoBehaviour {
         Health += change;
         if (_friendly) SendMessage("OnAggression", true);
         if (_decider && !_decider.combat) SendMessage("EnterCombat");
-        if (healthBar) healthBar.UpdateHealth();
+        if (healthBar)
+        {
+            if (!healthBar.gameObject.activeInHierarchy) healthBar.Activate();
+            healthBar.UpdateHealth();
+        }
     }
 
     public void ResetHealth()
@@ -117,7 +121,6 @@ public class HealthManager : MonoBehaviour {
     public void Respawn()
     {
         Life();
-        //SendMessage("SheatheWeapons");
         SendMessage("OnRespawn");
     }
 

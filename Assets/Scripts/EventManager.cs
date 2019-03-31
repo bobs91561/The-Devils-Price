@@ -25,6 +25,8 @@ public class EventManager {
     public static event VoidDelegate PrinceDealAccepted;
     public static event VoidDelegate PrinceDealRejected;
 
+    public static event VoidDelegate DDAResponsive;
+
 	
     public static void Death()
     {
@@ -51,5 +53,23 @@ public class EventManager {
     {
         if (RankUp != null)
             RankUp();
+    }
+
+    public static void AcceptDeal()
+    {
+        if (PrinceDealAccepted != null)
+            PrinceDealAccepted();
+    }
+
+    public static void DeclineDeal()
+    {
+        if (PrinceDealRejected != null)
+            PrinceDealRejected();
+    }
+
+    public static void TriggerDDA()
+    {
+        if (DDAResponsive != null)
+            DDAResponsive();
     }
 }

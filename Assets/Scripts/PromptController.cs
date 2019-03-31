@@ -53,6 +53,14 @@ public class PromptController : MonoBehaviour
             Display.text = PromptsText[i];
             Display.enabled = true;
             Display.GetComponentInParent<Image>().enabled = true;
+            //Create a Delay before prompts are shown
+            if (PromptsInput[i].Equals("Delay"))
+            {
+                _time_of_next_display = Time.time + PromptDisplayTime + TimeBetweenPrompts; //Remove TimeBetweenPrompts if needed
+                Display.enabled = false;
+                Display.GetComponentInParent<Image>().enabled = false;
+                i++;
+            }
             //No input expected
             if (PromptsInput[i].Equals("None"))
             {

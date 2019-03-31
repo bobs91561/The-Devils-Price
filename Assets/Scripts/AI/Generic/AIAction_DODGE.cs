@@ -27,7 +27,9 @@ public class AIAction_DODGE : AIAction {
         //Is feasible if the AI is not attacking, the player is attacking,
         //  and the dodge time is not less than the threshold
         UpdateTime();
-        
+        if (IsPlayerPresent())
+            m_PlayerSkillSet = AIActionDecider.Player.GetComponent<SkillSet>();
+        //Debug.Log("Action Feasible:" + (decider.combat && !_skillSet.CheckAttack() && AIActionDecider.Player.GetComponent<SkillSet>().CheckAttack() && CheckTime()));
         return decider.combat && !_skillSet.CheckAttack() && AIActionDecider.Player.GetComponent<SkillSet>().CheckAttack() && CheckTime();
     }
 
@@ -53,15 +55,14 @@ public class AIAction_DODGE : AIAction {
         //Tell the AIController to dodge on move update
         if(choose)
         {
-            m_Character.m_IsDodging = true;
-            m_Character.transform.forward = m_Direction;
-            Debug.Log("We did it Reddit");
+            g.GetComponent<AIController>().Dodge = true;
         }
         return choose;
     }
 
     private bool ChooseDodgeDirection()
     {
+        m_position = g.transform.position;
         m_Direction = new Vector3();
         //Get the player's currentAttack
         m_PlayerAttack = m_PlayerSkillSet.currentAttack;
@@ -70,17 +71,41 @@ public class AIAction_DODGE : AIAction {
         //Get the range of the attack
         var forwardRange = m_PlayerAttack.maxForwardDistance;
         var areaRange = m_PlayerAttack.areaOfAttack;
-        var closestToMe = m_Character.transform.position + m_Character.transform.forward * forwardRange;
+        var closestToMe = m_Character.transform.position + m_Character.transform.forward * forwardRange + m_Character.transform.forward * areaRange;
+        
+        var backVector = m_position + new Vector3(0, 0, -3);
+        var leftVector = m_position + new Vector3(-3, 0, 0);
+        var rightVector = m_position + new Vector3(3, 0, 0);
+        var forwardVector = m_position + new Vector3(0, 0, 3);
+        
 
         //Choose a direction that moves the AI out of range
-        bool dodge_needed_right = NavMesh.Raycast(m_position, closestToMe + new Vector3(areaRange, 0, 0), out _hit,
+        //This code is fucking nonsense but we'll hold onto it because why not 
+        /*bool ableDodgeRight = NavMesh.Raycast(m_position, closestToMe + new Vector3(areaRange, 0, 0), out _hit,
             NavMesh.AllAreas);
-        bool dodge_needed_left = NavMesh.Raycast(m_position, closestToMe + new Vector3(-areaRange, 0, 0), out _hit,
+        Debug.Log("Right " + ableDodgeRight);
+        bool ableDodgeLeft = NavMesh.Raycast(m_position, closestToMe + new Vector3(-areaRange, 0, 0), out _hit,
             NavMesh.AllAreas);
-        bool dodge_needed_back = NavMesh.Raycast(m_position, closestToMe + new Vector3(0, 0, -areaRange), out _hit,
+        bool ableDodgeBack = NavMesh.Raycast(m_position, closestToMe + new Vector3(0, 0, -areaRange), out _hit,
             NavMesh.AllAreas);
-        bool dodge_needed_forward = NavMesh.Raycast(m_position, closestToMe + new Vector3(0, 0, areaRange), out _hit,
+        bool ableDodgeForward = NavMesh.Raycast(m_position, closestToMe + new Vector3(0, 0, areaRange), out _hit,
             NavMesh.AllAreas);
+        Debug.Log("Right " + ableDodgeRight);
+        Debug.Log("Left " + ableDodgeLeft);
+        Debug.Log("Back " + ableDodgeBack);
+        Debug.Log("Forward " + ableDodgeForward);*/
+        bool ableDodgeBack = NavMesh.Raycast(m_position, backVector, out _hit,
+            NavMesh.AllAreas);
+        bool ableDodgeLeft = NavMesh.Raycast(m_position, leftVector, out _hit,
+            NavMesh.AllAreas);
+        bool ableDodgeRight = NavMesh.Raycast(m_position, rightVector, out _hit,
+            NavMesh.AllAreas);
+        bool ableDodgeForward = NavMesh.Raycast(m_position, forwardVector, out _hit,
+            NavMesh.AllAreas);
+        /*Debug.Log("Right " + ableDodgeRight);
+        Debug.Log("Left " + ableDodgeLeft);
+        Debug.Log("Back " + ableDodgeBack);
+        Debug.Log("Forward " + ableDodgeForward);
         if (dodge_needed_right)
         {
             m_Direction = new Vector3(1, 0, 0);
@@ -100,8 +125,31 @@ public class AIAction_DODGE : AIAction {
         {
             m_Direction = new Vector3(0, 0, 1);
             return true;
+        }*/
+        float maxDistanceAway = 0f;
+        if (!ableDodgeBack && Vector3.Distance(backVector, closestToMe) > maxDistanceAway)
+        {
+            maxDistanceAway = Vector3.Distance(backVector, closestToMe);
+            m_Direction = new Vector3(0, 0, -1);
         }
-        return false;
+        if (!ableDodgeLeft && Vector3.Distance(leftVector, closestToMe) > maxDistanceAway)
+        {
+            maxDistanceAway = Vector3.Distance(leftVector, closestToMe);
+            m_Direction = new Vector3(-1, 0, 0);
+        }
+        if (!ableDodgeForward && Vector3.Distance(forwardVector, closestToMe) > maxDistanceAway)
+        {
+            maxDistanceAway = Vector3.Distance(forwardVector, closestToMe);
+            m_Direction = new Vector3(0, 0, 1);
+        }
+        if (!ableDodgeRight && Vector3.Distance(forwardVector, closestToMe) > maxDistanceAway)
+        {
+            m_Direction = new Vector3(1, 0, 0);
+        }
+
+        if (maxDistanceAway.Equals(0f))
+            return false;
+        return true;
     }
 
     private bool ContinueDodge()
@@ -131,6 +179,8 @@ public class AIAction_DODGE : AIAction {
         base.Initialize(obj);
         m_Character = g.GetComponent<ThirdPersonCharacter>();
         _timeSinceDodge = MinTimeBetweenDodge;
-        m_PlayerSkillSet = AIActionDecider.Player.GetComponent<SkillSet>();
+        // m_PlayerSkillSet = AIActionDecider.Player.GetComponent<SkillSet>();
     }
+
+
 }

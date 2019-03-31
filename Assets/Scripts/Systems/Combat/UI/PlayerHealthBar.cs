@@ -15,7 +15,7 @@ public class PlayerHealthBar : HealthBar
         _slider.minValue = 0f;
         _slider.value = _hm.Health;
 
-        PlayerCanvas = GameObject.Find("Canvas").GetComponent<Canvas>();
+        PlayerCanvas = GameManager.GetDialogueManager().GetComponentInChildren<Canvas>();
         parent = obj.transform;
         _rect = GetComponent<RectTransform>();
         _rect.SetParent(PlayerCanvas.GetComponent<RectTransform>());

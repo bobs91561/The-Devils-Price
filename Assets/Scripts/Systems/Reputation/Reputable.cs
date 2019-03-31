@@ -13,7 +13,7 @@ using System;
 public class Reputable : MonoBehaviour {
     public static float BaseReputation = 20f;
     public float Reputation;
-    public int CurrentRank;
+    public int CurrentRank = 1;
     private float m_RankRequirement;
 
     private RankResponse m_RankResponse;

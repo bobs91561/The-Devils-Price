@@ -179,6 +179,9 @@ public class RFX1_TransformMotion : MonoBehaviour
 
     void OnCollisionBehaviour(RaycastHit hit)
     {
+        if (GetComponent<DamageForPreSetupObjects>())
+            GetComponent<DamageForPreSetupObjects>().CollideWith(hit);
+
         var handler = CollisionEnter;
         if (handler != null)
             handler(this, new RFX1_CollisionInfo {Hit = hit});

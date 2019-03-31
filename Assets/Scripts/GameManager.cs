@@ -9,6 +9,7 @@ using Devdog.InventoryPro.UnityStandardAssets;
 using System;
 using CustomManager;
 using CompassNavigatorPro;
+using PixelCrushers.DialogueSystem;
 
 public class GameManager : MonoBehaviour {
     public static GameObject Player;
@@ -54,6 +55,7 @@ public class GameManager : MonoBehaviour {
             _mAudioSource.Play();
         }
         SceneManager.sceneLoaded += OnSceneLoaded;
+        if (instance) DestroyGM();
         instance = this;
         DontDestroyOnLoad(this);
         if (DeveloperMode) StartCoroutine(DevMode());
@@ -63,6 +65,24 @@ public class GameManager : MonoBehaviour {
     {
         yield return new WaitForEndOfFrame();
         SetUpPlayer();
+    }
+
+    public static GameObject GetDialogueManager()
+    {
+        return instance.DialogueManager;
+    }
+
+    public static GameObject GetNavigator()
+    {
+        return instance.Navigator;
+    }
+
+    public static List<GameObject> GetUI()
+    {
+        List<GameObject> UIs = new List<GameObject>();
+        if (instance.DialogueManager) UIs.Add(instance.DialogueManager);
+        if (instance.Navigator) UIs.Add(instance.Navigator);
+        return UIs;
     }
 
     public static void SetPlayerInput(bool active)
@@ -91,7 +111,7 @@ public class GameManager : MonoBehaviour {
 
     private IEnumerator FadeScene()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         _mFaderAnimator.SetTrigger(FadeInHash);
     }
     #endregion
@@ -143,6 +163,7 @@ public class GameManager : MonoBehaviour {
         if (CurrentSceneData.EntryPoint)
         {
             Player.transform.position = CurrentSceneData.EntryPoint.transform.position;
+            Player.transform.rotation = CurrentSceneData.EntryPoint.transform.rotation;
         }
     }
     
@@ -199,10 +220,9 @@ public class GameManager : MonoBehaviour {
 
     private void CheckForDialogueManager()
     {
-        var go = GameObject.Find("Dialogue Manager");
-        if (!go) go = Instantiate(DialogueMangerPrefab);
-        DialogueManager = go;
+        if (!DialogueManager) DialogueManager = Instantiate(DialogueMangerPrefab);
         InputManager.SetDialogueCancelKeys(DialogueManager);
+        VerifyDialogueDisplay();
     }
 
     private void CheckForNavigator()
@@ -213,8 +233,29 @@ public class GameManager : MonoBehaviour {
         go.GetComponent<CompassPro>().cameraMain = Camera.main;
     }
 
+    public void VerifyDialogueDisplay()
+    {
+        if(DialogueManager)
+        DialogueManager.GetComponentInChildren<StandardUIQuestTracker>().ShowTracker();
+    }
+
+    private void ManualFade()
+    {
+        if (HandleFadeManually)
+        {
+            _mFaderAnimator.SetTrigger(FadeInHash);
+            HandleFadeManually = false;
+        }
+    }
+
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        if (scene.buildIndex == 0)
+        {
+            QuitGame();
+            ManualFade();
+            return;
+        }
         Debug.Log("Loaded scene");
         CheckForDialogueManager();
         CheckForNavigator();
@@ -224,13 +265,19 @@ public class GameManager : MonoBehaviour {
         exec.AddObjects(ObjectsToActivate);
         SetUpPlayer();
 
-        if (HandleFadeManually)
-        {
-            _mFaderAnimator.SetTrigger(FadeInHash);
-            HandleFadeManually = false;
-        }
+        ManualFade();
         //StartCoroutine(DoubleCheckAudio());
     }
     
+    private void QuitGame()
+    {
+        Destroy(Player);
+        Destroy(DialogueManager);
+        Destroy(Navigator);
+    }
 
+    private static void DestroyGM()
+    {
+        Destroy(instance);
+    }
 }

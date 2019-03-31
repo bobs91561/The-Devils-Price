@@ -19,6 +19,7 @@ public class AnimationCheck : MonoBehaviour
     void Start()
     {
         _mThirdPerson = GetComponent<ThirdPersonCharacter>();
+        if (!_mThirdPerson) _mThirdPerson = GetComponentInParent<ThirdPersonCharacter>();
         _mSkillSet = GetComponentInParent<SkillSet>();
 
         _mAnimator = GetComponent<Animator>();
@@ -118,5 +119,10 @@ public class AnimationCheck : MonoBehaviour
     public void FinishReact()
     {
         m_ReactionManager.FinishReact();
+    }
+
+    public void EndDodge()
+    {
+        _mThirdPerson.EndDodge();
     }
 }

@@ -476,7 +476,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4257846727227028}
   - component: {fileID: 114629113510148886}
-  m_Layer: 10
+  m_Layer: 16
   m_Name: Dialogue_Items
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2316,12 +2316,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ba4248577c3e95b41bd7d445f613f2f5, type: 2}
   BasicAttack: {fileID: 11400000, guid: ba4248577c3e95b41bd7d445f613f2f5, type: 2}
   ChargedAttack: {fileID: 0}
+  BlockAttack: {fileID: 0}
   meleeCenter: {x: 0, y: 0, z: 0}
   castingPoint: {x: 0, y: 0, z: 0}
   meleeObject: {fileID: 0}
   HitboxToGenerate: {fileID: 0}
   meleeObjectSecondary: {fileID: 0}
   HitboxToGenerateSecondary: {fileID: 0}
+  BlockHitboxToGenerate: {fileID: 0}
   WeaponDamage1: 0
   WeaponDamage2: 0
   CastingDamage: 0
@@ -2331,9 +2333,8 @@ MonoBehaviour:
   - {fileID: 1380104788214920}
   currentAttack: {fileID: 0}
   isAttacking: 0
+  isBlocking: 0
   combat: 0
-  _mTargeting: 0
-  _mTargetObject: {fileID: 0}
 --- !u!114 &114381589202220402
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2367,6 +2368,7 @@ MonoBehaviour:
   patrolPoints: []
   spawnPoints: []
   patrolPoint: 0
+  followTarget: {fileID: 0}
 --- !u!114 &114214049776046138
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2403,6 +2405,7 @@ MonoBehaviour:
   Decider: {fileID: 0}
   Moving: 0
   Frozen: 0
+  Dodge: 0
 --- !u!114 &114343616601902846
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2961,6 +2964,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4790243943083426}
     m_Modifications:
+    - target: {fileID: 5102755689553534401, guid: 18743b69643bb654ea782695bc46f137,
+        type: 3}
+      propertyPath: m_Name
+      value: Halberd (1)
+      objectReference: {fileID: 0}
     - target: {fileID: 5102755689553887717, guid: 18743b69643bb654ea782695bc46f137,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3030,11 +3038,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5102755689553534401, guid: 18743b69643bb654ea782695bc46f137,
-        type: 3}
-      propertyPath: m_Name
-      value: Halberd (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18743b69643bb654ea782695bc46f137, type: 3}

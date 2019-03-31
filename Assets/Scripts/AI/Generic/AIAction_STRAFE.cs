@@ -9,6 +9,7 @@ public class AIAction_STRAFE : AIAction
 
     private int _direction;             //-1 for left, 1 for right
     private bool _directionChosen;
+    private bool _directionSet;
     private Vector3 g_position;
     private Vector3 n_position;
     private NavMeshHit _hit;
@@ -29,8 +30,11 @@ public class AIAction_STRAFE : AIAction
         {
             ChooseDirection();
             SetAnimation();
-            SetDirection();
             return true;
+        }
+        else if (!_directionSet)
+        {
+            SetDirection();
         }
         else
         {
@@ -66,6 +70,7 @@ public class AIAction_STRAFE : AIAction
                 _direction = 0;
         }
         _directionChosen = true;
+        _directionSet = false;
     }
 
     private bool CheckRange()
@@ -88,11 +93,15 @@ public class AIAction_STRAFE : AIAction
 
     public override void SetActive()
     {
-        if (isActive) _directionChosen = false;
+        if (isActive)
+        {
+            _directionChosen = false;
+            _directionSet = false;
+        }
         else _agent.ResetPath();
         base.SetActive();
         decider.combatMoveActive = isActive;
-        if (!isActive)
-            SetAnimation();
+        //if (!isActive)
+          //  SetAnimation();
     }
 }

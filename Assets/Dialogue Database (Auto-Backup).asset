@@ -214,6 +214,26 @@ MonoBehaviour:
       typeString: CustomFieldType_Boolean
     portrait: {fileID: 0}
     alternatePortraits: []
+  - id: 11
+    fields:
+    - title: Name
+      value: Azazel
+      type: 0
+      typeString: 
+    - title: Pictures
+      value: '[]'
+      type: 3
+      typeString: CustomFieldType_Files
+    - title: Description
+      value: Prince of Wrath
+      type: 0
+      typeString: 
+    - title: IsPlayer
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    portrait: {fileID: 0}
+    alternatePortraits: []
   items:
   - id: 2
     fields:
@@ -22177,7 +22197,7 @@ MonoBehaviour:
     - id: 19
       fields:
       - title: Title
-        value: New Dialogue Entry
+        value: 
         type: 0
         typeString: CustomFieldType_Text
       - title: Pictures
@@ -22201,7 +22221,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: 
+        value: WHAT? You let him keep it! I said any cost. ANY. COST. RAAAAAAA!
         type: 0
         typeString: CustomFieldType_Text
       - title: Parenthetical
@@ -22228,11 +22248,22 @@ MonoBehaviour:
       falseConditionAction: Block
       conditionPriority: 2
       outgoingLinks: []
-      conditionsString: WHAT? You let him keep it! I said any cost. ANY. COST. RAAAAAAA!
+      conditionsString: 
       userScript: SetQuestEntryState("Torture", 4, "active")
       onExecute:
         m_PersistentCalls:
-          m_Calls: []
+          m_Calls:
+          - m_Target: {fileID: 11400000, guid: dec9eabb8b9eca94ab8c5bdbee318217, type: 2}
+            m_MethodName: TriggerCombat
+            m_Mode: 5
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: Tancred
+              m_BoolArgument: 0
+            m_CallState: 2
         m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
       canvasRect:
@@ -22811,7 +22842,18 @@ MonoBehaviour:
       userScript: SetQuestEntryState("Torture", 4, "active")
       onExecute:
         m_PersistentCalls:
-          m_Calls: []
+          m_Calls:
+          - m_Target: {fileID: 11400000, guid: dec9eabb8b9eca94ab8c5bdbee318217, type: 2}
+            m_MethodName: TriggerCombat
+            m_Mode: 5
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: Tancred
+              m_BoolArgument: 0
+            m_CallState: 2
         m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
       canvasRect:
@@ -22820,8 +22862,8 @@ MonoBehaviour:
         y: 373.83566
         width: 160
         height: 30
-    canvasScrollPosition: {x: 0, y: 0}
-    canvasZoom: 0.5200004
+    canvasScrollPosition: {x: 26.853085, y: 12.902077}
+    canvasZoom: 0.55000037
   - id: 18
     fields:
     - title: Title
@@ -23510,7 +23552,18 @@ MonoBehaviour:
       userScript: SetQuestEntryState("Torture", 2, "active")
       onExecute:
         m_PersistentCalls:
-          m_Calls: []
+          m_Calls:
+          - m_Target: {fileID: 11400000, guid: dec9eabb8b9eca94ab8c5bdbee318217, type: 2}
+            m_MethodName: TriggerCombat
+            m_Mode: 5
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: Guadahill
+              m_BoolArgument: 0
+            m_CallState: 2
         m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
       canvasRect:

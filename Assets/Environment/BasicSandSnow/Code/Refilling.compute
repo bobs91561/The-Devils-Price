@@ -1,0 +1,28 @@
+﻿// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+//Parameters (other than coordinates)
+RWTexture2D<float4> Memory;
+Texture2D<float4> New;
+float Reduce;
+
+[numthreads(8, 8, 1)]
+void CSMain (uint2 Coord : SV_DispatchThreadID)
+{
+	//General-use data
+	float Width;
+	float Height;
+	Memory.GetDimensions(Width, Height);
+	//float2 UVs = float2(Coord.x / Width, Coord.y / Height);
+
+	float4 NewHeight = New[Coord];
+	float4 OldHeight = Memory[Coord];
+	OldHeight.r = OldHeight.r - Reduce;
+
+	float4 ResultHeight = NewHeight + OldHeight;
+	Memory[Coord] = ResultHeight;
+	
+	//Memory[Coord].r = New.mips[0][Coord];									//Pixel access
+	//Memory[Coord] = New.SampleLevel(_LinearClamp, UVs, 0);				//Using UVs & bi/tri linear stuff	
+	//Memory[Coord] = float4(Coord.x / Width, Coord.y / Height, 0.0, 1.0);	//RGBA
+}

@@ -1,0 +1,112 @@
+
+#############################
+Basic Sand & Snow
+Unity Engine - 2018
+v1.0
+#############################
+
+
+-------------------------------
+ImprintManager component :
+-------------------------------
+
+	RenderSize_X & RenderSize_Y :
+		Determine the imprints' resolution. Higher resolution is required for larger area.
+		Increasing the resolution will decrease performance.
+		
+	Refill :
+		Will "refill" the imprints over time.
+		This use a Compute Shader and thus require DirectX 11 (or platform equivalent).
+		It has next to no CPU cost, and a minor GPU cost.
+		
+	Refill speed :
+		How fast the refilling effect will be.
+		
+	Elastic :
+		Change the behavior so that objects don't actually leave imprints.
+		The ground change under them but get instantly back into place when they leave.
+		
+	Compute Shader :
+		Must point to the ComputeShader provided in BasicSandSnow/Code.
+		
+	Orthographic Camera :
+		Indicate which orthographic camera is capturing depth.
+		It must be pointed upward, while being under the actual ground.
+		Set up culling mask to ignore the ground itself.
+		Set up clipping planes to start at the ground's bottom level and end at its surface.
+		Set up size to match the area' size (note : actual aspect ratio is dictated by RenderSize_X/Y)
+		
+	Ground Renderer :
+		The ground's mesh renderer.
+		It must use the "ImprintableGround" shader provided in BasicSandSnow/Shader.
+		
+	Optional Renderer :
+		Must point to a mesh renderer with a shader using a main texture.
+		This will display the imprints' raw data.
+		This is mostly intended as a debugging feature and can be left empty.
+		
+-------------------------------
+ImprintableGround shader :
+-------------------------------
+        
+	Upper Texture & Upper Normals :
+		Diffuse and bump texture that will be displayed when the ground is close to its maximal height.
+		
+	Under Texture & Under Normals :
+		Diffuse and bump texture that will be displayed when the ground is close to its minimal height.
+		
+	Height Map :
+		Will be overrided by the ImprintManager during runtime if set up properly.
+		Using a fully black texture will simulate a non-imprinted ground, a fully white will simulate a flattened ground.
+		
+	Height Multiplier :
+		Determine how 'Deep' the imprint can be.
+		This setting will require case by case tweaking as it depend on your ground 'deepness', orthographic camera's clipping planes, and visual effect desired.
+		'Expectable' value is slightly inferior to the difference between top and bottom ground, in negative.
+		
+	Height Blur :
+		Reduce the imprints' sharpness.
+		
+	Normal Radius :
+		Tweak how the normals are calculated.
+		Recommended value is 0.01, but may require change depending on your ground mesh's resolution.
+		Setting it to 0 will result in no normals and thus lessen the 'deepness' effect, which is usefull for grounds that don't want 3D imprints (like the with the Sand prefab).
+		
+	Smoothness & Metallic :
+		Standard Unity Shader settings.
+		
+--------------------
+Known issues :
+--------------------
+
+	The character in the package is different from the video / screenshot ! :
+		The character in those is Unity's "ThirdPersonCharacter". 
+		It's part of Unity's free standard assets and can be added to your project via "Assets -> Import Package -> Characters".
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+

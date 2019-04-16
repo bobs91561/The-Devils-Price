@@ -2053,6 +2053,212 @@ MonoBehaviour:
       value: Take the shard
       type: 0
       typeString: 
+  - id: 28
+    fields:
+    - title: Name
+      value: The Bastard Killer
+      type: 0
+      typeString: 
+    - title: Pictures
+      value: '[]'
+      type: 3
+      typeString: CustomFieldType_Files
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
+    - title: Success Description
+      value: 
+      type: 0
+      typeString: 
+    - title: Failure Description
+      value: 
+      type: 0
+      typeString: 
+    - title: State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Is Item
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Trackable
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Entry Count
+      value: 7
+      type: 1
+      typeString: CustomFieldType_Number
+    - title: Track
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Entry 1 State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Entry 1
+      value: Speak to the first son
+      type: 0
+      typeString: 
+    - title: Entry 2 State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Entry 2
+      value: Defeat Robert
+      type: 0
+      typeString: 
+    - title: Entry 3 State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Entry 3
+      value: Speak to Robert
+      type: 0
+      typeString: 
+    - title: Entry 4 State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Entry 4
+      value: Find the youngest son
+      type: 0
+      typeString: 
+    - title: Entry 5 State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Entry 5
+      value: Kill Brandon
+      type: 0
+      typeString: 
+    - title: Entry 6 State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Entry 6
+      value: Find the twins
+      type: 0
+      typeString: 
+    - title: Entry 7 State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Entry 7
+      value: Kill Alayne and Harry
+      type: 0
+      typeString: 
+  - id: 29
+    fields:
+    - title: Name
+      value: Lost Doggo
+      type: 0
+      typeString: 
+    - title: Pictures
+      value: '[]'
+      type: 3
+      typeString: CustomFieldType_Files
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
+    - title: Success Description
+      value: 
+      type: 0
+      typeString: 
+    - title: Failure Description
+      value: 
+      type: 0
+      typeString: 
+    - title: State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Is Item
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Trackable
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Track
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Entry Count
+      value: 2
+      type: 1
+      typeString: CustomFieldType_Number
+    - title: Entry 1 State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Entry 1
+      value: Find the dog
+      type: 0
+      typeString: 
+    - title: Entry 2 State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Entry 2
+      value: Return to Mick
+      type: 0
+      typeString: 
+  - id: 30
+    fields:
+    - title: Name
+      value: Valefar's Prisoner
+      type: 0
+      typeString: 
+    - title: Pictures
+      value: '[]'
+      type: 3
+      typeString: CustomFieldType_Files
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
+    - title: Success Description
+      value: 
+      type: 0
+      typeString: 
+    - title: Failure Description
+      value: 
+      type: 0
+      typeString: 
+    - title: State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Is Item
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Trackable
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Track
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Entry Count
+      value: 1
+      type: 1
+      typeString: CustomFieldType_Number
+    - title: Entry 1 State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Entry 1
+      value: Free the prisoner
+      type: 0
+      typeString: 
   locations: []
   variables:
   - id: 1
@@ -38619,8 +38825,8 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: 'SetQuestEntryState("Barghest", 3,"success");
-        SetQuestEntryState("Malthus", 1,"active");'
+      userScript: SetQuestEntryState("Barghest", 3,"success"); SetQuestEntryState("Malthus",
+        1,"active");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -39762,8 +39968,8 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: 'SetQuestEntryState("The Cave", 2,"success");
-        SetQuestEntryState("Barghest", 1,"active")'
+      userScript: SetQuestEntryState("The Cave", 2,"success"); SetQuestEntryState("Barghest",
+        1,"active")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -39870,7 +40076,7 @@ MonoBehaviour:
       isGroup: 0
       nodeColor: 
       delaySimStatus: 0
-      falseConditionAction: 
+      falseConditionAction: Block
       conditionPriority: 2
       outgoingLinks:
       - originConversationID: 39
@@ -40465,9 +40671,8 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: 'SetQuestEntryState("Barghest", 1,"success");
-        SetQuestEntryState("Barghest", 2,"failure");
-        SetQuestEntryState("Barghest", 3,"active");'
+      userScript: SetQuestEntryState("Barghest", 1,"success"); SetQuestEntryState("Barghest",
+        2,"failure"); SetQuestEntryState("Barghest", 3,"active");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -40614,8 +40819,8 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: 'SetQuestEntryState("Barghest", 1,"success");
-        SetQuestEntryState("Barghest", 2,"active");'
+      userScript: SetQuestEntryState("Barghest", 1,"success"); SetQuestEntryState("Barghest",
+        2,"active");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -40682,9 +40887,8 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: 'SetQuestEntryState("Barghest", 1,"success");
-        SetQuestEntryState("Barghest", 2,"failure");
-        SetQuestEntryState("Barghest", 3,"active");'
+      userScript: SetQuestEntryState("Barghest", 1,"success"); SetQuestEntryState("Barghest",
+        2,"failure"); SetQuestEntryState("Barghest", 3,"active");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -40696,8 +40900,8 @@ MonoBehaviour:
         y: 470
         width: 160
         height: 30
-    canvasScrollPosition: {x: 22.518524, y: 373.33328}
-    canvasZoom: 0.8437502
+    canvasScrollPosition: {x: 0, y: 0}
+    canvasZoom: 0.4837505
   - id: 40
     fields:
     - title: Title
@@ -41650,8 +41854,8 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: 'SetQuestEntryState("Malthus", 1,"success");
-        SetQuestEntryState("Malthus", 2,"active");'
+      userScript: SetQuestEntryState("Malthus", 1,"success"); SetQuestEntryState("Malthus",
+        2,"active");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -41718,8 +41922,8 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: CurrentQuestEntryState("Malthus", 3) == "active"
-      userScript: 'SetQuestEntryState("Malthus", 3,"success");
-        SetQuestEntryState("Abaddon", 1,"active");'
+      userScript: SetQuestEntryState("Malthus", 3,"success"); SetQuestEntryState("Abaddon",
+        1,"active");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -42195,8 +42399,8 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: 'SetQuestEntryState("Abaddon", 1,"success");
-        SetQuestEntryState("Abaddon", 2,"active");'
+      userScript: SetQuestEntryState("Abaddon", 1,"success"); SetQuestEntryState("Abaddon",
+        2,"active");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -42208,8 +42412,8 @@ MonoBehaviour:
         y: 280
         width: 160
         height: 30
-    canvasScrollPosition: {x: 0, y: 186}
-    canvasZoom: 1
+    canvasScrollPosition: {x: 0, y: 61.702133}
+    canvasZoom: 0.94000006
   syncInfo:
     syncActors: 0
     syncItems: 0

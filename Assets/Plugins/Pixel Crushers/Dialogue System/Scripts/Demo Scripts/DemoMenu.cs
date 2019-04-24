@@ -177,12 +177,20 @@ namespace PixelCrushers.DialogueSystem.Demo
 
         private void ClearSavedGame()
         {
-            if (PlayerPrefs.HasKey("SavedGame"))
+            var saveSystem = FindObjectOfType<SaveSystem>();
+            if (saveSystem != null)
+            {
+                if (SaveSystem.HasSavedGameInSlot(1))
+                {
+                    SaveSystem.DeleteSavedGameInSlot(1);
+                }
+            }
+            else if (PlayerPrefs.HasKey("SavedGame"))
             {
                 PlayerPrefs.DeleteKey("SavedGame");
                 Debug.Log("Cleared saved game data");
             }
-            DialogueManager.ShowAlert("Saved Game Cleared From PlayerPrefs");
+            DialogueManager.ShowAlert("Saved Game Cleared");
         }
 
     }

@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Pixel Crushers. All rights reserved.
 
 using UnityEngine;
+using UnityEngine.Events;
+using System;
 
 namespace PixelCrushers.DialogueSystem
 {
@@ -30,6 +32,27 @@ namespace PixelCrushers.DialogueSystem
         /// </summary>
         public float maxUseDistance = 5f;
 
+        [Serializable]
+        public class UsableEvents
+        {
+            /// <summary>
+            /// Invoked when a Selector or ProximitySelector selects this Usable.
+            /// </summary>
+            public UnityEvent onSelect = new UnityEvent();
+
+            /// <summary>
+            /// Invoked when a Selector or ProximitySelector deselects this Usable.
+            /// </summary>
+            public UnityEvent onDeselect = new UnityEvent();
+
+            /// <summary>
+            /// Invoked when a Selector or ProximitySelector uses this Usable.
+            /// </summary>
+            public UnityEvent onUse = new UnityEvent();
+        }
+
+        public UsableEvents events;
+
         /// <summary>
         /// Gets the name of the override, including parsing if it contains a [lua]
         /// or [var] tag.
@@ -43,11 +66,11 @@ namespace PixelCrushers.DialogueSystem
             }
             else if (overrideName.Contains("[lua") || overrideName.Contains("[var"))
             {
-                return FormattedText.Parse(overrideName, DialogueManager.masterDatabase.emphasisSettings).text;
+                return DialogueManager.GetLocalizedText(FormattedText.Parse(overrideName, DialogueManager.masterDatabase.emphasisSettings).text);
             }
             else
             {
-                return overrideName;
+                return DialogueManager.GetLocalizedText(overrideName);
             }
         }
 
@@ -56,8 +79,23 @@ namespace PixelCrushers.DialogueSystem
             if (string.IsNullOrEmpty(overrideName))
             {
                 DialogueActor overrideActorName = GetComponentInChildren<DialogueActor>();
-                if (overrideActorName != null) overrideName = overrideActorName.actor;
+                if (overrideActorName != null) overrideName = overrideActorName.GetActorName();
             }
+        }
+
+        public virtual void OnSelectUsable()
+        {
+            if (events != null && events.onSelect != null) events.onSelect.Invoke();
+        }
+
+        public virtual void OnDeselectUsable()
+        {
+            if (events != null && events.onDeselect != null) events.onDeselect.Invoke();
+        }
+
+        public virtual void OnUseUsable()
+        {
+            if (events != null && events.onUse != null) events.onUse.Invoke();
         }
 
     }

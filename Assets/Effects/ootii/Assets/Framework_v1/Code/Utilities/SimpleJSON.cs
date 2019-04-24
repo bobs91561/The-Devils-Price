@@ -46,6 +46,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 
@@ -108,13 +109,13 @@ namespace com.ootii.Utilities
             get
             {
                 int v = 0;
-                if (int.TryParse(Value, out v))
+                if (int.TryParse(Value, NumberStyles.Integer, CultureInfo.InvariantCulture, out v))
                     return v;
                 return 0;
             }
             set
             {
-                Value = value.ToString();
+                Value = value.ToString(CultureInfo.InvariantCulture);
             }
         }
         public virtual float AsFloat
@@ -125,13 +126,13 @@ namespace com.ootii.Utilities
                 if (Value.Length > 0 && Value.IndexOf("-")  < 0 && Value.IndexOf("E+38") >= 0) { return float.MaxValue; }
 
                 float v = 0.0f;
-                if (float.TryParse(Value, out v))
+                if (float.TryParse(Value, NumberStyles.Float, CultureInfo.InvariantCulture, out v))
                     return v;
                 return 0.0f;
             }
             set
             {
-                Value = value.ToString();
+                Value = value.ToString(CultureInfo.InvariantCulture);
             }
         }
         public virtual double AsDouble
@@ -139,13 +140,13 @@ namespace com.ootii.Utilities
             get
             {
                 double v = 0.0;
-                if (double.TryParse(Value, out v))
-                    return v;
+                if (double.TryParse(Value, NumberStyles.Float, CultureInfo.InvariantCulture,out v))
+                    return v; 
                 return 0.0;
             }
             set
             {
-                Value = value.ToString();
+                Value = value.ToString(CultureInfo.InvariantCulture);
             }
         }
         public virtual bool AsBool

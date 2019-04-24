@@ -30,13 +30,13 @@ namespace PixelCrushers.DialogueSystem
             if (trackToggleTemplate == null && DialogueDebug.logWarnings) Debug.LogWarning("Dialogue System: UI Track Toggle Template is unassigned.", this);
         }
 
-        public virtual void Assign(string quest, ToggleChangedDelegate trackToggleDelegate)
+        public virtual void Assign(string questName, string displayName, ToggleChangedDelegate trackToggleDelegate)
         {
             if (UITextField.IsNull(label)) label.uiText = button.GetComponentInChildren<UnityEngine.UI.Text>();
-            name = quest;
-            label.text = quest;
-            var canTrack = QuestLog.IsQuestActive(quest) && QuestLog.IsQuestTrackingAvailable(quest);
-            trackToggleTemplate.Assign(canTrack, QuestLog.IsQuestTrackingEnabled(quest), quest, trackToggleDelegate);
+            name = questName;
+            label.text = displayName;
+            var canTrack = QuestLog.IsQuestActive(questName) && QuestLog.IsQuestTrackingAvailable(questName);
+            trackToggleTemplate.Assign(canTrack, QuestLog.IsQuestTrackingEnabled(questName), questName, trackToggleDelegate);
         }
 
     }

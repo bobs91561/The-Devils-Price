@@ -202,7 +202,7 @@ namespace PixelCrushers.DialogueSystem {
 			cmpEntry.ConditionPriority = entry.conditionPriority.ToString();
 			cmpEntry.Fields = FieldsToCmp(entry.fields);
 			AddRequiredDialogEntryFields(cmpEntry.Fields);
-			cmpEntry.Fields.ForEach(cmpField => { if (cmpField.Title.StartsWith("Dialogue Text")) cmpField.Type = "Localization"; });
+			//--- Dialogue Text type should be Text: cmpEntry.Fields.ForEach(cmpField => { if (cmpField.Title.StartsWith("Dialogue Text")) cmpField.Type = "Localization"; });
             if (includeCanvasRect) AddCanvasRectField(entry, cmpEntry);
 			cmpEntry.OutgoingLinks = LinksToCmp(entry.outgoingLinks);
 			foreach (var link in cmpEntry.OutgoingLinks) {

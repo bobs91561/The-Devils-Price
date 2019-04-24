@@ -241,6 +241,8 @@ namespace PixelCrushers.DialogueSystem
                     return !(isPCLine || isPCResponseMenuNext || isPCAutoResponseNext);
                 case DisplaySettings.SubtitleSettings.ContinueButtonMode.NotForPCOrBeforePCAutoresponseOrMenu:
                     return !(isPCLine || isPCResponseMenuNext || isPCAutoResponseNext);
+                case DisplaySettings.SubtitleSettings.ContinueButtonMode.OnlyForPC:
+                    return isPCLine;
                 default:
                     return false;
             }
@@ -277,6 +279,8 @@ namespace PixelCrushers.DialogueSystem
                     return true;
                 case DisplaySettings.SubtitleSettings.ContinueButtonMode.NotForPCOrBeforePCAutoresponseOrMenu:
                     return !(isPCLine || isPCResponseMenuNext || isPCAutoResponseNext);
+                case DisplaySettings.SubtitleSettings.ContinueButtonMode.OnlyForPC:
+                    return isPCLine;
                 default:
                     return false;
             }
@@ -353,14 +357,14 @@ namespace PixelCrushers.DialogueSystem
 
         private void OnCancelSubtitle()
         {
-            if (lastNPCSubtitle == null) // Need to create a dummy subtitle to OnConversationLineCancelled's signature.
+            if (lastSubtitle == null) // Need to create a dummy subtitle to OnConversationLineCancelled's signature.
             {
-                var dummyNPCSubtitle = new Subtitle(null, null, null, string.Empty, string.Empty, null);
-                BroadcastMessage(DialogueSystemMessages.OnConversationLineCancelled, dummyNPCSubtitle, SendMessageOptions.DontRequireReceiver);
+                var dummySubtitle = new Subtitle(null, null, null, string.Empty, string.Empty, null);
+                BroadcastMessage(DialogueSystemMessages.OnConversationLineCancelled, dummySubtitle, SendMessageOptions.DontRequireReceiver);
             }
             else
             {
-                BroadcastMessage(DialogueSystemMessages.OnConversationLineCancelled, lastNPCSubtitle, SendMessageOptions.DontRequireReceiver);
+                BroadcastMessage(DialogueSystemMessages.OnConversationLineCancelled, lastSubtitle, SendMessageOptions.DontRequireReceiver);
             }
             waitForContinue = false;
             FinishSubtitle();

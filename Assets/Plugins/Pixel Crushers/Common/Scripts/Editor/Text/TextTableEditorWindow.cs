@@ -1,10 +1,11 @@
 ﻿// Copyright (c) Pixel Crushers. All rights reserved.
 
-using UnityEngine;
-using UnityEditor;
-using UnityEditorInternal;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
+using UnityEditor;
+using UnityEditorInternal;
+using UnityEngine;
 
 namespace PixelCrushers
 {
@@ -15,11 +16,17 @@ namespace PixelCrushers
     public class TextTableEditorWindow : EditorWindow
     {
 
+        #region Menu Item
+
         [MenuItem("Tools/Pixel Crushers/Common/Text Table Editor")]
         public static void ShowWindow()
         {
             GetWindow<TextTableEditorWindow>();
         }
+
+        #endregion
+
+        #region Variables
 
         public static bool isOpen { get { return instance != null; } }
 
@@ -53,6 +60,18 @@ namespace PixelCrushers
         [SerializeField]
         private string m_csvFilename = string.Empty;
 
+        [SerializeField]
+        private bool m_isSearchPanelOpen = false;
+
+        [SerializeField]
+        private string m_searchString = string.Empty;
+
+        [SerializeField]
+        private string m_replaceString = string.Empty;
+
+        [SerializeField]
+        private bool m_matchCase = false;
+
         private TextTable m_textTable;
 
         private bool m_needRefreshLists = true;
@@ -60,8 +79,11 @@ namespace PixelCrushers
         private ReorderableList m_fieldList = null;
         private SerializedObject m_serializedObject = null;
         private GUIStyle textAreaStyle = null;
-
+        private bool isTextAreaStyleInitialized = false;
+        
         private const string EncodingTypeEditorPrefsKey = "PixelCrushers.EncodingType";
+
+        #endregion
 
         #region Editor Entrypoints
 
@@ -233,7 +255,7 @@ namespace PixelCrushers
 
         private void OnReorderLanguageListElement(ReorderableList list)
         {
-            //Also reorder values:
+            // Also reorder values:
             var languageValuesProperty = m_serializedObject.FindProperty("m_languageValues");
             var value = languageValuesProperty.GetArrayElementAtIndex(m_selectedLanguageListIndex).intValue;
             languageValuesProperty.DeleteArrayElementAtIndex(m_selectedLanguageListIndex);
@@ -257,19 +279,43 @@ namespace PixelCrushers
         private void DrawFieldsTab()
         {
             DrawGrid();
-            DrawEntryBox();
+            if (m_isSearchPanelOpen)
+            {
+                DrawSearchPanel();
+            }
+            else
+            {
+                DrawEntryBox();
+            }
         }
 
         private const float MinColumnWidth = 100;
 
         private string[] m_languageDropdownList = null;
 
+        private class CachedFieldInfo
+        {
+            public SerializedProperty fieldNameProperty;
+            public SerializedProperty fieldValueProperty;
+            public string nameControl;
+            public string valueControl;
+            public CachedFieldInfo(int index, SerializedProperty fieldNameProperty, SerializedProperty fieldValueProperty)
+            {
+                this.fieldNameProperty = fieldNameProperty;
+                this.fieldValueProperty = fieldValueProperty;
+                this.nameControl = "Field" + index;
+                this.valueControl = "Value" + index;
+            }
+        }
+        private List<CachedFieldInfo> m_fieldCache = new List<CachedFieldInfo>();
+
         private void DrawGrid()
         {
             if (m_textTable == null) return;
             try
             {
-                var entryBoxHeight = IsAnyFieldSelected() ? (6 * EditorGUIUtility.singleLineHeight) : 0;
+                var entryBoxHeight = IsAnyFieldSelected() ? (6 * EditorGUIUtility.singleLineHeight) 
+                    : m_isSearchPanelOpen ? (5 * EditorGUIUtility.singleLineHeight) :  0;
                 GUILayout.BeginArea(new Rect(0, 2 * (EditorGUIUtility.singleLineHeight + 4), position.width,
                     position.height - (2 * (EditorGUIUtility.singleLineHeight + 4) + 4) - entryBoxHeight));
                 m_fieldListScrollPosition = GUILayout.BeginScrollView(m_fieldListScrollPosition, false, false);
@@ -292,6 +338,8 @@ namespace PixelCrushers
                         languages.Add(languageKeysProperty.GetArrayElementAtIndex(i).stringValue);
                     }
                     m_languageDropdownList = languages.ToArray();
+
+                    RebuildFieldCache();
                 }
 
                 m_fieldList.DoLayoutList();
@@ -300,6 +348,41 @@ namespace PixelCrushers
             {
                 GUILayout.EndScrollView();
                 GUILayout.EndArea();
+            }
+        }
+
+        private void RebuildFieldCache()
+        {
+            m_fieldCache.Clear();
+
+            var fieldValuesProperty = m_serializedObject.FindProperty("m_fieldValues");
+            for (int index = 0; index < fieldValuesProperty.arraySize; index++)
+            {
+                var fieldValueProperty = fieldValuesProperty.GetArrayElementAtIndex(index);
+                var fieldNameProperty = fieldValueProperty.FindPropertyRelative("m_fieldName");
+                var keysProperty = fieldValueProperty.FindPropertyRelative("m_keys");
+                var valuesProperty = fieldValueProperty.FindPropertyRelative("m_values");
+
+                var valueIndex = -1;
+                for (int i = 0; i < keysProperty.arraySize; i++)
+                {
+                    if (keysProperty.GetArrayElementAtIndex(i).intValue == m_selectedLanguageID)
+                    {
+                        valueIndex = i;
+                        break;
+                    }
+                }
+                if (valueIndex == -1)
+                {
+                    valueIndex = keysProperty.arraySize;
+                    keysProperty.arraySize++;
+                    keysProperty.GetArrayElementAtIndex(valueIndex).intValue = m_selectedLanguageID;
+                    valuesProperty.arraySize++;
+                    valuesProperty.GetArrayElementAtIndex(valueIndex).stringValue = string.Empty;
+                }
+                var valueProperty = valuesProperty.GetArrayElementAtIndex(valueIndex);
+
+                m_fieldCache.Add(new CachedFieldInfo(index, fieldNameProperty, valueProperty));
             }
         }
 
@@ -316,46 +399,29 @@ namespace PixelCrushers
                 var languageValuesProperty = m_serializedObject.FindProperty("m_languageValues");
                 var languageValueProperty = languageValuesProperty.GetArrayElementAtIndex(newIndex);
                 m_selectedLanguageID = languageValueProperty.intValue;
+                RebuildFieldCache();
             }
         }
 
         private void OnDrawFieldListElement(Rect rect, int index, bool isActive, bool isFocused)
         {
+            if (rect.width <= 0) return;
+            // Since lists can be very long, only draw elements within the visible window:
+            if (!(0 <= index && index < m_fieldCache.Count)) return;
+            var isElementVisible = rect.Overlaps(new Rect(0, m_fieldListScrollPosition.y, position.width, position.height));
+            if (!isElementVisible) return;
+
             var columnWidth = (rect.width / 2) - 1;
 
-            var nameControl = "Field" + index;
-            var valueControl = "Value" + index;
+            var info = m_fieldCache[index];
 
+            GUI.SetNextControlName(info.nameControl);
+            EditorGUI.PropertyField(new Rect(rect.x, rect.y + 1, columnWidth, EditorGUIUtility.singleLineHeight), info.fieldNameProperty, GUIContent.none, false);
 
-            var fieldValuesProperty = m_serializedObject.FindProperty("m_fieldValues");
-            var fieldValueProperty = fieldValuesProperty.GetArrayElementAtIndex(index);
-            var fieldNameProperty = fieldValueProperty.FindPropertyRelative("m_fieldName");
-            GUI.SetNextControlName(nameControl);
-            EditorGUI.PropertyField(new Rect(rect.x, rect.y + 1, columnWidth, EditorGUIUtility.singleLineHeight), fieldNameProperty, GUIContent.none, false);
-            var keysProperty = fieldValueProperty.FindPropertyRelative("m_keys");
-            var valuesProperty = fieldValueProperty.FindPropertyRelative("m_values");
-            var valueIndex = -1;
-            for (int i = 0; i < keysProperty.arraySize; i++)
-            {
-                if (keysProperty.GetArrayElementAtIndex(i).intValue == m_selectedLanguageID)
-                {
-                    valueIndex = i;
-                    break;
-                }
-            }
-            if (valueIndex == -1)
-            {
-                valueIndex = keysProperty.arraySize;
-                keysProperty.arraySize++;
-                keysProperty.GetArrayElementAtIndex(valueIndex).intValue = m_selectedLanguageID;
-                valuesProperty.arraySize++;
-                valuesProperty.GetArrayElementAtIndex(valueIndex).stringValue = string.Empty;
-            }
-            var valueProperty = valuesProperty.GetArrayElementAtIndex(valueIndex);
-            GUI.SetNextControlName(valueControl);
-            EditorGUI.PropertyField(new Rect(rect.x + rect.width - columnWidth, rect.y + 1, columnWidth, EditorGUIUtility.singleLineHeight), valueProperty, GUIContent.none, false);
+            GUI.SetNextControlName(info.valueControl);
+            EditorGUI.PropertyField(new Rect(rect.x + rect.width - columnWidth, rect.y + 1, columnWidth, EditorGUIUtility.singleLineHeight), info.fieldValueProperty, GUIContent.none, false);
             var focusedControl = GUI.GetNameOfFocusedControl();
-            if (string.Equals(nameControl, focusedControl) || string.Equals(valueControl, focusedControl))
+            if (string.Equals(info.nameControl, focusedControl) || string.Equals(info.valueControl, focusedControl))
             {
                 m_selectedFieldListElement = index;
                 m_fieldList.index = index;
@@ -367,6 +433,8 @@ namespace PixelCrushers
             m_serializedObject.ApplyModifiedProperties();
             m_textTable.AddField("Field " + m_textTable.nextFieldID);
             m_serializedObject.Update();
+            RebuildFieldCache();
+            Repaint();
         }
 
         private void OnRemoveFieldListElement(ReorderableList list)
@@ -383,6 +451,7 @@ namespace PixelCrushers
             m_serializedObject.ApplyModifiedProperties();
             m_textTable.RemoveField(fieldID);
             m_serializedObject.Update();
+            RebuildFieldCache();
         }
 
         private int m_selectedFieldListElement;
@@ -432,8 +501,9 @@ namespace PixelCrushers
                 valuesProperty.arraySize++;
                 valuesProperty.GetArrayElementAtIndex(valueIndex).stringValue = string.Empty;
             }
-            if (textAreaStyle == null)
+            if (textAreaStyle == null || !isTextAreaStyleInitialized)
             {
+                isTextAreaStyleInitialized = true;
                 textAreaStyle = new GUIStyle(EditorStyles.textField);
                 textAreaStyle.wordWrap = true;
             }
@@ -452,13 +522,17 @@ namespace PixelCrushers
                 var menu = new GenericMenu();
                 if (m_textTable == null)
                 {
-                    //menu.AddDisabledItem(new GUIContent("Sort"));
+                    menu.AddDisabledItem(new GUIContent("Search..."));
+                    menu.AddDisabledItem(new GUIContent("Sort..."));
+                    menu.AddDisabledItem(new GUIContent("Delete All..."));
                     menu.AddDisabledItem(new GUIContent("Export/CSV..."));
                     menu.AddDisabledItem(new GUIContent("Import/CSV..."));
                 }
                 else
                 {
-                    //menu.AddItem(new GUIContent("Sort"), false, Sort);
+                    menu.AddItem(new GUIContent("Search..."), false, OpenSearchPanel);
+                    menu.AddItem(new GUIContent("Sort..."), false, Sort);
+                    menu.AddItem(new GUIContent("Delete All..."), false, DeleteAll);
                     menu.AddItem(new GUIContent("Export/CSV..."), false, ExportCSVDialogs);
                     menu.AddItem(new GUIContent("Import/CSV..."), false, ImportCSVDialogs);
                 }
@@ -468,6 +542,162 @@ namespace PixelCrushers
                 menu.ShowAsContext();
             }
         }
+
+        private void DeleteAll()
+        {
+            var answer = EditorUtility.DisplayDialogComplex("Delete All", "Delete all fields or delete everything (languages and fields)?", "Fields", "Everything", "Cancel");
+            if (answer == 2) return; // Cancel.
+
+            m_serializedObject.ApplyModifiedProperties();
+            Undo.RecordObject(m_textTable, "Delete");
+            switch (answer)
+            {
+                case 0:
+                    m_textTable.RemoveAllFields();
+                    Debug.Log("Deleted all fields in " + m_textTable.name, m_textTable);
+                    break;
+                case 1:
+                    m_textTable.RemoveAll();
+                    Debug.Log("Deleted everything in " + m_textTable.name, m_textTable);
+                    break;
+            }
+            m_serializedObject.Update();
+            RebuildFieldCache();
+            Repaint();
+        }
+
+        #endregion
+
+        #region Sort
+
+        private void Sort()
+        {
+            var onLanguagesTab = (m_toolbarSelection == 0);
+            var section = onLanguagesTab ? "Languages" : "Fields";
+            if (!EditorUtility.DisplayDialog("Sort " + section, "Sort " + section.ToLower() + " alphabetically?", "OK", "Cancel")) return;
+            m_serializedObject.ApplyModifiedProperties();
+            if (onLanguagesTab)
+            {
+                m_textTable.SortLanguages();
+            }
+            else
+            {
+                m_textTable.SortFields();
+            }
+            m_serializedObject.Update();
+            RebuildFieldCache();
+            Repaint();
+        }
+
+        #endregion
+
+        #region Search
+
+        private void OpenSearchPanel()
+        {
+            m_isSearchPanelOpen = !m_isSearchPanelOpen;
+        }
+
+        private void DrawSearchPanel()
+        {
+            var rect = new Rect(2, position.height - 5 * EditorGUIUtility.singleLineHeight, position.width - 4, 5 * EditorGUIUtility.singleLineHeight);
+            var searchRect = new Rect(rect.x, rect.y + rect.height - 4 * EditorGUIUtility.singleLineHeight, rect.width, EditorGUIUtility.singleLineHeight);
+            var replaceRect = new Rect(rect.x, rect.y + rect.height - 3 * EditorGUIUtility.singleLineHeight, rect.width, EditorGUIUtility.singleLineHeight);
+            var buttonRect = new Rect(rect.x, rect.y + rect.height - 2 * EditorGUIUtility.singleLineHeight + 4, rect.width, EditorGUIUtility.singleLineHeight);
+            m_searchString = EditorGUI.TextField(searchRect, "Find", m_searchString);
+            m_replaceString = EditorGUI.TextField(replaceRect, "Replace With", m_replaceString);
+            var buttonWidth = 78f;
+            var toggleWidth = 90f;
+            m_matchCase = EditorGUI.ToggleLeft(new Rect(buttonRect.x + buttonRect.width - (4 * (2 + buttonWidth)) - toggleWidth, buttonRect.y, toggleWidth, buttonRect.height), "Match Case", m_matchCase);
+            if (GUI.Button(new Rect(buttonRect.x + buttonRect.width - (4 * (2 + buttonWidth)), buttonRect.y, buttonWidth, buttonRect.height), "Find Next"))
+            {
+                FindNext();
+            }
+            EditorGUI.BeginDisabledGroup(!IsAnyFieldSelected());
+            if (GUI.Button(new Rect(buttonRect.x + buttonRect.width - (3 * (2 + buttonWidth)), buttonRect.y, buttonWidth, buttonRect.height), "Replace"))
+            {
+                ReplaceCurrent();
+            }
+            EditorGUI.EndDisabledGroup();
+            if (GUI.Button(new Rect(buttonRect.x + buttonRect.width - (2 * (2 + buttonWidth)), buttonRect.y, buttonWidth, buttonRect.height), "Replace All"))
+            {
+                ReplaceAll();
+            }
+            if (GUI.Button(new Rect(buttonRect.x + buttonRect.width - (1 * (2 + buttonWidth)), buttonRect.y, buttonWidth, buttonRect.height), "Cancel"))
+            {
+                m_isSearchPanelOpen = false;
+            }
+        }
+
+        private void FindNext()
+        {
+            var found = false;
+            int currentIndex = (m_fieldList.index + 1) % m_fieldList.count;
+            var regexOptions = m_matchCase ? RegexOptions.None : RegexOptions.IgnoreCase;
+            int safeguard = 0;
+            while (!found && safeguard < 9999)
+            {
+                safeguard++;
+                var info = m_fieldCache[currentIndex];
+                if (Regex.IsMatch(info.fieldNameProperty.stringValue, m_searchString, regexOptions) ||
+                    Regex.IsMatch(info.fieldValueProperty.stringValue, m_searchString, regexOptions))
+                {
+                    found = true;
+                    break;
+                }
+                else if (currentIndex == m_fieldList.index)
+                {
+                    break; // Wrapped around, so stop.
+                }
+                else
+                {
+                    currentIndex = (currentIndex + 1) % m_fieldList.count;
+                }
+            }
+            if (found)
+            {
+                m_fieldList.index = currentIndex;
+                // Scroll to position:
+                var minScrollY = m_fieldList.index * (EditorGUIUtility.singleLineHeight + 5);
+                m_fieldListScrollPosition = new Vector2(m_fieldListScrollPosition.x, minScrollY);
+            }
+            else
+            {
+                EditorUtility.DisplayDialog("Search Text Table", "String '" + m_searchString + "' not found in text table.", "OK");
+            }
+        }
+
+        private void ReplaceCurrent()
+        {
+            if (!IsAnyFieldSelected()) return;
+            var regexOptions = m_matchCase ? RegexOptions.None : RegexOptions.IgnoreCase;
+            m_fieldCache[m_fieldList.index].fieldNameProperty.stringValue = Regex.Replace(m_fieldCache[m_fieldList.index].fieldNameProperty.stringValue, m_searchString, m_replaceString, regexOptions);
+            m_fieldCache[m_fieldList.index].fieldValueProperty.stringValue = Regex.Replace(m_fieldCache[m_fieldList.index].fieldValueProperty.stringValue, m_searchString, m_replaceString, regexOptions);
+        }
+
+        private void ReplaceAll()
+        {
+            if (!EditorUtility.DisplayDialog("Replace All", "Replace:\n'" + m_searchString + "'\nwith:\n'" + m_replaceString + "'\nin entire table for current language?", "OK", "Cancel")) return;
+            var regexOptions = m_matchCase ? RegexOptions.None : RegexOptions.IgnoreCase;
+            EditorUtility.DisplayProgressBar("Replace All", "Processing text table.", 0);
+            try
+            {
+                for (int i = 0; i < m_fieldCache.Count; i++)
+                {
+                    m_fieldCache[i].fieldNameProperty.stringValue = Regex.Replace(m_fieldCache[i].fieldNameProperty.stringValue, m_searchString, m_replaceString, regexOptions);
+                    m_fieldCache[i].fieldValueProperty.stringValue = Regex.Replace(m_fieldCache[i].fieldValueProperty.stringValue, m_searchString, m_replaceString, regexOptions);
+
+                }
+            }
+            finally
+            {
+                EditorUtility.ClearProgressBar();
+            }
+        }
+
+        #endregion
+
+        #region CSV
 
         private void ExportCSVDialogs()
         {
@@ -491,7 +721,7 @@ namespace PixelCrushers
 
         private void ImportCSVDialogs()
         {
-            if (!EditorUtility.DisplayDialog("Import CSV?", "Importing from CSV will overwrite the current contents. Are you sure?", "Import", "Cancel")) return;
+            if (!EditorUtility.DisplayDialog("Import CSV?", "Importing from CSV will overwrite any existing languages or fields with the same name in the current contents. Are you sure?", "Import", "Cancel")) return;
             string newFilename = EditorUtility.OpenFilePanel("Import from CSV", GetPath(m_csvFilename), "csv");
             if (string.IsNullOrEmpty(newFilename)) return;
             if (!File.Exists(newFilename))
@@ -625,12 +855,10 @@ namespace PixelCrushers
                     }
                 }
             }
+            m_textTable.OnBeforeSerialize();
+            m_serializedObject.Update();
+            RebuildFieldCache();
             EditorUtility.SetDirty(m_textTable);
-        }
-
-        private void Sort()
-        {
-            //[TODO] Sort text table.
         }
 
         #endregion

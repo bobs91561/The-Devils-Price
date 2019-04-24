@@ -57,6 +57,7 @@ namespace PixelCrushers.DialogueSystem
             displaySettingsProperty = serializedObject.FindProperty("displaySettings");
             persistentDataSettingsProperty = serializedObject.FindProperty("persistentDataSettings");
             foldouts = EditorPrefs.HasKey(InspectorEditorPrefsKey) ? JsonUtility.FromJson<Foldouts>(EditorPrefs.GetString(InspectorEditorPrefsKey)) : new Foldouts();
+            if (foldouts == null) foldouts = new Foldouts();
         }
 
         private void OnDisable()

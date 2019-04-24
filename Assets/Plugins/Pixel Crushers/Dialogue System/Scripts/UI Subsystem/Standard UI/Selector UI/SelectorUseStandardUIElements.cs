@@ -1,5 +1,7 @@
 ﻿// Copyright (c) Pixel Crushers. All rights reserved.
 
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace PixelCrushers.DialogueSystem
@@ -13,6 +15,28 @@ namespace PixelCrushers.DialogueSystem
     public class SelectorUseStandardUIElements : MonoBehaviour
     {
 
+        [Serializable]
+        public class TagInfo
+        {
+            [Tooltip("Use the UI elements below for usables with this tag. Tags take precedence over layers.")]
+            public string tag;
+            public string defaultUseMessage;
+            public StandardUISelectorElements UIElements;
+        }
+
+        public List<TagInfo> tagSpecificElements = new List<TagInfo>();
+
+        [Serializable]
+        public class LayerInfo
+        {
+            [Tooltip("Use the UI elements below for usables in these layers.")]
+            public LayerMask layerMask;
+            public string defaultUseMessage;
+            public StandardUISelectorElements UIElements;
+        }
+
+        public List<LayerInfo> layerSpecificElements = new List<LayerInfo>();
+
         private Selector selector = null;
         private ProximitySelector proximitySelector = null;
         private string defaultUseMessage = string.Empty;
@@ -20,6 +44,7 @@ namespace PixelCrushers.DialogueSystem
         private bool lastInRange = false;
         private AbstractUsableUI usableUI = null;
         private bool started = false;
+        private string originalDefaultUseMessage;
 
         protected float CurrentDistance
         {
@@ -29,11 +54,11 @@ namespace PixelCrushers.DialogueSystem
             }
         }
 
-        private StandardUISelectorElements elements { get { return StandardUISelectorElements.instance; } }
+        private StandardUISelectorElements elements = null;
 
-        public void Start()
+        private void Start()
         {
-            if (elements == null)
+            if (StandardUISelectorElements.instances.Count == 0)
             {
                 if (DialogueDebug.logWarnings) Debug.LogWarning("Dialogue System: SelectorUseStandardUIElements can't find a StandardUISelectorElements component in the scene.", this);
                 enabled = false;
@@ -42,16 +67,20 @@ namespace PixelCrushers.DialogueSystem
             {
                 started = true;
                 ConnectDelegates();
-                DeactivateControls();
+                foreach (var current in StandardUISelectorElements.instances)
+                {
+                    elements = current;
+                    DeactivateControls();
+                }
             }
         }
 
-        public void OnEnable()
+        private void OnEnable()
         {
             if (started) ConnectDelegates();
         }
 
-        public void OnDisable()
+        private void OnDisable()
         {
             DisconnectDelegates();
         }
@@ -75,6 +104,7 @@ namespace PixelCrushers.DialogueSystem
                 proximitySelector.DeselectedUsableObject += OnDeselectedUsable;
                 if (string.IsNullOrEmpty(defaultUseMessage)) defaultUseMessage = proximitySelector.defaultUseMessage;
             }
+            originalDefaultUseMessage = defaultUseMessage;
         }
 
         private void DisconnectDelegates()
@@ -96,6 +126,51 @@ namespace PixelCrushers.DialogueSystem
             HideControls();
         }
 
+        private void SetElementsForUsable(Usable usable)
+        {
+            // Check tag-specific UI elements:
+            for (int i = 0; i < tagSpecificElements.Count; i++)
+            {
+                var tagInfo = tagSpecificElements[i];
+                if (usable != null && usable.CompareTag(tagInfo.tag))
+                {
+                    defaultUseMessage = tagInfo.defaultUseMessage;
+                    elements = tagInfo.UIElements;
+                    return;
+                }
+            }
+
+            // Check layer-specific UI elements:
+            for (int i = 0; i < layerSpecificElements.Count; i++)
+            {
+                var layerInfo = layerSpecificElements[i];
+                if (usable != null && ((1 << usable.gameObject.layer) & layerInfo.layerMask.value) != 0)
+                {
+                    defaultUseMessage = layerInfo.defaultUseMessage;
+                    elements = layerInfo.UIElements;
+                    return;
+                }
+            }
+
+            // Otherwise get default elements:
+            defaultUseMessage = originalDefaultUseMessage;
+            if (layerSpecificElements.Count > 0 || tagSpecificElements.Count > 0)
+            {
+                for (int i = 0; i < StandardUISelectorElements.instances.Count; i++)
+                {
+                    var instance = StandardUISelectorElements.instances[i];
+                    var isSpecific = (layerSpecificElements.Find(x => x.UIElements == instance) != null) ||
+                        (tagSpecificElements.Find(x => x.UIElements == instance) != null);
+                    if (!isSpecific)
+                    {
+                        elements = instance;
+                        return;
+                    }
+                }
+            }
+            elements = StandardUISelectorElements.instance;
+        }
+
         private void OnSelectedUsable(Usable usable)
         {
             this.usable = usable;
@@ -108,6 +183,15 @@ namespace PixelCrushers.DialogueSystem
             }
             else
             {
+                var oldElements = elements;
+                SetElementsForUsable(usable);
+                if (oldElements != elements)
+                {
+                    var newElements = elements;
+                    elements = oldElements;
+                    HideControls();
+                    elements = newElements;
+                }
                 ShowControls();
             }
             lastInRange = !IsUsableInRange();
@@ -127,7 +211,7 @@ namespace PixelCrushers.DialogueSystem
 
         private string GetUseMessage()
         {
-            return string.IsNullOrEmpty(usable.overrideUseMessage) ? defaultUseMessage : usable.overrideUseMessage;
+            return DialogueManager.GetLocalizedText(string.IsNullOrEmpty(usable.overrideUseMessage) ? defaultUseMessage : usable.overrideUseMessage);
         }
 
         private void ShowControls()

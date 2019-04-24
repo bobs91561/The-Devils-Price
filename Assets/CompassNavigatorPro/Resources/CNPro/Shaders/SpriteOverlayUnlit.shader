@@ -10,7 +10,7 @@ Shader "CompassNavigatorPro/Sprite Overlay Unlit"
 	{
 		Tags
 		{
-			"Queue"="Overlay"
+			"Queue"="Transparent+100"
 			"IgnoreProjector"="True"
 			"RenderType"="Transparent"
 			"DisableBatching"="LODFading"

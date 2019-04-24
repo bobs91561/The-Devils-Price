@@ -68,14 +68,7 @@ namespace PixelCrushers.DialogueSystem.SequencerCommands
                 fadeIn = string.Equals(direction, "in", System.StringComparison.OrdinalIgnoreCase);
                 stay = string.Equals(direction, "stay", System.StringComparison.OrdinalIgnoreCase);
 
-                if (fadeIn)
-                {
-                    faderImage.color = new Color(color.r, color.g, color.b, 1);
-                }
-                else
-                {
-                    faderImage.color = new Color(color.r, color.g, color.b, 0);
-                }
+                faderImage.color = new Color(color.r, color.g, color.b, fadeIn ? 1 : 0);
             }
             else
             {
@@ -100,8 +93,15 @@ namespace PixelCrushers.DialogueSystem.SequencerCommands
 
         public void OnDestroy()
         {
-            if (faderCanvas != null) faderCanvas.gameObject.SetActive(stay);
-            if (faderImage != null) faderImage.gameObject.SetActive(stay);
+            if (faderCanvas != null)
+            {
+                faderCanvas.gameObject.SetActive(stay);
+            }
+            if (faderImage != null)
+            {
+                faderImage.gameObject.SetActive(stay);
+                faderImage.color = new Color(color.r, color.g, color.b, fadeIn ? 1 : 0);
+            }
         }
 
     }

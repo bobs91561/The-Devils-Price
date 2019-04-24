@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using System.Text;
 using System.Collections;
 using System.Collections.Generic;
@@ -103,15 +105,33 @@ namespace CompassNavigatorPro {
 		float lastDistanceSqr;
 		CompassPointPOI[] compassPoints;
 		float usedNorthDegrees;
-
-		#endregion
+        const int TEXT_POOL_SIZE = 256;
+        LetterAnimator[] textPool;
+        int poolIndex;
+        Transform canvasTextPool;
+        #endregion
 
 		#region internal Minimap stuff
 
+		const string SKW_COMPASS_FOG_OF_WAR = "COMPASS_FOG_OF_WAR";
+		const string SKW_COMPASS_ROTATED = "COMPASS_ROTATED";
 		Transform miniMapUIRoot;
-		Transform miniMapUI;
+		Transform miniMapUI, miniMapButtonsPanel;
+		Camera miniMapCamera;
+		Transform cameraCompass;
 		RenderTexture miniMapTex;
 		CanvasGroup miniMapCanvasGroup;
+		Material miniMapOverlayMat;
+		Vector2 miniMapAnchorMin, miniMapAnchorMax, miniMapPivot, miniMapSizeDelta;
+		float miniMapCameraAspect;
+		MINIMAP_STYLE miniMapCurrentStyle;
+		float miniMapLastSnapshotTime;
+		Vector3 miniMapLastSnapshotLocation;
+		bool needMiniMapShot;
+		Image miniMapImage;
+        bool miniMapMaterialRefresh;
+        float miniMapLastCameraRotation;
+        Vector3 lastMiniMapCameraPos;
 
 		#endregion
 
@@ -143,18 +163,21 @@ namespace CompassNavigatorPro {
 
 		#endif
 		public void OnEnable () {
-			if (_cameraMain == null) {
-				_cameraMain = Camera.main;
-				if (_cameraMain == null) {
-					_cameraMain = FindObjectOfType<Camera> ();
-				}
-			}
 
 			if (icons == null) {
 				Init ();
 			}
 
-			SetupMiniMap ();
+                // ensure there's an EventSystem gameobject is buttons are visible so they can be used
+                // an EventSystem gameobject is automatically created when instantiating a Canvas prefab so here we go
+                if (Application.isPlaying && _miniMapShowButtons && FindObjectOfType<EventSystem>() == null)
+                {
+                    GameObject eventSystem = new GameObject("EventSystem", typeof(EventSystem));
+                    eventSystem.AddComponent<StandaloneInputModule>();
+                }
+
+            SetupTextPool();
+            SetupMiniMap ();
 
 			if (dontDestroyOnLoad && Application.isPlaying) {
 				if (FindObjectsOfType (GetType ()).Length > 1) {
@@ -162,12 +185,19 @@ namespace CompassNavigatorPro {
 					return;
 				}
 				DontDestroyOnLoad (this);
+				SceneManager.sceneLoaded += UpdateFogOfWarOnLoadScene;
 			}
 		}
 
 
+        void OnValidate()
+        {
+            SetupMiniMap();
+        }
+
 		void OnDisable () {
 			DisableMiniMap ();
+			SceneManager.sceneLoaded -= UpdateFogOfWarOnLoadScene;
 		}
 
 		void Init () {
@@ -243,11 +273,13 @@ namespace CompassNavigatorPro {
 			UpdateCompassBarAppearance ();
 			UpdateHalfWindsAppearance ();
 			UpdateCompassBarAlpha ();
+			UpdateFogOfWarTexture ();
 		}
 
 		void LateUpdate () {
 			UpdateCompassBarAlpha ();
 			UpdateCompassBarContents ();
+			UpdateFogOfWarPosition ();
 			UpdateMiniMap ();
 		}
 
@@ -260,8 +292,10 @@ namespace CompassNavigatorPro {
 		/// </summary>
 		void UpdateCompassBarContents () {
 
-			if (_cameraMain == null)
-				return;
+			if (cameraMain == null) {
+				if (_cameraMain == null)
+					return;
+			}
 
 			// If camera has not moved, then don't refresh compass bar so often - just once each second in case one POI is moving
 			switch (_updateInterval) {
@@ -310,6 +344,7 @@ namespace CompassNavigatorPro {
 
 			float nearestPOIDistanceThisFrame = float.MaxValue;
 			CompassProPOI nearestPOI = null;
+			bool miniMapIsActive = _showMiniMap && miniMapUI != null;
 
 			for (int p = 0; p < icons.Count; p++) {
 				bool iconVisible = false;
@@ -342,22 +377,19 @@ namespace CompassNavigatorPro {
 					Vector2 v = new Vector2 (poiPosition.x - lastCamPos.x, poiPosition.z - lastCamPos.z);
 					distancePlanarSQR = v.sqrMagnitude;
 				}
-				float factor = poi.visibility == POI_VISIBILITY.AlwaysVisible ? 1f : distancePlanarSQR / nearDistanceSQR;
+				float distanceFactor = distancePlanarSQR / nearDistanceSQR;
+				float alphaFactor = poi.visibility == POI_VISIBILITY.AlwaysVisible ? 1f : distanceFactor;
 				if (poi.showPlayModeGizmo) {
-					poi.iconAlpha = Mathf.Lerp (0.65f, 0, 5f * factor);
+					poi.iconAlpha = Mathf.Lerp (0.65f, 0, 5f * alphaFactor);
 				}
-				poi.iconScale = Misc.Vector3one * Mathf.Lerp (_maxIconSize, _minIconSize, factor);
+				poi.iconScale = Misc.Vector3one * Mathf.Lerp (_maxIconSize, _minIconSize, distanceFactor);
 				poi.miniMapIconScale = Misc.Vector3one * _miniMapIconSize;
 
 				// Should we make this POI visible in the compass bar?
 				float thisPOIVisibleDistanceSQR = poi.visibleDistanceOverride > 0 ? poi.visibleDistanceOverride * poi.visibleDistanceOverride : visibleDistanceSQR;
-				bool isInRange = poi.visibility == POI_VISIBILITY.AlwaysVisible || poi.distanceToCameraSQR < thisPOIVisibleDistanceSQR;
+				bool isInRange = poi.distanceToCameraSQR < thisPOIVisibleDistanceSQR;
 				bool prevVisible = poi.isVisible;
-				if (isInRange && poi.isActiveAndEnabled && poi.visibility != POI_VISIBILITY.AlwaysHidden) {
-					poi.isVisible = true;
-				} else {
-					poi.isVisible = false;
-				}
+				poi.isVisible = ((isInRange && poi.visibility == POI_VISIBILITY.WhenInRange) || poi.visibility == POI_VISIBILITY.AlwaysVisible) && poi.isActiveAndEnabled;
 
 				// Is it same scene?
 				if (poi.isVisible && poi.dontDestroyOnLoad && !activeIcon.levelName.Equals (SceneManager.GetActiveScene ().name)) {
@@ -407,9 +439,6 @@ namespace CompassNavigatorPro {
 					}
 					if (poi.spriteRenderer != null && poi.spriteRenderer.enabled) {
 						poi.spriteRenderer.enabled = false;
-					}
-					if (activeIcon.miniMapImage != null && activeIcon.miniMapImage.enabled) {
-						activeIcon.miniMapImage.enabled = false;
 					}
 				} else {
 					
@@ -506,9 +535,6 @@ namespace CompassNavigatorPro {
 							activeIcon.image.sprite = poi.iconNonVisited;
 						}
 
-						// tint color
-						activeIcon.image.color = poi.tintColor;
-
 						// Scale in animation
 						if (_scaleInDuration > 0) {
 							float t = (Time.time - activeIcon.poi.visibleTime) / _scaleInDuration;
@@ -523,17 +549,17 @@ namespace CompassNavigatorPro {
 							activeIcon.rectTransform.localScale = activeIcon.poi.iconScale;
 						}
 
-						// Set icon's alpha
+                        // Set icon's color and alpha
+                        Color spriteColor = poi.tintColor;
 						if (visibleDistanceFallOffSQR > 0) {
-							Color spriteColor = activeIcon.image.color;
 							if (poi.visibility == POI_VISIBILITY.AlwaysVisible) {
 								spriteColor.a = 1f;
 							} else {
 								float t = (visibleDistanceSQR - poi.distanceToCameraSQR) / visibleDistanceFallOffSQR;
 								spriteColor.a = Mathf.Lerp (0, 1, t);
 							}
-							activeIcon.image.color = spriteColor;
 						}
+                        activeIcon.image.color = spriteColor;
 
 						// Get title if POI is centered
 						if (absPosX < _labelHotZone && distancePlanarSQR < nearestPOIDistanceThisFrame) {
@@ -541,77 +567,80 @@ namespace CompassNavigatorPro {
 							nearestPOIDistanceThisFrame = distancePlanarSQR;
 						}
 					}
+				}
 
-					// mini-map icon
-					if (_showMiniMap && miniMapUI != null) {
-						iconVisible = false;
+				// mini-map icon
+				if (miniMapIsActive && (poi.miniMapVisibility == POI_VISIBILITY.AlwaysVisible || (poi.miniMapVisibility == POI_VISIBILITY.WhenInRange && isInRange))) {
+					iconVisible = false;
 
-						// POI is visible, should we create the icon in the compass bar?
-						if (activeIcon.miniMapRectTransform == null) {
-							GameObject iconGO = Instantiate (poi.miniMapClampPosition ? compassMiniMapClampedPrefab : compassIconPrefab);
-							iconGO.hideFlags = HideFlags.DontSave;
-							iconGO.transform.SetParent (miniMapUI.transform, false);
-							activeIcon.miniMapRectTransform = iconGO.GetComponent<RectTransform> ();
+					// POI is visible, should we create the icon in the minimap?
+					if (activeIcon.miniMapRectTransform == null) {
+						GameObject iconGO = Instantiate (poi.miniMapClampPosition ? compassMiniMapClampedPrefab : compassIconPrefab);
+						iconGO.hideFlags = HideFlags.DontSave;
+						iconGO.transform.SetParent (miniMapUI.transform, false);
+						activeIcon.miniMapRectTransform = iconGO.GetComponent<RectTransform> ();
+					}
+
+					// Position the icon on the mini-map area
+					Vector2 miniMapScreenPos = GetMiniMapScreenPos (poiPosition);
+
+					// Always show the focused icon in the compass bar; if out of bar, maintain it on the edge with normal scale
+					if (poi.miniMapClampPosition) {
+						miniMapScreenPos.x = Mathf.Clamp (miniMapScreenPos.x, _miniMapClampBorder, 1f - _miniMapClampBorder);
+						miniMapScreenPos.y = Mathf.Clamp (miniMapScreenPos.y, _miniMapClampBorder, 1f - _miniMapClampBorder);
+					}
+
+					// Set icon position
+					if (miniMapScreenPos.x > 1 || miniMapScreenPos.x < 0 || miniMapScreenPos.y > 1 || miniMapScreenPos.y < 0) {
+						// Icon outside of bar
+						if (activeIcon.miniMapImage != null && activeIcon.miniMapImage.enabled) {
+							activeIcon.miniMapImage.enabled = false;
+						}
+					} else {
+						// Unhide icon
+						if (activeIcon.miniMapImage != null && !activeIcon.miniMapImage.enabled) {
+							activeIcon.miniMapImage.enabled = true;
+						}
+						activeIcon.miniMapRectTransform.anchorMin = activeIcon.miniMapRectTransform.anchorMax = miniMapScreenPos;
+						iconVisible = true;
+					}
+
+					// Icon is visible, manage it
+					if (iconVisible) {
+
+						// Assign proper icon
+						if (activeIcon.poi.isVisited) {
+							if (activeIcon.miniMapImage != poi.iconVisited) {
+								activeIcon.miniMapImage.sprite = poi.iconVisited;
+							}
+						} else if (activeIcon.miniMapImage != poi.iconNonVisited) {
+							activeIcon.miniMapImage.sprite = poi.iconNonVisited;
 						}
 
-						// Position the icon on the compass bar
-						Vector2 miniMapScreenPos = GetMiniMapScreenPos (poiPosition);
 
-						// Always show the focused icon in the compass bar; if out of bar, maintain it on the edge with normal scale
-						if (poi.miniMapClampPosition) {
-							miniMapScreenPos.x = Mathf.Clamp (miniMapScreenPos.x, _miniMapClampBorder, 1f - _miniMapClampBorder);
-							miniMapScreenPos.y = Mathf.Clamp (miniMapScreenPos.y, _miniMapClampBorder, 1f - _miniMapClampBorder);
+						// tint color
+						activeIcon.miniMapImage.color = poi.tintColor;
+
+						// Scale icon
+						if (activeIcon.poi.miniMapIconScale != activeIcon.miniMapRectTransform.localScale) {
+							activeIcon.miniMapRectTransform.localScale = activeIcon.poi.miniMapIconScale;
 						}
+					}
 
-						// Set icon position
-						if (miniMapScreenPos.x > 1 || miniMapScreenPos.x < 0 || miniMapScreenPos.y > 1 || miniMapScreenPos.y < 0) {
-							// Icon outside of bar
-							if (activeIcon.miniMapImage != null && activeIcon.miniMapImage.enabled) {
-								activeIcon.miniMapImage.enabled = false;
-							}
-						} else {
-							// Unhide icon
-							if (activeIcon.miniMapImage != null && !activeIcon.miniMapImage.enabled) {
-								activeIcon.miniMapImage.enabled = true;
-							}
-							activeIcon.miniMapRectTransform.anchorMin = activeIcon.miniMapRectTransform.anchorMax = miniMapScreenPos;
-							iconVisible = true;
+					// Send events
+					if (activeIcon.poi.miniMapIsVisible && !iconVisible) {
+						if (OnPOIVisibleInMiniMap != null) {
+							OnPOIVisibleInMiniMap (activeIcon.poi);
 						}
-
-						// Icon is visible, manage it
-						if (iconVisible) {
-
-							// Assign proper icon
-							if (activeIcon.poi.isVisited) {
-								if (activeIcon.miniMapImage != poi.iconVisited) {
-									activeIcon.miniMapImage.sprite = poi.iconVisited;
-								}
-							} else if (activeIcon.miniMapImage != poi.iconNonVisited) {
-								activeIcon.miniMapImage.sprite = poi.iconNonVisited;
-							}
-
-
-							// tint color
-							activeIcon.miniMapImage.color = poi.tintColor;
-
-							// Scale icon
-							if (activeIcon.poi.miniMapIconScale != activeIcon.miniMapRectTransform.localScale) {
-								activeIcon.miniMapRectTransform.localScale = activeIcon.poi.miniMapIconScale;
-							}
+					} else if (iconVisible && !activeIcon.poi.miniMapIsVisible) {
+						if (OnPOIHidesInMiniMap != null) {
+							OnPOIHidesInMiniMap (activeIcon.poi);
 						}
-
-						// Send events
-						if (activeIcon.poi.miniMapIsVisible && !iconVisible) {
-							if (OnPOIVisibleInMiniMap != null) {
-								OnPOIVisibleInMiniMap (activeIcon.poi);
-							}
-						} else if (iconVisible && !activeIcon.poi.miniMapIsVisible) {
-							if (OnPOIHidesInMiniMap != null) {
-								OnPOIHidesInMiniMap (activeIcon.poi);
-							}
-						}
-						activeIcon.poi.miniMapIsVisible = iconVisible;
-
+					}
+					activeIcon.poi.miniMapIsVisible = iconVisible;
+				} else {
+					if (activeIcon.miniMapImage != null && activeIcon.miniMapImage.enabled) {
+						activeIcon.miniMapImage.enabled = false;
 					}
 				}
 
@@ -712,11 +741,17 @@ namespace CompassNavigatorPro {
 		}
 
 		Vector2 GetMiniMapScreenPos (Vector3 poiPosition) {
-			Vector2 viewportPos = _miniMapCamera.WorldToViewportPoint (poiPosition);
+			Vector2 viewportPos = miniMapCamera.WorldToViewportPoint (poiPosition);
+			viewportPos.x = (viewportPos.x - 0.5f) / _miniMapZoomLevel + 0.5f;
+			viewportPos.y = (viewportPos.y - 0.5f) / _miniMapZoomLevel + 0.5f;
 			return viewportPos;
 		}
 
 		void ComputeCompassPointsPositions () {
+
+			if (_cameraMain == null)
+				return;
+
 			if (_northDegrees != usedNorthDegrees) {
 				usedNorthDegrees = _northDegrees;
 				for (int k = 0; k < 16; k++) {
@@ -764,7 +799,7 @@ namespace CompassNavigatorPro {
 						compassPoints [k].text.enabled = true;
 					}
 					RectTransform rt = compassPoints [k].text.rectTransform;
-					rt.anchorMin = rt.anchorMax = new Vector2 (0.5f + posX / _width, 0.5f);
+					rt.anchorMin = rt.anchorMax = new Vector2 (0.5f + posX / _width, 0.5f + _cardinalPointsVerticalOffset / rt.sizeDelta.y);
 				}
 			}
 
@@ -800,7 +835,7 @@ namespace CompassNavigatorPro {
 						compassPoints [k].text.enabled = true;
 					}
 					RectTransform rt = compassPoints [k].text.rectTransform;
-					rt.anchorMin = rt.anchorMax = new Vector2 (0.5f + posX / _width, 0.5f);
+					rt.anchorMin = rt.anchorMax = new Vector2 (0.5f + posX / _width, 0.5f + _cardinalPointsVerticalOffset / rt.sizeDelta.y);
 				}
 			}
 			
@@ -929,12 +964,12 @@ namespace CompassNavigatorPro {
 				return;
 			text.text = textShadow.text = "SAMPLE TEXT";
 			UpdateTextAlpha (1);
-			UpdateTextAppearance (text.text);
+			UpdateTextAppearance ();
 		}
 
-		void UpdateTextAppearance (string sizeText) {
-			// Vertical and horizontal position
-			text.alignment = TextAnchor.MiddleCenter;
+		void UpdateTextAppearance () {
+            // Vertical and horizontal position
+            text.alignment = TextAnchor.MiddleCenter;
 			Vector3 localScale = new Vector3 (_textScale, _textScale, 1f);
 			RectTransform rt = text.GetComponent<RectTransform> ();
 			rt.pivot = new Vector2 (0.5f, 0.5f);
@@ -981,7 +1016,77 @@ namespace CompassNavigatorPro {
 			titleShadow.color = new Color (0, 0, 0, t);
 		}
 
-		void ShowPOIDiscoveredText (CompassProPOI poi) {
+        void SetupTextPool()
+        {
+            if (!Application.isPlaying) return;
+
+            text.text = textShadow.text = "";
+            UpdateTextAppearance();
+            if (textPool == null || textPool.Length != TEXT_POOL_SIZE)
+            {
+                textPool = new LetterAnimator[TEXT_POOL_SIZE];
+            }
+
+            GameObject o = GameObject.Find("CompassProTextPool");
+            if (o==null)
+            {
+                o = new GameObject("CompassProTextPool");
+            }
+            canvasTextPool = o.transform;
+
+            for (int k=0;k<textPool.Length;k++)
+            {
+                GameObject letterShadow = Instantiate(textShadow.gameObject);
+                letterShadow.transform.SetParent(canvasTextPool);
+                letterShadow.name = "TextShadowPool";
+                Text lts = letterShadow.GetComponent<Text>();
+
+                GameObject letter = Instantiate (text.gameObject);
+                letter.transform.SetParent(canvasTextPool);
+                letter.name = "TextPool";
+                Text lt = letter.GetComponent<Text>();
+
+                LetterAnimator animator = lts.gameObject.AddComponent<LetterAnimator>();
+                animator.poolIndex = k;
+                animator.text = lt;
+                animator.textShadow = lts;
+                animator.OnAnimationEnds += PushTextToPool;
+                animator.used = false;
+                textPool[k] = animator;
+            }
+        }
+
+        void FetchTextFromPool(out Text lt, out Text lts)
+        {
+            for (int k=0;k< TEXT_POOL_SIZE; k++)
+            {
+                ++poolIndex;
+                if (poolIndex >= TEXT_POOL_SIZE)
+                {
+                    poolIndex = 0;
+                }
+                if (!textPool[poolIndex].used)
+                {
+                    break;
+                }
+            }
+            // Setup shadow (first, so it goes behind white text)
+            lts = textPool[poolIndex].textShadow;
+            lts.transform.SetParent(text.transform.parent, false);
+            lt = textPool[poolIndex].text;
+            lt.transform.SetParent(text.transform.parent, false);
+            textPool[poolIndex].used = true;
+        }
+
+        void PushTextToPool(int index)
+        {
+            textPool[index].text.transform.SetParent(canvasTextPool);
+            textPool[index].textShadow.transform.SetParent(canvasTextPool);
+            textPool[index].used = false;
+        }
+
+
+        void ShowPOIDiscoveredText (CompassProPOI poi) {
 			if (poi.visitedText == null || !_textRevealEnabled)
 				return;
 			StartCoroutine (AnimateDiscoverText (poi.visitedText));
@@ -990,61 +1095,58 @@ namespace CompassNavigatorPro {
 		IEnumerator AnimateDiscoverText (string discoverText) {
 
 			int len = discoverText.Length;
-			if (len == 0 || _cameraMain == null)
+			if (len == 0 || _cameraMain == null || textPool == null || textPool.Length != TEXT_POOL_SIZE)
 				yield break;
 
 			while (Time.time < endTimeOfCurrentTextReveal) {
 				yield return new WaitForSeconds (1);
 			}
 
-			text.text = textShadow.text = "";
-
 			float now = Time.time;
 			endTimeOfCurrentTextReveal = now + _textRevealDuration + _textDuration + _textFadeOutDuration * 0.5f;
-			UpdateTextAppearance (discoverText);
+
+            text.text = textShadow.text = "";
+            UpdateTextAppearance();
 
 			// initial pos of text
 			string discoverTextSpread = discoverText.Replace (" ", "A");
 			float posX = -text.cachedTextGenerator.GetPreferredWidth (discoverTextSpread, text.GetGenerationSettings (Misc.Vector2zero)) * 0.5f * _textScale;
 
 			float acum = 0;
-			for (int k = 0; k < len; k++) {
-				string ch = discoverText.Substring (k, 1);
+            TextGenerationSettings settings = new TextGenerationSettings();
+            for (int k = 0; k < len; k++) {
+                Text lts, lt;
+                string ch = discoverText.Substring (k, 1);
+                FetchTextFromPool(out lt, out lts);
+                lts.text = ch;
+                lt.text = ch;
 
-				// Setup shadow (first, so it goes behind white text)
-				GameObject letterShadow = Instantiate (textShadow.gameObject);
-				letterShadow.transform.SetParent (text.transform.parent, false);
-				Text lts = letterShadow.GetComponent<Text> ();
-				lts.text = ch;
-
-				// Setup letter
-				GameObject letter = Instantiate (text.gameObject);
-				letter.transform.SetParent (text.transform.parent, false);
-				Text lt = letter.GetComponent<Text> ();
-				lt.text = ch;
-
-				float letw = 0;
+                float letw = 0;
+                if (k==0)
+                {
+                    settings = lt.GetGenerationSettings(Misc.Vector2max);
+                }
 				if (ch.Equals (" ")) {
-					letw = lt.cachedTextGenerator.GetPreferredWidth ("A", lt.GetGenerationSettings (Misc.Vector2max)) * _textScale;
+					letw = lt.cachedTextGenerator.GetPreferredWidth ("A", settings) * _textScale;
 				} else {
-					letw = lt.cachedTextGenerator.GetPreferredWidth (ch, lt.GetGenerationSettings (Misc.Vector2max)) * _textScale;
+					letw = lt.cachedTextGenerator.GetPreferredWidth (ch, settings) * _textScale;
 				}
 
-				RectTransform letterRT = letter.GetComponent<RectTransform> ();
+				RectTransform letterRT = lt.GetComponent<RectTransform> ();
 				letterRT.anchoredPosition3D = new Vector3 (posX + acum + letw * 0.5f, letterRT.anchoredPosition3D.y, 0);
-				RectTransform shadowRT = letterShadow.GetComponent<RectTransform> ();
+				RectTransform shadowRT = lts.GetComponent<RectTransform> ();
 				shadowRT.anchoredPosition3D = new Vector3 (posX + acum + letw * 0.5f + 1f, shadowRT.anchoredPosition3D.y, 0);
 
 				acum += letw;
 
-				// Trigger animator
-				LetterAnimator anim = letterShadow.AddComponent<LetterAnimator> ();
-				anim.text = lt;
-				anim.textShadow = lts;
+                // Trigger animator
+                LetterAnimator anim = textPool[poolIndex];
 				anim.startTime = now + k * _textRevealLetterDelay;
 				anim.revealDuration = _textRevealDuration;
 				anim.startFadeTime = now + _textRevealDuration + _textDuration;
 				anim.fadeDuration = _textFadeOutDuration;
+                anim.enabled = true;
+                anim.Play();
 			}
 		}
 
@@ -1057,12 +1159,24 @@ namespace CompassNavigatorPro {
 			if (miniMapFollow == null && _cameraMain != null) {
 				miniMapFollow = _cameraMain.transform;
 			}
-			bool visible = showMiniMap && miniMapFollow != null;
-			if (visible) {
-				miniMapUIRoot = transform.Find ("MiniMap Root");
+
+			miniMapUIRoot = transform.Find ("MiniMap Root");
+			if (_showMiniMap) {
 				miniMapUI = transform.Find ("MiniMap");
 				// if there exists an old minimap at root or the minimap root does not exist at root, remove anything and recreate
+				bool rebuildMiniMap = false;
 				if (miniMapUI != null || miniMapUIRoot == null) {
+					rebuildMiniMap = true;
+				} 
+				// check buttons
+				if (miniMapUIRoot != null) {
+					miniMapButtonsPanel = miniMapUIRoot.Find ("Buttons");
+					if (miniMapButtonsPanel == null) {
+						rebuildMiniMap = true;
+					}
+				}
+
+				if (rebuildMiniMap) {
 					if (miniMapUI != null) {
 						DestroyImmediate (miniMapUI.gameObject);
 					}
@@ -1086,31 +1200,92 @@ namespace CompassNavigatorPro {
 							miniMapUIRoot = minimapRootGO.transform;
 						}
 					}
+					miniMapButtonsPanel = miniMapUIRoot.Find ("Buttons");
 				}
+
+				// check buttons
+
+				ToggleButtonEventHandler ("ZoomIn", () => {
+					MiniMapZoomIn ();
+				}, true);
+				ToggleButtonEventHandler ("ZoomOut", () => {
+					MiniMapZoomOut ();
+				}, true);
+				ToggleButtonEventHandler ("ToggleFull", () => {
+					miniMapZoomState = !miniMapZoomState;
+				}, false);
+
 				miniMapUIRoot = transform.Find ("MiniMap Root");
 				miniMapUI = miniMapUIRoot.Find ("MiniMap");
-				if (_miniMapCamera == null) {
-					_miniMapCamera = transform.GetComponentInChildren<Camera> (true);
-					if (_miniMapCamera != null) {
-						_miniMapCamera.enabled = false;
-					}
+				if (miniMapCamera == null) {
+					miniMapCamera = transform.GetComponentInChildren<Camera> (true);
 				}
-				if (_miniMapCamera != null && miniMapUIRoot != null) {
-					miniMapUIRoot.gameObject.SetActive (true);
+				if (miniMapCamera != null) {
+					miniMapCamera.enabled = false;
+				}
+				if (miniMapCamera != null && miniMapUIRoot != null) {
+					RectTransform miniMapUIRootRT = miniMapUIRoot.GetComponent<RectTransform> ();
 
-					// adjust size
-					float screenSize = _cameraMain.pixelHeight * _miniMapSize;
-					miniMapUIRoot.GetComponent<RectTransform> ().sizeDelta = new Vector2 (screenSize, screenSize);
+					// set mini-map position
+					if (_miniMapLocation != MINIMAP_LOCATION.Custom) {
+						switch (_miniMapLocation) {
+						case MINIMAP_LOCATION.TopLeft:
+							miniMapUIRootRT.anchorMin = new Vector2 (0, 1);
+							miniMapUIRootRT.anchorMax = new Vector2 (0, 1);
+							miniMapUIRootRT.pivot = new Vector2 (0, 1);
+							break;
+						case MINIMAP_LOCATION.TopCenter:
+							miniMapUIRootRT.anchorMin = new Vector2 (0.5f, 1f);
+							miniMapUIRootRT.anchorMax = new Vector2 (0.5f, 1);
+							miniMapUIRootRT.pivot = new Vector2 (0.5f, 1);
+							break;
+						case MINIMAP_LOCATION.TopRight:
+							miniMapUIRootRT.anchorMin = new Vector2 (1, 1);
+							miniMapUIRootRT.anchorMax = new Vector2 (1, 1);
+							miniMapUIRootRT.pivot = new Vector2 (1, 1);
+							break;
+						case MINIMAP_LOCATION.MiddleLeft:
+							miniMapUIRootRT.anchorMin = new Vector2 (0, 0.5f);
+							miniMapUIRootRT.anchorMax = new Vector2 (0, 0.5f);
+							miniMapUIRootRT.pivot = new Vector2 (0, 0.5f);
+							break;
+						case MINIMAP_LOCATION.MiddleCenter:
+							miniMapUIRootRT.anchorMin = new Vector2 (0.5f, 0.5f);
+							miniMapUIRootRT.anchorMax = new Vector2 (0.5f, 0.5f);
+							miniMapUIRootRT.pivot = new Vector2 (0.5f, 0.5f);
+							break;
+						case MINIMAP_LOCATION.MiddleRight:
+							miniMapUIRootRT.anchorMin = new Vector2 (1, 0.5f);
+							miniMapUIRootRT.anchorMax = new Vector2 (1, 0.5f);
+							miniMapUIRootRT.pivot = new Vector2 (1, 0.5f);
+							break;
+						case MINIMAP_LOCATION.BottomLeft:
+							miniMapUIRootRT.anchorMin = new Vector2 (0, 0);
+							miniMapUIRootRT.anchorMax = new Vector2 (0, 0);
+							miniMapUIRootRT.pivot = new Vector2 (0, 0);
+							break;
+						case MINIMAP_LOCATION.BottomCenter:
+							miniMapUIRootRT.anchorMin = new Vector2 (0.5f, 0);
+							miniMapUIRootRT.anchorMax = new Vector2 (0.5f, 0);
+							miniMapUIRootRT.pivot = new Vector2 (0.5f, 0);
+							break;
+						case MINIMAP_LOCATION.BottomRight:
+							miniMapUIRootRT.anchorMin = new Vector2 (1, 0);
+							miniMapUIRootRT.anchorMax = new Vector2 (1, 0);
+							miniMapUIRootRT.pivot = new Vector2 (1, 0);
+							break;
+						}
 
-					// setup render texture
-					if (miniMapTex != null) {
-						miniMapTex.Release ();
+						if (_miniMapLocation != MINIMAP_LOCATION.Custom) {
+							miniMapUIRootRT.anchoredPosition = _miniMapLocationOffset;
+						}
 					}
-					int res = 1 << _miniMapResolution;
-					miniMapTex = new RenderTexture (res, res, 24, RenderTextureFormat.ARGB32);
-					_miniMapCamera.targetTexture = miniMapTex;
-					_miniMapCamera.orthographic = (_miniMapCameraMode == MINIMAP_CAMERA_MODE.Orthographic);
-					_miniMapCamera.cullingMask = _miniMapLayerMask;
+
+					// set mini-map size
+					float screenSize = _cameraMain != null ? _cameraMain.pixelHeight * _miniMapSize : Screen.height * _miniMapSize;
+					miniMapUIRootRT.sizeDelta = new Vector2 (screenSize, screenSize);
+
+					miniMapUIRoot.gameObject.SetActive (true);
 
 					// set minimap viewer properties
 					switch (_miniMapStyle) {
@@ -1130,17 +1305,46 @@ namespace CompassNavigatorPro {
 						break;
 					}
 
+					if (miniMapOverlayMat == null) {
+						miniMapOverlayMat = Instantiate<Material> (Resources.Load<Material> ("CNPro/Materials/MiniMapOverlayUnlit"));
+					}
+
+					if (_miniMapCameraMode == MINIMAP_CAMERA_MODE.Perspective) {
+						miniMapCameraSnapshotFrequency = MINIMAP_CAMERA_SNAPSHOT_FREQUENCY.Continuous;
+					}
+
 					if (miniMapUI != null) {
-						Image img = miniMapUI.GetComponent<Image> ();
-						if (img != null) {
-							img.sprite = _miniMapMaskSprite;
-							Material miniMapOverlayMat = Instantiate<Material> (Resources.Load<Material> ("CNPro/Materials/MiniMapOverlayUnlit"));
-							miniMapOverlayMat.SetTexture ("_MiniMapTex", miniMapTex);
-							miniMapOverlayMat.SetTexture ("_BorderTex", _miniMapBorderTexture);
-							img.material = miniMapOverlayMat;
+						miniMapImage = miniMapUI.GetComponent<Image> ();
+						if (miniMapImage != null) {
+							miniMapImage.sprite = _miniMapMaskSprite;
+							miniMapImage.material = miniMapOverlayMat;
+							Material mat = miniMapImage.materialForRendering;
+							mat.SetTexture ("_BorderTex", _miniMapBorderTexture);
+							if (_fogOfWarEnabled && _miniMapCameraMode == MINIMAP_CAMERA_MODE.Orthographic) {
+								mat.EnableKeyword (SKW_COMPASS_FOG_OF_WAR);
+							} else {
+								mat.DisableKeyword (SKW_COMPASS_FOG_OF_WAR);
+							}
+							if (_miniMapKeepStraight) {
+								mat.DisableKeyword (SKW_COMPASS_ROTATED);
+							} else {
+								mat.EnableKeyword (SKW_COMPASS_ROTATED);
+							}
 						}
 					}
-					_miniMapCamera.enabled = true;
+
+					// setup render texture
+					MiniMapResizeRenderTexture (_miniMapResolutionNormalSize, _miniMapResolutionNormalSize);
+					#if UNITY_5_6_OR_NEWER
+					miniMapCamera.allowHDR = false;
+					miniMapCamera.allowMSAA = false;
+					#endif
+					miniMapCamera.clearFlags = CameraClearFlags.SolidColor;
+					miniMapCamera.backgroundColor = Color.black;
+					miniMapCamera.orthographic = (_miniMapCameraMode == MINIMAP_CAMERA_MODE.Orthographic);
+					miniMapCamera.cullingMask = _miniMapLayerMask;
+
+					cameraCompass = miniMapUIRoot.Find ("CameraCompass");
 				} else {
 					Debug.LogError ("Mini Map prefab element could not be intialized.");
 					_showMiniMap = false;
@@ -1148,10 +1352,29 @@ namespace CompassNavigatorPro {
 				if (miniMapCanvasGroup == null) {
 					miniMapCanvasGroup = GetCanvasGroup (miniMapUIRoot);
 				}
+				miniMapCanvasGroup.interactable = miniMapCanvasGroup.blocksRaycasts = _miniMapShowButtons;
 			} else {
 				if (miniMapUIRoot != null) {
 					miniMapUIRoot.gameObject.SetActive (false);
 				}
+			}
+			needUpdateBarContents = true;
+			needMiniMapShot = true;
+		}
+
+		void MiniMapResizeRenderTexture (int width, int height) {
+			if (miniMapCamera == null || miniMapCamera == null)
+				return;
+
+			if (miniMapTex == null || miniMapTex.width != width || miniMapTex.height != height) {
+				if (miniMapTex != null) {
+					miniMapTex.Release ();
+				}
+				miniMapTex = new RenderTexture (width, height, 24, RenderTextureFormat.ARGB32);
+			}
+			miniMapCamera.targetTexture = miniMapTex;
+			if (miniMapImage != null) {
+				miniMapImage.materialForRendering.SetTexture ("_MiniMapTex", miniMapTex);
 			}
 		}
 
@@ -1159,8 +1382,8 @@ namespace CompassNavigatorPro {
 			if (miniMapUIRoot != null && miniMapUIRoot.gameObject.activeSelf) {
 				miniMapUIRoot.gameObject.SetActive (false);
 			}
-			if (_miniMapCamera != null) {
-				_miniMapCamera.enabled = false;
+			if (miniMapCamera != null) {
+				miniMapCamera.enabled = false;
 			}
 			if (miniMapTex != null) {
 				miniMapTex.Release ();
@@ -1168,17 +1391,128 @@ namespace CompassNavigatorPro {
 		}
 
 		void UpdateMiniMap () {
-			if (!_showMiniMap || _miniMapCamera == null || miniMapFollow == null)
+			if (!_showMiniMap || miniMapCamera == null || miniMapFollow == null)
 				return;
 
 			Vector3 followPos = miniMapFollow.position;
-			_miniMapCamera.transform.position = new Vector3 (followPos.x, followPos.y + _miniMapCameraAltitude, followPos.z);
-			Vector3 forward = miniMapFollow.forward;
-			forward.y = 0;
-			_miniMapCamera.transform.LookAt (followPos, forward);
-			_miniMapCamera.orthographicSize = _miniMapZoomSize;
-			miniMapCanvasGroup.alpha = _miniMapAlpha;
-		}
+			if (_miniMapCameraMode == MINIMAP_CAMERA_MODE.Orthographic) {
+				miniMapCamera.transform.position = new Vector3 (followPos.x, followPos.y + _miniMapCameraHeightVSFollow + 0.1f, followPos.z);
+				if (_miniMapZoomMin < 0.001f) {
+					_miniMapZoomMin = 0.001f;
+				}
+				if (_miniMapZoomMax < _miniMapZoomMin) {
+					_miniMapZoomMax = _miniMapZoomMin;
+				}
+				_miniMapZoomLevel = Mathf.Clamp (_miniMapZoomLevel, _miniMapZoomMin, _miniMapZoomMax);
+				miniMapCamera.orthographicSize = _miniMapCaptureSize * 0.5f;
+			} else {
+				float altitude = _miniMapCameraMinAltitude + (_miniMapCameraMaxAltitude - _miniMapCameraMinAltitude) * _miniMapZoomLevel;
+				if (_miniMapCameraMaxAltitude < _miniMapCameraMinAltitude) {
+					_miniMapCameraMaxAltitude = _miniMapCameraMinAltitude;
+				}
+				miniMapCamera.transform.position = new Vector3 (followPos.x, followPos.y + altitude, followPos.z);
+			}
+            if (miniMapCanvasGroup.alpha != _miniMapAlpha)
+            {
+                miniMapCanvasGroup.alpha = _miniMapAlpha;
+            }
+
+			// snapshot control
+			switch (_miniMapCameraSnapshotFrequency) {
+			case MINIMAP_CAMERA_SNAPSHOT_FREQUENCY.TimeInterval:
+				if (Time.time - miniMapLastSnapshotTime > _miniMapSnapshotInterval) {
+					needMiniMapShot = true;
+				}
+				break;
+			case MINIMAP_CAMERA_SNAPSHOT_FREQUENCY.DistanceTravelled:
+				if ((miniMapLastSnapshotLocation - miniMapCamera.transform.position).sqrMagnitude > _miniMapSnapshotDistance * _miniMapSnapshotDistance) {
+					needMiniMapShot = true;
+				}
+				break;
+			case MINIMAP_CAMERA_SNAPSHOT_FREQUENCY.Continuous:
+				needMiniMapShot = true;
+				break;
+			}
+
+            // minimapp camera rotation
+			float rotation = 0;
+			if (_miniMapKeepStraight) {
+                miniMapCamera.transform.eulerAngles = new Vector3(90f, 0, 0);
+				if (cameraCompass != null) {
+					Vector3 angles = miniMapFollow.rotation.eulerAngles;
+					angles.z = 180f - angles.y;
+					angles.x = angles.y = 0;
+					cameraCompass.eulerAngles = angles;
+				}
+			} else {
+				Vector3 forward = miniMapFollow.forward;
+				forward.y = 0;
+				miniMapCamera.transform.LookAt (followPos, forward);
+				rotation = miniMapFollow.rotation.eulerAngles.y * Mathf.Deg2Rad;
+			}
+            if (miniMapLastCameraRotation != rotation)
+            {
+                miniMapLastCameraRotation = rotation;
+                miniMapMaterialRefresh = true;
+            }
+
+            // capture map
+            if (needMiniMapShot)
+            {
+                needMiniMapShot = false;
+				Quaternion oldRot = miniMapCamera.transform.rotation;
+				miniMapCamera.transform.eulerAngles = new Vector3(90f, 0, 0);
+                if (!_miniMapEnableShadows)
+                {
+                    ShadowQuality sq = QualitySettings.shadows;
+                    QualitySettings.shadows = ShadowQuality.Disable;
+                    miniMapCamera.Render();
+                    QualitySettings.shadows = sq;
+                } else
+                {
+                    miniMapCamera.Render();
+                }
+                miniMapLastSnapshotTime = Time.time;
+                miniMapLastSnapshotLocation = miniMapCamera.transform.position;
+				miniMapCamera.transform.rotation = oldRot;
+                miniMapMaterialRefresh = true;
+            }
+
+            // Set mini-map shader properties
+
+            // mini-map uv
+            Vector3 miniMapCameraPos = miniMapCamera.transform.position;
+            if (miniMapCameraPos != lastMiniMapCameraPos)
+            {
+                miniMapMaterialRefresh = true;
+                lastMiniMapCameraPos = miniMapCameraPos;
+            }
+            Vector3 uvOffset = miniMapLastSnapshotLocation - miniMapCameraPos;
+            float camSize = miniMapCamera.orthographicSize * 2f;
+            uvOffset.x = uvOffset.x / camSize;
+            uvOffset.y = uvOffset.z / camSize;
+            uvOffset.z = _miniMapZoomLevel;
+
+            // fog of war shader properties
+            Vector4 uvFogOffset = _fogOfWarCenter - miniMapCameraPos;
+            uvFogOffset.x = (uvFogOffset.x / camSize) / _miniMapZoomLevel;
+            uvFogOffset.y = (uvFogOffset.z / camSize) / _miniMapZoomLevel;
+            uvFogOffset.z = _miniMapZoomLevel * camSize / _fogOfWarSize.x;
+            uvFogOffset.w = _miniMapZoomLevel * camSize / _fogOfWarSize.z;
+
+            // update material
+            if (miniMapMaterialRefresh && miniMapImage != null)
+            {
+                miniMapMaterialRefresh = false;
+                Material mat = miniMapImage.materialForRendering;
+                mat.SetFloat("_Rotation", rotation);
+                mat.SetVector("_UVOffset", uvOffset);
+                mat.SetVector("_UVFogOffset", uvFogOffset);
+                mat.SetTexture("_FogOfWarTex", fogOfWarTexture);
+                mat.SetColor("_FogOfWarTintColor", _fogOfWarColor);
+                mat.SetVector("_Effects", new Vector3(_miniMapBrightness, _miniMapContrast, 0));
+            }
+        }
 
 		CanvasGroup GetCanvasGroup (Transform transform) {
 			if (transform == null) {
@@ -1191,6 +1525,93 @@ namespace CompassNavigatorPro {
 			}
 			return canvasGroup;
 
+		}
+
+		void ToggleButtonEventHandler (string buttonName, UnityAction handler, bool continuous) {
+			if (miniMapButtonsPanel == null)
+				return;
+			Transform t = miniMapButtonsPanel.Find (buttonName);
+			if (t == null)
+				return;
+			if (!_miniMapShowButtons) {
+				t.gameObject.SetActive (false);
+				return;
+			}
+			t.gameObject.SetActive (true);
+			Button button = t.GetComponent<Button> ();
+			if (button == null)
+				return;
+
+			if (continuous) {
+				CompassButtonHandler buttonHandler = button.GetComponent<CompassButtonHandler> ();
+				if (buttonHandler == null) {
+					buttonHandler = button.gameObject.AddComponent<CompassButtonHandler> ();
+				}
+				buttonHandler.actionHandler = handler;
+			} else {
+				button.onClick.RemoveListener (handler);
+				button.onClick.AddListener (handler);
+			}
+		}
+
+		void MiniMapZoomToggle (bool state) {
+
+			if (miniMapUIRoot == null || cameraMain == null)
+				return;
+
+			RectTransform rt = miniMapUIRoot.GetComponent<RectTransform> ();
+
+			_miniMapZoomState = state;
+
+			if (state) {
+				miniMapAnchorMin = rt.anchorMin;
+				miniMapAnchorMax = rt.anchorMax;
+				miniMapPivot = rt.pivot;
+				miniMapSizeDelta = rt.sizeDelta;
+				miniMapCurrentStyle = _miniMapStyle;
+				miniMapCameraAspect = miniMapCamera.aspect;
+				if (_miniMapStyle != MINIMAP_STYLE.SolidBox) {
+					miniMapStyle = MINIMAP_STYLE.SolidBox;
+				}
+				float padding = (1f - _miniMapFullScreenSize) * 0.5f;
+				float minX, minY, maxX, maxY;
+				minY = padding;
+				maxY = 1f - padding;
+				int height = (int)(cameraMain.pixelHeight * _miniMapFullScreenSize);
+				int width = _miniMapKeepAspectRatio ? height : (int)(cameraMain.pixelWidth * _miniMapFullScreenSize);
+				if (_miniMapKeepAspectRatio) {
+					float paddingW = (1f - _miniMapFullScreenSize / cameraMain.aspect) * 0.5f;
+					minX = paddingW;
+					maxX = 1f - paddingW;
+				} else {
+					minX = minY;
+					maxX = maxY;
+					miniMapCamera.aspect = (float)width / height;
+				}
+				rt.anchorMin = new Vector3 (minX, minY);
+				rt.anchorMax = new Vector3 (maxX, maxY);
+				rt.pivot = new Vector2 (0.5f, 0.5f);
+				rt.anchoredPosition = Vector2.zero;
+				rt.sizeDelta = new Vector2 (0, 0);
+				MiniMapResizeRenderTexture (width, height);	
+				if (_miniMapFullScreenSize >= 1f && _miniMapDisableMainCameraInFullScreen && !_miniMapKeepAspectRatio) {
+					_cameraMain.enabled = false;
+				}
+			} else {
+				rt.anchorMin = miniMapAnchorMin;
+				rt.anchorMax = miniMapAnchorMax;
+				rt.pivot = miniMapPivot;
+				rt.sizeDelta = miniMapSizeDelta;
+				if (_miniMapStyle != miniMapCurrentStyle) {
+					miniMapStyle = miniMapCurrentStyle;
+				}
+				miniMapCamera.aspect = miniMapCameraAspect;
+				MiniMapResizeRenderTexture (_miniMapResolutionNormalSize, _miniMapResolutionNormalSize);
+				if (_miniMapFullScreenSize >= 1f && _miniMapDisableMainCameraInFullScreen && !_miniMapKeepAspectRatio) {
+					_cameraMain.enabled = true;
+				}
+
+			}
 		}
 
 		#endregion

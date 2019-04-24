@@ -70,6 +70,14 @@ namespace PixelCrushers
         }
 
         /// <summary>
+        /// Deletes the saved game in the specified slot.
+        /// </summary>
+        public void DeleteSavedGameInSlot(int slotNumber)
+        {
+            SaveSystem.DeleteSavedGameInSlot(slotNumber);
+        }
+
+        /// <summary>
         /// Records the current game state into the Save System.
         /// </summary>
         public void RecordSavedGameData()

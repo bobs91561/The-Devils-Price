@@ -162,6 +162,11 @@ namespace PixelCrushers.DialogueSystem
                 /// Wait for the continue button only for NPC lines that don't precede response menus or PC auto-select responses.
                 /// </summary>
                 NotForPCOrBeforePCAutoresponseOrMenu,
+
+                /// <summary>
+                /// Wait for continue button for PC lines but not for NPC lines.
+                /// </summary>
+                OnlyForPC
             }
 
             /// <summary>

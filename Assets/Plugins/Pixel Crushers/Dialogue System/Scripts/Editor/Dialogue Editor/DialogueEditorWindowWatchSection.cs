@@ -2,7 +2,6 @@
 
 using UnityEngine;
 using UnityEditor;
-using UnityEditorInternal;
 using System;
 using System.Collections.Generic;
 
@@ -42,7 +41,7 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
         }
 
         [SerializeField]
-        private List<Watch> watches;
+        private List<Watch> watches = new List<Watch>();
 
         [SerializeField]
         private bool autoUpdateWatches = false;
@@ -488,9 +487,12 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
 
         private void UpdateAllWatches()
         {
-            foreach (var watch in watches)
+            if (watches != null)
             {
-                EvaluateWatch(watch);
+                foreach (var watch in watches)
+                {
+                    EvaluateWatch(watch);
+                }
             }
             Repaint();
             ResetWatchTime();

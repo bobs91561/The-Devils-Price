@@ -68,12 +68,17 @@ namespace PixelCrushers.DialogueSystem
 
         public Animator animator { get; private set; }
 
+        private static List<StandardUISelectorElements> m_instances = new List<StandardUISelectorElements>();
+
+        public static List<StandardUISelectorElements> instances
+        {
+            get { return m_instances; }
+        }
+
         public static StandardUISelectorElements instance
         {
             get { return (m_instances.Count > 0) ? m_instances[0] : null; }
         }
-
-        private static List<StandardUISelectorElements> m_instances = new List<StandardUISelectorElements>(); 
 
         private void Awake()
         {

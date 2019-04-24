@@ -102,6 +102,11 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
             inspectorSelection = currentConversation;
         }
 
+        private bool IsConversationActive()
+        {
+            return Application.isPlaying && DialogueManager.instance != null && DialogueManager.isConversationActive;
+        }
+
         private void DrawNodeEditorMenu()
         {
             if (GUILayout.Button("Menu", "MiniPullDown", GUILayout.Width(56)))
@@ -111,6 +116,10 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                 if (currentConversation != null)
                 {
                     menu.AddItem(new GUIContent("Center on START"), false, GotoStartNodePosition);
+                    if (IsConversationActive())
+                    {
+                        menu.AddItem(new GUIContent("Center on Current Entry"), false, GotoCurrentRuntimeEntry);
+                    }
                 }
                 else
                 {
@@ -280,6 +289,19 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
             var startEntry = currentConversation.GetFirstDialogueEntry();
             if (startEntry == null) return;
             canvasScrollPosition = new Vector2(Mathf.Max(0, startEntry.canvasRect.x - ((position.width - startEntry.canvasRect.width) / 2)), Mathf.Max(0, startEntry.canvasRect.y - 8));
+        }
+
+        private void GotoCurrentRuntimeEntry()
+        {
+            if (!(Application.isPlaying && DialogueManager.isConversationActive)) return;
+            if (currentConversation == null || !string.Equals(currentConversation.Title, DialogueManager.lastConversationStarted))
+            {
+                OpenConversation(database.GetConversation(DialogueManager.lastConversationStarted));
+            }
+            if (currentConversation == null) return;
+            var currentEntry = currentConversation.GetDialogueEntry(DialogueManager.currentConversationState.subtitle.dialogueEntry.id);
+            if (currentEntry == null) return;
+            canvasScrollPosition = new Vector2(Mathf.Max(0, currentEntry.canvasRect.x - ((position.width - currentEntry.canvasRect.width) / 2)), Mathf.Max(0, currentEntry.canvasRect.y - 8));
         }
 
         private void SetSnapToGrid(object data)

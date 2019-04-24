@@ -93,7 +93,7 @@ namespace Gaia.GX.Kronnect
 
 				// Check existing POI for this spawned group
 				bool newPOI = false;
-				Transform t = spawned.FindChild("CompassPOI");
+				Transform t = spawned.Find("CompassPOI");
 				if (t==null) {
 					// Create POI game object
 					GameObject poiGO = new GameObject();

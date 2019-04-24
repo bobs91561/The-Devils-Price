@@ -98,6 +98,8 @@ namespace PixelCrushers
                 var key = baseKey + i;
                 if (PlayerPrefs.HasKey(key)) PlayerPrefs.DeleteKey(key);
             }
+            m_keys.Clear();
+            Repaint();
         }
 
     }

@@ -5,7 +5,9 @@ using UnityEngine;
 public class Buff : Cast
 {
     public float duration;
+    public bool SingleMoment;
     public bool SelfTargeting;
+    public bool ReverseOnComplete;
 
     public override void UseAttack()
     {
@@ -20,7 +22,14 @@ public class Buff : Cast
 
         //Instantiate effect
         var g = Instantiate(objectToGenerate);
+        objectGenerated = g;
+
+        //Set transform values
+        SetTransform();
+
+        //Change layer to collide with the caster
 
         //Apply values to special hitbox
+        g.GetComponentInChildren<BuffHitbox>().Initialize(target.gameObject, effectGrounded, SingleMoment, ReverseOnComplete, damage, duration);
     }
 }

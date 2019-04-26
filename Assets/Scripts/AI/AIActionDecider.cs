@@ -14,10 +14,10 @@ public class AIActionDecider: MonoBehaviour {
 
     public float currentPriority = 0f;
 
-    public float tiredness = 0f;
-    public float combatApproach = 0f;
+    [HideInInspector] public float tiredness = 0f;
+    [HideInInspector] public float combatApproach = 0f;
     public bool combat = false;
-    public bool combatMoveActive = false;
+    [HideInInspector] public bool combatMoveActive = false;
 
     public bool CombatNearby;
     public bool RecentCombat;
@@ -27,7 +27,7 @@ public class AIActionDecider: MonoBehaviour {
     public List<AIAction> actions;
     public List<GameObject> patrolPoints;
     public List<GameObject> spawnPoints;
-    public int patrolPoint;
+    [HideInInspector] public int patrolPoint;
     public GameObject followTarget;
 
     public Vector3 LastKnownPosition;

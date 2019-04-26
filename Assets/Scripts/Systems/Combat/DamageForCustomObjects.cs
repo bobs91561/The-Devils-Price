@@ -17,7 +17,7 @@ namespace Systems.Combat
             parent = par;
             _hb = GetComponent<Hitbox>();
             _ef = GetComponent<ExplosiveForce>();
-            if (_hb) _hb.Initialize(parent,damage, false, 5f, true);
+            if (_hb) _hb.Initialize(parent, damage, false, 5f, true);
             if (_ef) _ef.Initialize(parent, damage, mask);
             SendMessage("SetParams");
         }

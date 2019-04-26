@@ -1,6 +1,11 @@
 using UnityEngine;
 using System.Collections;
 
+public enum MovementType
+{
+    REGULAR, AIRBORNE, PRONE
+}
+
 namespace Devdog.InventoryPro.UnityStandardAssets
 {
     //[RequireComponent(typeof(Rigidbody))]
@@ -33,6 +38,7 @@ namespace Devdog.InventoryPro.UnityStandardAssets
         CapsuleCollider m_Capsule;
         bool m_Crouching;
 
+        protected MovementType movementType = MovementType.REGULAR;
 
         private int _dodgeID = Animator.StringToHash("Dodge");
         private int _backDodge = Animator.StringToHash("DodgeBack");
@@ -336,5 +342,11 @@ namespace Devdog.InventoryPro.UnityStandardAssets
         {
             m_IsDodging = false;
         }
+
+        public virtual void ChangeMovementType(MovementType type)
+        {
+            movementType = type;
+        }
     }
+
 }

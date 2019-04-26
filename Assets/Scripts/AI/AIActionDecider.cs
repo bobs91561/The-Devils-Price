@@ -6,9 +6,9 @@ using UnityEngine.AI;
 public class AIActionDecider: MonoBehaviour {
     public static GameObject Player;
 
-    private AIController _controller;
-    public SkillSet skillSet;
-    public GameObject AI;
+    protected AIController _controller;
+    [HideInInspector] public SkillSet skillSet;
+    [HideInInspector] public GameObject AI;
 
     public AIAction currentAction;
 
@@ -37,23 +37,29 @@ public class AIActionDecider: MonoBehaviour {
 	{
 	    if (!AI) AI = gameObject;
         skillSet = GetComponent<SkillSet>();
-        _controller = GetComponent<AIController>();
-        if (actions == null)
-        {
-            actions = new List<AIAction>();
-        }
-        for(int i = 0; i < actions.Count; i++)
-        {
-            actions[i] = Instantiate(actions[i]);
-            actions[i].Initialize(gameObject);
-        }
+        _controller = GetComponent<AIController>();        
         if (patrolPoints == null) patrolPoints = new List<GameObject>();
         patrolPoint = 0;
         tiredness = 0f;
         combat = false;
 	    PlayerContact = false;
         EventManager.DeathAction += PlayerDeath;
+        InitializeActions();
 	}
+
+    protected virtual void InitializeActions()
+    {
+        currentAction = null;
+        if (actions == null)
+        {
+            actions = new List<AIAction>();
+        }
+        for (int i = 0; i < actions.Count; i++)
+        {
+            actions[i] = Instantiate(actions[i]);
+            actions[i].Initialize(gameObject);
+        }
+    }
 
     public void Tick()
     {

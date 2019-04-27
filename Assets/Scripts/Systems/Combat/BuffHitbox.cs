@@ -32,6 +32,7 @@ public class BuffHitbox : MonoBehaviour
         if (singlemoment)
         {
             ApplyBuff();
+            StartCoroutine(DestroyAfterTime());
             return;
         }
         else if (!grounded)
@@ -68,9 +69,33 @@ public class BuffHitbox : MonoBehaviour
         switch (buffType)
         {
             case BuffType.HEALTH:
+                if (!m_TargetHealthManager) return;
                 m_TargetHealthManager.ModifyHealth(val);
                 break;
             case BuffType.DAMAGE:
+                if (!m_TargetSkillSet) return;
+                break;
+            case BuffType.SPEED:
+                break;
+        }
+    }
+
+    private void ApplyBuff(GameObject g)
+    {
+        float val = m_SingleMoment ? m_BuffValue : m_BuffValue * Time.deltaTime;        
+
+        // Check bufftype
+        // Apply val to proper attribute
+        switch (buffType)
+        {
+            case BuffType.HEALTH:
+                HealthManager hm = g.GetComponent<HealthManager>();
+                if (!hm) return;
+                hm.ModifyHealth(val);
+                break;
+            case BuffType.DAMAGE:
+                SkillSet set = g.GetComponent<SkillSet>();
+                if (!set) return;
                 break;
             case BuffType.SPEED:
                 break;
@@ -92,10 +117,14 @@ public class BuffHitbox : MonoBehaviour
         }
     }
 
+    public void ReceiveValue(float val)
+    {
+        m_BuffValue = val;
+        ApplyBuff();
+    }
+
     // When the effect is grounded to a spot
     #region Collision Logic
-
-    #endregion
 
     public void OnDestroy()
     {
@@ -104,6 +133,34 @@ public class BuffHitbox : MonoBehaviour
         // Reverse the buff
         ReverseBuff();
     }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        GameObject g = collision.gameObject;
+        ApplyBuff(g);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        GameObject g = other.gameObject;
+        ApplyBuff(g);
+
+    }
+
+    void OnTriggerStay(Collider other)
+    {
+        GameObject g = other.gameObject;
+        ApplyBuff(g);
+
+    }
+
+    void OnParticleCollision(GameObject other)
+    {
+        GameObject g = other.gameObject;
+        ApplyBuff(g);
+    }
+
+    #endregion
 }
 
 public enum BuffType

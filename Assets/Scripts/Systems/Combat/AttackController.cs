@@ -55,11 +55,19 @@ namespace Assets.Scripts.Systems.Combat
                     _cooldowns[a] = a.coolDown;
         }
 
+        protected void SetUpCooldowns()
+        {
+            foreach(Attack a in _attacks)
+            {
+                _cooldowns.Add(a, a.coolDown);
+            }
+        }
+
         public void RefreshAttacks()
         {
             _cooldowns = new Dictionary<Attack, float>();
             _attacks = _skillSet.attacks;
-            SetAttacks();
+            SetUpCooldowns();
         }
 
         public virtual void SetAttacks()

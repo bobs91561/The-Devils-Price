@@ -254,7 +254,7 @@ namespace PixelCrushers.DialogueSystem
                     if (string.Equals(quest.Group, groupName))
                     {                        
                         var questTitle = selectionPanelContentManager.Instantiate<StandardUIQuestTitleButtonTemplate>(questTitleTemplate);
-                        questTitle.Assign(quest.Heading.text, OnToggleTracking);
+                        questTitle.Assign(quest.Title, quest.Heading.text, OnToggleTracking);
                         selectionPanelContentManager.Add(questTitle, groupFoldout.interiorPanel);
                         var target = quest.Title;
                         questTitle.button.onClick.AddListener(() => { OnClickQuest(target); });
@@ -273,7 +273,7 @@ namespace PixelCrushers.DialogueSystem
             {
                 if (!string.IsNullOrEmpty(quest.Group)) continue;
                 var questTitle = selectionPanelContentManager.Instantiate<StandardUIQuestTitleButtonTemplate>(questTitleTemplate);
-                questTitle.Assign(quest.Heading.text, OnToggleTracking);
+                questTitle.Assign(quest.Title, quest.Heading.text, OnToggleTracking);
                 selectionPanelContentManager.Add(questTitle, questSelectionContentContainer);
                 var target = quest.Title;
                 questTitle.button.onClick.AddListener(() => { OnClickQuest(target); });
@@ -289,7 +289,8 @@ namespace PixelCrushers.DialogueSystem
             if (quests.Length == 0 && showNoQuestsText)
             {
                 var questTitle = selectionPanelContentManager.Instantiate<StandardUIQuestTitleButtonTemplate>(completedQuestHeadingTemplate);
-                questTitle.Assign(IsShowingActiveQuests ? noActiveQuestsText : noCompletedQuestsText, null);
+                var dummyText = IsShowingActiveQuests ? noActiveQuestsText : noCompletedQuestsText;
+                questTitle.Assign(dummyText, dummyText, null);
                 selectionPanelContentManager.Add(questTitle, questSelectionContentContainer);
             }
 
@@ -388,7 +389,7 @@ namespace PixelCrushers.DialogueSystem
             }
         }
 
-        protected StandardUITextTemplate GetEntryTemplate(QuestState state)
+        protected virtual StandardUITextTemplate GetEntryTemplate(QuestState state)
         {
             switch (state)
             {
@@ -408,7 +409,7 @@ namespace PixelCrushers.DialogueSystem
         /// </summary>
         /// <param name="value">Tracking on or off.</param>
         /// <param name="data">Quest name (string).</param>
-        public void OnToggleTracking(bool value, object data)
+        public virtual void OnToggleTracking(bool value, object data)
         {
             var quest = (string)data;
             if (string.IsNullOrEmpty(quest)) return;
@@ -427,7 +428,7 @@ namespace PixelCrushers.DialogueSystem
         {
             if (abandonQuestPanel == null || selectedQuest == null) return;
             this.confirmAbandonQuestHandler = confirmAbandonQuestHandler;
-            abandonQuestTitleText.text = selectedQuest;
+            abandonQuestTitleText.text = QuestLog.GetQuestTitle(selectedQuest);
             abandonQuestPanel.Open();
         }
 

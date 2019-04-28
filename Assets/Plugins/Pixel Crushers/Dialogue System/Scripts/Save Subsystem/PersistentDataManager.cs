@@ -429,6 +429,10 @@ namespace PixelCrushers.DialogueSystem
                 {
                     return o.ToString().ToLower();
                 }
+                else if (type == typeof(float) || type == typeof(double))
+                {
+                    return ((float)o).ToString(System.Globalization.CultureInfo.InvariantCulture);
+                }
                 else
                 {
                     return o.ToString();

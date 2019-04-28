@@ -8,7 +8,7 @@ namespace com.ootii.Input
     /// to process input using your input component.
     /// </summary>
     [AddComponentMenu("ootii/Input Sources/Unity Input Source")]
-    public class UnityInputSource : MonoBehaviour, IInputSource
+    public class UnityInputSource : MonoBehaviour, IInputSource, IViewActivator
     {
         /// <summary>
         /// Helps users of the input source to determine if

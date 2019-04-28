@@ -14,6 +14,9 @@ namespace PixelCrushers.DialogueSystem
     /// all localized Text elements. You will typically call it from the
     /// event handler of a language selection button or pop-up menu. It
     /// also localizes Texts at start.
+    /// 
+    /// This is now primarily a utility wrapper for LocalizeUI and
+    /// UILocalizationManager.
     /// </summary>
     [AddComponentMenu("")] // Use wrapper.
     public class UpdateLocalizedUITexts : MonoBehaviour
@@ -53,9 +56,9 @@ namespace PixelCrushers.DialogueSystem
             {
                 PlayerPrefs.SetString(languagePlayerPrefsKey, languageCode);
             }
-            foreach (var localizeUIText in FindObjectsOfType<LocalizeUIText>())
+            foreach (var localizeUI in FindObjectsOfType<LocalizeUI>())
             {
-                localizeUIText.LocalizeText();
+                localizeUI.UpdateText();
             }
         }
 
@@ -63,7 +66,11 @@ namespace PixelCrushers.DialogueSystem
         [MenuItem("Tools/Pixel Crushers/Dialogue System/Tools/Clear Saved Localization Settings", false, 1)]
         public static void ClearSavedLocalizationSettings()
         {
-            PlayerPrefs.DeleteKey("Language");
+            var key = "Language";
+            var localizationManager = FindObjectOfType<UILocalizationManager>();
+            if (localizationManager != null) key = localizationManager.currentLanguagePlayerPrefsKey;
+            PlayerPrefs.DeleteKey(key);
+            Debug.Log("Dialogue System: Deleted PlayerPrefs key '" + key + "'.");
         }
 #endif
 

@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Pixel Crushers. All rights reserved.
 
-using UnityEngine;
-using UnityEngine.Events;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Events;
 
 namespace PixelCrushers
 {
@@ -44,9 +44,17 @@ namespace PixelCrushers
         public UnityEvent onBackButtonDown = new UnityEvent();
 
         protected GameObject m_previousSelected = null;
+        protected GameObject m_lastSelected = null;
         protected List<GameObject> selectables = new List<GameObject>();
         private float m_timeNextCheck = 0;
         private float m_timeNextRefresh = 0;
+
+        /// <summary>
+        /// If false, turns off checking of current selection to make sure a valid selectable is selected.
+        /// You can temporarily set this false if you open a non-UIPanel window and don't want
+        /// any UIPanels to steal focus.
+        /// </summary>
+        public static bool monitorSelection = true;
 
         protected static List<UIPanel> panelStack = new List<UIPanel>();
 
@@ -149,6 +157,7 @@ namespace PixelCrushers
         protected virtual void OnEnable()
         {
             PushToPanelStack();
+            RefreshAfterOneFrame();
         }
 
         protected virtual void OnDisable()
@@ -229,6 +238,7 @@ namespace PixelCrushers
             }
             else
             {
+                m_lastSelected = (UnityEngine.EventSystems.EventSystem.current != null) ? UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject : null;
                 if (Time.realtimeSinceStartup >= m_timeNextCheck && focusCheckFrequency > 0 && topPanel == this && InputDeviceManager.autoFocus)
                 {
                     m_timeNextCheck = Time.realtimeSinceStartup + focusCheckFrequency;
@@ -244,15 +254,24 @@ namespace PixelCrushers
 
         public void CheckFocus()
         {
+            if (!monitorSelection) return;
             if (!InputDeviceManager.autoFocus) return;
             if (UnityEngine.EventSystems.EventSystem.current == null) return;
             if (topPanel != this) return;
             var currentSelected = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
             if (currentSelected == null || !selectables.Contains(currentSelected))
             {
-                var firstSelectable = (firstSelected != null) ? firstSelected.GetComponent<UnityEngine.UI.Selectable>() : null;
-                var firstInteractive = firstSelectable != null && firstSelectable.IsActive() && firstSelectable.IsInteractable();
-                var selectableToFocus = firstInteractive ? firstSelected : GetFirstInteractableButton();
+                GameObject selectableToFocus = null;
+                if (m_lastSelected != null && selectables.Contains(currentSelected))
+                {
+                    selectableToFocus = m_lastSelected;
+                }
+                else
+                {
+                    var firstSelectable = (firstSelected != null) ? firstSelected.GetComponent<UnityEngine.UI.Selectable>() : null;
+                    var isFirstInteractive = firstSelectable != null && firstSelectable.IsActive() && firstSelectable.IsInteractable();
+                    selectableToFocus = isFirstInteractive ? firstSelected : GetFirstInteractableButton();
+                }
                 if (selectableToFocus != null)
                 {
                     UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(selectableToFocus);

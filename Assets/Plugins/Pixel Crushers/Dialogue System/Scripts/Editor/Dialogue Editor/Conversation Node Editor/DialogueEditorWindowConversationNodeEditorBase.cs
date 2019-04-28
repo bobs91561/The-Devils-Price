@@ -121,13 +121,13 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
             }
         }
 
-        public void DrawLink(Vector3 start, Vector3 end, Color color)
+        public void DrawLink(Vector3 start, Vector3 end, Color color, bool wide)
         {
             if (Event.current.type != EventType.Repaint) return;
             Vector3 cross = Vector3.Cross((start - end).normalized, Vector3.forward);
             Texture2D connectionTexture = (Texture2D)UnityEditor.Graphs.Styles.connectionTexture.image;
             Handles.color = color;
-            Handles.DrawAAPolyLine(connectionTexture, 4f, new Vector3[] { start, end });
+            Handles.DrawAAPolyLine(connectionTexture, wide ? 16f : 4f, new Vector3[] { start, end });
             Vector3 diff = (end - start);
             Vector3 direction = diff.normalized;
             Vector3 mid = ((0.5f * diff) + start) - (0.5f * cross);

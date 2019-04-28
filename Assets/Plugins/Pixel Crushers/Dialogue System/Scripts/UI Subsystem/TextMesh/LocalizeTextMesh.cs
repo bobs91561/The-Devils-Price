@@ -9,42 +9,48 @@ namespace PixelCrushers.DialogueSystem
     /// GameObject. You can assign the localized text table to this script 
     /// or the Dialogue Manager. The element's starting text value serves 
     /// as the field name to look up in the table.
+    /// 
+    /// Note: Since TextMesh has been deprecated in later versions of Unity,
+    /// this component is only valid for Unity 2018.2 or older.
     /// </summary>
     [AddComponentMenu("")] // Use wrapper.
-    public class LocalizeTextMesh : LocalizeUIText
+    public class LocalizeTextMesh : LocalizeUI
     {
+
+#if UNITY_5 || UNITY_2017 || UNITY_2018_1 || UNITY_2018_2
 
         protected TextMesh m_textMesh;
 
-        public override void LocalizeText()
+        public virtual void LocalizeText()
+        {
+            UpdateText();
+        }
+
+        public override void UpdateText()
         {
             if (!started) return;
+            base.UpdateText();
 
             // Skip if no language set:
-            if (string.IsNullOrEmpty(PixelCrushers.DialogueSystem.Localization.language)) return;
+            var language = UILocalizationManager.instance.currentLanguage;
+            if (string.IsNullOrEmpty(language)) return;
             if (textTable == null)
             {
                 textTable = DialogueManager.displaySettings.localizationSettings.textTable;
                 if (textTable == null)
                 {
-                    if (DialogueDebug.logWarnings) Debug.LogWarning(DialogueDebug.Prefix + ": No localized text table is assigned to " + name + " or the Dialogue Manager.", this);
+                    if (DialogueDebug.logWarnings) Debug.LogWarning(DialogueDebug.Prefix + ": No text table is assigned to " + name + " or the Dialogue Manager.", this);
                     return;
                 }
             }
 
-            if (!HasCurrentLanguage())
-            {
-                if (DialogueDebug.logWarnings) Debug.LogWarning(DialogueDebug.Prefix + "Localized text table '" + textTable + "' does not have a language '" + PixelCrushers.DialogueSystem.Localization.language + "'", this);
-                return;
-            }
-
-            // Make sure we have a Text or Dropdown:
+            // Make sure we have a TextMesh:
             if (m_textMesh == null)
             {
                 m_textMesh = GetComponent<TextMesh>();
                 if (m_textMesh == null)
                 {
-                    if (DialogueDebug.logWarnings) Debug.LogWarning(DialogueDebug.Prefix + ": LocalizeUILabel didn't find a TextMesh component on " + name + ".", this);
+                    if (DialogueDebug.logWarnings) Debug.LogWarning(DialogueDebug.Prefix + ": LocalizeTextMesh didn't find a TextMesh component on " + name + ".", this);
                     return;
                 }
             }
@@ -57,7 +63,7 @@ namespace PixelCrushers.DialogueSystem
             {
                 if (!textTable.HasField(fieldName))
                 {
-                    if (DialogueDebug.logWarnings) Debug.LogWarning(DialogueDebug.Prefix + ": Localized text table '" + textTable.name + "' does not have a field: " + fieldName, this);
+                    if (DialogueDebug.logWarnings) Debug.LogWarning(DialogueDebug.Prefix + ": text table '" + textTable.name + "' does not have a field: " + fieldName, this);
                 }
                 else
                 {
@@ -66,11 +72,22 @@ namespace PixelCrushers.DialogueSystem
             }
         }
 
-        public override void UpdateFieldName(string newFieldName = "")
+        public virtual void UpdateFieldName(string newFieldName = "")
         {
-            if (m_textMesh == null) m_textMesh = GetComponent<TextMesh>();
-            fieldName = string.IsNullOrEmpty(newFieldName) ? m_textMesh.text : newFieldName;
+            SetFieldName(newFieldName);
         }
+
+#else
+
+        public virtual void LocalizeText()
+        {
+        }
+
+        public virtual void UpdateFieldName(string newFieldName = "")
+        {
+        }
+
+#endif
 
     }
 

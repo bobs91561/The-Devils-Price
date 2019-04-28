@@ -24,7 +24,7 @@ public class AIAttackController : AttackController {
         ConsiderMove = false;
 	}
 
-    public void SetAttacks()
+    public override void SetAttacks()
     {
         Initialize();
         foreach (Attack a in _attacks)

@@ -655,7 +655,7 @@ namespace com.ootii.Helpers
         public static string GetRelativeDataPath(string rAbsolutePath)
         {
             string lRelativePath = rAbsolutePath;
-            if (rAbsolutePath.StartsWith(Application.dataPath))
+            if (rAbsolutePath.StartsWith(Application.dataPath, StringComparison.Ordinal))
             {
                 lRelativePath = "Assets" + rAbsolutePath.Substring(Application.dataPath.Length);
             }

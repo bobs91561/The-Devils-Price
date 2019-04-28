@@ -186,6 +186,67 @@ namespace PixelCrushers
             RemoveLanguage(GetLanguageName(languageID));
         }
 
+        /// <summary>
+        /// Removes all languages and fields.
+        /// </summary>
+        public void RemoveAll()
+        {
+            fields.Clear();
+            languages.Clear();
+            languages.Add("Default", 0);
+            m_nextLanguageID = 1;
+            m_nextFieldID = 1;
+            OnBeforeSerialize();
+        }
+
+        protected struct LanguageKeyValuePair // Temp object used to sort languages.
+        {
+            public string key;
+            public int value;
+            public LanguageKeyValuePair(string key, int value)
+            {
+                this.key = key;
+                this.value = value;
+            }
+        }
+
+        /// <summary>
+        /// Sort languages alphabetically, always keeping Default first.
+        /// </summary>
+        public void SortLanguages()
+        {
+            if (m_languageKeys.Count == 0) return;
+
+            // Extract Default language; always stays on top:
+            var defaultKey = m_languageKeys[0];
+            m_languageKeys.RemoveAt(0);
+            var defaultValue = m_languageValues[0];
+            m_languageValues.RemoveAt(0);
+
+            // Need to keep keys and values both in the same order.
+            // First create a single list:
+            var list = new List<LanguageKeyValuePair>();
+            for (int i = 0; i < m_languageKeys.Count; i++)
+            {
+                list.Add(new LanguageKeyValuePair(m_languageKeys[i], m_languageValues[i]));
+            }
+
+            list.Sort(delegate (LanguageKeyValuePair a, LanguageKeyValuePair b) { return a.key.CompareTo(b.key); });
+
+            // Then update keys and values:
+            m_languageKeys.Clear();
+            m_languageValues.Clear();
+            m_languageKeys.Add(defaultKey); // Always keep Default first.
+            m_languageValues.Add(defaultValue);
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                m_languageKeys.Add(list[i].key);
+                m_languageValues.Add(list[i].value);
+            }
+            OnAfterDeserialize();
+        }
+
         #endregion
 
         #region Fields
@@ -437,6 +498,53 @@ namespace PixelCrushers
             {
                 if (enumerator.Current.Value != null) enumerator.Current.Value.RemoveLanguage(languageID);
             }
+        }
+
+        /// <summary>
+        /// Removes all fields.
+        /// </summary>
+        public void RemoveAllFields()
+        {
+            fields.Clear();
+            m_nextFieldID = 1;
+            OnBeforeSerialize();
+        }
+
+        protected struct FieldKeyValuePair // Temp object used to sort fields.
+        {
+            public int key;
+            public TextTableField value;
+            public FieldKeyValuePair(int key, TextTableField value)
+            {
+                this.key = key;
+                this.value = value;
+            }
+        }
+
+        /// <summary>
+        /// Sort fields alphabetically.
+        /// </summary>
+        public void SortFields()
+        {
+            // Need to keep keys and values both in the same order.
+            // First create a single list:
+            var list = new List<FieldKeyValuePair>();
+            for (int i = 0; i < m_fieldKeys.Count; i++)
+            {
+                list.Add(new FieldKeyValuePair(m_fieldKeys[i], m_fieldValues[i]));
+            }
+
+            list.Sort(delegate (FieldKeyValuePair a, FieldKeyValuePair b) { return a.value.fieldName.CompareTo(b.value.fieldName); });
+
+            // Then update keys and values:
+            m_fieldKeys.Clear();
+            m_fieldValues.Clear();
+            for (int i = 0; i < list.Count; i++)
+            {
+                m_fieldKeys.Add(list[i].key);
+                m_fieldValues.Add(list[i].value);
+            }
+            OnAfterDeserialize();
         }
 
         #endregion

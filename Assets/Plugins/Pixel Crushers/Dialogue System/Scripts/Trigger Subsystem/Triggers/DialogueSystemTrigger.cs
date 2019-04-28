@@ -229,6 +229,9 @@ namespace PixelCrushers.DialogueSystem
         [Tooltip("Primary actor (e.g., player). If unassigned, GameObject that triggered conversation.")]
         public Transform conversationActor;
 
+        [Tooltip("Start at this entry ID.")]
+        public int startConversationEntryID = -1;
+
         /// <summary>
         /// Only start if no other conversation is active.
         /// </summary>
@@ -834,7 +837,7 @@ namespace PixelCrushers.DialogueSystem
                     var registeredTransform = (conversationConversantActor != null) ? CharacterInfo.GetRegisteredActorTransform(conversationConversantActor.Name) : null;
                     conversantTransform = (registeredTransform != null) ? registeredTransform : this.transform;
                 }
-                DialogueManager.StartConversation(conversation, actorTransform, conversantTransform);
+                DialogueManager.StartConversation(conversation, actorTransform, conversantTransform, startConversationEntryID);
                 earliestTimeToAllowTriggerExit = Time.time + MarginToAllowTriggerExit;
                 if (stopConversationIfTooFar)
                 {

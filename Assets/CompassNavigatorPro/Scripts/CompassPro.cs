@@ -33,7 +33,15 @@ namespace CompassNavigatorPro {
 		Camera _cameraMain;
 
 		public Camera cameraMain {
-			get { return _cameraMain; }
+			get { 
+				if (_cameraMain == null) {
+					_cameraMain = Camera.main;
+					if (_cameraMain == null) {
+						_cameraMain = FindObjectOfType<Camera> ();
+					}
+				}
+				return _cameraMain; 
+			}
 			set {
 				if (_cameraMain != value) {
 					_cameraMain = value; 
@@ -361,6 +369,25 @@ namespace CompassNavigatorPro {
 				}
 			}
 		}
+
+
+		[SerializeField]
+		float _cardinalPointsVerticalOffset = 0;
+
+		/// <summary>
+		/// Optional vertical offset for compass cardinal/ordinal points
+		/// </summary>
+		public float cardinalPointsVerticalOffset {
+			get { return _cardinalPointsVerticalOffset; }
+			set {
+				if (value != _cardinalPointsVerticalOffset) {
+					_cardinalPointsVerticalOffset = value;
+					needUpdateBarContents = true;
+					isDirty = true;
+				}
+			}
+		}
+
 
 		
 		[SerializeField]
@@ -913,13 +940,7 @@ namespace CompassNavigatorPro {
 		public static CompassPro instance {
 			get {
 				if (_instance == null) {
-					GameObject o = GameObject.Find ("CompassNavigatorPro");
-					if (o != null) {
-						_instance = o.GetComponent<CompassPro> ();
-					}
-					if (_instance == null) {
-						_instance = FindObjectOfType<CompassPro> ();
-					}
+					_instance = FindObjectOfType<CompassPro> ();
 				}
 				return _instance;
 			}

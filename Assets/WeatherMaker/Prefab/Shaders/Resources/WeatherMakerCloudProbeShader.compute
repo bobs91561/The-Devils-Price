@@ -1,0 +1,58 @@
+﻿// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+struct CloudProbeInput
+{
+	float4 Source;
+	float4 Target;
+};
+
+// Create a RenderTexture with enableRandomWrite flag and set it with cs.SetTexture
+RWStructuredBuffer<CloudProbeInput> probe;
+
+#include "../WeatherMakerCloudVolumetricShaderInclude.cginc"
+
+#define RAY_SAMPLE_COUNT 64
+#define INV_RAY_SAMPLE_COUNT (1.0 / float(RAY_SAMPLE_COUNT))
+#define MIN_PROBE_STEP_LENGTH 10.0
+
+[numthreads(8,8,1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+	CloudProbeInput i = probe[id.x];
+	float heightFrac = GetCloudHeightFractionForPoint(i.Source);
+	float4 weatherData = CloudVolumetricSampleWeather(i.Source, 0.0);
+	float sourceDensity = SampleCloudDensity(i.Source, weatherData, heightFrac, 0.0, true);
+	probe[id.x].Source.x = sourceDensity;
+
+	UNITY_BRANCH
+	if (i.Source.x == i.Target.x && i.Source.y == i.Target.y && i.Source.z == i.Target.z)
+	{
+		probe[id.x].Source.y = 0.0;
+		probe[id.x].Source.z = 0.0;
+	}
+	else
+	{
+		heightFrac = GetCloudHeightFractionForPoint(i.Target);
+		weatherData = CloudVolumetricSampleWeather(i.Target, 0.0);
+		float destDensity = SampleCloudDensity(i.Target, weatherData, heightFrac, 0.0, true);
+		probe[id.x].Source.y = destDensity;
+		float rayDensity = 0.0;
+		float length = distance(i.Source, i.Target);
+		float marchStep = max(MIN_PROBE_STEP_LENGTH, length * INV_RAY_SAMPLE_COUNT);
+		float3 rayDir = normalize(i.Target - i.Source);
+		float3 marchDir = marchStep * rayDir;
+		float3 marchPos = i.Source;
+
+		UNITY_LOOP
+		for (uint i = 0; i < RAY_SAMPLE_COUNT; i++)
+		{
+			marchPos += marchDir;
+			heightFrac = GetCloudHeightFractionForPoint(marchPos);
+			weatherData = CloudVolumetricSampleWeather(marchPos, 0.0);
+			rayDensity += SampleCloudDensity(marchPos, weatherData, heightFrac, 0.0, true);
+		}
+
+		probe[id.x].Source.z = rayDensity;
+	}
+}

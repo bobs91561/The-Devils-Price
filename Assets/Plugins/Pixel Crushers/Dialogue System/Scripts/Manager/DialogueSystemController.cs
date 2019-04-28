@@ -125,6 +125,7 @@ namespace PixelCrushers.DialogueSystem
         private IDialogueUI m_originalDialogueUI = null;
         [HideInInspector] // Prevents accidental serialization if inspector is in Debug mode.
         private DisplaySettings m_originalDisplaySettings = null;
+        private bool m_overrodeDisplaySettings = false; // Inspector Debug mode will deserialize default into m_originalDisplaySettings, so use this bool instead of counting on m_originalDisplaySettings being null.
         private bool m_isOverrideUIPrefab = false;
         private ConversationController m_conversationController = null;
         private IsDialogueEntryValidDelegate m_isDialogueEntryValid = null;
@@ -274,6 +275,7 @@ namespace PixelCrushers.DialogueSystem
 
         public void OnDestroy()
         {
+            //--- No need to unregister. Static functions: UnregisterLuaFunctions();
             if (dontDestroyOnLoad && allowOnlyOneInstance) applicationIsQuitting = true;
         }
 
@@ -928,6 +930,7 @@ namespace PixelCrushers.DialogueSystem
                     m_originalDialogueUI = dialogueUI;
                     m_currentDialogueUI = null;
                 }
+                m_overrodeDisplaySettings = true;
                 m_originalDisplaySettings = displaySettings;
                 displaySettings = overrideDisplaySettings.displaySettings;
                 if (overrideDisplaySettings.displaySettings.dialogueUI == null) overrideDisplaySettings.displaySettings.dialogueUI = m_originalDisplaySettings.dialogueUI;
@@ -936,7 +939,10 @@ namespace PixelCrushers.DialogueSystem
 
         private void RestoreOriginalUI()
         {
-            if (m_originalDisplaySettings != null) displaySettings = m_originalDisplaySettings;
+            if (m_overrodeDisplaySettings && m_originalDisplaySettings != null)
+            {
+                displaySettings = m_originalDisplaySettings;
+            }
             if (m_originalDialogueUI != null)
             {
                 if (m_isOverrideUIPrefab)
@@ -950,6 +956,7 @@ namespace PixelCrushers.DialogueSystem
             m_isOverrideUIPrefab = false;
             m_originalDialogueUI = null;
             m_originalDisplaySettings = null;
+            m_overrodeDisplaySettings = false;
         }
 
         private void OnDialogueEntrySpoken(Subtitle subtitle)
@@ -1600,6 +1607,20 @@ namespace PixelCrushers.DialogueSystem
             Lua.RegisterFunction("ShowAlert", null, typeof(DialogueSystemController).GetMethod("LuaShowAlert"));
             Lua.RegisterFunction("HideAlert", null, typeof(DialogueSystemController).GetMethod("LuaHideAlert"));
             Lua.RegisterFunction("RandomizeNextEntry", this, typeof(DialogueSystemController).GetMethod("RandomizeNextEntry"));
+            Lua.RegisterFunction("UpdateTracker", this, typeof(DialogueSystemController).GetMethod("SendUpdateTracker"));
+        }
+
+        private void UnregisterLuaFunctions()
+        {
+            Lua.UnregisterFunction("ShowAlert");
+            Lua.UnregisterFunction("HideAlert");
+            Lua.UnregisterFunction("RandomizeNextEntry");
+            Lua.UnregisterFunction("UpdateTracker");
+        }
+
+        public void SendUpdateTracker()
+        {
+            BroadcastMessage(DialogueSystemMessages.UpdateTracker, SendMessageOptions.DontRequireReceiver);
         }
 
         public static void LuaShowAlert(string message)

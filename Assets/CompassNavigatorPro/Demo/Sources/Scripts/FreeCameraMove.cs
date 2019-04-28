@@ -1,23 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace CompassNavigatorPro
-{
-	public class FreeCameraMove : MonoBehaviour
-	{
+namespace CompassNavigatorPro {
+	public class FreeCameraMove : MonoBehaviour {
 		public float cameraSensitivity = 150;
 		public float climbSpeed = 20;
 		public float normalMoveSpeed = 20;
 		public float slowMoveFactor = 0.25f;
 		public float fastMoveFactor = 3;
+		public Bounds bounds;
 
 		float rotationX = 0.0f;
 		Quaternion startRotation;
-
+	
 		float rotationY = 0.0f;
 
-		void Update ()
-		{
+		void Update () {
 			Vector2 mousePos = Input.mousePosition;
 			if (mousePos.x < 0 || mousePos.x > Screen.width || mousePos.y < 0 || mousePos.y > Screen.height)
 				return;
@@ -27,6 +25,8 @@ namespace CompassNavigatorPro
 
 			rotationY += Input.GetAxis ("Mouse Y") * cameraSensitivity * Time.deltaTime;
 			transform.localRotation *= Quaternion.AngleAxis (rotationY, Vector3.left);
+
+			Vector3 oldPos = transform.position;
 
 			if (Input.GetKey (KeyCode.LeftShift) || Input.GetKey (KeyCode.RightShift)) {
 				transform.position += transform.forward * (normalMoveSpeed * fastMoveFactor) * Input.GetAxis ("Vertical") * Time.deltaTime;
@@ -46,7 +46,11 @@ namespace CompassNavigatorPro
 				transform.position += transform.up * climbSpeed * Time.deltaTime;
 			}
 
-			if (transform.position.y<1) transform.position = new Vector3(transform.position.x, 1, transform.position.z);
+			transform.position = new Vector3 (transform.position.x, 1, transform.position.z);
+
+			if (!bounds.Contains (transform.position)) {
+				transform.position = oldPos;
+			}
 
 		}
 

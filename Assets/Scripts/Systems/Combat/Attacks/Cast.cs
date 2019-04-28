@@ -19,19 +19,25 @@ public class Cast : Attack
 
         damageMultiplier = skillSet.CastingDamage;
 
+        SetTransform();
+
+        if (g.GetComponentInChildren<DamageForPreSetupObjects>()) UsePreSetup();
+        else if(g.GetComponentInChildren<DamageForCustomObjects>()) UseCustom();
+    }
+
+    protected void SetTransform()
+    {
         Vector3 castingPoint = castingObject.transform.position;
 
         Vector3 attackerFwd = attacker.transform.forward;
         Vector3 attackerCtr = attacker.transform.position + attackerFwd * maxForwardDistance * .75f;
         attackerCtr.y = castingPoint.y;
         Vector3 rotated = (attackerCtr - castingPoint).normalized;
-        g.transform.position = !effectGrounded ? castingPoint : attacker.transform.position;
-        g.transform.forward = rotated;
-        g.layer = attacker.layer;
+        objectGenerated.transform.position = !effectGrounded ? castingPoint : attacker.transform.position;
+        objectGenerated.transform.forward = rotated;
+        objectGenerated.layer = attacker.layer;
 
-
-        if (g.GetComponentInChildren<DamageForPreSetupObjects>()) UsePreSetup();
-        else UseCustom();
+        if (objectGenerated.GetComponent<RFX1_Target>()) objectGenerated.GetComponent<RFX1_Target>().Target = targetObject;
     }
 
     private void UsePreSetup()
@@ -40,13 +46,13 @@ public class Cast : Attack
         g.GetComponentInChildren<DamageForPreSetupObjects>().gameObject.layer = attacker.layer;
         g.GetComponentInChildren<DamageForPreSetupObjects>().Initialize(damage * damageMultiplier, attacker);
         g.GetComponentInChildren<RFX1_TransformMotion>().CollidesWith = ~LayerMask.GetMask(LayerMask.LayerToName(attacker.layer), "Ignore Raycast", "Zone", "Dialogue");
-        if (g.GetComponent<RFX1_Target>()) g.GetComponent<RFX1_Target>().Target = targetObject;
+        
     }
 
     private void UseCustom()
     {
         GameObject g = objectGenerated;
-        g.GetComponent<DamageForCustomObjects>().Initialize(damage * damageMultiplier, ~LayerMask.GetMask(LayerMask.LayerToName(attacker.layer), "Ignore Raycast"), attacker);
+        g.GetComponent<DamageForCustomObjects>().Initialize(damage * damageMultiplier, ~LayerMask.GetMask(LayerMask.LayerToName(attacker.layer), "Ignore Raycast", "Zone", "Dialogue"), attacker);
     }
 
     public override void Initialize(GameObject g)

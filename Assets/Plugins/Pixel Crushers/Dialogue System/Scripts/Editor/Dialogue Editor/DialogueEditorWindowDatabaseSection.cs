@@ -33,6 +33,10 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
         private string globalSearchText = string.Empty;
         [SerializeField]
         private string globalReplaceText = string.Empty;
+        [SerializeField]
+        private bool globalSearchSpecificConversation = false;
+        [SerializeField]
+        private int globalSearchConversationIndex = -1;
 
         [SerializeField]
         private DatabaseFoldouts databaseFoldouts = new DatabaseFoldouts();
@@ -213,7 +217,16 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
             globalSearchText = EditorGUILayout.TextArea(globalSearchText);
             EditorGUILayout.LabelField("Replace With:");
             globalReplaceText = EditorGUILayout.TextArea(globalReplaceText);
-            EditorGUI.BeginDisabledGroup(database != null && string.IsNullOrEmpty(globalSearchText));
+            globalSearchSpecificConversation = EditorGUILayout.Toggle("Specific Conversation", globalSearchSpecificConversation);
+            if (globalSearchSpecificConversation)
+            {
+                ValidateConversationMenuTitleIndex();
+                if (conversationTitles == null) conversationTitles = GetConversationTitles();
+                globalSearchConversationIndex = EditorGUILayout.Popup(globalSearchConversationIndex, conversationTitles, GUILayout.Height(30));
+            }
+            var ready = database != null && !string.IsNullOrEmpty(globalSearchText) &&
+                (!globalSearchSpecificConversation || (0 <= globalSearchConversationIndex && globalSearchConversationIndex < conversationTitles.Length));
+            EditorGUI.BeginDisabledGroup(!ready);
             EditorGUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
             var logMatches = GUILayout.Button(new GUIContent("Search", "Log all matches to the Console window."), GUILayout.Width(120));
@@ -225,41 +238,48 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
 
             if (logMatches) LogGlobalSearchResults();
             if (searchAndReplace) RunGlobalSearchAndReplace(true);
-            if (replaceAll && EditorUtility.DisplayDialog("Replace All", "Replace all instances of '" + globalSearchText + "' with '" + globalReplaceText + "' in entire database?", "Replace All", "Cancel")) RunGlobalSearchAndReplace(false);
+            if (replaceAll && EditorUtility.DisplayDialog("Replace All", "Replace all instances of '" + globalSearchText + 
+                "' with '" + globalReplaceText + "' in " + (globalSearchSpecificConversation ? "selected conversation?" : "entire database?"), "Replace All", "Cancel")) RunGlobalSearchAndReplace(false);
         }
 
         private void LogGlobalSearchResults()
         {
             try
             {
-                var result = "Database matches for '" + globalSearchText + "': (click this log entry to see full report)";
+                var specificConversation = globalSearchSpecificConversation ? conversationTitles[globalSearchConversationIndex] : string.Empty;
+                var result = globalSearchSpecificConversation ? "Conversation '" + specificConversation + "' matches for '" + globalSearchText + "': (click this log entry to see full report)"
+                    : "Database matches for '" + globalSearchText + "': (click this log entry to see full report)";
 
-                if (database.globalUserScript.Contains(globalSearchText))
+                if (!globalSearchSpecificConversation && database.globalUserScript.Contains(globalSearchText))
                 {
                     result += "\nGlobal User Script: " + database.globalUserScript;
                 }
 
-                if (database.description.Contains(globalSearchText))
+                if (!globalSearchSpecificConversation && database.description.Contains(globalSearchText))
                 {
                     result += "\nDescription: " + database.description;
                 }
 
                 float size = database.actors.Count + database.items.Count + database.locations.Count + database.variables.Count + database.conversations.Count;
 
-                if (EditorUtility.DisplayCancelableProgressBar("Searching Database", "Searching actors for '" + globalSearchText + "'. Please wait...", 0)) return;
-                result += LogSearchResultsInAssetList<Actor>(database.actors, "Actor");
-                if (EditorUtility.DisplayCancelableProgressBar("Searching Database", "Searching quests/items for '" + globalSearchText + "'. Please wait...", database.actors.Count / size)) return;
-                result += LogSearchResultsInAssetList<Item>(database.items, "Quest/Item");
-                if (EditorUtility.DisplayCancelableProgressBar("Searching Database", "Searching locations for '" + globalSearchText + "'. Please wait...", (database.actors.Count + database.items.Count) / size)) return;
-                result += LogSearchResultsInAssetList<Location>(database.locations, "Location");
-                if (EditorUtility.DisplayCancelableProgressBar("Searching Database", "Searching variables for '" + globalSearchText + "'. Please wait...", (database.actors.Count + database.items.Count + database.locations.Count) / size)) return;
-                result += LogSearchResultsInAssetList<Variable>(database.variables, "Variable");
+                if (!globalSearchSpecificConversation)
+                {
+                    if (EditorUtility.DisplayCancelableProgressBar("Searching Database", "Searching actors for '" + globalSearchText + "'. Please wait...", 0)) return;
+                    result += LogSearchResultsInAssetList<Actor>(database.actors, "Actor");
+                    if (EditorUtility.DisplayCancelableProgressBar("Searching Database", "Searching quests/items for '" + globalSearchText + "'. Please wait...", database.actors.Count / size)) return;
+                    result += LogSearchResultsInAssetList<Item>(database.items, "Quest/Item");
+                    if (EditorUtility.DisplayCancelableProgressBar("Searching Database", "Searching locations for '" + globalSearchText + "'. Please wait...", (database.actors.Count + database.items.Count) / size)) return;
+                    result += LogSearchResultsInAssetList<Location>(database.locations, "Location");
+                    if (EditorUtility.DisplayCancelableProgressBar("Searching Database", "Searching variables for '" + globalSearchText + "'. Please wait...", (database.actors.Count + database.items.Count + database.locations.Count) / size)) return;
+                    result += LogSearchResultsInAssetList<Variable>(database.variables, "Variable");
+                }
 
                 int numConversationsDone = 0;
                 foreach (var conversation in database.conversations)
                 {
-                    if (EditorUtility.DisplayCancelableProgressBar("Searching Database", "Searching conversation '" + conversation.Title + "' for '" + globalSearchText + "'. Please wait...", (database.actors.Count + database.items.Count + database.locations.Count + numConversationsDone) / size)) return;
                     numConversationsDone++;
+                    if (globalSearchSpecificConversation && !string.Equals(conversation.Title, specificConversation)) continue;
+                    if (EditorUtility.DisplayCancelableProgressBar("Searching Database", "Searching conversation '" + conversation.Title + "' for '" + globalSearchText + "'. Please wait...", (database.actors.Count + database.items.Count + database.locations.Count + numConversationsDone) / size)) return;
                     foreach (var field in conversation.fields)
                     {
                         if (field.title.Contains(globalSearchText) || field.value.Contains(globalSearchText))
@@ -323,8 +343,10 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
             int matches = 0;
             try
             {
+                var specificConversation = globalSearchSpecificConversation ? conversationTitles[globalSearchConversationIndex] : string.Empty;
+
                 bool cancel = false;
-                if (database.globalUserScript.Contains(globalSearchText))
+                if (!globalSearchSpecificConversation && database.globalUserScript.Contains(globalSearchText))
                 {
                     matches++;
                     var confirmed = !interactive || ConfirmReplacement("Global User Script:\n" + database.globalUserScript, out cancel);
@@ -335,7 +357,7 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                     }
                 }
 
-                if (database.description.Contains(globalSearchText))
+                if (!globalSearchSpecificConversation && database.description.Contains(globalSearchText))
                 {
                     matches++;
                     var confirmed = !interactive || ConfirmReplacement("Description:\n" + database.description, out cancel);
@@ -347,24 +369,29 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                 }
 
                 float size = database.actors.Count + database.items.Count + database.locations.Count + database.variables.Count + database.conversations.Count;
-                if (!interactive && EditorUtility.DisplayCancelableProgressBar("Search & Replace", "Replacing '" + globalSearchText + "' with '" + globalReplaceText + "' in actors. Please wait...", 0)) return;
-                matches += RunGlobalSearchAndReplaceAssetList<Actor>(database.actors, interactive, out cancel);
-                if (cancel) return;
-                if (!interactive && EditorUtility.DisplayCancelableProgressBar("Search & Replace", "Replacing '" + globalSearchText + "' with '" + globalReplaceText + "' in quests/items. Please wait...", database.actors.Count / size)) return;
-                matches += RunGlobalSearchAndReplaceAssetList<Item>(database.items, interactive, out cancel);
-                if (cancel) return;
-                if (!interactive && EditorUtility.DisplayCancelableProgressBar("Search & Replace", "Replacing '" + globalSearchText + "' with '" + globalReplaceText + "' in locations. Please wait...", (database.actors.Count + database.items.Count) / size)) return;
-                matches += RunGlobalSearchAndReplaceAssetList<Location>(database.locations, interactive, out cancel);
-                if (cancel) return;
-                if (!interactive && EditorUtility.DisplayCancelableProgressBar("Search & Replace", "Replacing '" + globalSearchText + "' with '" + globalReplaceText + "' in variables. Please wait...", (database.actors.Count + database.items.Count + database.locations.Count) / size)) return;
-                matches += RunGlobalSearchAndReplaceAssetList<Variable>(database.variables, interactive, out cancel);
-                if (cancel) return;
+
+                if (!globalSearchSpecificConversation)
+                {
+                    if (!interactive && EditorUtility.DisplayCancelableProgressBar("Search & Replace", "Replacing '" + globalSearchText + "' with '" + globalReplaceText + "' in actors. Please wait...", 0)) return;
+                    matches += RunGlobalSearchAndReplaceAssetList<Actor>(database.actors, interactive, out cancel);
+                    if (cancel) return;
+                    if (!interactive && EditorUtility.DisplayCancelableProgressBar("Search & Replace", "Replacing '" + globalSearchText + "' with '" + globalReplaceText + "' in quests/items. Please wait...", database.actors.Count / size)) return;
+                    matches += RunGlobalSearchAndReplaceAssetList<Item>(database.items, interactive, out cancel);
+                    if (cancel) return;
+                    if (!interactive && EditorUtility.DisplayCancelableProgressBar("Search & Replace", "Replacing '" + globalSearchText + "' with '" + globalReplaceText + "' in locations. Please wait...", (database.actors.Count + database.items.Count) / size)) return;
+                    matches += RunGlobalSearchAndReplaceAssetList<Location>(database.locations, interactive, out cancel);
+                    if (cancel) return;
+                    if (!interactive && EditorUtility.DisplayCancelableProgressBar("Search & Replace", "Replacing '" + globalSearchText + "' with '" + globalReplaceText + "' in variables. Please wait...", (database.actors.Count + database.items.Count + database.locations.Count) / size)) return;
+                    matches += RunGlobalSearchAndReplaceAssetList<Variable>(database.variables, interactive, out cancel);
+                    if (cancel) return;
+                }
 
                 int numConversationsDone = 0;
                 foreach (var conversation in database.conversations)
                 {
-                    if (!interactive && EditorUtility.DisplayCancelableProgressBar("Search & Replace", "Replacing '" + globalSearchText + "' with '" + globalReplaceText + "' in conversation '" + conversation.Title + "'. Please wait...", (database.actors.Count + database.items.Count + database.locations.Count + database.variables.Count + numConversationsDone) / size)) return;
                     numConversationsDone++;
+                    if (globalSearchSpecificConversation && !string.Equals(conversation.Title, specificConversation)) continue;
+                    if (!interactive && EditorUtility.DisplayCancelableProgressBar("Search & Replace", "Replacing '" + globalSearchText + "' with '" + globalReplaceText + "' in conversation '" + conversation.Title + "'. Please wait...", (database.actors.Count + database.items.Count + database.locations.Count + database.variables.Count + numConversationsDone) / size)) return;
                     matches += RunGlobalSearchAndReplaceFieldList(conversation.fields, conversation, interactive, out cancel);
                     if (cancel) return;
                     foreach (var entry in conversation.dialogueEntries)

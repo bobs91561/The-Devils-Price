@@ -36,6 +36,48 @@ https://www.assetstore.unity3d.com/en/#!/search/page=1/sortby=popularity/query=p
 Version history
 ---------------
 
+V4.5.2
+- Performance improvements
+
+V4.5.1
+- [Fix] Fixed issue with mini-map icon visibility
+
+V4.5
+- Added contrast and brightness options to mini-map inspector
+- Improved compatibility of mini-map and Gaia water system
+- Improved inspector with collapsible sections to reduce clutter
+
+V4.4
+- Reworked mini-map internals
+- Added: minimap screen location
+- Added: minimap snapshot frequency (in orthographic mode). Can choose between: continuous, time interval, distance travelled.
+
+V4.3.1
+- Added cardinal vertical offset to fine-adjust cardinal/ordinal points vertical position
+
+V4.3
+- Added mini-map buttons for zoom control
+- Added mini-map full screen mode
+- API: added miniMapZoomState, MiniMapZoomToggle
+
+V4.2
+- API: added fogOfWarTextureData to retrieve/set fog of war state between sessions
+
+V4.1.2
+- Fog of War now correctly refreshes between scene changes
+- Updated documentation with available fog of war methods and scaling tips
+
+V4.1.1
+- Fog of War: added Default Amount/Alpha setting
+
+V4.1
+- Mini-Map: added min/max zoom ranges. Use MiniMapZoomLevel property to change current zoom.
+- Mini-Map: added Keep Straight option
+- Fog of War: auto clear option
+
+V4.0
+- New Mini-Map fog of war feature!
+
 V3.5.1
 - [Fix] Fixed CompassPro singleton not found if gameobject is renamed
 

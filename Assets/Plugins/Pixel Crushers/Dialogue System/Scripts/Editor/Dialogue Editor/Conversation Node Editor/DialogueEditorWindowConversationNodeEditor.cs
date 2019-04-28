@@ -263,7 +263,7 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                         {
                             connectorColor = IncomingLinkColor;
                         }
-                        DrawLink(start, end, connectorColor);
+                        DrawLink(start, end, connectorColor, link.priority != ConditionPriority.Normal);
                         HandleConnectorEvents(link, start, end);
                     }
                 }
@@ -334,7 +334,7 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                 Vector3 end = (linkTargetEntry != null)
                     ? new Vector3(linkTargetEntry.canvasRect.center.x, linkTargetEntry.canvasRect.center.y, 0)
                     : new Vector3(Event.current.mousePosition.x, Event.current.mousePosition.y, 0);
-                DrawLink(start, end, Color.white);
+                DrawLink(start, end, Color.white, false);
             }
         }
 
@@ -443,6 +443,10 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                 var text = currentHoveredEntry.currentDialogueText;
                 if (string.IsNullOrEmpty(text)) text = currentHoveredEntry.currentMenuText;
                 if (string.IsNullOrEmpty(text)) text = currentHoveredEntry.Title;
+                if (Application.isPlaying && DialogueManager.instance != null && DialogueManager.instance.includeSimStatus)
+                {
+                    text += "\nSimStatus=" + DialogueLua.GetSimStatus(currentHoveredEntry);
+                }
                 currentHoverGUIContent = string.IsNullOrEmpty(text) ? null : new GUIContent(text);
                 if (currentHoverGUIContent != null)
                 {
@@ -1019,6 +1023,9 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
             }
             contextMenu.AddItem(new GUIContent("Duplicate Conversation"), false, CopyConversationCallback, null);
             contextMenu.AddItem(new GUIContent("Delete Conversation"), false, DeleteConversationCallback, null);
+
+            AddCanvasContextMenuGotoItems(contextMenu);
+
             contextMenu.ShowAsContext();
             contextMenuPosition = Event.current.mousePosition;
 
@@ -1032,6 +1039,9 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
             GenericMenu contextMenu = new GenericMenu();
             contextMenu.AddItem(new GUIContent("Delete Link"), false, DeleteLinkCallback, selectedLink);
             contextMenu.AddItem(new GUIContent("Arrange Nodes..."), false, ArrangeNodesCallback, null);
+
+            AddCanvasContextMenuGotoItems(contextMenu);
+
             contextMenu.ShowAsContext();
             contextMenuPosition = Event.current.mousePosition;
 
@@ -1086,10 +1096,31 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
             }
             contextMenu.AddItem(new GUIContent("Arrange Nodes..."), false, ArrangeNodesCallback, entry);
             contextMenu.AddItem(new GUIContent("Snap All Nodes to Grid"), false, SnapAllNodesToGrid);
+
+            AddCanvasContextMenuGotoItems(contextMenu);
+
             contextMenu.ShowAsContext();
             contextMenuPosition = Event.current.mousePosition;
 
             EditorZoomArea.Begin(_zoom, _zoomArea);
+        }
+
+        private void AddCanvasContextMenuGotoItems(GenericMenu contextMenu)
+        {
+            contextMenu.AddSeparator(string.Empty);
+            contextMenu.AddItem(new GUIContent("Home Position"), false, GotoCanvasHomePosition);
+            if (currentConversation != null)
+            {
+                contextMenu.AddItem(new GUIContent("Center on START"), false, GotoStartNodePosition);
+                if (IsConversationActive())
+                {
+                    contextMenu.AddItem(new GUIContent("Center on Current Entry"), false, GotoCurrentRuntimeEntry);
+                }
+            }
+            else
+            {
+                contextMenu.AddDisabledItem(new GUIContent("Center on START"));
+            }
         }
 
         private void AddChildCallback(object o)

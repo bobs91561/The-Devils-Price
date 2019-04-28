@@ -6,7 +6,7 @@ namespace PixelCrushers.Wrappers
 {
 
     /// <summary>
-    /// This wrapper for PixelCrushers.DeathEvent keeps references intact if you
+    /// This wrapper for PixelCrushers.DisappearEvent keeps references intact if you
     /// switch between the compiled assembly and source code versions of the original
     /// class.
     /// </summary>

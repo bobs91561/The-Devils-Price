@@ -74,7 +74,6 @@ namespace PixelCrushers.DialogueSystem.Articy
             if (!string.IsNullOrEmpty(s))
             {
                 if (convertMarkupToRichText) s = ReplaceMarkup(s);
-
                 foreach (string htmlTag in htmlTags)
                 {
                     s = s.Replace(htmlTag, string.Empty);
@@ -102,7 +101,7 @@ namespace PixelCrushers.DialogueSystem.Articy
         // Apply the styles to the actual text. The style tags never overlap, so they can be processed in order.
         static readonly Regex TextRegex = new Regex(@"<p id=""s0"">(?<text>.*?)</p>", Options);
         static readonly Regex PartsRegex = new Regex(@"<span id=""(?<id>s[1-9]\d*)"">(?<text>.*?)</span>", Options); // Style id : Pure text  
-        
+
         static string ReplaceMarkup(string s)
         {
             if (string.IsNullOrEmpty(s)) return s;
@@ -130,26 +129,58 @@ namespace PixelCrushers.DialogueSystem.Articy
                 Color = ColorRegex.Match(style.Style).Groups["color"].Value
             });
 
-            // Get texts
-            var fullText = TextRegex.Match(s).Value; // The dialogue text with <span> tags
-            var innerTexts = PartsRegex.Matches(fullText)
-                                       .Cast<Match>()
-                                       .Select(match => new {
-                                           StyleId = match.Groups["id"].Value,
-                                           Text = match.Groups["text"].Value
-                                       });
 
-            // Apply the styles to the texts
-            var editedParts = innerTexts.Select(text => {
-                var currentStyle = styles.First(style => style.Id == text.StyleId);
-                return ApplyStyle(
-                        innerText: text.Text,
-                        bold: currentStyle.Bold,
-                        italic: currentStyle.Italic,
-                        color: currentStyle.Color
-                );
-            }).ToArray();
-            string editedLine = string.Join(string.Empty, editedParts);
+
+            // Multiparagraph fix contributed by Francois Dujardin:
+            var allParagraphs = TextRegex.Matches(s);
+
+            //process each paragraph
+            List<string> paragraphs = new List<string>();
+            foreach (var v in allParagraphs)
+            {
+                var innerTexts = PartsRegex.Matches(v.ToString())
+                                    .Cast<Match>()
+                                    .Select(match => new {
+                                        StyleId = match.Groups["id"].Value,
+                                        Text = match.Groups["text"].Value
+                                    });
+                // Apply the styles to the texts
+                var editedParts = innerTexts.Select(text => {
+                    var currentStyle = styles.First(style => style.Id == text.StyleId);
+                    return ApplyStyle(
+                            innerText: text.Text,
+                            bold: currentStyle.Bold,
+                            italic: currentStyle.Italic,
+                            color: currentStyle.Color
+                    );
+                }).ToArray();
+                string tmp = string.Join(string.Empty, editedParts);
+                if (!string.IsNullOrEmpty(tmp))
+                    paragraphs.Add(tmp);
+            }
+            string editedLine = string.Join("\n", paragraphs.ToArray());
+
+            //// Get texts (ORIGINAL CODE)
+            //var fullText = TextRegex.Match(s).Value; // The dialogue text with <span> tags
+
+            //var innerTexts = PartsRegex.Matches(fullText)
+            //                           .Cast<Match>()
+            //                           .Select(match => new {
+            //                               StyleId = match.Groups["id"].Value,
+            //                               Text = match.Groups["text"].Value
+            //                           });
+
+            //// Apply the styles to the texts
+            //var editedParts = innerTexts.Select(text => {
+            //    var currentStyle = styles.First(style => style.Id == text.StyleId);
+            //    return ApplyStyle(
+            //            innerText: text.Text,
+            //            bold: currentStyle.Bold,
+            //            italic: currentStyle.Italic,
+            //            color: currentStyle.Color
+            //    );
+            //}).ToArray();
+            //string editedLine = string.Join(string.Empty, editedParts);
 
             return editedLine;
         }

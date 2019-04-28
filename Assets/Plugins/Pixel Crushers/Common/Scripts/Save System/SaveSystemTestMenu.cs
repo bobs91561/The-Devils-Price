@@ -28,15 +28,19 @@ namespace PixelCrushers
         [Tooltip("Pause the game while the menu is open.")]
         public bool pauseWhileOpen = false;
 
+        [Tooltip("If Input Device Manager mode is mouse, show cursor when opening and hide when closing.")]
+        public bool allowCursorWhileOpen = false;
+
         public UnityEvent onShow = new UnityEvent();
         public UnityEvent onHide = new UnityEvent();
 
         private bool m_isVisible = false;
-        private float instructionsDoneTime;
+        private float m_instructionsDoneTime;
+        private bool m_prevCursorState = false;
 
         private void Awake()
         {
-            instructionsDoneTime = string.IsNullOrEmpty(instructions) ? 0 : Time.time + instructionsDuration;
+            m_instructionsDoneTime = string.IsNullOrEmpty(instructions) ? 0 : Time.time + instructionsDuration;
         }
 
         private void Update()
@@ -48,13 +52,40 @@ namespace PixelCrushers
         {
             m_isVisible = !m_isVisible;
             if (pauseWhileOpen) Time.timeScale = m_isVisible ? 0 : 1;
-            if (m_isVisible) onShow.Invoke(); else onHide.Invoke();
+            if (m_isVisible)
+            {
+                HandleCursor(true);
+                onShow.Invoke();
+            }
+            else
+            {
+                HandleCursor(false);
+                onHide.Invoke();
+            }
+        }
+
+        void HandleCursor(bool open)
+        {
+            if (allowCursorWhileOpen && InputDeviceManager.deviceUsesCursor)
+            {
+                if (open)
+                {
+                    m_prevCursorState = Cursor.visible;
+                    Cursor.visible = true;
+                    Cursor.lockState = CursorLockMode.None;
+                }
+                else
+                {
+                    Cursor.visible = m_prevCursorState;
+                    Cursor.lockState = m_prevCursorState ? CursorLockMode.None : CursorLockMode.Locked;
+                }
+            }
         }
 
         void OnGUI()
         {
             // Draw instructions if within the timeframe to do so:
-            if (Time.time < instructionsDoneTime)
+            if (Time.time < m_instructionsDoneTime)
             {
                 GUILayout.Label(instructions);
             }

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using UnityEngine;
 using com.ootii.Base;
+using com.ootii.Data.Serializers;
 using com.ootii.Geometry;
 using com.ootii.Helpers;
 using com.ootii.Input;
@@ -710,8 +712,8 @@ namespace com.ootii.Cameras
             lStringBuilder.Append(", \"AnchorIndex\" : \"" + _AnchorIndex.ToString() + "\"");
             lStringBuilder.Append(", \"AnchorOffset\" : \"" + _AnchorOffset.ToString("G8") + "\"");
             lStringBuilder.Append(", \"Offset\" : \"" + _Offset.ToString("G8") + "\"");
-            lStringBuilder.Append(", \"Distance\" : \"" + Distance.ToString("f5") + "\"");
-            lStringBuilder.Append(", \"MaxDistance\" : \"" + MaxDistance.ToString("f5") + "\"");
+            lStringBuilder.Append(", \"Distance\" : \"" + Distance.ToString("f5", CultureInfo.InvariantCulture) + "\"");
+            lStringBuilder.Append(", \"MaxDistance\" : \"" + MaxDistance.ToString("f5", CultureInfo.InvariantCulture) + "\"");
             lStringBuilder.Append(", \"IsCollisionEnabled\" : \"" + _IsCollisionEnabled.ToString() + "\"");
             lStringBuilder.Append(", \"IsFadingEnabled\" : \"" + _IsFadingEnabled.ToString() + "\"");
             lStringBuilder.Append(", \"SpecifyFadeRenderers\" : \"" + _SpecifyFadeRenderers.ToString() + "\"");
@@ -762,7 +764,7 @@ namespace com.ootii.Cameras
                 else if (lProperty.PropertyType == typeof(List<int>))
                 {
                     List<int> lList = lValue as List<int>;
-                    lStringBuilder.Append(", \"" + lProperty.Name + "\" : \"" + string.Join(",", lList.Select(n => n.ToString()).ToArray()) + "\"");
+                    lStringBuilder.Append(", \"" + lProperty.Name + "\" : \"" + string.Join(",", lList.Select(n => n.ToString(CultureInfo.InvariantCulture)).ToArray()) + "\"");
                 }
                 else if (lProperty.PropertyType == typeof(AnimationCurve))
                 {
@@ -772,7 +774,11 @@ namespace com.ootii.Cameras
                     for (int i = 0; i < lCurve.keys.Length; i++)
                     {
                         Keyframe lKey = lCurve.keys[i];
-                        lStringBuilder.Append(lKey.time.ToString("f5") + "|" + lKey.value.ToString("f5") + "|" + lKey.tangentMode.ToString() + "|" + lKey.inTangent.ToString("f5") + "|" + lKey.outTangent.ToString("f5"));
+                        lStringBuilder.Append(lKey.time.ToString("f5", CultureInfo.InvariantCulture) + "|" 
+                                            + lKey.value.ToString("f5", CultureInfo.InvariantCulture) + "|" 
+                                            + lKey.tangentMode.ToString(CultureInfo.InvariantCulture) + "|" 
+                                            + lKey.inTangent.ToString("f5", CultureInfo.InvariantCulture) + "|" 
+                                            + lKey.outTangent.ToString("f5", CultureInfo.InvariantCulture));
 
                         if (i < lCurve.keys.Length - 1) { lStringBuilder.Append(";"); }
                     }
@@ -870,7 +876,9 @@ namespace com.ootii.Cameras
                 {
                     if (lValueNode.Value.Length > 0)
                     {
-                        List<int> lValues = lValueNode.Value.Split(',').Select(x => int.Parse(x)).ToList();
+                        List<int> lValues = lValueNode.Value.Split(',')
+                            .Select(x => int.Parse(x, NumberStyles.Integer, CultureInfo.InvariantCulture))
+                            .ToList();
                         lProperty.SetValue(this, lValues, null);
                     }
                 }
@@ -888,13 +896,13 @@ namespace com.ootii.Cameras
                             {
                                 int lIntValue = 0;
                                 float lFloatValue = 0f;
-
+                                
                                 Keyframe lKey = new Keyframe();
-                                if (float.TryParse(lElements[0], out lFloatValue)) { lKey.time = lFloatValue; }
-                                if (float.TryParse(lElements[1], out lFloatValue)) { lKey.value = lFloatValue; }
-                                if (int.TryParse(lElements[2], out lIntValue)) { lKey.tangentMode = lIntValue; }
-                                if (float.TryParse(lElements[3], out lFloatValue)) { lKey.inTangent = lFloatValue; }
-                                if (float.TryParse(lElements[4], out lFloatValue)) { lKey.outTangent = lFloatValue; }
+                                if (float.TryParse(lElements[0], NumberStyles.Float, CultureInfo.InvariantCulture, out lFloatValue)) { lKey.time = lFloatValue; }
+                                if (float.TryParse(lElements[1], NumberStyles.Float, CultureInfo.InvariantCulture,  out lFloatValue)) { lKey.value = lFloatValue; }
+                                if (int.TryParse(lElements[2], NumberStyles.Integer, CultureInfo.InvariantCulture,  out lIntValue)) { lKey.tangentMode = lIntValue; }
+                                if (float.TryParse(lElements[3], NumberStyles.Float, CultureInfo.InvariantCulture,  out lFloatValue)) { lKey.inTangent = lFloatValue; }
+                                if (float.TryParse(lElements[4], NumberStyles.Float, CultureInfo.InvariantCulture,  out lFloatValue)) { lKey.outTangent = lFloatValue; }
 
                                 lCurve.AddKey(lKey);
                             }

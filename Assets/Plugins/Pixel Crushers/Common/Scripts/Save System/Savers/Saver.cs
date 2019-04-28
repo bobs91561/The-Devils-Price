@@ -24,6 +24,10 @@ namespace PixelCrushers
         [SerializeField]
         private bool m_saveAcrossSceneChanges = false;
 
+        [Tooltip("When starting, restore this saver's state from current saved game data. Normally the save system restores state when loading games or changing scenes without this checkbox.")]
+        [SerializeField]
+        private bool m_restoreStateOnStart = false;
+
         protected string m_runtimeKey = null;
 
         /// <summary>
@@ -80,9 +84,21 @@ namespace PixelCrushers
             set { m_saveAcrossSceneChanges = value; }
         }
 
+        public virtual bool restoreStateOnStart
+        {
+            get { return m_restoreStateOnStart; }
+            set { m_restoreStateOnStart = value; }
+        }
+
         public virtual void Awake() { }
 
-        public virtual void Start() { }
+        public virtual void Start()
+        {
+            if (restoreStateOnStart)
+            {
+                ApplyData(SaveSystem.currentSavedGameData.GetData(key));
+            }
+        }
 
         public virtual void Reset() { }
 

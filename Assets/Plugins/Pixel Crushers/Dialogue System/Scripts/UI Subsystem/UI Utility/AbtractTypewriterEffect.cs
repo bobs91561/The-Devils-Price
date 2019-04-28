@@ -50,6 +50,9 @@ namespace PixelCrushers.DialogueSystem
         [Tooltip("If audio clip is still playing from previous character, stop and restart it when typing next character.")]
         public bool interruptAudioClip = false;
 
+        [Tooltip("Use AudioSource.PlayOneShot instead of Play. Slightly heavier performance but produces different effect.")]
+        public bool usePlayOneShot = false;
+
         /// <summary>
         /// Don't play audio on these characters.
         /// </summary>
@@ -186,7 +189,7 @@ namespace PixelCrushers.DialogueSystem
             return false;
         }
 
-        protected void PlayCharacterAudio()
+        protected virtual void PlayCharacterAudio()
         {
             if (audioClip == null || audioSource == null) return;
             AudioClip randomClip = null;
@@ -197,16 +200,31 @@ namespace PixelCrushers.DialogueSystem
             }
             if (interruptAudioClip)
             {
-                if (audioSource.isPlaying) audioSource.Stop();
-                if (randomClip != null) audioSource.clip = randomClip;
-                audioSource.Play();
+                if (usePlayOneShot)
+                {
+                    if (randomClip != null) audioSource.clip = randomClip;
+                    audioSource.PlayOneShot(audioSource.clip);
+                }
+                else
+                {
+                    if (audioSource.isPlaying) audioSource.Stop();
+                    if (randomClip != null) audioSource.clip = randomClip;
+                    audioSource.Play();
+                }
             }
             else
             {
                 if (!audioSource.isPlaying)
                 {
                     if (randomClip != null) audioSource.clip = randomClip;
-                    audioSource.Play();
+                    if (usePlayOneShot)
+                    {
+                        audioSource.PlayOneShot(audioSource.clip);
+                    }
+                    else
+                    {
+                        audioSource.Play();
+                    }
                 }
             }
         }

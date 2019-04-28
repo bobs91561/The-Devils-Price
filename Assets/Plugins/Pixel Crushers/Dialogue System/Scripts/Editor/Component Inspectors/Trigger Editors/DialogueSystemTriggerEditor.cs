@@ -530,6 +530,18 @@ namespace PixelCrushers.DialogueSystem
                     {
                         EditorGUILayout.PropertyField(serializedObject.FindProperty("conversationActor"), true);
                         EditorGUILayout.PropertyField(serializedObject.FindProperty("conversationConversant"), true);
+
+                        var entryIDProperty = serializedObject.FindProperty("startConversationEntryID");
+                        var specifyEntryID = EditorGUILayout.Toggle(new GUIContent("Specify Starting Entry", "Start conversation at a specific entry ID."), (entryIDProperty.intValue != -1));
+                        if (specifyEntryID)
+                        {
+                            entryIDProperty.intValue = Mathf.Max(0, EditorGUILayout.IntField(new GUIContent("Entry ID", "Start at this entry ID."), entryIDProperty.intValue));
+                        }
+                        else
+                        {
+                            entryIDProperty.intValue = -1;
+                        }
+                        
                         EditorGUILayout.PropertyField(serializedObject.FindProperty("exclusive"), true);
                         EditorGUILayout.PropertyField(serializedObject.FindProperty("skipIfNoValidEntries"), true);
                         EditorGUILayout.PropertyField(serializedObject.FindProperty("stopConversationOnTriggerExit"), true);

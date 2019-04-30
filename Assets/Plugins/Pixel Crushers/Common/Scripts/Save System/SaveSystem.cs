@@ -52,6 +52,8 @@ namespace PixelCrushers
 
         private static AsyncOperation m_currentAsyncOperation = null;
 
+        private static bool m_isQuitting = false;
+
         /// <summary>
         /// When loading a game, load the scene that the game was saved in.
         /// </summary>
@@ -98,7 +100,7 @@ namespace PixelCrushers
         {
             get
             {
-                if (m_instance == null)
+                if (m_instance == null && !m_isQuitting)
                 {
                     m_instance = new GameObject("Save System", typeof(SaveSystem)).GetComponent<SaveSystem>();
                 }
@@ -113,7 +115,7 @@ namespace PixelCrushers
                 if (m_serializer == null)
                 {
                     m_serializer = instance.GetComponent<DataSerializer>();
-                    if (m_serializer == null)
+                    if (m_serializer == null && !m_isQuitting)
                     {
                         Debug.Log("Save System: No DataSerializer found on " + instance.name + ". Adding JsonDataSerializer.", instance);
                         m_serializer = instance.gameObject.AddComponent<JsonDataSerializer>();
@@ -130,7 +132,7 @@ namespace PixelCrushers
                 if (m_storer == null)
                 {
                     m_storer = instance.GetComponent<SavedGameDataStorer>();
-                    if (m_storer == null)
+                    if (m_storer == null && !m_isQuitting)
                     {
                         Debug.Log("Save System: No SavedGameDataStorer found on " + instance.name + ". Adding PlayerPrefsSavedGameDataStorer.", instance);
                         m_storer = instance.gameObject.AddComponent<PlayerPrefsSavedGameDataStorer>();
@@ -237,6 +239,7 @@ namespace PixelCrushers
 
         private void OnApplicationQuit()
         {
+            m_isQuitting = true;
             BeforeSceneChange();
         }
 

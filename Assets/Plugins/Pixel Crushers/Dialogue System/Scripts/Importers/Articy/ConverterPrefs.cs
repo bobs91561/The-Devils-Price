@@ -66,6 +66,7 @@ namespace PixelCrushers.DialogueSystem.Articy
         public RecursionModes RecursionMode { get; set; }
         public ConvertDropdownsModes ConvertDropdownsAs { get; set; }
         public ConvertSlotsModes ConvertSlotsAs { get; set; }
+        public bool UseTechnicalNames { get; set; }
         public bool DirectConversationLinksToEntry1 { get; set; }
         public bool ConvertMarkupToRichText { get; set; }
         public string FlowFragmentScript { get; set; }
@@ -95,6 +96,7 @@ namespace PixelCrushers.DialogueSystem.Articy
             RecursionMode = RecursionModes.On;
             ConvertDropdownsAs = ConvertDropdownsModes.Ints;
             ConvertSlotsAs = ConvertSlotsModes.DisplayName;
+            UseTechnicalNames = false;
             DirectConversationLinksToEntry1 = false;
             ConvertMarkupToRichText = true;
             FlowFragmentScript = DefaultFlowFragmentScript;

@@ -487,7 +487,7 @@ namespace PixelCrushers.DialogueSystem
             if (abandonPopup != null)
             {
                 Tools.SetGameObjectActive(abandonPopup, true);
-                if (abandonQuestTitle != null) abandonQuestTitle.text = title;
+                if (abandonQuestTitle != null) abandonQuestTitle.text = QuestLog.GetQuestTitle(title);
                 if (autoFocus && (UnityEngine.EventSystems.EventSystem.current != null))
                 {
                     var button = abandonPopup.GetComponentInChildren<UnityEngine.UI.Button>();

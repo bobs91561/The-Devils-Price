@@ -80,7 +80,7 @@ public class PlayerController : AttackController {
         DodgeKey = keys[2];
     }
     
-    public void SetAttacks()
+    public override void SetAttacks()
     {
         PopulateKeys();
         Initialize();
@@ -91,10 +91,10 @@ public class PlayerController : AttackController {
         {
             a = i < _skillSet.attacks.Count ? _skillSet.attacks[i] : null;
             availableAttacks.Add(k, a);
-            if (a) _cooldowns.Add(a, a.coolDown);
+            //if (a) _cooldowns.Add(a, a.coolDown);
             i++;
         }
-
+        SetUpCooldowns();
         //Add non-regular attacks
         a = _skillSet.ChargedAttack;
         if (a) _cooldowns.Add(a, a.coolDown);
@@ -237,7 +237,7 @@ public class PlayerController : AttackController {
 
     #endregion
 
-
+    #region Input Actions
     private List<string> DetermineAxis()
     {
         var axes = new List<string>();
@@ -267,6 +267,48 @@ public class PlayerController : AttackController {
             SendAttack(_skillSet.BlockAttack);
         }
 
+    }
+    #endregion
+
+    public void SwapAttackKeys(Attack old, Attack a)
+    {
+        string key = ""; 
+        // If both  are in the current set of attacks, simply swap the two keycodes
+        if (_attacks.Contains(old) && _attacks.Contains(a))
+        {
+            // If the old attack is not present in the dictionary, break out
+            if (!availableAttacks.ContainsValue(old)) return;
+
+            // Otherwise, switch attacks
+            foreach(KeyValuePair<string, Attack> k in availableAttacks)
+            {
+                if (k.Value == old)
+                {
+                    key = k.Key;
+                    break;
+                }
+            }
+
+            availableAttacks[key] = a;
+            return;
+        }
+
+        // If this is a new attack, use the Skillset method to AddAttack and then swap
+        _skillSet.AddAttack(a);
+        RefreshAttacks();
+        if (!availableAttacks.ContainsValue(old)) return;
+
+        foreach (KeyValuePair<string, Attack> k in availableAttacks)
+        {
+            if (k.Value == old)
+            {
+                key = k.Key;
+                break;
+            }
+        }
+
+        availableAttacks[key] = a;
+        return;
     }
 
     public void OnDeath()

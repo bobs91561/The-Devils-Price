@@ -55,6 +55,26 @@ namespace Assets.Scripts.Systems.Combat
                     _cooldowns[a] = a.coolDown;
         }
 
+        protected void SetUpCooldowns()
+        {
+            foreach(Attack a in _attacks)
+            {
+                _cooldowns.Add(a, a.coolDown);
+            }
+        }
+
+        public void RefreshAttacks()
+        {
+            _cooldowns = new Dictionary<Attack, float>();
+            _attacks = _skillSet.attacks;
+            SetUpCooldowns();
+        }
+
+        public virtual void SetAttacks()
+        {
+            return;
+        }
+
         #region Levelling Settings
         public void ModifyDemonicPower(float multiplier)
         {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Globalization;
 using System.Reflection;
 using System.Text;
 using UnityEngine;
@@ -418,12 +419,12 @@ namespace com.ootii.Data.Serializers
             }
             else if (lType == typeof(int))
             {
-                lJSON.Append(((int)rValue).ToString());
+                lJSON.Append(((int)rValue).ToString(CultureInfo.InvariantCulture));
                 //lJSON = ((int)rValue).ToString();
             }
             else if (lType == typeof(float))
             {
-                lJSON.Append(((float)rValue).ToString("G8"));
+                lJSON.Append(((float)rValue).ToString("G8", CultureInfo.InvariantCulture));
                 //lJSON = ((float)rValue).ToString("G8");
             }
             else if (lType == typeof(bool))
@@ -572,7 +573,9 @@ namespace com.ootii.Data.Serializers
                 for (int i = 0; i < lCurve.keys.Length; i++)
                 {
                     Keyframe lKey = lCurve.keys[i];
-                    lJSON.Append(lKey.time.ToString("f5") + "|" + lKey.value.ToString("f5") + "|" + lKey.tangentMode.ToString() + "|" + lKey.inTangent.ToString("f5") + "|" + lKey.outTangent.ToString("f5"));
+                    lJSON.Append(lKey.time.ToString("f5", CultureInfo.InvariantCulture) + "|" + lKey.value.ToString("f5", CultureInfo.InvariantCulture) + "|" 
+                                 + lKey.tangentMode.ToString(CultureInfo.InvariantCulture) + "|" + lKey.inTangent.ToString("f5", CultureInfo.InvariantCulture) + "|" 
+                                 + lKey.outTangent.ToString("f5", CultureInfo.InvariantCulture));
 
                     if (i < lCurve.keys.Length - 1) { lJSON.Append(";"); }
                 }
@@ -821,11 +824,11 @@ namespace com.ootii.Data.Serializers
                             float lFloatValue = 0f;
 
                             Keyframe lKey = new Keyframe();
-                            if (float.TryParse(lElements[0], out lFloatValue)) { lKey.time = lFloatValue; }
-                            if (float.TryParse(lElements[1], out lFloatValue)) { lKey.value = lFloatValue; }
-                            if (int.TryParse(lElements[2], out lIntValue)) { lKey.tangentMode = lIntValue; }
-                            if (float.TryParse(lElements[3], out lFloatValue)) { lKey.inTangent = lFloatValue; }
-                            if (float.TryParse(lElements[4], out lFloatValue)) { lKey.outTangent = lFloatValue; }
+                            if (float.TryParse(lElements[0], NumberStyles.Float, CultureInfo.InvariantCulture, out lFloatValue)) { lKey.time = lFloatValue; }
+                            if (float.TryParse(lElements[1], NumberStyles.Float, CultureInfo.InvariantCulture,  out lFloatValue)) { lKey.value = lFloatValue; }
+                            if (int.TryParse(lElements[2], NumberStyles.Integer, CultureInfo.InvariantCulture, out lIntValue)) { lKey.tangentMode = lIntValue; }
+                            if (float.TryParse(lElements[3], NumberStyles.Float, CultureInfo.InvariantCulture, out lFloatValue)) { lKey.inTangent = lFloatValue; }
+                            if (float.TryParse(lElements[4], NumberStyles.Float, CultureInfo.InvariantCulture, out lFloatValue)) { lKey.outTangent = lFloatValue; }
 
                             lCurve.AddKey(lKey);
                         }

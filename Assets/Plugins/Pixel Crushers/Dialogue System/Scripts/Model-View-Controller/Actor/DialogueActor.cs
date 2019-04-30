@@ -188,9 +188,9 @@ namespace PixelCrushers.DialogueSystem
         public void SetSubtitlePanelNumber(SubtitlePanelNumber newSubtitlePanelNumber)
         {
             standardDialogueUISettings.subtitlePanelNumber = newSubtitlePanelNumber;
-            if (DialogueManager.isConversationActive && DialogueManager.dialogueUI is StandardDialogueUI)
+            if (DialogueManager.isConversationActive && DialogueManager.dialogueUI is IStandardDialogueUI)
             {
-                (DialogueManager.dialogueUI as StandardDialogueUI).SetActorSubtitlePanelNumber(this, newSubtitlePanelNumber);
+                (DialogueManager.dialogueUI as IStandardDialogueUI).SetActorSubtitlePanelNumber(this, newSubtitlePanelNumber);
             }
         }
 
@@ -209,9 +209,9 @@ namespace PixelCrushers.DialogueSystem
         public void SetMenuPanelNumber(MenuPanelNumber newMenuPanelNumber)
         {
             standardDialogueUISettings.menuPanelNumber = newMenuPanelNumber;
-            if (DialogueManager.isConversationActive && DialogueManager.dialogueUI is StandardDialogueUI)
+            if (DialogueManager.isConversationActive && DialogueManager.dialogueUI is IStandardDialogueUI)
             {
-                (DialogueManager.dialogueUI as StandardDialogueUI).SetActorMenuPanelNumber(this, newMenuPanelNumber);
+                (DialogueManager.dialogueUI as IStandardDialogueUI).SetActorMenuPanelNumber(this, newMenuPanelNumber);
             }
         }
 

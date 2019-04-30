@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Pixel Crushers. All rights reserved.
 
-using UnityEngine;
-using UnityEditor;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using UnityEditor;
+using UnityEngine;
 
 namespace PixelCrushers.DialogueSystem
 {
@@ -19,7 +19,8 @@ namespace PixelCrushers.DialogueSystem
         private enum ValueSetMode
         {
             To,
-            Add
+            Add,
+            Subtract
         }
 
         private enum NetSetMode
@@ -388,7 +389,7 @@ namespace PixelCrushers.DialogueSystem
                     {
 
                         // Variable:
-                        string variableName = variableNames[item.variableNamesIndex];
+                        string variableName = (0 <= item.variableNamesIndex && item.variableNamesIndex < variableNames.Length) ? variableNames[item.variableNamesIndex] : "Alert";
                         switch (GetWizardVariableType(item.variableNamesIndex))
                         {
                             case FieldType.Boolean:
@@ -408,33 +409,44 @@ namespace PixelCrushers.DialogueSystem
                             case FieldType.Number:
                                 if (item.netSetMode == NetSetMode.NetSet)
                                 {
-
-                                    if (item.valueSetMode == ValueSetMode.To)
+                                    switch (item.valueSetMode)
                                     {
-                                        sb.AppendFormat("NetSetNumber(\"{0}\", {1})",
-                                                        DialogueLua.StringToTableIndex(variableName),
-                                                        item.floatValue);
-                                    }
-                                    else
-                                    {
-                                        sb.AppendFormat("NetSetNumber(\"{0}\", Variable[\"{0}\"] + {1})",
-                                                        DialogueLua.StringToTableIndex(variableName),
-                                                        item.floatValue);
+                                        case ValueSetMode.To:
+                                            sb.AppendFormat("NetSetNumber(\"{0}\", {1})",
+                                                            DialogueLua.StringToTableIndex(variableName),
+                                                            item.floatValue);
+                                            break;
+                                        case ValueSetMode.Add:
+                                            sb.AppendFormat("NetSetNumber(\"{0}\", Variable[\"{0}\"] + {1})",
+                                                            DialogueLua.StringToTableIndex(variableName),
+                                                            item.floatValue);
+                                            break;
+                                        case ValueSetMode.Subtract:
+                                            sb.AppendFormat("NetSetNumber(\"{0}\", Variable[\"{0}\"] - {1})",
+                                                            DialogueLua.StringToTableIndex(variableName),
+                                                            item.floatValue);
+                                            break;
                                     }
                                 }
                                 else
                                 {
-                                    if (item.valueSetMode == ValueSetMode.To)
+                                    switch (item.valueSetMode)
                                     {
-                                        sb.AppendFormat("Variable[\"{0}\"] = {1}",
-                                                        DialogueLua.StringToTableIndex(variableName),
-                                                        item.floatValue);
-                                    }
-                                    else
-                                    {
-                                        sb.AppendFormat("Variable[\"{0}\"] = Variable[\"{0}\"] + {1}",
-                                                        DialogueLua.StringToTableIndex(variableName),
-                                                        item.floatValue);
+                                        case ValueSetMode.To:
+                                            sb.AppendFormat("Variable[\"{0}\"] = {1}",
+                                                            DialogueLua.StringToTableIndex(variableName),
+                                                            item.floatValue);
+                                            break;
+                                        case ValueSetMode.Add:
+                                            sb.AppendFormat("Variable[\"{0}\"] = Variable[\"{0}\"] + {1}",
+                                                            DialogueLua.StringToTableIndex(variableName),
+                                                            item.floatValue);
+                                            break;
+                                        case ValueSetMode.Subtract:
+                                            sb.AppendFormat("Variable[\"{0}\"] = Variable[\"{0}\"] - {1}",
+                                                            DialogueLua.StringToTableIndex(variableName),
+                                                            item.floatValue);
+                                            break;
                                     }
                                 }
                                 break;
@@ -535,21 +547,29 @@ namespace PixelCrushers.DialogueSystem
                                     (item.booleanValue == BooleanType.True) ? "true" : "false");
                     break;
                 case FieldType.Number:
-                    if (item.valueSetMode == ValueSetMode.To)
+                    switch (item.valueSetMode)
                     {
-                        sb.AppendFormat("{0}[\"{1}\"].{2} = {3}",
-                                        tableName,
-                                        DialogueLua.StringToTableIndex(elementName),
-                                        DialogueLua.StringToTableIndex(fieldName),
-                                        item.floatValue);
-                    }
-                    else
-                    {
-                        sb.AppendFormat("{0}[\"{1}\"].{2} = {0}[\"{1}\"].{2} + {3}",
-                                        tableName,
-                                        DialogueLua.StringToTableIndex(elementName),
-                                        DialogueLua.StringToTableIndex(fieldName),
-                                        item.floatValue);
+                        case ValueSetMode.To:
+                            sb.AppendFormat("{0}[\"{1}\"].{2} = {3}",
+                                            tableName,
+                                            DialogueLua.StringToTableIndex(elementName),
+                                            DialogueLua.StringToTableIndex(fieldName),
+                                            item.floatValue);
+                            break;
+                        case ValueSetMode.Add:
+                            sb.AppendFormat("{0}[\"{1}\"].{2} = {0}[\"{1}\"].{2} + {3}",
+                                            tableName,
+                                            DialogueLua.StringToTableIndex(elementName),
+                                            DialogueLua.StringToTableIndex(fieldName),
+                                            item.floatValue);
+                            break;
+                        case ValueSetMode.Subtract:
+                            sb.AppendFormat("{0}[\"{1}\"].{2} = {0}[\"{1}\"].{2} - {3}",
+                                            tableName,
+                                            DialogueLua.StringToTableIndex(elementName),
+                                            DialogueLua.StringToTableIndex(fieldName),
+                                            item.floatValue);
+                            break;
                     }
                     break;
                 default:

@@ -188,6 +188,20 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
         private Conversation AddNewConversation()
         {
             Conversation newConversation = AddNewAsset<Conversation>(database.conversations);
+
+            // Use same actors as previous conversation:
+            if (currentConversation != null)
+            {
+                newConversation.ActorID = currentConversation.ActorID;
+                newConversation.ConversantID = currentConversation.ConversantID;
+                var startEntry = newConversation.GetFirstDialogueEntry();
+                if (startEntry != null)
+                {
+                    startEntry.ActorID = currentConversation.ActorID;
+                    startEntry.ConversantID = currentConversation.ConversantID;
+                }
+            }
+
             if (newConversation != null) OpenConversation(newConversation);
             SetDatabaseDirty("Add New Conversation");
             return newConversation;
@@ -306,7 +320,7 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
             string newTitle = EditorGUILayout.TextField(new GUIContent("Title", "Conversation triggers reference conversations by this."), currentConversation.Title);
             if (!string.Equals(newTitle, currentConversation.Title))
             {
-                currentConversation.Title = newTitle;
+                currentConversation.Title = RemoveLeadingSlashes(newTitle); ;
                 changed = true;
                 SetDatabaseDirty("Change Conversation Title");
             }
@@ -328,6 +342,17 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
             DrawOtherConversationPrimaryFields();
 
             return changed;
+        }
+
+        private string RemoveLeadingSlashes(string s)
+        {
+            int safeguard = 0; // Disallow leading forward slashes.
+            while (s.StartsWith("/") && safeguard < 99)
+            {
+                safeguard++;
+                s = s.Remove(0, 1);
+            }
+            return s;
         }
 
         private static List<string> conversationBuiltInFieldTitles = new List<string>(new string[] { "Title", "Description", "Actor", "Conversant" });

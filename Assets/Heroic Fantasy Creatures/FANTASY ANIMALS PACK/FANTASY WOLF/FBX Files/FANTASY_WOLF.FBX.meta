@@ -41,6 +41,9 @@ ModelImporter:
     100066: FantasyWolf_ Tail4
     100068: FantasyWolf_ Tail5
     100070: ROOT_
+    100072: FantasyWolf_ L Toe0
+    100074: FantasyWolf_ R Toe0
+    100076: root
     400000: //RootNode
     400002: FantasyWolf
     400004: FantasyWolf_
@@ -77,6 +80,9 @@ ModelImporter:
     400066: FantasyWolf_ Tail4
     400068: FantasyWolf_ Tail5
     400070: ROOT_
+    400072: FantasyWolf_ L Toe0
+    400074: FantasyWolf_ R Toe0
+    400076: root
     4300000: FantasyWolf
     7400000: Take 001
     9500000: //RootNode
@@ -90,7 +96,11 @@ ModelImporter:
     bakeSimulation: 0
     optimizeGameObjects: 0
     motionNodeName: 
-    animationImportErrors: 
+    animationImportErrors: 'MuscleClip ''FANTASY_WOLF'' conversion failed: Cannot
+      find root motion transform ''ROOT_''
+
+
+'
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
@@ -136,7 +146,7 @@ ModelImporter:
     armStretch: .0500000007
     legStretch: .0500000007
     feetSpacing: 0
-    rootMotionBoneName: ROOT_
+    rootMotionBoneName: root
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 2
   additionalBone: 0

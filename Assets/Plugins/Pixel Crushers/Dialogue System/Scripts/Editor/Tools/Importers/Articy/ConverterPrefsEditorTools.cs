@@ -28,8 +28,9 @@ namespace PixelCrushers.DialogueSystem.Articy
         private const string ArticyRecursionKey = "PixelCrushers.DialogueSystem.ArticyRecursion";
         private const string ArticyDropdownsKey = "PixelCrushers.DialogueSystem.ArticyDropdowns";
         private const string ArticySlotsKey = "PixelCrushers.DialogueSystem.ArticySlots";
-        private const string ArticyDirectConversationLinksToEntry1 = "PixelCrushers.DialogueSystem.DirectConversationLinksToEntry1";
-        private const string ArticyConvertMarkupToRichText = "PixelCrushers.DialogueSystem.ArticyConvertMarkupToRichText";
+        private const string ArticyUseTechnicalNamesKey = "PixelCrushers.DialogueSystem.UseTechnicalNames";
+        private const string ArticyDirectConversationLinksToEntry1Key = "PixelCrushers.DialogueSystem.DirectConversationLinksToEntry1";
+        private const string ArticyConvertMarkupToRichTextKey = "PixelCrushers.DialogueSystem.ArticyConvertMarkupToRichText";
         private const string ArticyFlowFragmentScriptKey = "PixelCrushers.DialogueSystem.ArticyFlowFragmentScript";
         private const string ArticyVoiceOverPropertyKey = "PixelCrushers.DialogueSystem.ArticyVoiceOverPropertyKey";
         private const string ArticyLocalizationXlsKey = "PixelCrushers.DialogueSystem.ArticyLocalizationXlsxKey";
@@ -51,8 +52,9 @@ namespace PixelCrushers.DialogueSystem.Articy
             converterPrefs.RecursionMode = EditorPrefs.HasKey(ArticyRecursionKey) ? (ConverterPrefs.RecursionModes)EditorPrefs.GetInt(ArticyRecursionKey) : ConverterPrefs.RecursionModes.On;
             converterPrefs.ConvertDropdownsAs = EditorPrefs.HasKey(ArticyDropdownsKey) ? (ConverterPrefs.ConvertDropdownsModes)EditorPrefs.GetInt(ArticyDropdownsKey) : ConverterPrefs.ConvertDropdownsModes.Ints;
             converterPrefs.ConvertSlotsAs = EditorPrefs.HasKey(ArticySlotsKey) ? (ConverterPrefs.ConvertSlotsModes)EditorPrefs.GetInt(ArticySlotsKey) : ConverterPrefs.ConvertSlotsModes.DisplayName;
-            converterPrefs.DirectConversationLinksToEntry1 = EditorPrefs.GetBool(ArticyDirectConversationLinksToEntry1, false);
-            converterPrefs.ConvertMarkupToRichText = EditorPrefs.GetBool(ArticyConvertMarkupToRichText, false);
+            converterPrefs.UseTechnicalNames = EditorPrefs.GetBool(ArticyUseTechnicalNamesKey, false);
+            converterPrefs.DirectConversationLinksToEntry1 = EditorPrefs.GetBool(ArticyDirectConversationLinksToEntry1Key, false);
+            converterPrefs.ConvertMarkupToRichText = EditorPrefs.GetBool(ArticyConvertMarkupToRichTextKey, false);
             converterPrefs.FlowFragmentScript = EditorPrefs.GetString(ArticyFlowFragmentScriptKey, ConverterPrefs.DefaultFlowFragmentScript);
             converterPrefs.VoiceOverProperty = EditorPrefs.GetString(ArticyVoiceOverPropertyKey, ConverterPrefs.DefaultVoiceOverProperty);
             converterPrefs.LocalizationXlsx = EditorPrefs.GetString(ArticyLocalizationXlsKey);
@@ -75,8 +77,9 @@ namespace PixelCrushers.DialogueSystem.Articy
             EditorPrefs.SetInt(ArticyRecursionKey, (int)converterPrefs.RecursionMode);
             EditorPrefs.SetInt(ArticyDropdownsKey, (int)converterPrefs.ConvertDropdownsAs);
             EditorPrefs.SetInt(ArticySlotsKey, (int)converterPrefs.ConvertSlotsAs);
-            EditorPrefs.SetBool(ArticyDirectConversationLinksToEntry1, converterPrefs.DirectConversationLinksToEntry1);
-            EditorPrefs.SetBool(ArticyConvertMarkupToRichText, converterPrefs.ConvertMarkupToRichText);
+            EditorPrefs.SetBool(ArticyUseTechnicalNamesKey, converterPrefs.UseTechnicalNames);
+            EditorPrefs.SetBool(ArticyDirectConversationLinksToEntry1Key, converterPrefs.DirectConversationLinksToEntry1);
+            EditorPrefs.SetBool(ArticyConvertMarkupToRichTextKey, converterPrefs.ConvertMarkupToRichText);
             EditorPrefs.SetString(ArticyFlowFragmentScriptKey, converterPrefs.FlowFragmentScript);
             EditorPrefs.SetString(ArticyVoiceOverPropertyKey, converterPrefs.VoiceOverProperty);
             EditorPrefs.SetString(ArticyLocalizationXlsKey, converterPrefs.LocalizationXlsx);
@@ -98,8 +101,9 @@ namespace PixelCrushers.DialogueSystem.Articy
             EditorPrefs.DeleteKey(ArticyRecursionKey);
             EditorPrefs.DeleteKey(ArticyDropdownsKey);
             EditorPrefs.DeleteKey(ArticySlotsKey);
-            EditorPrefs.DeleteKey(ArticyDirectConversationLinksToEntry1);
-            EditorPrefs.DeleteKey(ArticyConvertMarkupToRichText);
+            EditorPrefs.DeleteKey(ArticyUseTechnicalNamesKey);
+            EditorPrefs.DeleteKey(ArticyDirectConversationLinksToEntry1Key);
+            EditorPrefs.DeleteKey(ArticyConvertMarkupToRichTextKey);
             EditorPrefs.DeleteKey(ArticyFlowFragmentScriptKey);
             EditorPrefs.DeleteKey(ArticyVoiceOverPropertyKey);
             EditorPrefs.DeleteKey(ArticyLocalizationXlsKey);

@@ -7,7 +7,7 @@ namespace PixelCrushers.DialogueSystem
 {
 
     [AddComponentMenu("")] // Use wrapper.
-    public class StandardDialogueUI : CanvasDialogueUI
+    public class StandardDialogueUI : CanvasDialogueUI, IStandardDialogueUI
     {
 
         #region Serialized Fields
@@ -194,6 +194,11 @@ namespace PixelCrushers.DialogueSystem
             conversationUIElements.standardMenuControls.SetActorMenuPanelNumber(dialogueActor, menuPanelNumber);
         }
 
+        public virtual void OverrideActorPanel(Actor actor, SubtitlePanelNumber subtitlePanelNumber)
+        {
+            conversationUIElements.standardSubtitleControls.OverrideActorPanel(actor, subtitlePanelNumber);
+        }
+
         #endregion
 
         #region Response Menu
@@ -208,7 +213,11 @@ namespace PixelCrushers.DialogueSystem
         {
             conversationUIElements.standardMenuControls.MakeButtonsNonclickable();
             base.OnClick(data);
+        }
 
+        public virtual void OverrideActorMenuPanel(Transform actorTransform, MenuPanelNumber menuPanelNumber, StandardUIMenuPanel customPanel)
+        {
+            conversationUIElements.standardMenuControls.OverrideActorMenuPanel(actorTransform, menuPanelNumber, customPanel ?? conversationUIElements.defaultMenuPanel);
         }
 
         #endregion

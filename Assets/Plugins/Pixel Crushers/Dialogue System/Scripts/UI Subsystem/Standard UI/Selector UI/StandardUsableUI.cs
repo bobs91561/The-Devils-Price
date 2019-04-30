@@ -69,7 +69,7 @@ namespace PixelCrushers.DialogueSystem
         public override void Show(string useMessage)
         {
             if (canvas != null) canvas.enabled = true;
-            if (useMessageText != null) useMessageText.text = useMessage;
+            if (useMessageText != null) useMessageText.text = DialogueManager.GetLocalizedText(useMessage);
             if (CanTriggerAnimations() && !string.IsNullOrEmpty(animationTransitions.showTrigger))
             {
                 animator.SetTrigger(animationTransitions.showTrigger);

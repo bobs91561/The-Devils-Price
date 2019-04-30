@@ -36,7 +36,8 @@ namespace CompassNavigatorPro
 		// Update is called once per frame
 		void Update ()
 		{
-			mat.mainTextureOffset =  Misc.Vector3one * Time.time * -0.25f;
+			mat.mainTextureOffset = new Vector2(Time.time * -0.25f, Time.time * -0.25f);
+			mat.SetTextureOffset ("_EmissionMap", new Vector2 (Time.time * -0.15f, Time.time * -0.2f));
 			UpdateColor();
 		}
 

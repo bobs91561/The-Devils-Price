@@ -11,10 +11,11 @@ namespace PixelCrushers.DialogueSystem.SequencerCommands
 
     /// <summary>
     /// Sequencer command Timeline(mode, timeline, [nowait], [nostop], [#:binding]...)
+    /// or Timeline(speed, timeline, value)
     /// 
     /// Controls a Timeline (PlayableDirector).
     /// 
-    /// - mode: Can be play, pause, resume, or stop.
+    /// - mode: Can be play, pause, resume, stop, or speed. If speed, the third parameter should be the new speed.
     /// - timeline: Name of a GameObject with a PlayableDirector, or a Timeline asset in a Resources folder or asset bundle. Default: speaker.
     /// - nowait: If specified, doesn't wait for the director to finish.
     /// - nostop: If specified, doesn't force the director to stop at the end of the sequencer command.
@@ -55,7 +56,7 @@ namespace PixelCrushers.DialogueSystem.SequencerCommands
             if (playableDirector == null)
             {
                 if (DialogueDebug.LogWarnings) Debug.LogWarning("Dialogue System: Sequencer: Timeline(" + GetParameters() +
-                    "): Can't find playable director '" + GetParameter(0) + "'.");
+                    "): Can't find playable director '" + GetParameter(1) + "'.");
             }
             else if (playableDirector.playableAsset == null)
             {
@@ -64,7 +65,7 @@ namespace PixelCrushers.DialogueSystem.SequencerCommands
             }
             else
             {
-                var isModeValid = (mode == "play" || mode == "pause" || mode == "resume" || mode == "stop");
+                var isModeValid = (mode == "play" || mode == "pause" || mode == "resume" || mode == "stop" || mode == "speed");
                 if (!isModeValid)
                 {
                     if (DialogueDebug.LogWarnings) Debug.LogWarning("Dialogue System: Sequencer: Timeline(" + GetParameters() +
@@ -120,6 +121,10 @@ namespace PixelCrushers.DialogueSystem.SequencerCommands
                         case "stop":
                             playableDirector.Stop();
                             nostop = false;
+                            break;
+                        case "speed":
+                            playableDirector.playableGraph.GetRootPlayable(0).SetSpeed(GetParameterAsFloat(2));
+                            nostop = true;
                             break;
                         default:
                             isModeValid = false;

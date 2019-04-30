@@ -100,14 +100,27 @@ namespace Language.Lua
 
         public void AddRaw(string key, LuaValue value) //[PixelCrushers]
         {
-            var keyValue = new LuaString(key);
-            Dict[keyValue] = value;
-            m_stringKeyCache[key] = keyValue;
+            if (m_stringKeyCache.ContainsKey(key))
+            {
+                var keyValue = m_stringKeyCache[key];
+                Dict[keyValue] = value;
+            }
+            else
+            {
+                var keyValue = new LuaString(key);
+                Dict[keyValue] = value;
+                m_stringKeyCache[key] = keyValue;
+            }
         }
 
         public void AddRaw(int key, LuaValue value) //[PixelCrushers]
         {
-            if (key == this.Length + 1)
+            if (m_intKeyCache.ContainsKey(key))
+            {
+                var keyValue = m_intKeyCache[key];
+                Dict[keyValue] = value;
+            }
+            else if (key == this.Length + 1)
             {
                 this.AddValue(value);
             }
@@ -157,8 +170,10 @@ namespace Language.Lua
 
         public bool ContainsKey(LuaValue key)
         {
-            if(this.dict != null){
-                if(this.dict.ContainsKey(key)){
+            if (this.dict != null)
+            {
+                if (this.dict.ContainsKey(key))
+                {
                     return true;
                 }
             }
@@ -232,18 +247,18 @@ namespace Language.Lua
         public void Sort(LuaFunction compare)
         {
             this.list.Sort((a, b) =>
+            {
+                LuaValue result = compare.Invoke(new LuaValue[] { a, b });
+                LuaBoolean boolValue = result as LuaBoolean;
+                if (boolValue != null && boolValue.BoolValue == true)
                 {
-                    LuaValue result = compare.Invoke(new LuaValue[] { a, b });
-                    LuaBoolean boolValue = result as LuaBoolean;
-                    if (boolValue != null && boolValue.BoolValue == true)
-                    {
-                        return 1;
-                    }
-                    else
-                    {
-                        return -1;
-                    }
-                });
+                    return 1;
+                }
+                else
+                {
+                    return -1;
+                }
+            });
         }
 
         public LuaValue GetValue(int index)
@@ -252,12 +267,12 @@ namespace Language.Lua
             {
                 return this.list[index - 1];
             }
-			//[PixelCrushers]
-			if (dict != null)
+            //[PixelCrushers]
+            if (dict != null)
             {
                 if (m_intKeyCache.ContainsKey(index)) return dict[m_intKeyCache[index]];
-				return GetValue(index.ToString());
-			}
+                return GetValue(index.ToString());
+            }
 
             return LuaNil.Nil;
         }
@@ -289,18 +304,18 @@ namespace Language.Lua
 
             foreach (LuaValue value in this.dict.Keys)
             {
-				//[PixelCrushers]
+                //[PixelCrushers]
                 //LuaString str = value as LuaString;
                 //if (str != null && string.Equals(str.Text, key, StringComparison.Ordinal))
                 //{
                 //    return value;
                 //}
-				//LuaString str = value as LuaString;
-				if (value != null && string.Equals(value.ToString(), key, StringComparison.Ordinal))
-				{
-					return value;
-				}
-			}
+                //LuaString str = value as LuaString;
+                if (value != null && string.Equals(value.ToString(), key, StringComparison.Ordinal))
+                {
+                    return value;
+                }
+            }
 
             return LuaNil.Nil;
         }
@@ -336,6 +351,12 @@ namespace Language.Lua
             if (number != null && number.Number == (int)number.Number)
             {
                 int index = (int)number.Number;
+
+                if (m_intKeyCache.ContainsKey(index)) //[PixelCrushers]
+                {
+                    Dict[m_intKeyCache[index]] = value;
+                    return;
+                }
 
                 if (index == this.Length + 1)
                 {
@@ -419,7 +440,6 @@ namespace Language.Lua
                 if (number != null && number.Number == (int)number.Number)
                 {
                     int index = (int)number.Number;
-
                     if (index > 0 && index <= this.Length)
                     {
                         return this.list[index - 1];
@@ -431,7 +451,7 @@ namespace Language.Lua
                     return this.dict[key];
                 }
 
-				if (this.MetaTable != null)
+                if (this.MetaTable != null)
                 {
                     return this.GetValueFromMetaTable(key);
                 }
@@ -489,18 +509,19 @@ namespace Language.Lua
             return luaFunc;
         }
 
-		/// <summary>
-		/// [PixelCrushers] Registers a C# method by its MethodInfo.
-		/// </summary>
-		/// <returns>The Lua function instance wrapping the method.</returns>
-		/// <param name="name">Name of the function in Lua.</param>
-		/// <param name="target">Target object containing the method (or <c>null</c>).</param>
-		/// <param name="methodInfo">Method info.</param>
-		public LuaFunction RegisterMethodFunction(string name, object target, System.Reflection.MethodInfo methodInfo) {
-			LuaMethodFunction luaFunc = new LuaMethodFunction(target, methodInfo);
-			this.SetNameValue(name, luaFunc);
-			return luaFunc;
-		}
+        /// <summary>
+        /// [PixelCrushers] Registers a C# method by its MethodInfo.
+        /// </summary>
+        /// <returns>The Lua function instance wrapping the method.</returns>
+        /// <param name="name">Name of the function in Lua.</param>
+        /// <param name="target">Target object containing the method (or <c>null</c>).</param>
+        /// <param name="methodInfo">Method info.</param>
+        public LuaFunction RegisterMethodFunction(string name, object target, System.Reflection.MethodInfo methodInfo)
+        {
+            LuaMethodFunction luaFunc = new LuaMethodFunction(target, methodInfo);
+            this.SetNameValue(name, luaFunc);
+            return luaFunc;
+        }
 
         public LuaValue RawGetValue(LuaValue key)
         {

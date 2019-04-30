@@ -78,6 +78,7 @@ namespace PixelCrushers.DialogueSystem.Articy
             DrawSlotsPopup();
             DrawRecursionMode();
             DrawFlowFragmentMode();
+            DrawUseTechnicalNamesToggle();
             DrawDirectConversationLinksToEntry1Toggle();
             DrawConvertMarkupToggle();
             DrawDocumentsSubmenu();
@@ -221,9 +222,16 @@ namespace PixelCrushers.DialogueSystem.Articy
             if (EditorGUI.EndChangeCheck()) ConverterPrefsTools.Save(prefs);
         }
 
+        private void DrawUseTechnicalNamesToggle()
+        {
+            prefs.UseTechnicalNames = EditorGUILayout.Toggle(new GUIContent("Use Technical Names", 
+                "Name dialogue database elements by their articy technical name instead of display name."),
+                prefs.UseTechnicalNames);
+        }
+
         private void DrawDirectConversationLinksToEntry1Toggle()
         {
-            prefs.DirectConversationLinksToEntry1 = EditorGUILayout.Toggle(new GUIContent("Conv. Links to Entry 1", 
+            prefs.DirectConversationLinksToEntry1 = EditorGUILayout.Toggle(new GUIContent("Conv. Links to Entry 1",
                 "When a link points to a conversation's START node, redirect it to entry 1 instead."),
                 prefs.DirectConversationLinksToEntry1);
         }

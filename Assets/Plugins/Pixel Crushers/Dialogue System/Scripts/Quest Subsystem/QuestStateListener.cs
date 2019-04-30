@@ -57,8 +57,8 @@ namespace PixelCrushers.DialogueSystem
 
         public QuestEntryStateIndicatorLevel[] questEntryStateIndicatorLevels = new QuestEntryStateIndicatorLevel[0];
 
-        private QuestStateDispatcher m_questStateDispatcher;
-        private QuestStateDispatcher questStateDispatcher
+        protected QuestStateDispatcher m_questStateDispatcher;
+        protected QuestStateDispatcher questStateDispatcher
         {
             get
             {
@@ -90,8 +90,8 @@ namespace PixelCrushers.DialogueSystem
                 return m_questStateDispatcher;
             }
         }
-        private QuestStateIndicator m_questStateIndicator;
-        private QuestStateIndicator questStateIndicator
+        protected QuestStateIndicator m_questStateIndicator;
+        protected QuestStateIndicator questStateIndicator
         {
             get
             {
@@ -100,18 +100,18 @@ namespace PixelCrushers.DialogueSystem
             }
         }
         private bool m_started = false;
-        private bool started
+        protected bool started
         {
             get { return m_started; }
             set { m_started = value; }
         }
 
-        void OnApplicationQuit()
+        protected virtual void OnApplicationQuit()
         {
             enabled = false;
         }
 
-        IEnumerator Start()
+        protected virtual IEnumerator Start()
         {
             yield return null;
             if (enabled)
@@ -130,17 +130,17 @@ namespace PixelCrushers.DialogueSystem
             }
         }
 
-        void OnEnable()
+        protected virtual void OnEnable()
         {
             if (started) questStateDispatcher.AddListener(this);
         }
 
-        void OnDisable()
+        protected virtual void OnDisable()
         {
             if (m_questStateDispatcher != null) m_questStateDispatcher.RemoveListener(this); // Use private; don't create new quest state dispatcher.
         }
 
-        public void OnChange()
+        public virtual void OnChange()
         {
             UpdateIndicator();
         }
@@ -149,7 +149,7 @@ namespace PixelCrushers.DialogueSystem
         /// Update the current quest state indicator based on the specified quest state indicator 
         /// levels and quest entry state indicator levels.
         /// </summary>
-        public void UpdateIndicator()
+        public virtual void UpdateIndicator()
         {
             // Check quest state:
             var questState = QuestLog.GetQuestState(questName);

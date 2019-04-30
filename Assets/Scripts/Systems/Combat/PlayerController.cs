@@ -80,7 +80,7 @@ public class PlayerController : AttackController {
         DodgeKey = keys[2];
     }
     
-    public void SetAttacks()
+    public override void SetAttacks()
     {
         PopulateKeys();
         Initialize();

@@ -32,6 +32,15 @@ namespace CompassNavigatorPro {
 			if (Input.GetKeyDown (KeyCode.B)) {
 				compass.POIShowBeacon (5f, 1.1f, 1f, new Color(1,1,0.25f));
 			}
+			if (Input.GetKey (KeyCode.Z)) {
+				compass.miniMapZoomLevel -= Time.deltaTime;
+			}
+			if (Input.GetKey (KeyCode.X)) {
+				compass.miniMapZoomLevel += Time.deltaTime;
+			}
+			if (Input.GetKeyDown (KeyCode.M)) {
+				compass.showMiniMap = !compass.showMiniMap;
+			}
 		}
 
 

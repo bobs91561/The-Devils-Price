@@ -29,9 +29,10 @@ public class AIAttackController : AttackController {
         Initialize();
         foreach (Attack a in _attacks)
         {
-            _cooldowns.Add(a, a.coolDown);
+            //_cooldowns.Add(a, a.coolDown);
             AverageMaxDistance += a.maxForwardDistance;
         }
+        SetUpCooldowns();
         AverageMaxDistance = AverageMaxDistance / _attacks.Count;
 
     }

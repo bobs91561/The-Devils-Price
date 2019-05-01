@@ -228,6 +228,42 @@ public class SkillSet : MonoBehaviour {
         combat = false;
         m_Animator.SetBool("Combat", combat);
     }
+
+    #region Attack Swapping
+
+    public void AddAttack(Attack a)
+    {
+        if (!a || attacks.Contains(a)) return;
+        var n = Instantiate(a);
+        n.Initialize(gameObject);
+        attacks.Add(n);
+    }
+
+    public void RemoveAttack(Attack a = null)
+    {
+        if (a && attacks.Contains(a))
+            attacks.Remove(a);
+
+    }
+
+    public void ResetSkillSet(List<Attack> newSet)
+    {
+        currentAttack = null;
+
+        // Clear the entire skill set list
+        attacks.Clear();
+
+        // Set the attacks set to new set
+        foreach(Attack a in newSet)
+        {
+            var n = Instantiate(a);
+            n.Initialize(gameObject);
+            attacks.Add(a);
+        }
+    }
+
+    #endregion
+
     #region Levelling Settings
     public void ModifyDamage(float multiplier)
     {

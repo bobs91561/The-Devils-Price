@@ -1,9 +1,7 @@
 fileFormatVersion: 2
 guid: 5fdcf956f202a344396f62ae60ef03be
-timeCreated: 1489681830
-licenseType: Store
 ModelImporter:
-  serializedVersion: 19
+  serializedVersion: 23
   fileIDToRecycleName:
     100000: ball_l
     100002: ball_r
@@ -277,15 +275,32 @@ ModelImporter:
     13700028: UNDEAD_HEAD
     13700030: UNDEAD_LEGS
     13700032: UNDEAD_TORSO
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: UNDEAD_BODY
+    second: {fileID: 2100000, guid: d38e9b81659244442821ef862c87f2c9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: UNDEAD_GEAR
+    second: {fileID: 2100000, guid: 2735d271629755e4d9ce74c3dff6a0d9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: UNDED_WEAPONS
+    second: {fileID: 2100000, guid: f97dc644b9634ec4997a6b90642990a9, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
     materialSearch: 1
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
     resampleCurves: 1
-    optimizeGameObjects: 0
+    optimizeGameObjects: 1
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
@@ -293,12 +308,38 @@ ModelImporter:
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
     animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
     animationWrapMode: 0
-    extraExposedTransformPaths: []
+    extraExposedTransformPaths:
+    - boots
+    - braces
+    - Collar_Armor
+    - Flanks_Armor
+    - helmet_neck_protection
+    - Leather_armor
+    - Pants
+    - Shoulder_Armor_L
+    - Shoulder_Armor_R
+    - UNDEAD
+    - UNDEAD_ARMS
+    - UNDEAD_FEET
+    - UNDEAD_HEAD
+    - UNDEAD_LEGS
+    - UNDEAD_TORSO
+    - root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/Weapons_Mount_Slot
+    - root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/Weapons_Mount_Slot/battle_axe_rusty
+    - root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/Weapons_Mount_Slot/mace_A_rusty
+    - root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/Weapons_Mount_Slot/mace_B_rusty
+    - root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/Weapons_Mount_Slot/sword_rusty
+    - root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/Weapons_Mount_Slot/warhammer_rusty
+    - root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/wooden_shield_rusty
+    - root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/wooden_shield_rusty/Shield_Mount_Slot
+    extraUserProperties: []
     clipAnimations: []
     isReadable: 1
   meshes:
@@ -306,22 +347,34 @@ ModelImporter:
     globalScale: 1
     meshCompression: 0
     addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 0
     importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
     optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 1
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
+    previousCalculatedGlobalScale: 0.01
+    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
     tangentImportMode: 4
+    normalCalculationMode: 0
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 1
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
@@ -336,7 +389,6 @@ ModelImporter:
     legStretch: 0.05
     feetSpacing: 0
     rootMotionBoneName: root
-    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
     hasExtraRoot: 1
     skeletonHasParents: 0

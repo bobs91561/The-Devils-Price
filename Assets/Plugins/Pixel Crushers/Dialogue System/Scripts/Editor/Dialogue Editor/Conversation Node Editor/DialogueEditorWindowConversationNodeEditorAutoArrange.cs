@@ -26,7 +26,9 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
 
         private void ConfirmAndAutoArrangeNodes()
         {
-            var result = EditorUtility.DisplayDialogComplex("Auto-Arrange Nodes", "Are you sure you want to auto-arrange the nodes in this conversation?", "Vertically", "Horizontally", "Cancel");
+            var result = EditorUtility.DisplayDialogComplex("Auto-Arrange Nodes",
+                (multinodeSelection.nodes.Count > 1) ? "Are you sure you want to auto-arrange the selected nodes in this conversation?"
+                : "Are you sure you want to auto-arrange the nodes in this conversation?", "Vertically", "Horizontally", "Cancel");
             switch (result)
             {
                 case 0:
@@ -51,11 +53,12 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
         private void ArrangeGatherChildren(DialogueNode node, int level, List<List<DialogueEntry>> tree)
         {
             if (node == null) return;
+            var skip = multinodeSelection.nodes.Count > 1 && !multinodeSelection.nodes.Contains(node.entry);
             while (tree.Count <= level)
             {
                 tree.Add(new List<DialogueEntry>());
             }
-            if (!tree[level].Contains(node.entry)) tree[level].Add(node.entry);
+            if (!(skip || tree[level].Contains(node.entry))) tree[level].Add(node.entry);
             if (node.hasFoldout)
             {
                 for (int i = 0; i < node.children.Count; i++)
@@ -150,6 +153,8 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                 float y = AutoStartY;
                 foreach (var orphan in orphans)
                 {
+                    var skip = multinodeSelection.nodes.Count > 1 && !multinodeSelection.nodes.Contains(orphan.entry);
+                    if (skip) continue;
                     orphan.entry.canvasRect.x = AutoStartX;
                     orphan.entry.canvasRect.y = y;
                     y += orphan.entry.canvasRect.height + AutoHeightBetweenNodes;
@@ -160,6 +165,8 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                 float x = AutoStartX;
                 foreach (var orphan in orphans)
                 {
+                    var skip = multinodeSelection.nodes.Count > 1 && !multinodeSelection.nodes.Contains(orphan.entry);
+                    if (skip) continue;
                     orphan.entry.canvasRect.x = x;
                     x += orphan.entry.canvasRect.width + AutoWidthBetweenNodes;
                     orphan.entry.canvasRect.y = AutoStartY;

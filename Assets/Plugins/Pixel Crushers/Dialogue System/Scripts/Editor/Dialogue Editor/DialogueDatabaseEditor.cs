@@ -147,62 +147,72 @@ namespace PixelCrushers.DialogueSystem
         private void DrawInspectorSelection()
         {
             if (DialogueEditor.DialogueEditorWindow.instance == null) return;
-            object selection = DialogueEditor.DialogueEditorWindow.inspectorSelection;
-            if (selection == null) return;
-            Type selectionType = selection.GetType();
-            if (selectionType == typeof(Actor))
+            try
             {
-                DrawInspectorSelectionTitle("Actor");
-                var actor = selection as Actor;
-                DialogueEditor.DialogueEditorWindow.instance.DrawAssetSpecificPropertiesFirstPart(actor);
-                DialogueEditor.DialogueEditorWindow.instance.DrawSelectedActorSecondPart();
-            }
-            else if (selectionType == typeof(Item))
-            {
-                DrawInspectorSelectionTitle("Item");
-                var item = selection as Item;
-                DialogueEditor.DialogueEditorWindow.instance.DrawAssetSpecificPropertiesFirstPart(item);
-                DialogueEditor.DialogueEditorWindow.instance.DrawSelectedItemSecondPart();
-            }
-            else if (selectionType == typeof(Location))
-            {
-                DrawInspectorSelectionTitle("Location");
-                var location = selection as Location;
-                DialogueEditor.DialogueEditorWindow.instance.DrawAssetSpecificPropertiesFirstPart(location);
-                DialogueEditor.DialogueEditorWindow.instance.DrawSelectedLocationSecondPart();
-            }
-            else if (selectionType == typeof(Conversation))
-            {
-                DrawInspectorSelectionTitle("Conversation");
-                if (DialogueEditor.DialogueEditorWindow.instance.DrawConversationProperties())
+                object selection = DialogueEditor.DialogueEditorWindow.inspectorSelection;
+                if (selection == null) return;
+                Type selectionType = selection.GetType();
+                if (selectionType == typeof(Actor))
                 {
-                    DialogueEditor.DialogueEditorWindow.instance.UpdateConversationTitles();
+                    DrawInspectorSelectionTitle("Actor");
+                    var actor = selection as Actor;
+                    DialogueEditor.DialogueEditorWindow.instance.DrawAssetSpecificPropertiesFirstPart(actor);
+                    DialogueEditor.DialogueEditorWindow.instance.DrawSelectedActorSecondPart();
                 }
-                DialogueEditor.DialogueEditorWindow.instance.DrawConversationFieldsFoldout();
-            }
-            else if (selectionType == typeof(DialogueEntry))
-            {
-                DrawInspectorSelectionTitle("Dialogue Entry");
-                if (DialogueEditor.DialogueEditorWindow.instance.DrawDialogueEntryInspector())
+                else if (selectionType == typeof(Item))
                 {
-                    DialogueEditor.DialogueEditorWindow.instance.ResetDialogueEntryText(selection as DialogueEntry);
-                    DialogueEditor.DialogueEditorWindow.instance.Repaint();
+                    DrawInspectorSelectionTitle((selection as Item).IsItem ? "Item" : "Quest");
+                    var item = selection as Item;
+                    DialogueEditor.DialogueEditorWindow.instance.DrawAssetSpecificPropertiesFirstPart(item);
+                    DialogueEditor.DialogueEditorWindow.instance.DrawSelectedItemSecondPart();
                 }
-            }
-            else if (selectionType == typeof(Link))
-            {
-                DrawInspectorSelectionTitle("Link");
-                DialogueEditor.DialogueEditorWindow.instance.DrawSelectedLinkContents();
-            }
-            else if (selectionType == typeof(DialogueEditor.DialogueEditorWindow.MultinodeSelection))
-            {
-                DrawInspectorSelectionTitle("Multiple Dialogue Entries");
-                //--- Now supports multiple entry editing: EditorGUILayout.HelpBox("Dialogue entries cannot be multi-edited.", MessageType.None);
-                if (DialogueEditor.DialogueEditorWindow.instance.DrawMultinodeSelectionInspector())
+                else if (selectionType == typeof(Location))
                 {
-                    DialogueEditor.DialogueEditorWindow.instance.ResetDialogueEntryText(selection as DialogueEntry);
-                    DialogueEditor.DialogueEditorWindow.instance.Repaint();
+                    DrawInspectorSelectionTitle("Location");
+                    var location = selection as Location;
+                    DialogueEditor.DialogueEditorWindow.instance.DrawAssetSpecificPropertiesFirstPart(location);
+                    DialogueEditor.DialogueEditorWindow.instance.DrawSelectedLocationSecondPart();
                 }
+                else if (selectionType == typeof(Conversation))
+                {
+                    DrawInspectorSelectionTitle("Conversation");
+                    if (DialogueEditor.DialogueEditorWindow.instance.DrawConversationProperties())
+                    {
+                        DialogueEditor.DialogueEditorWindow.instance.UpdateConversationTitles();
+                    }
+                    DialogueEditor.DialogueEditorWindow.instance.DrawConversationFieldsFoldout();
+                }
+                else if (selectionType == typeof(DialogueEntry))
+                {
+                    DrawInspectorSelectionTitle("Dialogue Entry");
+                    if (DialogueEditor.DialogueEditorWindow.instance.DrawDialogueEntryInspector())
+                    {
+                        DialogueEditor.DialogueEditorWindow.instance.ResetDialogueEntryText(selection as DialogueEntry);
+                        DialogueEditor.DialogueEditorWindow.instance.Repaint();
+                    }
+                }
+                else if (selectionType == typeof(Link))
+                {
+                    DrawInspectorSelectionTitle("Link");
+                    DialogueEditor.DialogueEditorWindow.instance.DrawSelectedLinkContents();
+                }
+                else if (selectionType == typeof(DialogueEditor.DialogueEditorWindow.MultinodeSelection))
+                {
+                    DrawInspectorSelectionTitle("Multiple Dialogue Entries");
+                    //--- Now supports multiple entry editing: EditorGUILayout.HelpBox("Dialogue entries cannot be multi-edited.", MessageType.None);
+                    if (DialogueEditor.DialogueEditorWindow.instance.DrawMultinodeSelectionInspector())
+                    {
+                        DialogueEditor.DialogueEditorWindow.instance.ResetDialogueEntryText(selection as DialogueEntry);
+                        DialogueEditor.DialogueEditorWindow.instance.Repaint();
+                    }
+                }
+            }
+            catch (ArgumentException)
+            {
+                // Editor may change GUI elements between Layout and Repaint events.
+                // Silence the issue since it's effectively harmless.
+                // We may in the future check the current event and prevent changes
+                // between Layout and Repaint.
             }
         }
 

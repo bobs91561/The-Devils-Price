@@ -9,7 +9,7 @@ namespace CompassNavigatorPro {
 	public class CompassBarMeshModifier : BaseMeshEffect {
 
 		public override void ModifyMesh (VertexHelper vh) {
-			if (!IsActive ())
+			if (!IsActive () || vh == null || vh.currentVertCount < 1)
 				return;
 			const float maxWidth = 50;
 			Mesh m = new Mesh ();

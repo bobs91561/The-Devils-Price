@@ -34,12 +34,11 @@ public class AIAction_SPAWN : AIAction
     private bool _noPortal;
     private float _time;
     private int _mCallNumber;
-    private SkillSet _mSkillSet;
     private float _mTimeSinceCall;
     private HealthManager AIhm;
     private HealthManager Playerhm;
     private float lastCallTime;
-    private int m_SpawnId;
+    private int m_SpawnId = Animator.StringToHash("Spawn");
     private bool m_AnimationCalled;
 
     public override void Initialize(GameObject obj = null)
@@ -47,12 +46,10 @@ public class AIAction_SPAWN : AIAction
         base.Initialize(obj);
         spawner = g;
         _mCallNumber = 0;
-        _mSkillSet = obj.GetComponent<SkillSet>();
         AIhm = decider.AI.GetComponent<HealthManager>();
         lastCallTime = 0;
         _mTimeSinceCall = 0;
         _noPortal = true;
-        m_SpawnId = Animator.StringToHash("Spawn");
         m_AnimationCalled = false;
     }
 
@@ -96,9 +93,6 @@ public class AIAction_SPAWN : AIAction
             }
             return true;
         }
-
-        //else
-        //    _mSkillSet.StartAttack(SpawnAttack);
         return false;
     }
 

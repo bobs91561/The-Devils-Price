@@ -4,15 +4,19 @@ using System.Collections;
 
 namespace CompassNavigatorPro {
 
-	public class LetterAnimator : MonoBehaviour {
+    public delegate void OnAnimationEndDelegate(int poolIndex);
+
+    public class LetterAnimator : MonoBehaviour {
 
 		public float startTime, revealDuration, startFadeTime, fadeDuration;
 		public Text text, textShadow;
-
+        public int poolIndex;
+        public OnAnimationEndDelegate OnAnimationEnds;
+        public bool used;
 
 		Vector3 localScale;
 
-		void Start () {
+		public void Play () {
 			localScale = text.transform.localScale;
 			Update ();
 		}
@@ -33,8 +37,8 @@ namespace CompassNavigatorPro {
 				float t = Mathf.Clamp01 (1.0f - (now - startFadeTime) / fadeDuration);
 				UpdateTextAlpha (t);
 			} else {
-				Destroy (text.gameObject);
-				Destroy (textShadow.gameObject);
+                OnAnimationEnds(poolIndex);
+                enabled = false;
 			}
 		}
 

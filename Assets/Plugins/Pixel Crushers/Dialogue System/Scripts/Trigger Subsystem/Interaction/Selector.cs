@@ -301,7 +301,7 @@ namespace PixelCrushers.DialogueSystem
                 clickedDownOn = null;
                 if (distance <= usable.maxUseDistance)
                 {
-
+                    usable.OnUseUsable();
                     // If within range, send the OnUse message:
                     var fromTransform = (actorTransform != null) ? actorTransform : this.transform;
                     if (broadcastToChildren)
@@ -480,12 +480,14 @@ namespace PixelCrushers.DialogueSystem
         {
             if (SelectedUsableObject != null) SelectedUsableObject(usable);
             onSelectedUsable.Invoke(usable);
+            if (usable != null) usable.OnSelectUsable();
         }
 
         protected void OnDeselectedUsableObject(Usable usable)
         {
             if (DeselectedUsableObject != null) DeselectedUsableObject(usable);
             onDeselectedUsable.Invoke(usable);
+            if (usable != null) usable.OnDeselectUsable();
         }
 
         protected virtual void DeselectTarget()
@@ -555,7 +557,7 @@ namespace PixelCrushers.DialogueSystem
                 if (string.IsNullOrEmpty(heading))
                 {
                     heading = usable.GetName();
-                    useMessage = string.IsNullOrEmpty(usable.overrideUseMessage) ? defaultUseMessage : usable.overrideUseMessage;
+                    useMessage = DialogueManager.GetLocalizedText(string.IsNullOrEmpty(usable.overrideUseMessage) ? defaultUseMessage : usable.overrideUseMessage);
                 }
                 UnityGUITools.DrawText(new Rect(0, 0, Screen.width, Screen.height), heading, guiStyle, textStyle, textStyleColor);
                 UnityGUITools.DrawText(new Rect(0, guiStyleLineHeight, Screen.width, Screen.height), useMessage, guiStyle, textStyle, textStyleColor);

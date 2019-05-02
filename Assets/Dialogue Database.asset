@@ -3111,6 +3111,62 @@ MonoBehaviour:
       value: False
       type: 2
       typeString: CustomFieldType_Boolean
+    - title: Trackable
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Entry Count
+      value: 6
+      type: 1
+      typeString: CustomFieldType_Number
+    - title: Entry 1 State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Entry 1
+      value: Speak to Ose
+      type: 0
+      typeString: 
+    - title: Entry 2 State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Entry 2
+      value: Speak to Shax at the outpost
+      type: 0
+      typeString: 
+    - title: Entry 3 State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Entry 3
+      value: Follow Shax into the forest
+      type: 0
+      typeString: 
+    - title: Entry 4 State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Entry 4
+      value: Speak to Shax
+      type: 0
+      typeString: 
+    - title: Entry 5 State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Entry 5
+      value: Destroy the flyer nest
+      type: 0
+      typeString: 
+    - title: Entry 6 State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Entry 6
+      value: Return to Shax
+      type: 0
+      typeString: 
   - id: 32
     fields:
     - title: Name
@@ -5450,6 +5506,20 @@ MonoBehaviour:
       typeString: CustomFieldType_Boolean
     - title: Description
       value: Does Alexander jump into lava
+      type: 0
+      typeString: CustomFieldType_Text
+  - id: 17
+    fields:
+    - title: Name
+      value: Total_Reputation
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: Initial Value
+      value: 0
+      type: 1
+      typeString: CustomFieldType_Number
+    - title: Description
+      value: Player's reputation throughout game
       type: 0
       typeString: CustomFieldType_Text
   conversations:
@@ -47338,7 +47408,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 20
-        y: 30
+        y: 32.087677
         width: 160
         height: 30
     - id: 1
@@ -48432,7 +48502,9 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: 
+      userScript: 'SetQuestEntryState("Into the Woods", 4, "success");
+
+        SetQuestEntryState("Into the Woods", 5, "active")'
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -49362,7 +49434,7 @@ MonoBehaviour:
         destinationDialogueID: 5
         isConnector: 0
         priority: 2
-      conditionsString: player rep high enough
+      conditionsString: Variable["Total_Reputation"] >= 1000
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -49840,8 +49912,8 @@ MonoBehaviour:
         destinationDialogueID: 1
         isConnector: 0
         priority: 2
-      conditionsString: "(CurrentQuestState(\"Into the Breach\") == \"active\")\r
-        and (CurrentQuestEntryState(\"Into the Breach\", 1) == \"active\")"
+      conditionsString: "(CurrentQuestState(\"The Climb\") == \"active\")\r and (CurrentQuestEntryState(\"The
+        Climb\", 1) == \"active\")"
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -50657,7 +50729,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 821.347
-        y: 239.25919
+        y: 237.39871
         width: 160
         height: 30
     - id: 12

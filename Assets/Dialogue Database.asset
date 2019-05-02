@@ -54075,7 +54075,9 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: 
+      userScript: 'SetQuestState("Fly Away Home", "success");
+
+        SetQuestEntryState("Fly Away Home", 1, "success")'
       onExecute:
         m_PersistentCalls:
           m_Calls: []

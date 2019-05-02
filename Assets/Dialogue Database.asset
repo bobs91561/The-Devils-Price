@@ -50860,7 +50860,9 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: SetQuestEntryState("The Climb", 1, "success")
+      userScript: 'SetQuestEntryState("The Climb", 1, "success");
+
+        SetQuestEntryState("The Climb", 2, "active")'
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -52259,7 +52261,7 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: 
+      userScript: SetQuestEntryState("The Climb", 4, "active")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -52326,7 +52328,9 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: 
+      userScript: 'SetQuestEntryState("The Climb", 3, "success");
+
+        SetQuestState("The Climb", "success")'
       onExecute:
         m_PersistentCalls:
           m_Calls: []

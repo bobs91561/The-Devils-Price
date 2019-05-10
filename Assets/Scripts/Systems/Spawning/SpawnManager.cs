@@ -26,6 +26,15 @@ public class SpawnManager : MonoBehaviour {
         StartCoroutine(ConsiderRequests());
 	}
 
+    public void SpecialRespawnPlayer(bool add)
+    {
+        if (add)
+            EventManager.SpecialDeath += RespawnPlayer;
+        else
+            EventManager.SpecialDeath -= RespawnPlayer;
+    }
+
+
     IEnumerator ConsiderRequests()
     {
         yield return new WaitWhile(() => _mRespawnRequests.Count <= 0);

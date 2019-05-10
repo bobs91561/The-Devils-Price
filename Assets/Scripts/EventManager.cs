@@ -27,10 +27,17 @@ public class EventManager {
 
     public static event VoidDelegate DDAResponsive;
 
+    public static event VoidDelegate SpecialDeath;
+
 	
+    /// <summary>
+    /// Checks if there are special death conditions that must be met. If not, trigger regular DeathAction event
+    /// </summary>
     public static void Death()
     {
-        DeathAction();
+        if (SpecialDeath != null) SpecialDeath();
+        else
+            DeathAction();
     }
 
     public static void OffWorld()

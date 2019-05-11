@@ -90,7 +90,7 @@ namespace Devdog.InventoryPro.UnityStandardAssets
         }
 
 
-        public void Move(Vector3 move, bool crouch, bool jump, bool restrictForward = false, bool sprint = false, bool dodge = false)
+        public virtual void Move(Vector3 move, bool crouch, bool jump, bool restrictForward = false, bool sprint = false, bool dodge = false)
         {
 #if UMA
 			if(m_Animator == null)

@@ -1572,107 +1572,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 785018659}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &127930312
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 2107804199}
-    m_Modifications:
-    - target: {fileID: 6194478975504602100, guid: 1ee4bf97be0c86348ba847713e271052,
-        type: 3}
-      propertyPath: m_Name
-      value: Dialogue_Items Belphegor
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194478975504602109, guid: 1ee4bf97be0c86348ba847713e271052,
-        type: 3}
-      propertyPath: actor
-      value: Belphegor
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194478975504602096, guid: 1ee4bf97be0c86348ba847713e271052,
-        type: 3}
-      propertyPath: condition.luaConditions.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194478975504602096, guid: 1ee4bf97be0c86348ba847713e271052,
-        type: 3}
-      propertyPath: condition.luaConditions.Array.data[0]
-      value: (CurrentQuestState("The Gluttonous Fool") == "active") and (CurrentQuestEntryState("The
-        Gluttonous Fool", 1) == "active")
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194478975504602096, guid: 1ee4bf97be0c86348ba847713e271052,
-        type: 3}
-      propertyPath: conversation
-      value: SecondPlane/The Gluttonous Fool/Player-Belphegor
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194478975504602110, guid: 1ee4bf97be0c86348ba847713e271052,
-        type: 3}
-      propertyPath: overrideName
-      value: 
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 1ee4bf97be0c86348ba847713e271052, type: 3}
---- !u!4 &127930313 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
-    type: 3}
-  m_PrefabInstance: {fileID: 127930312}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &129606526 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4747903718334181524, guid: c4ed7127a06202f4287dac1c35619dac,
@@ -5057,7 +4956,7 @@ PrefabInstance:
     - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
         type: 3}
@@ -11775,6 +11674,90 @@ SkinnedMeshRenderer:
     type: 3}
   m_PrefabInstance: {fileID: 1172205245}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &963231948
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2066231096758887516, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_Name
+      value: DI_FriendlyBase hungry
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887510, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: overrideName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887512, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: conversation
+      value: SecondPlane/Cruel Temptations/Player-HungrySoul
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887509, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: actor
+      value: Hungry Soul
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 19aa79f9bfbaf544db5298e3b9887def, type: 3}
 --- !u!1 &963443800 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8139069157993670709, guid: c4ed7127a06202f4287dac1c35619dac,
@@ -17061,7 +17044,7 @@ MonoBehaviour:
     - {fileID: 123366601}
     - {fileID: 123366603}
     - {fileID: 123366602}
-    - {fileID: 127930313}
+    - {fileID: 0}
     - {fileID: 160364240}
     - {fileID: 160364243}
     - {fileID: 160364242}
@@ -17328,7 +17311,7 @@ MonoBehaviour:
     - {fileID: 1797671305}
     - {fileID: 1114247557}
     - {fileID: 299002904}
-    - {fileID: 1512380577}
+    - {fileID: 0}
     - {fileID: 1738518563}
     - {fileID: 1974884090}
     - {fileID: 635566138}
@@ -18287,7 +18270,7 @@ MonoBehaviour:
     - {fileID: 120371010}
     - {fileID: 1845127700}
     - {fileID: 1656186249}
-    - {fileID: 1512380581}
+    - {fileID: 0}
     - {fileID: 592632407}
     - {fileID: 340163389}
     - {fileID: 2018271305}
@@ -18668,7 +18651,7 @@ MonoBehaviour:
     - {fileID: 367529990}
     - {fileID: 1817055022}
     - {fileID: 209118305}
-    - {fileID: 1512380578}
+    - {fileID: 0}
     - {fileID: 808939846}
     - {fileID: 762380042}
     - {fileID: 147740508}
@@ -19238,8 +19221,8 @@ MonoBehaviour:
     - {fileID: 47891603}
     - {fileID: 1207883747}
     - {fileID: 1942611391}
-    - {fileID: 1512380583}
-    - {fileID: 1512380580}
+    - {fileID: 0}
+    - {fileID: 0}
     - {fileID: 1514610259}
     - {fileID: 371924775}
     - {fileID: 1444876158}
@@ -19854,8 +19837,8 @@ MonoBehaviour:
     - {fileID: 2084363787}
     - {fileID: 337953283}
     - {fileID: 232728806}
-    - {fileID: 1512380582}
-    - {fileID: 1512380579}
+    - {fileID: 0}
+    - {fileID: 0}
     - {fileID: 1016851122}
     - {fileID: 1294437013}
     - {fileID: 1294437011}
@@ -23514,7 +23497,60 @@ PrefabInstance:
     - target: {fileID: 2066231096758887516, guid: 19aa79f9bfbaf544db5298e3b9887def,
         type: 3}
       propertyPath: m_Name
-      value: DI_FriendlyBase
+      value: Dialogue_Items Belphegor
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887510, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: overrideName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887512, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887512, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: conversation
+      value: SecondPlane/The Gluttonous Fool/Player-Belphegor
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887512, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.data[0]
+      value: (CurrentQuestState("The Gluttonous Fool") == "active")
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887512, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.data[1]
+      value: (CurrentQuestEntryState("The Gluttonous Fool", 2) ~= "active") and (CurrentQuestEntryState("The
+        Gluttonous Fool", 4) ~= "active")
+      objectReference: {fileID: 0}
+    - target: {fileID: 5670948032092822873, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5670948032092822873, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.data[0]
+      value: CurrentQuestEntryState("The Gluttonous Fool", 4) == "active"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2140371814266016209, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2140371814266016209, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.data[0]
+      value: CurrentQuestEntryState("The Gluttonous Fool", 4) == "active"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2140371814266016209, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: luaCode
+      value: 'SetQuestState("The Gluttonous Fool", "success");
+
+        SetQuestEntryState("The Gluttonous Fool", 4, "success")'
       objectReference: {fileID: 0}
     - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
         type: 3}
@@ -23554,7 +23590,7 @@ PrefabInstance:
     - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
         type: 3}
@@ -23571,10 +23607,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2066231096758887510, guid: 19aa79f9bfbaf544db5298e3b9887def,
+    - target: {fileID: 2066231096758887509, guid: 19aa79f9bfbaf544db5298e3b9887def,
         type: 3}
-      propertyPath: overrideName
-      value: 
+      propertyPath: actor
+      value: Belphegor
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 19aa79f9bfbaf544db5298e3b9887def, type: 3}
@@ -26379,6 +26415,90 @@ BoxCollider:
     type: 3}
   m_PrefabInstance: {fileID: 452102860}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1306259803
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2066231096758887516, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_Name
+      value: DI_FriendlyBase thirsty
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887510, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: overrideName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5670948032092822873, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: conversation
+      value: SecondPlane/Desperate Thirst/Player-ThirstySoul
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887509, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: actor
+      value: Thirsty Soul
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 19aa79f9bfbaf544db5298e3b9887def, type: 3}
 --- !u!1 &1306622112 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4747903718543510782, guid: c4ed7127a06202f4287dac1c35619dac,
@@ -27174,6 +27294,100 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1172205245}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1386086312
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2066231096758887516, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_Name
+      value: DI_FriendlyBase bored
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887510, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: overrideName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887512, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: conversation
+      value: SecondPlane/Overwhelming Boredom/Player-BoredSoul
+      objectReference: {fileID: 0}
+    - target: {fileID: 2140371814266016209, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: conversation
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2140371814266016209, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: luaCode
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887509, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: actor
+      value: Bored Soul
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 19aa79f9bfbaf544db5298e3b9887def, type: 3}
 --- !u!1 &1386232453 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8139069158639150614, guid: c4ed7127a06202f4287dac1c35619dac,
@@ -28456,78 +28670,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 452102860}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1512380577 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6194478975504602100, guid: 1ee4bf97be0c86348ba847713e271052,
-    type: 3}
-  m_PrefabInstance: {fileID: 127930312}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1512380578 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6194478975504602098, guid: 1ee4bf97be0c86348ba847713e271052,
-    type: 3}
-  m_PrefabInstance: {fileID: 127930312}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1512380577}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba2e3066672a3834182d094e4029952d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1512380579 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6194478975504602097, guid: 1ee4bf97be0c86348ba847713e271052,
-    type: 3}
-  m_PrefabInstance: {fileID: 127930312}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1512380577}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9788c61928f1bb24a8559f5d6aaed894, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1512380580 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6194478975504602096, guid: 1ee4bf97be0c86348ba847713e271052,
-    type: 3}
-  m_PrefabInstance: {fileID: 127930312}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1512380577}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c593457cd8105e148906690e1707c592, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!135 &1512380581 stripped
-SphereCollider:
-  m_CorrespondingSourceObject: {fileID: 6194478975504602111, guid: 1ee4bf97be0c86348ba847713e271052,
-    type: 3}
-  m_PrefabInstance: {fileID: 127930312}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1512380582 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6194478975504602110, guid: 1ee4bf97be0c86348ba847713e271052,
-    type: 3}
-  m_PrefabInstance: {fileID: 127930312}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1512380577}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 274b80ab5b659c646ba9338870d14625, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1512380583 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6194478975504602109, guid: 1ee4bf97be0c86348ba847713e271052,
-    type: 3}
-  m_PrefabInstance: {fileID: 127930312}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1512380577}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a64578247383140469c45370654a984a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1513598774 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4747903718508864620, guid: c4ed7127a06202f4287dac1c35619dac,
@@ -29074,6 +29216,90 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1823937495}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1569288256
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2066231096758887516, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_Name
+      value: DI_FriendlyBase lonely
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887510, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: overrideName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5670948032092822873, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: conversation
+      value: SecondPlane/Starving All Alone/Player-LonelySoul
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887509, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: actor
+      value: Lonely Soul
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 19aa79f9bfbaf544db5298e3b9887def, type: 3}
 --- !u!1 &1570386347 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4843968119276285272, guid: 06026ce2980f0584f87ac7de983a70b0,
@@ -30564,6 +30790,36 @@ MeshFilter:
     type: 3}
   m_PrefabInstance: {fileID: 554976286}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1668663953
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1668663954}
+  m_Layer: 0
+  m_Name: Dialogue Prep Side
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1668663954
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1668663953}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.89592296, y: 4.5099363, z: 2.506199}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1669418351 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6748466467351327464, guid: 01776aef5c87ef746bc860b46e1c8e73,
@@ -35073,10 +35329,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 476713893}
     m_Modifications:
-    - target: {fileID: 1719619391768154, guid: a834639a31a6cad45b669b5dea1e9281, type: 3}
-      propertyPath: m_Name
-      value: Candle_Group_1A1(Lit)
-      objectReference: {fileID: 0}
     - target: {fileID: 4004701495013034, guid: a834639a31a6cad45b669b5dea1e9281, type: 3}
       propertyPath: m_LocalPosition.x
       value: 75.57425
@@ -35120,6 +35372,10 @@ PrefabInstance:
     - target: {fileID: 4004701495013034, guid: a834639a31a6cad45b669b5dea1e9281, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1719619391768154, guid: a834639a31a6cad45b669b5dea1e9281, type: 3}
+      propertyPath: m_Name
+      value: Candle_Group_1A1(Lit)
       objectReference: {fileID: 0}
     - target: {fileID: 108861259012811312, guid: a834639a31a6cad45b669b5dea1e9281,
         type: 3}
@@ -38361,7 +38617,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2107804199}
   m_Layer: 0
-  m_Name: Dialogue_Prep
+  m_Name: Dialogue_Prep Main
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -38378,11 +38634,10 @@ Transform:
   m_LocalPosition: {x: -0.89592296, y: 4.5099363, z: 2.506199}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 127930313}
   - {fileID: 401748622}
   - {fileID: 1086694712}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2107990474 stripped
 GameObject:
@@ -38811,10 +39066,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 667485336}
     m_Modifications:
-    - target: {fileID: 1719619391768154, guid: a834639a31a6cad45b669b5dea1e9281, type: 3}
-      propertyPath: m_Name
-      value: Candle_Group_1A1(Lit) (1)
-      objectReference: {fileID: 0}
     - target: {fileID: 4004701495013034, guid: a834639a31a6cad45b669b5dea1e9281, type: 3}
       propertyPath: m_LocalPosition.x
       value: 10.494251
@@ -38858,6 +39109,10 @@ PrefabInstance:
     - target: {fileID: 4004701495013034, guid: a834639a31a6cad45b669b5dea1e9281, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1719619391768154, guid: a834639a31a6cad45b669b5dea1e9281, type: 3}
+      propertyPath: m_Name
+      value: Candle_Group_1A1(Lit) (1)
       objectReference: {fileID: 0}
     - target: {fileID: 4116522613482282, guid: a834639a31a6cad45b669b5dea1e9281, type: 3}
       propertyPath: m_LocalPosition.x

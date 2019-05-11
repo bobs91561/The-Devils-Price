@@ -13,7 +13,7 @@ public class Melee : Attack
     public bool MultipleGenerations;
     public float HitboxDestroyTime;
 
-    private GameObject meleeObject, meleeObjectSecondary;
+    protected GameObject meleeObject, meleeObjectSecondary;
     private SkillSet _skillSet;
 
     public override void UseAttack()

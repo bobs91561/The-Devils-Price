@@ -14,11 +14,11 @@ public class BuffHitbox : MonoBehaviour
     private SkillSet m_TargetSkillSet;
     private HealthManager m_TargetHealthManager;
 
-    private float m_BuffValue;
+    protected float m_BuffValue;
 
     public BuffType buffType;
 
-    public void Initialize(GameObject target, bool grounded, bool singlemoment, bool reverse, float value, float duration = 0f)
+    public virtual void Initialize(GameObject target, bool grounded, bool singlemoment, bool reverse, float value, float duration = 0f)
     {
         m_TimeSinceStart = 0f;
         m_Duration = duration;
@@ -61,7 +61,7 @@ public class BuffHitbox : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void ApplyBuff()
+    protected virtual void ApplyBuff()
     {
         float val = m_SingleMoment ? m_BuffValue : m_BuffValue * Time.deltaTime;
         // Check bufftype
@@ -80,7 +80,7 @@ public class BuffHitbox : MonoBehaviour
         }
     }
 
-    private void ApplyBuff(GameObject g)
+    protected virtual void ApplyBuff(GameObject g)
     {
         float val = m_SingleMoment ? m_BuffValue : m_BuffValue * Time.deltaTime;        
 

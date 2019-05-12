@@ -1416,15 +1416,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WeaponSound: {fileID: 8300000, guid: 81704b6719eb08a4e9fda9d59a08d107, type: 3}
   DrawWeapon: {fileID: 8300000, guid: 59acfb4e5f876b64a8e54f873c62f930, type: 3}
-  clips:
-  - {fileID: 8300000, guid: fbe5efbcc2349574c9dc2acf88f199c9, type: 3}
-  - {fileID: 8300000, guid: f41f9339fdeab694d8f37397bfbf3a76, type: 3}
-  - {fileID: 8300000, guid: f339e45954b2ce44ca2e0ed0317cf217, type: 3}
-  - {fileID: 8300000, guid: f9a0d5b4a896a16408895adc148ab720, type: 3}
-  - {fileID: 8300000, guid: d86c01a53513a63468e4437775d2a3fe, type: 3}
-  - {fileID: 8300000, guid: 3ad80133fd5a1bd48a8b1f49fe5ee85f, type: 3}
-  - {fileID: 8300000, guid: 61f9d76b6eaca044e9792ba8641cd1c6, type: 3}
-  - {fileID: 8300000, guid: 76ecf23c66ac7f84a8d52aaf8516a146, type: 3}
+  footsteps: []
   attackSounds:
   - {fileID: 8300000, guid: 7b8285a6282d6f9498f6b71144ac2c54, type: 3}
   - {fileID: 8300000, guid: 8c9fbab8a6f9b4741be96014d9bd788a, type: 3}
@@ -2901,6 +2893,7 @@ MonoBehaviour:
   spawnPoints: []
   patrolPoint: 0
   followTarget: {fileID: 0}
+  LastKnownPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &1607640414602681083
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3193,6 +3186,7 @@ MonoBehaviour:
   m_key: 
   m_appendSaverTypeToKey: 1
   m_saveAcrossSceneChanges: 1
+  m_restoreStateOnStart: 0
   m_mode: 0
   m_destroyMode: 1
   m_destroyedVersionPrefab: {fileID: 0}

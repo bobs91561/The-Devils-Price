@@ -3062,6 +3062,50 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fog_Big_FX_01 (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 36
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ForceModule.x.scalar
+      value: -0.17999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ForceModule.y.scalar
+      value: -0.17999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ForceModule.z.scalar
+      value: -0.17999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ClampVelocityModule.x.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ClampVelocityModule.y.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ClampVelocityModule.z.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ClampVelocityModule.magnitude.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: SizeBySpeedModule.range.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: RotationBySpeedModule.range.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ColorBySpeedModule.range.y
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 433030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3117,50 +3161,6 @@ PrefabInstance:
     - target: {fileID: 433030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
       propertyPath: m_LocalScale.z
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: InitialModule.startSize.scalar
-      value: 36
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ForceModule.x.scalar
-      value: -0.17999999
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ForceModule.y.scalar
-      value: -0.17999999
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ForceModule.z.scalar
-      value: -0.17999999
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ClampVelocityModule.x.scalar
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ClampVelocityModule.y.scalar
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ClampVelocityModule.z.scalar
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ClampVelocityModule.magnitude.scalar
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: SizeBySpeedModule.range.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: RotationBySpeedModule.range.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ColorBySpeedModule.range.y
-      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
@@ -4104,6 +4104,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 976172588}
     m_Modifications:
+    - target: {fileID: 138326, guid: 246b081fc765c5e4cba0e73b55b8065d, type: 3}
+      propertyPath: m_Name
+      value: Bare_Tree_1B2
+      objectReference: {fileID: 0}
     - target: {fileID: 495994, guid: 246b081fc765c5e4cba0e73b55b8065d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 96.58035
@@ -4147,10 +4151,6 @@ PrefabInstance:
     - target: {fileID: 495994, guid: 246b081fc765c5e4cba0e73b55b8065d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 138326, guid: 246b081fc765c5e4cba0e73b55b8065d, type: 3}
-      propertyPath: m_Name
-      value: Bare_Tree_1B2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 246b081fc765c5e4cba0e73b55b8065d, type: 3}
@@ -7158,6 +7158,50 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fog_Big_FX_01 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 36
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ForceModule.x.scalar
+      value: -0.17999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ForceModule.y.scalar
+      value: -0.17999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ForceModule.z.scalar
+      value: -0.17999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ClampVelocityModule.x.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ClampVelocityModule.y.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ClampVelocityModule.z.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ClampVelocityModule.magnitude.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: SizeBySpeedModule.range.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: RotationBySpeedModule.range.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ColorBySpeedModule.range.y
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 433030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
       propertyPath: m_LocalPosition.x
       value: 19.659998
@@ -7213,50 +7257,6 @@ PrefabInstance:
     - target: {fileID: 433030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
       propertyPath: m_LocalScale.z
       value: 0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: InitialModule.startSize.scalar
-      value: 36
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ForceModule.x.scalar
-      value: -0.17999999
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ForceModule.y.scalar
-      value: -0.17999999
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ForceModule.z.scalar
-      value: -0.17999999
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ClampVelocityModule.x.scalar
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ClampVelocityModule.y.scalar
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ClampVelocityModule.z.scalar
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ClampVelocityModule.magnitude.scalar
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: SizeBySpeedModule.range.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: RotationBySpeedModule.range.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ColorBySpeedModule.range.y
-      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
@@ -13335,6 +13335,50 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fog Field Left Half
       objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ForceModule.x.scalar
+      value: -0.29999998
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ForceModule.y.scalar
+      value: -0.29999998
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ForceModule.z.scalar
+      value: -0.29999998
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ClampVelocityModule.x.scalar
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ClampVelocityModule.y.scalar
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ClampVelocityModule.z.scalar
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ClampVelocityModule.magnitude.scalar
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: SizeBySpeedModule.range.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: RotationBySpeedModule.range.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ColorBySpeedModule.range.y
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 433030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
       propertyPath: m_LocalPosition.x
       value: -34.5
@@ -13389,50 +13433,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 433030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
       propertyPath: m_LocalScale.z
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: InitialModule.startSize.scalar
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ForceModule.x.scalar
-      value: -0.29999998
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ForceModule.y.scalar
-      value: -0.29999998
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ForceModule.z.scalar
-      value: -0.29999998
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ClampVelocityModule.x.scalar
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ClampVelocityModule.y.scalar
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ClampVelocityModule.z.scalar
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ClampVelocityModule.magnitude.scalar
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: SizeBySpeedModule.range.y
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: RotationBySpeedModule.range.y
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ColorBySpeedModule.range.y
       value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -13708,6 +13708,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2066701115}
     m_Modifications:
+    - target: {fileID: 166028, guid: 9e2c57f02f7742f47912ffc78514ef94, type: 3}
+      propertyPath: m_Name
+      value: Lantern_1A
+      objectReference: {fileID: 0}
     - target: {fileID: 403694, guid: 9e2c57f02f7742f47912ffc78514ef94, type: 3}
       propertyPath: m_LocalPosition.x
       value: 50.08481
@@ -13751,10 +13755,6 @@ PrefabInstance:
     - target: {fileID: 403694, guid: 9e2c57f02f7742f47912ffc78514ef94, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 166028, guid: 9e2c57f02f7742f47912ffc78514ef94, type: 3}
-      propertyPath: m_Name
-      value: Lantern_1A
       objectReference: {fileID: 0}
     - target: {fileID: 10870516, guid: 9e2c57f02f7742f47912ffc78514ef94, type: 3}
       propertyPath: m_Range
@@ -13929,14 +13929,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 10897068, guid: 3f1b5ca3b18238c48907521baad58d35, type: 3}
-      propertyPath: m_Range
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 10897068, guid: 3f1b5ca3b18238c48907521baad58d35, type: 3}
-      propertyPath: m_Intensity
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 417938, guid: 3f1b5ca3b18238c48907521baad58d35, type: 3}
       propertyPath: m_LocalPosition.y
       value: -1.27
@@ -13944,6 +13936,14 @@ PrefabInstance:
     - target: {fileID: 449888, guid: 3f1b5ca3b18238c48907521baad58d35, type: 3}
       propertyPath: m_LocalScale.y
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 10897068, guid: 3f1b5ca3b18238c48907521baad58d35, type: 3}
+      propertyPath: m_Range
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 10897068, guid: 3f1b5ca3b18238c48907521baad58d35, type: 3}
+      propertyPath: m_Intensity
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f1b5ca3b18238c48907521baad58d35, type: 3}
@@ -22202,6 +22202,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 976172588}
     m_Modifications:
+    - target: {fileID: 114584, guid: 1b06010e661232041b369d2407bee3b6, type: 3}
+      propertyPath: m_Name
+      value: Bare_Tree_1A2
+      objectReference: {fileID: 0}
     - target: {fileID: 418816, guid: 1b06010e661232041b369d2407bee3b6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 64.587036
@@ -22245,10 +22249,6 @@ PrefabInstance:
     - target: {fileID: 418816, guid: 1b06010e661232041b369d2407bee3b6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114584, guid: 1b06010e661232041b369d2407bee3b6, type: 3}
-      propertyPath: m_Name
-      value: Bare_Tree_1A2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1b06010e661232041b369d2407bee3b6, type: 3}
@@ -23503,7 +23503,7 @@ PrefabInstance:
     - target: {fileID: 2963043488759335136, guid: c0a9467a59673435eb98ef92f9bc0a4c,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 54.100006
+      value: 54
       objectReference: {fileID: 0}
     - target: {fileID: 2963043488759335136, guid: c0a9467a59673435eb98ef92f9bc0a4c,
         type: 3}
@@ -24340,6 +24340,50 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fog_Big_FX_01 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 36
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ForceModule.x.scalar
+      value: -0.17999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ForceModule.y.scalar
+      value: -0.17999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ForceModule.z.scalar
+      value: -0.17999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ClampVelocityModule.x.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ClampVelocityModule.y.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ClampVelocityModule.z.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ClampVelocityModule.magnitude.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: SizeBySpeedModule.range.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: RotationBySpeedModule.range.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ColorBySpeedModule.range.y
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 433030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
       propertyPath: m_LocalPosition.x
       value: 38.26
@@ -24395,50 +24439,6 @@ PrefabInstance:
     - target: {fileID: 433030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
       propertyPath: m_LocalScale.z
       value: 0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: InitialModule.startSize.scalar
-      value: 36
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ForceModule.x.scalar
-      value: -0.17999999
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ForceModule.y.scalar
-      value: -0.17999999
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ForceModule.z.scalar
-      value: -0.17999999
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ClampVelocityModule.x.scalar
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ClampVelocityModule.y.scalar
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ClampVelocityModule.z.scalar
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ClampVelocityModule.magnitude.scalar
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: SizeBySpeedModule.range.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: RotationBySpeedModule.range.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ColorBySpeedModule.range.y
-      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
@@ -24655,6 +24655,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 249608037}
     m_Modifications:
+    - target: {fileID: 166028, guid: 9e2c57f02f7742f47912ffc78514ef94, type: 3}
+      propertyPath: m_Name
+      value: Lantern_1A
+      objectReference: {fileID: 0}
     - target: {fileID: 403694, guid: 9e2c57f02f7742f47912ffc78514ef94, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.18576339
@@ -24710,10 +24714,6 @@ PrefabInstance:
     - target: {fileID: 403694, guid: 9e2c57f02f7742f47912ffc78514ef94, type: 3}
       propertyPath: m_LocalScale.z
       value: 0.033333335
-      objectReference: {fileID: 0}
-    - target: {fileID: 166028, guid: 9e2c57f02f7742f47912ffc78514ef94, type: 3}
-      propertyPath: m_Name
-      value: Lantern_1A
       objectReference: {fileID: 0}
     - target: {fileID: 10870516, guid: 9e2c57f02f7742f47912ffc78514ef94, type: 3}
       propertyPath: m_Range
@@ -26028,6 +26028,50 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fog_Big_FX_01 (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 36
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ForceModule.x.scalar
+      value: -0.17999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ForceModule.y.scalar
+      value: -0.17999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ForceModule.z.scalar
+      value: -0.17999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ClampVelocityModule.x.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ClampVelocityModule.y.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ClampVelocityModule.z.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ClampVelocityModule.magnitude.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: SizeBySpeedModule.range.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: RotationBySpeedModule.range.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ColorBySpeedModule.range.y
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 433030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
       propertyPath: m_LocalPosition.x
       value: 42.46
@@ -26083,50 +26127,6 @@ PrefabInstance:
     - target: {fileID: 433030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
       propertyPath: m_LocalScale.z
       value: 0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: InitialModule.startSize.scalar
-      value: 36
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ForceModule.x.scalar
-      value: -0.17999999
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ForceModule.y.scalar
-      value: -0.17999999
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ForceModule.z.scalar
-      value: -0.17999999
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ClampVelocityModule.x.scalar
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ClampVelocityModule.y.scalar
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ClampVelocityModule.z.scalar
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ClampVelocityModule.magnitude.scalar
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: SizeBySpeedModule.range.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: RotationBySpeedModule.range.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ColorBySpeedModule.range.y
-      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
@@ -26406,6 +26406,50 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fog_Big_FX_01 (10)
       objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 36
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ForceModule.x.scalar
+      value: -0.17999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ForceModule.y.scalar
+      value: -0.17999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ForceModule.z.scalar
+      value: -0.17999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ClampVelocityModule.x.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ClampVelocityModule.y.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ClampVelocityModule.z.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ClampVelocityModule.magnitude.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: SizeBySpeedModule.range.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: RotationBySpeedModule.range.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ColorBySpeedModule.range.y
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 433030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.5999994
@@ -26461,50 +26505,6 @@ PrefabInstance:
     - target: {fileID: 433030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
       propertyPath: m_LocalScale.z
       value: 0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: InitialModule.startSize.scalar
-      value: 36
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ForceModule.x.scalar
-      value: -0.17999999
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ForceModule.y.scalar
-      value: -0.17999999
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ForceModule.z.scalar
-      value: -0.17999999
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ClampVelocityModule.x.scalar
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ClampVelocityModule.y.scalar
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ClampVelocityModule.z.scalar
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ClampVelocityModule.magnitude.scalar
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: SizeBySpeedModule.range.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: RotationBySpeedModule.range.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ColorBySpeedModule.range.y
-      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
@@ -29191,6 +29191,50 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fog Field Right Half
       objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 36
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ForceModule.x.scalar
+      value: -0.17999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ForceModule.y.scalar
+      value: -0.17999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ForceModule.z.scalar
+      value: -0.17999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ClampVelocityModule.x.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ClampVelocityModule.y.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ClampVelocityModule.z.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ClampVelocityModule.magnitude.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: SizeBySpeedModule.range.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: RotationBySpeedModule.range.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ColorBySpeedModule.range.y
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 433030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
       propertyPath: m_LocalPosition.x
       value: 177.79999
@@ -29245,50 +29289,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 433030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
       propertyPath: m_LocalScale.z
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: InitialModule.startSize.scalar
-      value: 36
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ForceModule.x.scalar
-      value: -0.17999999
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ForceModule.y.scalar
-      value: -0.17999999
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ForceModule.z.scalar
-      value: -0.17999999
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ClampVelocityModule.x.scalar
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ClampVelocityModule.y.scalar
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ClampVelocityModule.z.scalar
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ClampVelocityModule.magnitude.scalar
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: SizeBySpeedModule.range.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: RotationBySpeedModule.range.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ColorBySpeedModule.range.y
       value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -30124,6 +30124,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 846455574}
     m_Modifications:
+    - target: {fileID: 166028, guid: 9e2c57f02f7742f47912ffc78514ef94, type: 3}
+      propertyPath: m_Name
+      value: Lantern_1A
+      objectReference: {fileID: 0}
     - target: {fileID: 403694, guid: 9e2c57f02f7742f47912ffc78514ef94, type: 3}
       propertyPath: m_LocalPosition.x
       value: 45.747833
@@ -30167,10 +30171,6 @@ PrefabInstance:
     - target: {fileID: 403694, guid: 9e2c57f02f7742f47912ffc78514ef94, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 166028, guid: 9e2c57f02f7742f47912ffc78514ef94, type: 3}
-      propertyPath: m_Name
-      value: Lantern_1A
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9e2c57f02f7742f47912ffc78514ef94, type: 3}
@@ -38655,6 +38655,50 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fog_Big_FX_01 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 36
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ForceModule.x.scalar
+      value: -0.17999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ForceModule.y.scalar
+      value: -0.17999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ForceModule.z.scalar
+      value: -0.17999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ClampVelocityModule.x.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ClampVelocityModule.y.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ClampVelocityModule.z.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ClampVelocityModule.magnitude.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: SizeBySpeedModule.range.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: RotationBySpeedModule.range.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ColorBySpeedModule.range.y
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 433030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5.2599998
@@ -38710,50 +38754,6 @@ PrefabInstance:
     - target: {fileID: 433030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
       propertyPath: m_LocalScale.z
       value: 0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: InitialModule.startSize.scalar
-      value: 36
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ForceModule.x.scalar
-      value: -0.17999999
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ForceModule.y.scalar
-      value: -0.17999999
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ForceModule.z.scalar
-      value: -0.17999999
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ClampVelocityModule.x.scalar
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ClampVelocityModule.y.scalar
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ClampVelocityModule.z.scalar
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ClampVelocityModule.magnitude.scalar
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: SizeBySpeedModule.range.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: RotationBySpeedModule.range.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ColorBySpeedModule.range.y
-      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
@@ -39523,6 +39523,50 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fog_Big_FX_01 (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 36
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ForceModule.x.scalar
+      value: -0.17999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ForceModule.y.scalar
+      value: -0.17999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ForceModule.z.scalar
+      value: -0.17999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ClampVelocityModule.x.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ClampVelocityModule.y.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ClampVelocityModule.z.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ClampVelocityModule.magnitude.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: SizeBySpeedModule.range.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: RotationBySpeedModule.range.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ColorBySpeedModule.range.y
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 433030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
       propertyPath: m_LocalPosition.x
       value: -30.666672
@@ -39578,50 +39622,6 @@ PrefabInstance:
     - target: {fileID: 433030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
       propertyPath: m_LocalScale.z
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: InitialModule.startSize.scalar
-      value: 36
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ForceModule.x.scalar
-      value: -0.17999999
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ForceModule.y.scalar
-      value: -0.17999999
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ForceModule.z.scalar
-      value: -0.17999999
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ClampVelocityModule.x.scalar
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ClampVelocityModule.y.scalar
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ClampVelocityModule.z.scalar
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ClampVelocityModule.magnitude.scalar
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: SizeBySpeedModule.range.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: RotationBySpeedModule.range.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ColorBySpeedModule.range.y
-      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
@@ -44230,6 +44230,50 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fog_Big_FX_01 (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ForceModule.x.scalar
+      value: -0.14999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ForceModule.y.scalar
+      value: -0.14999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ForceModule.z.scalar
+      value: -0.14999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ClampVelocityModule.x.scalar
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ClampVelocityModule.y.scalar
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ClampVelocityModule.z.scalar
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ClampVelocityModule.magnitude.scalar
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: SizeBySpeedModule.range.y
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: RotationBySpeedModule.range.y
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ColorBySpeedModule.range.y
+      value: 2.5
+      objectReference: {fileID: 0}
     - target: {fileID: 433030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
       propertyPath: m_LocalPosition.x
       value: -48.66667
@@ -44285,50 +44329,6 @@ PrefabInstance:
     - target: {fileID: 433030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
       propertyPath: m_LocalScale.z
       value: 0.8333334
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: InitialModule.startSize.scalar
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ForceModule.x.scalar
-      value: -0.14999999
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ForceModule.y.scalar
-      value: -0.14999999
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ForceModule.z.scalar
-      value: -0.14999999
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ClampVelocityModule.x.scalar
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ClampVelocityModule.y.scalar
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ClampVelocityModule.z.scalar
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ClampVelocityModule.magnitude.scalar
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: SizeBySpeedModule.range.y
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: RotationBySpeedModule.range.y
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ColorBySpeedModule.range.y
-      value: 2.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
@@ -74221,6 +74221,50 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fog_Big_FX_01 (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 36
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ForceModule.x.scalar
+      value: -0.17999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ForceModule.y.scalar
+      value: -0.17999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ForceModule.z.scalar
+      value: -0.17999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ClampVelocityModule.x.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ClampVelocityModule.y.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ClampVelocityModule.z.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ClampVelocityModule.magnitude.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: SizeBySpeedModule.range.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: RotationBySpeedModule.range.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
+      propertyPath: ColorBySpeedModule.range.y
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 433030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
       propertyPath: m_LocalPosition.x
       value: -70.76667
@@ -74276,50 +74320,6 @@ PrefabInstance:
     - target: {fileID: 433030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
       propertyPath: m_LocalScale.z
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: InitialModule.startSize.scalar
-      value: 36
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ForceModule.x.scalar
-      value: -0.17999999
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ForceModule.y.scalar
-      value: -0.17999999
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ForceModule.z.scalar
-      value: -0.17999999
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ClampVelocityModule.x.scalar
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ClampVelocityModule.y.scalar
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ClampVelocityModule.z.scalar
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ClampVelocityModule.magnitude.scalar
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: SizeBySpeedModule.range.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: RotationBySpeedModule.range.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19833030, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}
-      propertyPath: ColorBySpeedModule.range.y
-      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df4c1f9bec6d96247a18d75f28c96191, type: 3}

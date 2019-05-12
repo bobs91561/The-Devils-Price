@@ -112,6 +112,81 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &27738284
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 27738285}
+  - component: {fileID: 27738286}
+  m_Layer: 16
+  m_Name: Ice Giant Kill Count
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &27738285
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 27738284}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 347242149}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &27738286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 27738284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b871c74662c23945bf35b97caee462a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  incrementOn: 0
+  variable: IceGiantsKilled
+  increment: 1
+  min: 0
+  max: 5
+  alertMessage: 
+  alertDuration: 0
+  condition:
+    luaConditions:
+    - (CurrentQuestState("Unwelcome Guest") == "success") and (CurrentQuestEntryState("Unwelcome
+      Guest", 1) == "active")
+    questConditions: []
+    acceptedTags: []
+    acceptedGameObjects: []
+    luaWizardIndex: -1
+    lastEvaluationValue: 0
+  onIncrement:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 803615902}
+        m_MethodName: OnUse
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!1 &105799640
 GameObject:
   m_ObjectHideFlags: 0
@@ -264,6 +339,176 @@ Animator:
     type: 3}
   m_PrefabInstance: {fileID: 135992563}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &139077830
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 672389178}
+    m_Modifications:
+    - target: {fileID: 2066231096758887516, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_Name
+      value: DI_Malthus
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887510, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: overrideName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887509, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: actor
+      value: Malthus
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887512, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887512, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.data[0]
+      value: (CurrentQuestState("Malthus") == "active") and (CurrentQuestEntryState("Malthus",
+        1) == "active")
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887512, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: conversation
+      value: FifthPlane/WildGooseChase/Malthus/Malthus
+      objectReference: {fileID: 0}
+    - target: {fileID: 5670948032092822873, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5670948032092822873, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.data[0]
+      value: (CurrentQuestState("Malthus") == "active") and (CurrentQuestEntryState("Malthus",
+        2) == "active")
+      objectReference: {fileID: 0}
+    - target: {fileID: 2140371814266016209, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2140371814266016209, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: setEnabledActions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2140371814266016209, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.data[0]
+      value: (CurrentQuestState("Malthus") == "active") and (CurrentQuestEntryState("Malthus",
+        2) == "active")
+      objectReference: {fileID: 0}
+    - target: {fileID: 2140371814266016209, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: luaCode
+      value: 'SetQuestEntryState("Malthus", 2, "success");
+
+        SetQuestEntryState("Malthus", 3, "active")'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2140371814266016209, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: setEnabledActions.Array.data[0].target
+      value: 
+      objectReference: {fileID: 139077833}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 19aa79f9bfbaf544db5298e3b9887def, type: 3}
+--- !u!4 &139077831 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+    type: 3}
+  m_PrefabInstance: {fileID: 139077830}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &139077832 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2066231096758887516, guid: 19aa79f9bfbaf544db5298e3b9887def,
+    type: 3}
+  m_PrefabInstance: {fileID: 139077830}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &139077833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 139077832}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39b57c445266b414d8b3be9a0a70f159, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  once: 1
+  trigger: 64
+  playableDirector: {fileID: 0}
+  timelineAsset: {fileID: 0}
+  condition:
+    luaConditions: []
+    questConditions: []
+    acceptedTags: []
+    acceptedGameObjects: []
+    luaWizardIndex: -1
+    lastEvaluationValue: 0
+  bindings: []
 --- !u!1 &153364692
 GameObject:
   m_ObjectHideFlags: 0
@@ -470,7 +715,7 @@ PrefabInstance:
     - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
         type: 3}
@@ -500,12 +745,17 @@ PrefabInstance:
     - target: {fileID: 6194478975504602096, guid: 1ee4bf97be0c86348ba847713e271052,
         type: 3}
       propertyPath: condition.luaConditions.Array.data[0]
-      value: (CurrentQuestState("The Cave") == "unassigned")
+      value: (CurrentQuestState("The Cave") == "active")
       objectReference: {fileID: 0}
     - target: {fileID: 6194478975504602096, guid: 1ee4bf97be0c86348ba847713e271052,
         type: 3}
       propertyPath: conversation
       value: FifthPlane/WildGooseChase/TheCave
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602096, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.data[1]
+      value: CurrentQuestEntryState("The Cave", 1) ~= "active"
       objectReference: {fileID: 0}
     - target: {fileID: 6194478975504602110, guid: 1ee4bf97be0c86348ba847713e271052,
         type: 3}
@@ -520,6 +770,298 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 207193981}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &207193983 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6194478975504602100, guid: 1ee4bf97be0c86348ba847713e271052,
+    type: 3}
+  m_PrefabInstance: {fileID: 207193981}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &207193984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 207193983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c593457cd8105e148906690e1707c592, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trigger: 32
+  condition:
+    luaConditions:
+    - CurrentQuestState("Barghest") == "active"
+    questConditions: []
+    acceptedTags: []
+    acceptedGameObjects: []
+    luaWizardIndex: -1
+    lastEvaluationValue: 0
+  setQuestState: 1
+  questName: 
+  questState: 0
+  setQuestEntryState: 0
+  questEntryNumber: 1
+  questEntryState: 0
+  luaCode: 
+  sequence: 
+  sequenceSpeaker: {fileID: 0}
+  sequenceListener: {fileID: 0}
+  waitOneFrameOnStartOrEnable: 1
+  alertMessage: 
+  textTable: {fileID: 0}
+  alertDuration: 0
+  sendMessages: []
+  barkSource: 0
+  barkConversation: 
+  barkText: 
+  barkTextSequence: 
+  barker: {fileID: 0}
+  barkTarget: {fileID: 0}
+  barkOrder: 0
+  allowBarksDuringConversations: 0
+  skipBarkIfNoValidEntries: 0
+  cacheBarkLines: 0
+  conversation: FifthPlane/WildGooseChase/Barghest/Abaddon
+  conversationConversant: {fileID: 0}
+  conversationActor: {fileID: 0}
+  startConversationEntryID: -1
+  exclusive: 0
+  skipIfNoValidEntries: 1
+  stopConversationOnTriggerExit: 0
+  stopConversationIfTooFar: 0
+  maxConversationDistance: 5
+  monitorConversationDistanceFrequency: 1
+  showCursorDuringConversation: 0
+  pauseGameDuringConversation: 0
+  setActiveActions: []
+  setEnabledActions: []
+  setAnimatorStateActions: []
+  onExecute:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: PixelCrushers.GameObjectUnityEvent, PixelCrushers, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  useConversationTitlePicker: 1
+  useBarkTitlePicker: 1
+  useQuestNamePicker: 1
+  selectedDatabase: {fileID: 11400000, guid: 4b9387829cfc8d8469142c0106630476, type: 2}
+--- !u!114 &207193985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 207193983}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c593457cd8105e148906690e1707c592, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trigger: 64
+  condition:
+    luaConditions: []
+    questConditions: []
+    acceptedTags: []
+    acceptedGameObjects: []
+    luaWizardIndex: -1
+    lastEvaluationValue: 0
+  setQuestState: 1
+  questName: 
+  questState: 0
+  setQuestEntryState: 0
+  questEntryNumber: 1
+  questEntryState: 0
+  luaCode: 'SetQuestEntryState("Abaddon", 2, "success");
+
+    SetQuestEntryState("Abaddon", 3, "active")'
+  sequence: 
+  sequenceSpeaker: {fileID: 0}
+  sequenceListener: {fileID: 0}
+  waitOneFrameOnStartOrEnable: 1
+  alertMessage: 
+  textTable: {fileID: 0}
+  alertDuration: 0
+  sendMessages: []
+  barkSource: 0
+  barkConversation: 
+  barkText: 
+  barkTextSequence: 
+  barker: {fileID: 0}
+  barkTarget: {fileID: 0}
+  barkOrder: 0
+  allowBarksDuringConversations: 0
+  skipBarkIfNoValidEntries: 0
+  cacheBarkLines: 0
+  conversation: 
+  conversationConversant: {fileID: 0}
+  conversationActor: {fileID: 0}
+  startConversationEntryID: -1
+  exclusive: 0
+  skipIfNoValidEntries: 1
+  stopConversationOnTriggerExit: 0
+  stopConversationIfTooFar: 0
+  maxConversationDistance: 5
+  monitorConversationDistanceFrequency: 1
+  showCursorDuringConversation: 0
+  pauseGameDuringConversation: 0
+  setActiveActions: []
+  setEnabledActions: []
+  setAnimatorStateActions: []
+  onExecute:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: PixelCrushers.GameObjectUnityEvent, PixelCrushers, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  useConversationTitlePicker: 1
+  useBarkTitlePicker: 1
+  useQuestNamePicker: 1
+  selectedDatabase: {fileID: 11400000, guid: 4b9387829cfc8d8469142c0106630476, type: 2}
+--- !u!114 &207193986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 207193983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c593457cd8105e148906690e1707c592, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trigger: 2
+  condition:
+    luaConditions:
+    - (CurrentQuestState("Abaddon") == "active") and (CurrentQuestEntryState("Abaddon",
+      2) == "active")
+    questConditions: []
+    acceptedTags: []
+    acceptedGameObjects: []
+    luaWizardIndex: -1
+    lastEvaluationValue: 0
+  setQuestState: 1
+  questName: 
+  questState: 0
+  setQuestEntryState: 0
+  questEntryNumber: 1
+  questEntryState: 0
+  luaCode: 
+  sequence: 
+  sequenceSpeaker: {fileID: 0}
+  sequenceListener: {fileID: 0}
+  waitOneFrameOnStartOrEnable: 1
+  alertMessage: 
+  textTable: {fileID: 0}
+  alertDuration: 0
+  sendMessages:
+  - gameObject: {fileID: 0}
+    message: OnAggression
+    parameter: 
+  barkSource: 0
+  barkConversation: 
+  barkText: 
+  barkTextSequence: 
+  barker: {fileID: 0}
+  barkTarget: {fileID: 0}
+  barkOrder: 0
+  allowBarksDuringConversations: 0
+  skipBarkIfNoValidEntries: 0
+  cacheBarkLines: 0
+  conversation: 
+  conversationConversant: {fileID: 0}
+  conversationActor: {fileID: 0}
+  startConversationEntryID: -1
+  exclusive: 0
+  skipIfNoValidEntries: 1
+  stopConversationOnTriggerExit: 0
+  stopConversationIfTooFar: 0
+  maxConversationDistance: 5
+  monitorConversationDistanceFrequency: 1
+  showCursorDuringConversation: 0
+  pauseGameDuringConversation: 0
+  setActiveActions: []
+  setEnabledActions: []
+  setAnimatorStateActions: []
+  onExecute:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: PixelCrushers.GameObjectUnityEvent, PixelCrushers, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  useConversationTitlePicker: 1
+  useBarkTitlePicker: 1
+  useQuestNamePicker: 1
+  selectedDatabase: {fileID: 11400000, guid: 4b9387829cfc8d8469142c0106630476, type: 2}
+--- !u!114 &207193987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 207193983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c593457cd8105e148906690e1707c592, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trigger: 32
+  condition:
+    luaConditions:
+    - (CurrentQuestState("Abaddon") == "active") and (CurrentQuestEntryState("Abaddon",
+      1) == "active")
+    questConditions: []
+    acceptedTags: []
+    acceptedGameObjects: []
+    luaWizardIndex: -1
+    lastEvaluationValue: 0
+  setQuestState: 1
+  questName: 
+  questState: 0
+  setQuestEntryState: 0
+  questEntryNumber: 1
+  questEntryState: 0
+  luaCode: 
+  sequence: 
+  sequenceSpeaker: {fileID: 0}
+  sequenceListener: {fileID: 0}
+  waitOneFrameOnStartOrEnable: 1
+  alertMessage: 
+  textTable: {fileID: 0}
+  alertDuration: 0
+  sendMessages: []
+  barkSource: 0
+  barkConversation: 
+  barkText: 
+  barkTextSequence: 
+  barker: {fileID: 0}
+  barkTarget: {fileID: 0}
+  barkOrder: 0
+  allowBarksDuringConversations: 0
+  skipBarkIfNoValidEntries: 0
+  cacheBarkLines: 0
+  conversation: FifthPlane/WildGooseChase/Abaddon
+  conversationConversant: {fileID: 0}
+  conversationActor: {fileID: 0}
+  startConversationEntryID: -1
+  exclusive: 0
+  skipIfNoValidEntries: 1
+  stopConversationOnTriggerExit: 0
+  stopConversationIfTooFar: 0
+  maxConversationDistance: 5
+  monitorConversationDistanceFrequency: 1
+  showCursorDuringConversation: 0
+  pauseGameDuringConversation: 0
+  setActiveActions: []
+  setEnabledActions: []
+  setAnimatorStateActions: []
+  onExecute:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: PixelCrushers.GameObjectUnityEvent, PixelCrushers, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  useConversationTitlePicker: 1
+  useBarkTitlePicker: 1
+  useQuestNamePicker: 1
+  selectedDatabase: {fileID: 11400000, guid: 4b9387829cfc8d8469142c0106630476, type: 2}
 --- !u!1 &209766347
 GameObject:
   m_ObjectHideFlags: 0
@@ -631,6 +1173,144 @@ MonoBehaviour:
   ZoneSetting: 0
   EnemyDensity: 0
   SpawnRate: 1
+--- !u!1001 &328399090
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 672389178}
+    m_Modifications:
+    - target: {fileID: 1081031700846285506, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_Name
+      value: Dialogue_System_Triggers_OnStartBase
+      objectReference: {fileID: 0}
+    - target: {fileID: 1081031700846285506, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7995114311862989317, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: questState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7995114311862989317, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: questName
+      value: The Cave
+      objectReference: {fileID: 0}
+    - target: {fileID: 7995114311862989317, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: setQuestEntryState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7995114311862989317, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: questEntryNumber
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7995114311862989317, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: questEntryState
+      value: 2
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 16b6d24272bb5194786538b3162c69af, type: 3}
+--- !u!4 &328399091 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+    type: 3}
+  m_PrefabInstance: {fileID: 328399090}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &347242148
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 347242149}
+  m_Layer: 16
+  m_Name: Unwelcome Guest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &347242149
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 347242148}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 27738285}
+  - {fileID: 803615901}
+  - {fileID: 1554697270}
+  m_Father: {fileID: 672389178}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &357779650
 GameObject:
   m_ObjectHideFlags: 0
@@ -867,96 +1547,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!1001 &402552936
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 672389178}
-    m_Modifications:
-    - target: {fileID: 6194478975504602100, guid: 1ee4bf97be0c86348ba847713e271052,
-        type: 3}
-      propertyPath: m_Name
-      value: DI_Barghest
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.89592296
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -4.5099363
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -2.506199
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194478975504602109, guid: 1ee4bf97be0c86348ba847713e271052,
-        type: 3}
-      propertyPath: actor
-      value: Barghest
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194478975504602096, guid: 1ee4bf97be0c86348ba847713e271052,
-        type: 3}
-      propertyPath: conversation
-      value: FifthPlane/WildGooseChase/Barghest/Barghest
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194478975504602110, guid: 1ee4bf97be0c86348ba847713e271052,
-        type: 3}
-      propertyPath: overrideName
-      value: Barghest
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 1ee4bf97be0c86348ba847713e271052, type: 3}
---- !u!4 &402552937 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
-    type: 3}
-  m_PrefabInstance: {fileID: 402552936}
-  m_PrefabAsset: {fileID: 0}
 --- !u!43 &412791076
 Mesh:
   m_ObjectHideFlags: 0
@@ -1117,86 +1707,6 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!1001 &428588694
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 672389178}
-    m_Modifications:
-    - target: {fileID: 2066231096758887516, guid: 19aa79f9bfbaf544db5298e3b9887def,
-        type: 3}
-      propertyPath: m_Name
-      value: DI_FriendlyBase
-      objectReference: {fileID: 0}
-    - target: {fileID: 2066231096758887510, guid: 19aa79f9bfbaf544db5298e3b9887def,
-        type: 3}
-      propertyPath: overrideName
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 19aa79f9bfbaf544db5298e3b9887def, type: 3}
---- !u!4 &428588695 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
-    type: 3}
-  m_PrefabInstance: {fileID: 428588694}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &429647177
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1260,6 +1770,39 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 429647177}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &513585036
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 513585037}
+  m_Layer: 16
+  m_Name: A Day in the Life of a Demon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &513585037
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 513585036}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 2101628206}
+  - {fileID: 1670494629}
+  - {fileID: 1755177574}
+  m_Father: {fileID: 672389178}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &514530114
 GameObject:
   m_ObjectHideFlags: 0
@@ -1294,86 +1837,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &540651578
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 672389178}
-    m_Modifications:
-    - target: {fileID: 1081031700846285506, guid: 16b6d24272bb5194786538b3162c69af,
-        type: 3}
-      propertyPath: m_Name
-      value: DI_OnStart
-      objectReference: {fileID: 0}
-    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7995114311862989317, guid: 16b6d24272bb5194786538b3162c69af,
-        type: 3}
-      propertyPath: luaCode
-      value: 
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 16b6d24272bb5194786538b3162c69af, type: 3}
---- !u!4 &540651579 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
-    type: 3}
-  m_PrefabInstance: {fileID: 540651578}
-  m_PrefabAsset: {fileID: 0}
 --- !u!43 &541067046
 Mesh:
   m_ObjectHideFlags: 0
@@ -1654,6 +2117,136 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: Cinemachine.CinemachineBrain+VcamActivatedEvent, Cinemachine, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!1001 &593593091
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 672389178}
+    m_Modifications:
+    - target: {fileID: 2066231096758887516, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_Name
+      value: DI_Barghest
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887510, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: overrideName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887509, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: actor
+      value: Barghest
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887512, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887512, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.data[0]
+      value: (CurrentQuestState("Barghest") == "active") and (CurrentQuestEntryState("Barghest",
+        1) == "active")
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887512, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: conversation
+      value: FifthPlane/WildGooseChase/Barghest/Barghest
+      objectReference: {fileID: 0}
+    - target: {fileID: 5670948032092822873, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5670948032092822873, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.data[0]
+      value: (CurrentQuestState("Barghest") == "active") and (CurrentQuestEntryState("Barghest",
+        2) == "active")
+      objectReference: {fileID: 0}
+    - target: {fileID: 2140371814266016209, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2140371814266016209, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.data[0]
+      value: (CurrentQuestState("Barghest") == "active") and (CurrentQuestEntryState("Barghest",
+        2) == "active")
+      objectReference: {fileID: 0}
+    - target: {fileID: 2140371814266016209, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: luaCode
+      value: 'SetQuestEntryState("Barghest", 2, "success");
+
+        SetQuestEntryState("Barghest", 3, "active")'
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 19aa79f9bfbaf544db5298e3b9887def, type: 3}
+--- !u!4 &593593092 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+    type: 3}
+  m_PrefabInstance: {fileID: 593593091}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &623094198
 GameObject:
   m_ObjectHideFlags: 0
@@ -6738,96 +7331,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &636329515
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 672389178}
-    m_Modifications:
-    - target: {fileID: 6194478975504602100, guid: 1ee4bf97be0c86348ba847713e271052,
-        type: 3}
-      propertyPath: m_Name
-      value: DI_Malthus
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.89592296
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -4.5099363
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -2.506199
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194478975504602109, guid: 1ee4bf97be0c86348ba847713e271052,
-        type: 3}
-      propertyPath: actor
-      value: Malthus
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194478975504602096, guid: 1ee4bf97be0c86348ba847713e271052,
-        type: 3}
-      propertyPath: conversation
-      value: FifthPlane/WildGooseChase/Malthus/Malthus
-      objectReference: {fileID: 0}
-    - target: {fileID: 6194478975504602110, guid: 1ee4bf97be0c86348ba847713e271052,
-        type: 3}
-      propertyPath: overrideName
-      value: Malthus
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 1ee4bf97be0c86348ba847713e271052, type: 3}
---- !u!4 &636329516 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
-    type: 3}
-  m_PrefabInstance: {fileID: 636329515}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &672389177
 GameObject:
   m_ObjectHideFlags: 0
@@ -6855,14 +7358,115 @@ Transform:
   m_LocalPosition: {x: -0.89592296, y: 4.5099363, z: 2.506199}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 328399091}
   - {fileID: 207193982}
-  - {fileID: 636329516}
-  - {fileID: 402552937}
-  - {fileID: 540651579}
-  - {fileID: 428588695}
+  - {fileID: 832487895}
+  - {fileID: 593593092}
+  - {fileID: 139077831}
+  - {fileID: 1712267018}
+  - {fileID: 347242149}
+  - {fileID: 1814142711}
+  - {fileID: 513585037}
+  - {fileID: 786276620}
+  - {fileID: 2119264964}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &716458041
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1814142711}
+    m_Modifications:
+    - target: {fileID: 6194478975504602100, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_Name
+      value: DI_SeperatedPart1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602109, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: actor
+      value: Tormented Soul
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602096, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602096, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.data[0]
+      value: CurrentQuestState("Seperated") ~= "success"
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602096, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: conversation
+      value: FifthPlane/Seperated/1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1ee4bf97be0c86348ba847713e271052, type: 3}
+--- !u!4 &716458042 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+    type: 3}
+  m_PrefabInstance: {fileID: 716458041}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &724743249
 Mesh:
   m_ObjectHideFlags: 0
@@ -7054,6 +7658,139 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &786276619
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 786276620}
+  m_Layer: 0
+  m_Name: Liberation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &786276620
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 786276619}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1850205058}
+  m_Father: {fileID: 672389178}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &803615900
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 803615901}
+  - component: {fileID: 803615902}
+  m_Layer: 0
+  m_Name: Ice Giant Quest Set
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &803615901
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 803615900}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 347242149}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &803615902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 803615900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c593457cd8105e148906690e1707c592, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trigger: 32
+  condition:
+    luaConditions: []
+    questConditions: []
+    acceptedTags: []
+    acceptedGameObjects: []
+    luaWizardIndex: -1
+    lastEvaluationValue: 0
+  setQuestState: 1
+  questName: 
+  questState: 0
+  setQuestEntryState: 0
+  questEntryNumber: 1
+  questEntryState: 0
+  luaCode: 'SetQuestEntryState("Unwelcome Guest", 1, "success");
+
+    SetQuestEntryState("Unwelcome Guest", 2, "active")'
+  sequence: 
+  sequenceSpeaker: {fileID: 0}
+  sequenceListener: {fileID: 0}
+  waitOneFrameOnStartOrEnable: 1
+  alertMessage: 
+  textTable: {fileID: 0}
+  alertDuration: 0
+  sendMessages: []
+  barkSource: 0
+  barkConversation: 
+  barkText: 
+  barkTextSequence: 
+  barker: {fileID: 0}
+  barkTarget: {fileID: 0}
+  barkOrder: 0
+  allowBarksDuringConversations: 0
+  skipBarkIfNoValidEntries: 0
+  cacheBarkLines: 0
+  conversation: 
+  conversationConversant: {fileID: 0}
+  conversationActor: {fileID: 0}
+  startConversationEntryID: -1
+  exclusive: 0
+  skipIfNoValidEntries: 1
+  stopConversationOnTriggerExit: 0
+  stopConversationIfTooFar: 0
+  maxConversationDistance: 5
+  monitorConversationDistanceFrequency: 1
+  showCursorDuringConversation: 0
+  pauseGameDuringConversation: 0
+  setActiveActions: []
+  setEnabledActions: []
+  setAnimatorStateActions: []
+  onExecute:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: PixelCrushers.GameObjectUnityEvent, PixelCrushers, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  useConversationTitlePicker: 1
+  useBarkTitlePicker: 1
+  useQuestNamePicker: 1
+  selectedDatabase: {fileID: 11400000, guid: 4b9387829cfc8d8469142c0106630476, type: 2}
 --- !u!43 &811994209
 Mesh:
   m_ObjectHideFlags: 0
@@ -7214,6 +7951,221 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &832487894
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 832487895}
+  - component: {fileID: 832487897}
+  - component: {fileID: 832487896}
+  m_Layer: 16
+  m_Name: The Cave Quest Trigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &832487895
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 832487894}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 672389178}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &832487896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 832487894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c593457cd8105e148906690e1707c592, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trigger: 8
+  condition:
+    luaConditions:
+    - (CurrentQuestState("The Cave") == "active") and (CurrentQuestEntryState("The
+      Cave", 1) == "active")
+    questConditions: []
+    acceptedTags:
+    - Player
+    acceptedGameObjects: []
+    luaWizardIndex: -1
+    lastEvaluationValue: 0
+  setQuestState: 0
+  questName: 
+  questState: 2
+  setQuestEntryState: 1
+  questEntryNumber: 2
+  questEntryState: 4
+  luaCode: 'SetQuestEntryState("The Cave", 1, "success");
+
+    SetQuestEntryState("The Cave", 2, "active")'
+  sequence: 
+  sequenceSpeaker: {fileID: 0}
+  sequenceListener: {fileID: 0}
+  waitOneFrameOnStartOrEnable: 1
+  alertMessage: 
+  textTable: {fileID: 0}
+  alertDuration: 0
+  sendMessages: []
+  barkSource: 0
+  barkConversation: 
+  barkText: 
+  barkTextSequence: 
+  barker: {fileID: 0}
+  barkTarget: {fileID: 0}
+  barkOrder: 0
+  allowBarksDuringConversations: 0
+  skipBarkIfNoValidEntries: 0
+  cacheBarkLines: 0
+  conversation: 
+  conversationConversant: {fileID: 0}
+  conversationActor: {fileID: 0}
+  startConversationEntryID: -1
+  exclusive: 0
+  skipIfNoValidEntries: 1
+  stopConversationOnTriggerExit: 0
+  stopConversationIfTooFar: 0
+  maxConversationDistance: 5
+  monitorConversationDistanceFrequency: 1
+  showCursorDuringConversation: 0
+  pauseGameDuringConversation: 0
+  setActiveActions: []
+  setEnabledActions: []
+  setAnimatorStateActions: []
+  onExecute:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: PixelCrushers.GameObjectUnityEvent, PixelCrushers, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  useConversationTitlePicker: 1
+  useBarkTitlePicker: 1
+  useQuestNamePicker: 1
+  selectedDatabase: {fileID: 11400000, guid: 4b9387829cfc8d8469142c0106630476, type: 2}
+--- !u!135 &832487897
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 832487894}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!1001 &896463091
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1814142711}
+    m_Modifications:
+    - target: {fileID: 6194478975504602100, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_Name
+      value: DI_SeperatedPart2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602109, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: actor
+      value: Tormented Soul
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602096, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602096, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.data[0]
+      value: (CurrentQuestState("Seperated") == "active") and (CurrentQuestEntryState("Seperated",
+        1) == "active")
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602096, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: conversation
+      value: FifthPlane/Seperated/2
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1ee4bf97be0c86348ba847713e271052, type: 3}
+--- !u!4 &896463092 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+    type: 3}
+  m_PrefabInstance: {fileID: 896463091}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &898901018
 Mesh:
   m_ObjectHideFlags: 0
@@ -7740,6 +8692,101 @@ Transform:
   m_Father: {fileID: 1749538196}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1169198263
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2119264964}
+    m_Modifications:
+    - target: {fileID: 6194478975504602100, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_Name
+      value: DI_Unpleasantry_Demon
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602109, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: actor
+      value: Demon
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602096, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602096, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.data[0]
+      value: CurrentQuestState("Unpleasantry") ~= "success"
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602096, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: conversation
+      value: FifthPlane/Unpleasantry/Demon
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1ee4bf97be0c86348ba847713e271052, type: 3}
+--- !u!4 &1169198264 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+    type: 3}
+  m_PrefabInstance: {fileID: 1169198263}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1171429323
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10002,10 +11049,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 105799641}
     m_Modifications:
-    - target: {fileID: 145412, guid: 8c58cb722b4f5324ebefee36bbe29002, type: 3}
-      propertyPath: m_Name
-      value: Woodcutters_Hut_1A2
-      objectReference: {fileID: 0}
     - target: {fileID: 412038, guid: 8c58cb722b4f5324ebefee36bbe29002, type: 3}
       propertyPath: m_LocalPosition.x
       value: -59.956966
@@ -10049,6 +11092,10 @@ PrefabInstance:
     - target: {fileID: 412038, guid: 8c58cb722b4f5324ebefee36bbe29002, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 145412, guid: 8c58cb722b4f5324ebefee36bbe29002, type: 3}
+      propertyPath: m_Name
+      value: Woodcutters_Hut_1A2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c58cb722b4f5324ebefee36bbe29002, type: 3}
@@ -10164,6 +11211,101 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 491510, guid: fae5085a246b0ef4aadff798cf29b353,
     type: 3}
   m_PrefabInstance: {fileID: 1446941532}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1554697269
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 347242149}
+    m_Modifications:
+    - target: {fileID: 6194478975504602100, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_Name
+      value: DI_UnwelcomeGuest
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602109, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: actor
+      value: Demon
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602096, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602096, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.data[0]
+      value: CurrentQuestState("Unwelcome Guest") ~= "success"
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602096, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: conversation
+      value: FifthPlane/UnwelcomeGuest/1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1ee4bf97be0c86348ba847713e271052, type: 3}
+--- !u!4 &1554697270 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+    type: 3}
+  m_PrefabInstance: {fileID: 1554697269}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1566161912
 GameObject:
@@ -10349,6 +11491,209 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1667942971}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1670494628
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1670494629}
+  - component: {fileID: 1670494630}
+  m_Layer: 0
+  m_Name: Boss Killed Quest Set
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1670494629
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1670494628}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 513585037}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1670494630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1670494628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c593457cd8105e148906690e1707c592, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trigger: 32
+  condition:
+    luaConditions: []
+    questConditions: []
+    acceptedTags: []
+    acceptedGameObjects: []
+    luaWizardIndex: -1
+    lastEvaluationValue: 0
+  setQuestState: 1
+  questName: 
+  questState: 0
+  setQuestEntryState: 0
+  questEntryNumber: 1
+  questEntryState: 0
+  luaCode: 'SetQuestEntryState("A Day in the Life of a Demon", 1, "success");
+
+    SetQuestEntryState("A Day in the Life of a Demon", 2, "active")'
+  sequence: 
+  sequenceSpeaker: {fileID: 0}
+  sequenceListener: {fileID: 0}
+  waitOneFrameOnStartOrEnable: 1
+  alertMessage: 
+  textTable: {fileID: 0}
+  alertDuration: 0
+  sendMessages: []
+  barkSource: 0
+  barkConversation: 
+  barkText: 
+  barkTextSequence: 
+  barker: {fileID: 0}
+  barkTarget: {fileID: 0}
+  barkOrder: 0
+  allowBarksDuringConversations: 0
+  skipBarkIfNoValidEntries: 0
+  cacheBarkLines: 0
+  conversation: 
+  conversationConversant: {fileID: 0}
+  conversationActor: {fileID: 0}
+  startConversationEntryID: -1
+  exclusive: 0
+  skipIfNoValidEntries: 1
+  stopConversationOnTriggerExit: 0
+  stopConversationIfTooFar: 0
+  maxConversationDistance: 5
+  monitorConversationDistanceFrequency: 1
+  showCursorDuringConversation: 0
+  pauseGameDuringConversation: 0
+  setActiveActions: []
+  setEnabledActions: []
+  setAnimatorStateActions: []
+  onExecute:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: PixelCrushers.GameObjectUnityEvent, PixelCrushers, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  useConversationTitlePicker: 1
+  useBarkTitlePicker: 1
+  useQuestNamePicker: 1
+  selectedDatabase: {fileID: 11400000, guid: 4b9387829cfc8d8469142c0106630476, type: 2}
+--- !u!1001 &1712267017
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 672389178}
+    m_Modifications:
+    - target: {fileID: 6194478975504602100, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_Name
+      value: DI_MalthusPostDeath
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602109, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: actor
+      value: Malthus
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602096, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602096, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.data[0]
+      value: (CurrentQuestState("Malthus") == "active") and (CurrentQuestEntryState("Malthus",
+        3) == "active")
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602096, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: conversation
+      value: FifthPlane/WildGooseChase/Malthus/Malthus
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602110, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: overrideName
+      value: 
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1ee4bf97be0c86348ba847713e271052, type: 3}
+--- !u!4 &1712267018 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+    type: 3}
+  m_PrefabInstance: {fileID: 1712267017}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1719723854
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10491,6 +11836,101 @@ MonoBehaviour:
   ZoneSetting: 0
   EnemyDensity: 0
   SpawnRate: 1
+--- !u!1001 &1755177573
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 513585037}
+    m_Modifications:
+    - target: {fileID: 6194478975504602100, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_Name
+      value: DI_ADayintheLifeofaDemon
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602109, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: actor
+      value: Demon
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602096, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602096, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.data[0]
+      value: CurrentQuestState("A Day in the Life of a Demon") ~= "success"
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602096, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: conversation
+      value: FifthPlane/ADayintheLifeofaDemon
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1ee4bf97be0c86348ba847713e271052, type: 3}
+--- !u!4 &1755177574 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+    type: 3}
+  m_PrefabInstance: {fileID: 1755177573}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1787262572
 GameObject:
   m_ObjectHideFlags: 0
@@ -10570,6 +12010,38 @@ Transform:
   m_Father: {fileID: 1248958379}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1814142710
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1814142711}
+  m_Layer: 0
+  m_Name: Seperated
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1814142711
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1814142710}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 716458042}
+  - {fileID: 896463092}
+  m_Father: {fileID: 672389178}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1841853422
 GameObject:
   m_ObjectHideFlags: 0
@@ -10614,6 +12086,108 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Timeline: {fileID: 0}
+--- !u!1001 &1850205057
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 786276620}
+    m_Modifications:
+    - target: {fileID: 6194478975504602100, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_Name
+      value: DI_ConversationBase
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602109, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: actor
+      value: Tormented Soul
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602096, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602096, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.data[0]
+      value: (CurrentQuestState("A Day in the Life of a Demon") == "success") and
+        (CurrentQuestState("Liberation") ~= "success") and (CurrentQuestEntryState("Liberation",
+        1) ~= "active")
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602096, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: conversation
+      value: FifthPlane/Liberation
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602096, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.data[1]
+      value: CurrentQuestEntryState("Liberation", 1) ~= "active"
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1ee4bf97be0c86348ba847713e271052, type: 3}
+--- !u!4 &1850205058 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+    type: 3}
+  m_PrefabInstance: {fileID: 1850205057}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1877672350
 GameObject:
   m_ObjectHideFlags: 0
@@ -10828,6 +12402,112 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &2101628205
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2101628206}
+  - component: {fileID: 2101628207}
+  m_Layer: 16
+  m_Name: Boss Killed
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2101628206
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2101628205}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 513585037}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2101628207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2101628205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b871c74662c23945bf35b97caee462a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  incrementOn: 0
+  variable: DemonBossKilled
+  increment: 1
+  min: 0
+  max: 1
+  alertMessage: 
+  alertDuration: 0
+  condition:
+    luaConditions:
+    - (CurrentQuestState("A Day in the Life of a Demon") == "active") and (CurrentQuestEntryState("A
+      Day in the Life of a Demon", 1) == "active")
+    questConditions: []
+    acceptedTags: []
+    acceptedGameObjects: []
+    luaWizardIndex: -1
+    lastEvaluationValue: 0
+  onIncrement:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1670494630}
+        m_MethodName: OnUse
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!1 &2119264963
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2119264964}
+  m_Layer: 0
+  m_Name: Unpleasantry
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2119264964
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2119264963}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1169198264}
+  m_Father: {fileID: 672389178}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2121690600
 GameObject:
   m_ObjectHideFlags: 0

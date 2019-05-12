@@ -9,19 +9,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 556e0dd404048c74abfb484341974011, type: 3}
-  m_Name: Cast_Slimeball
+  m_Script: {fileID: 11500000, guid: 8bfe56029a4b05c4f83a8ac988e5a1a8, type: 3}
+  m_Name: CastHand_PSCA_Life_Drain
   m_EditorClassIdentifier: 
   attacker: {fileID: 0}
-  objectToGenerate: {fileID: 4884849308939145613, guid: 559b36e3c019c734c88264cecc0817c3,
+  objectToGenerate: {fileID: 6881033022721325787, guid: ce5963ba056d52e4c8b87a719523ec32,
     type: 3}
   audioToPlay: {fileID: 0}
   damage: 20
-  coolDown: 0
+  coolDown: 5
   soulStrengthRequired: 0
   demonicPowerRequired: 0
-  maxForwardDistance: 35
-  areaOfAttack: 2
-  attackSpeed: 6
-  animationKey: 
+  maxForwardDistance: 0
+  areaOfAttack: 10
+  attackSpeed: 4
+  animationKey: Cast1
   effectGrounded: 0
+  duration: 5
+  SingleMoment: 0
+  SelfTargeting: 0
+  ReverseOnComplete: 0

@@ -9,22 +9,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b2bc747f41175a4b8be8410c50e4984, type: 3}
-  m_Name: BiteMelee
+  m_Script: {fileID: 11500000, guid: 556e0dd404048c74abfb484341974011, type: 3}
+  m_Name: CastMouth_Water_Spray
   m_EditorClassIdentifier: 
   attacker: {fileID: 0}
-  objectToGenerate: {fileID: 0}
+  objectToGenerate: {fileID: 717711569230619070, guid: e6696fddfea378142ba293b7c1b0bb2e,
+    type: 3}
   audioToPlay: {fileID: 0}
-  damage: 25
+  damage: 2
   coolDown: 1
   soulStrengthRequired: 0
   demonicPowerRequired: 0
-  maxForwardDistance: 5
-  areaOfAttack: 1
+  maxForwardDistance: 10
+  areaOfAttack: 4
   attackSpeed: 1
-  animationKey: LightMelee1
-  OneHit: 1
-  SwapSecondary: 0
-  DontEndAfterDestroy: 0
-  MultipleGenerations: 0
-  HitboxDestroyTime: 1
+  animationKey: Cast1
+  effectGrounded: 0

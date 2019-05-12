@@ -10,17 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 556e0dd404048c74abfb484341974011, type: 3}
-  m_Name: _PSCA_Life_Drain
+  m_Name: CastHand_Vacuum
   m_EditorClassIdentifier: 
   attacker: {fileID: 0}
-  objectToGenerate: {fileID: 0}
+  objectToGenerate: {fileID: 2719269351210412702, guid: f9a9efc9fd8fdc344bad96e5ef300f6c,
+    type: 3}
   audioToPlay: {fileID: 0}
-  damage: 0
-  coolDown: 0
+  damage: 5
+  coolDown: 1
   soulStrengthRequired: 0
   demonicPowerRequired: 0
-  maxForwardDistance: 0
-  areaOfAttack: 0
-  attackSpeed: 0
-  animationKey: 
+  maxForwardDistance: 20
+  areaOfAttack: 5
+  attackSpeed: 1
+  animationKey: Cast1
   effectGrounded: 0

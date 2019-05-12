@@ -8,9 +8,12 @@ public class FlyingCharacter : ThirdPersonCharacter
 {
     private NavMeshAgent m_Agent;
     private Collider m_Collider;
-    private Animator m_Animator;
 
     private int m_FlightMode = Animator.StringToHash("FlightMode");
+    private int m_FlightLayer;
+    private int m_BaseLayer;
+    private bool m_UsesLayers;
+    private Animator m_SecondaryAnimator;
 
     public float FlyingBaseOffset;
     public float FlyingHeight;
@@ -21,8 +24,9 @@ public class FlyingCharacter : ThirdPersonCharacter
     private float RegularRadius;
 
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         RegularBaseOffset = m_Agent.baseOffset;
         RegularHeight = m_Agent.height;
         RegularRadius = m_Agent.radius;
@@ -30,6 +34,19 @@ public class FlyingCharacter : ThirdPersonCharacter
         if (FlyingHeight == 0) FlyingHeight = RegularHeight;
         if (FlyingRadius == 0) FlyingRadius = RegularRadius;
         if (FlyingBaseOffset == 0) FlyingBaseOffset = RegularBaseOffset;
+
+        var layers = m_Animator.layerCount;
+        if (layers > 1)
+        {
+            m_FlightLayer = m_Animator.GetLayerIndex("Flying Layer");
+            m_BaseLayer = m_Animator.GetLayerIndex("Base Layer");
+            m_UsesLayers = true;
+        }
+        else
+        {
+            m_UsesLayers = false;
+            m_SecondaryAnimator = GetComponentsInChildren<Animator>()[1];
+        }
     }
 
     public override void Move(Vector3 move, bool crouch, bool jump, bool restrictForward = false, bool sprint = false, bool dodge = false)
@@ -58,7 +75,15 @@ public class FlyingCharacter : ThirdPersonCharacter
             m_Agent.baseOffset = FlyingBaseOffset;
             m_Agent.height = FlyingHeight;
 
-            m_Animator.SetBool(m_FlightMode, true);
+            if (m_UsesLayers)
+            {
+                m_Animator.SetLayerWeight(m_FlightLayer, 1);
+                m_Animator.SetLayerWeight(m_BaseLayer, 0);
+            }
+            else
+            {
+                m_SecondaryAnimator.SetBool(m_FlightMode, true);
+            }
         }
         else if (movementType == MovementType.REGULAR)
         {
@@ -66,7 +91,15 @@ public class FlyingCharacter : ThirdPersonCharacter
             m_Agent.baseOffset = RegularBaseOffset;
             m_Agent.height = RegularHeight;
 
-            m_Animator.SetBool(m_FlightMode, false);
+            if (m_UsesLayers)
+            {
+                m_Animator.SetLayerWeight(m_FlightLayer, 0);
+                m_Animator.SetLayerWeight(m_BaseLayer, 1);
+            }
+            else
+            {
+                m_SecondaryAnimator.SetBool(m_FlightMode, false);
+            }
         }
     }
 }

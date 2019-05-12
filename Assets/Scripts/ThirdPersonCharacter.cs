@@ -26,7 +26,7 @@ namespace Devdog.InventoryPro.UnityStandardAssets
         public AudioClip footstep;
 
         Rigidbody m_Rigidbody;
-        Animator m_Animator;
+        protected Animator m_Animator;
         bool m_IsGrounded;
         float m_OrigGroundCheckDistance;
         const float k_Half = 0.5f;
@@ -59,7 +59,7 @@ namespace Devdog.InventoryPro.UnityStandardAssets
         public LayerMask raycastLayerMask;
 
 
-        void Start()
+        protected virtual void Start()
         {
             m_Animator = GetComponent<Animator>();
             if (!m_Animator) m_Animator = GetComponentInChildren<Animator>();

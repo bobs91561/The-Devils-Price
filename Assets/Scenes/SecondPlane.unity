@@ -927,6 +927,101 @@ BoxCollider:
     type: 3}
   m_PrefabInstance: {fileID: 452102860}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &83522650
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1668663954}
+    m_Modifications:
+    - target: {fileID: 6194478975504602100, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_Name
+      value: DI_ConversationBaseLonely
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602110, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: overrideName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602096, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602096, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: conversation
+      value: SecondPlane/Starving All Alone/Player-LonelySoul
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602096, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.data[0]
+      value: CurrentQuestState("Starving All Alone") ~= "success"
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1ee4bf97be0c86348ba847713e271052, type: 3}
+--- !u!4 &83522651 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+    type: 3}
+  m_PrefabInstance: {fileID: 83522650}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &86245413 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4747903718714380617, guid: c4ed7127a06202f4287dac1c35619dac,
@@ -23525,33 +23620,6 @@ PrefabInstance:
       value: (CurrentQuestEntryState("The Gluttonous Fool", 2) ~= "active") and (CurrentQuestEntryState("The
         Gluttonous Fool", 4) ~= "active")
       objectReference: {fileID: 0}
-    - target: {fileID: 5670948032092822873, guid: 19aa79f9bfbaf544db5298e3b9887def,
-        type: 3}
-      propertyPath: condition.luaConditions.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5670948032092822873, guid: 19aa79f9bfbaf544db5298e3b9887def,
-        type: 3}
-      propertyPath: condition.luaConditions.Array.data[0]
-      value: CurrentQuestEntryState("The Gluttonous Fool", 4) == "active"
-      objectReference: {fileID: 0}
-    - target: {fileID: 2140371814266016209, guid: 19aa79f9bfbaf544db5298e3b9887def,
-        type: 3}
-      propertyPath: condition.luaConditions.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2140371814266016209, guid: 19aa79f9bfbaf544db5298e3b9887def,
-        type: 3}
-      propertyPath: condition.luaConditions.Array.data[0]
-      value: CurrentQuestEntryState("The Gluttonous Fool", 4) == "active"
-      objectReference: {fileID: 0}
-    - target: {fileID: 2140371814266016209, guid: 19aa79f9bfbaf544db5298e3b9887def,
-        type: 3}
-      propertyPath: luaCode
-      value: 'SetQuestState("The Gluttonous Fool", "success");
-
-        SetQuestEntryState("The Gluttonous Fool", 4, "success")'
-      objectReference: {fileID: 0}
     - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -23611,6 +23679,33 @@ PrefabInstance:
         type: 3}
       propertyPath: actor
       value: Belphegor
+      objectReference: {fileID: 0}
+    - target: {fileID: 5670948032092822873, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5670948032092822873, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.data[0]
+      value: CurrentQuestEntryState("The Gluttonous Fool", 4) == "active"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2140371814266016209, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2140371814266016209, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.data[0]
+      value: CurrentQuestEntryState("The Gluttonous Fool", 4) == "active"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2140371814266016209, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: luaCode
+      value: 'SetQuestState("The Gluttonous Fool", "success");
+
+        SetQuestEntryState("The Gluttonous Fool", 4, "success")'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 19aa79f9bfbaf544db5298e3b9887def, type: 3}
@@ -26432,11 +26527,6 @@ PrefabInstance:
       propertyPath: overrideName
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 5670948032092822873, guid: 19aa79f9bfbaf544db5298e3b9887def,
-        type: 3}
-      propertyPath: conversation
-      value: SecondPlane/Desperate Thirst/Player-ThirstySoul
-      objectReference: {fileID: 0}
     - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -26496,6 +26586,11 @@ PrefabInstance:
         type: 3}
       propertyPath: actor
       value: Thirsty Soul
+      objectReference: {fileID: 0}
+    - target: {fileID: 5670948032092822873, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: conversation
+      value: SecondPlane/Desperate Thirst/Player-ThirstySoul
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 19aa79f9bfbaf544db5298e3b9887def, type: 3}
@@ -27316,16 +27411,6 @@ PrefabInstance:
       propertyPath: conversation
       value: SecondPlane/Overwhelming Boredom/Player-BoredSoul
       objectReference: {fileID: 0}
-    - target: {fileID: 2140371814266016209, guid: 19aa79f9bfbaf544db5298e3b9887def,
-        type: 3}
-      propertyPath: conversation
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2140371814266016209, guid: 19aa79f9bfbaf544db5298e3b9887def,
-        type: 3}
-      propertyPath: luaCode
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -27385,6 +27470,16 @@ PrefabInstance:
         type: 3}
       propertyPath: actor
       value: Bored Soul
+      objectReference: {fileID: 0}
+    - target: {fileID: 2140371814266016209, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: conversation
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2140371814266016209, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: luaCode
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 19aa79f9bfbaf544db5298e3b9887def, type: 3}
@@ -28850,6 +28945,101 @@ MeshFilter:
     type: 3}
   m_PrefabInstance: {fileID: 2057904876}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1527760995
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1668663954}
+    m_Modifications:
+    - target: {fileID: 6194478975504602100, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_Name
+      value: DI_ConversationBaseThirsty
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602110, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: overrideName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602096, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602096, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.data[0]
+      value: CurrentQuestState("Desperate Thirst") ~= "success"
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602096, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: conversation
+      value: SecondPlane/Desperate Thirst/Player-ThirstySoul
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1ee4bf97be0c86348ba847713e271052, type: 3}
+--- !u!4 &1527760996 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+    type: 3}
+  m_PrefabInstance: {fileID: 1527760995}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1530068062 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1948077216, guid: c4ed7127a06202f4287dac1c35619dac,
@@ -29233,11 +29423,6 @@ PrefabInstance:
       propertyPath: overrideName
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 5670948032092822873, guid: 19aa79f9bfbaf544db5298e3b9887def,
-        type: 3}
-      propertyPath: conversation
-      value: SecondPlane/Starving All Alone/Player-LonelySoul
-      objectReference: {fileID: 0}
     - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -29297,6 +29482,11 @@ PrefabInstance:
         type: 3}
       propertyPath: actor
       value: Lonely Soul
+      objectReference: {fileID: 0}
+    - target: {fileID: 5670948032092822873, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: conversation
+      value: SecondPlane/Starving All Alone/Player-LonelySoul
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 19aa79f9bfbaf544db5298e3b9887def, type: 3}
@@ -30816,7 +31006,13 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.89592296, y: 4.5099363, z: 2.506199}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1679939988}
+  - {fileID: 83522651}
+  - {fileID: 1725222522}
+  - {fileID: 1527760996}
+  - {fileID: 572000615794922722}
+  - {fileID: 2078973327}
   m_Father: {fileID: 0}
   m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -30987,6 +31183,101 @@ BoxCollider:
   m_CorrespondingSourceObject: {fileID: 4747903718966131790, guid: c4ed7127a06202f4287dac1c35619dac,
     type: 3}
   m_PrefabInstance: {fileID: 452102860}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1679939987
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1668663954}
+    m_Modifications:
+    - target: {fileID: 6194478975504602100, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_Name
+      value: DI_ConversationBaseHungry
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602110, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: overrideName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602096, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602096, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: conversation
+      value: SecondPlane/Cruel Temptations/Player-HungrySoul
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602096, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.data[0]
+      value: CurrentQuestState("Cruel Temptations") ~= "success"
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1ee4bf97be0c86348ba847713e271052, type: 3}
+--- !u!4 &1679939988 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+    type: 3}
+  m_PrefabInstance: {fileID: 1679939987}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1682369459 stripped
 GameObject:
@@ -31636,6 +31927,101 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6477582884203812194, guid: 01776aef5c87ef746bc860b46e1c8e73,
     type: 3}
   m_PrefabInstance: {fileID: 1172205245}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1725222521
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1668663954}
+    m_Modifications:
+    - target: {fileID: 6194478975504602100, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_Name
+      value: DI_ConversationBaseBored
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602110, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: overrideName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602096, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602096, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.data[0]
+      value: CurrentQuestState("Overwhelming Boredom") ~= "success"
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194478975504602096, guid: 1ee4bf97be0c86348ba847713e271052,
+        type: 3}
+      propertyPath: conversation
+      value: SecondPlane/Starving All Alone/Player-LonelySoul
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1ee4bf97be0c86348ba847713e271052, type: 3}
+--- !u!4 &1725222522 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6194478975504602099, guid: 1ee4bf97be0c86348ba847713e271052,
+    type: 3}
+  m_PrefabInstance: {fileID: 1725222521}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1725330930 stripped
 GameObject:
@@ -35329,6 +35715,15 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 476713893}
     m_Modifications:
+    - target: {fileID: 1719619391768154, guid: a834639a31a6cad45b669b5dea1e9281, type: 3}
+      propertyPath: m_Name
+      value: Candle_Group_1A1(Lit)
+      objectReference: {fileID: 0}
+    - target: {fileID: 108861259012811312, guid: a834639a31a6cad45b669b5dea1e9281,
+        type: 3}
+      propertyPath: m_Shadows.m_Type
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4004701495013034, guid: a834639a31a6cad45b669b5dea1e9281, type: 3}
       propertyPath: m_LocalPosition.x
       value: 75.57425
@@ -35372,15 +35767,6 @@ PrefabInstance:
     - target: {fileID: 4004701495013034, guid: a834639a31a6cad45b669b5dea1e9281, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1719619391768154, guid: a834639a31a6cad45b669b5dea1e9281, type: 3}
-      propertyPath: m_Name
-      value: Candle_Group_1A1(Lit)
-      objectReference: {fileID: 0}
-    - target: {fileID: 108861259012811312, guid: a834639a31a6cad45b669b5dea1e9281,
-        type: 3}
-      propertyPath: m_Shadows.m_Type
-      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a834639a31a6cad45b669b5dea1e9281, type: 3}
@@ -38021,6 +38407,187 @@ MeshFilter:
     type: 3}
   m_PrefabInstance: {fileID: 452102860}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2078973326
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1668663954}
+    m_Modifications:
+    - target: {fileID: 1021383941007658974, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: m_Name
+      value: Dialogue_System_Triggers_TriggerArea
+      objectReference: {fileID: 0}
+    - target: {fileID: 323107127778621245, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 34.27
+      objectReference: {fileID: 0}
+    - target: {fileID: 323107127778621245, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.48
+      objectReference: {fileID: 0}
+    - target: {fileID: 323107127778621245, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 188.97
+      objectReference: {fileID: 0}
+    - target: {fileID: 323107127778621245, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.012758114
+      objectReference: {fileID: 0}
+    - target: {fileID: 323107127778621245, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.22331257
+      objectReference: {fileID: 0}
+    - target: {fileID: 323107127778621245, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.004214128
+      objectReference: {fileID: 0}
+    - target: {fileID: 323107127778621245, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9746543
+      objectReference: {fileID: 0}
+    - target: {fileID: 323107127778621245, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 323107127778621245, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 1.5330001
+      objectReference: {fileID: 0}
+    - target: {fileID: 323107127778621245, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 25.808
+      objectReference: {fileID: 0}
+    - target: {fileID: 323107127778621245, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -0.14400001
+      objectReference: {fileID: 0}
+    - target: {fileID: 323107127778621245, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.1778972
+      objectReference: {fileID: 0}
+    - target: {fileID: 323107127778621245, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.1778972
+      objectReference: {fileID: 0}
+    - target: {fileID: 323107127778621245, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.1778972
+      objectReference: {fileID: 0}
+    - target: {fileID: 7789431227633294860, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: alertMessage
+      value: As you try and gather food for the soul, your hand phases though it.
+        It looks like the entire area is an illusion set by the demons!
+      objectReference: {fileID: 0}
+    - target: {fileID: 7789431227633294860, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: alertDuration
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3894419271172752786, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: m_Radius
+      value: 4.1751156
+      objectReference: {fileID: 0}
+    - target: {fileID: 3894419271172752786, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: m_Center.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3894419271172752786, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: m_Center.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3894419271172752786, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: m_Center.x
+      value: -0.8248841
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 3894419271172752786, guid: b969d890613acdb40997624c663e4678, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: b969d890613acdb40997624c663e4678, type: 3}
+--- !u!4 &2078973327 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 323107127778621245, guid: b969d890613acdb40997624c663e4678,
+    type: 3}
+  m_PrefabInstance: {fileID: 2078973326}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2078973328 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1021383941007658974, guid: b969d890613acdb40997624c663e4678,
+    type: 3}
+  m_PrefabInstance: {fileID: 2078973326}
+  m_PrefabAsset: {fileID: 0}
+--- !u!135 &2078973329
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2078973328}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.4430351
+  m_Center: {x: 22.2, y: -0.17999975, z: 11}
+--- !u!135 &2078973330
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2078973328}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.7164267
+  m_Center: {x: 24.716507, y: 0.0000014920726, z: 13.000216}
+--- !u!65 &2078973331
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2078973328}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.5, y: 3, z: 16}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2078973332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2078973328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70a0e6e4ddaac754a8ec206b202ae372, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WaitThing: {fileID: 983861659379051521}
+  Duration: 5
 --- !u!1 &2079614749 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 152346, guid: 819dc35863802734fab29039e8eae56e,
@@ -39066,6 +39633,33 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 667485336}
     m_Modifications:
+    - target: {fileID: 1719619391768154, guid: a834639a31a6cad45b669b5dea1e9281, type: 3}
+      propertyPath: m_Name
+      value: Candle_Group_1A1(Lit) (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4116522613482282, guid: a834639a31a6cad45b669b5dea1e9281, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.17
+      objectReference: {fileID: 0}
+    - target: {fileID: 4116522613482282, guid: a834639a31a6cad45b669b5dea1e9281, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 108861259012811312, guid: a834639a31a6cad45b669b5dea1e9281,
+        type: 3}
+      propertyPath: m_Shadows.m_Type
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 108861259012811312, guid: a834639a31a6cad45b669b5dea1e9281,
+        type: 3}
+      propertyPath: m_Range
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 108861259012811312, guid: a834639a31a6cad45b669b5dea1e9281,
+        type: 3}
+      propertyPath: m_Intensity
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4004701495013034, guid: a834639a31a6cad45b669b5dea1e9281, type: 3}
       propertyPath: m_LocalPosition.x
       value: 10.494251
@@ -39109,33 +39703,6 @@ PrefabInstance:
     - target: {fileID: 4004701495013034, guid: a834639a31a6cad45b669b5dea1e9281, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1719619391768154, guid: a834639a31a6cad45b669b5dea1e9281, type: 3}
-      propertyPath: m_Name
-      value: Candle_Group_1A1(Lit) (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 4116522613482282, guid: a834639a31a6cad45b669b5dea1e9281, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.17
-      objectReference: {fileID: 0}
-    - target: {fileID: 4116522613482282, guid: a834639a31a6cad45b669b5dea1e9281, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.03
-      objectReference: {fileID: 0}
-    - target: {fileID: 108861259012811312, guid: a834639a31a6cad45b669b5dea1e9281,
-        type: 3}
-      propertyPath: m_Shadows.m_Type
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 108861259012811312, guid: a834639a31a6cad45b669b5dea1e9281,
-        type: 3}
-      propertyPath: m_Range
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 108861259012811312, guid: a834639a31a6cad45b669b5dea1e9281,
-        type: 3}
-      propertyPath: m_Intensity
-      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a834639a31a6cad45b669b5dea1e9281, type: 3}
@@ -39336,4 +39903,145 @@ BoxCollider:
   m_CorrespondingSourceObject: {fileID: 4747903718052789580, guid: c4ed7127a06202f4287dac1c35619dac,
     type: 3}
   m_PrefabInstance: {fileID: 452102860}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &400577235239048989
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1668663954}
+    m_Modifications:
+    - target: {fileID: 587792494845115164, guid: b65685717667eca4a94b89a0283685d7,
+        type: 3}
+      propertyPath: m_Name
+      value: Dialogue_System_Triggers_Enable
+      objectReference: {fileID: 0}
+    - target: {fileID: 179868385772487679, guid: b65685717667eca4a94b89a0283685d7,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 179868385772487679, guid: b65685717667eca4a94b89a0283685d7,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 179868385772487679, guid: b65685717667eca4a94b89a0283685d7,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 179868385772487679, guid: b65685717667eca4a94b89a0283685d7,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 179868385772487679, guid: b65685717667eca4a94b89a0283685d7,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 179868385772487679, guid: b65685717667eca4a94b89a0283685d7,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 179868385772487679, guid: b65685717667eca4a94b89a0283685d7,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 179868385772487679, guid: b65685717667eca4a94b89a0283685d7,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 179868385772487679, guid: b65685717667eca4a94b89a0283685d7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 179868385772487679, guid: b65685717667eca4a94b89a0283685d7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 179868385772487679, guid: b65685717667eca4a94b89a0283685d7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7646394250112019150, guid: b65685717667eca4a94b89a0283685d7,
+        type: 3}
+      propertyPath: setAnimatorStateActions.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7646394250112019150, guid: b65685717667eca4a94b89a0283685d7,
+        type: 3}
+      propertyPath: setActiveActions.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7646394250112019150, guid: b65685717667eca4a94b89a0283685d7,
+        type: 3}
+      propertyPath: setEnabledActions.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7646394250112019150, guid: b65685717667eca4a94b89a0283685d7,
+        type: 3}
+      propertyPath: questName
+      value: Cruel Temptations
+      objectReference: {fileID: 0}
+    - target: {fileID: 7646394250112019150, guid: b65685717667eca4a94b89a0283685d7,
+        type: 3}
+      propertyPath: setQuestEntryState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7646394250112019150, guid: b65685717667eca4a94b89a0283685d7,
+        type: 3}
+      propertyPath: questEntryNumber
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7646394250112019150, guid: b65685717667eca4a94b89a0283685d7,
+        type: 3}
+      propertyPath: questEntryState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7646394250112019150, guid: b65685717667eca4a94b89a0283685d7,
+        type: 3}
+      propertyPath: setActiveActions.Array.data[0].target
+      value: 
+      objectReference: {fileID: 2002738002}
+    - target: {fileID: 7646394250112019150, guid: b65685717667eca4a94b89a0283685d7,
+        type: 3}
+      propertyPath: setEnabledActions.Array.data[0].target
+      value: 
+      objectReference: {fileID: 554976287}
+    - target: {fileID: 7646394250112019150, guid: b65685717667eca4a94b89a0283685d7,
+        type: 3}
+      propertyPath: setEnabledActions.Array.data[0].state
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7646394250112019150, guid: b65685717667eca4a94b89a0283685d7,
+        type: 3}
+      propertyPath: setActiveActions.Array.data[1].target
+      value: 
+      objectReference: {fileID: 554976287}
+    - target: {fileID: 7646394250112019150, guid: b65685717667eca4a94b89a0283685d7,
+        type: 3}
+      propertyPath: setActiveActions.Array.data[1].state
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b65685717667eca4a94b89a0283685d7, type: 3}
+--- !u!4 &572000615794922722 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 179868385772487679, guid: b65685717667eca4a94b89a0283685d7,
+    type: 3}
+  m_PrefabInstance: {fileID: 400577235239048989}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &983861659379051521 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 587792494845115164, guid: b65685717667eca4a94b89a0283685d7,
+    type: 3}
+  m_PrefabInstance: {fileID: 400577235239048989}
   m_PrefabAsset: {fileID: 0}

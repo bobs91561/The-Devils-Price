@@ -9,17 +9,20 @@ namespace CompassNavigatorPro {
 		public Sprite[] icons;
 		public AudioClip[] soundClips;
 
-
 		int poiNumber;
 		CompassPro compass;
+		CompassProPOI POIUnderMouse;
 
-		// Create random POIs
 		void Start () {
 			// Get a reference to the Compass Pro Navigator component
 			compass = CompassPro.instance;
 
 			// Add a callback when POIs are reached
 			compass.OnPOIVisited += POIVisited;
+
+			compass.OnPOIMiniMapIconMouseEnter += POIHover;
+			compass.OnPOIMiniMapIconMouseExit += POIExit;
+			compass.OnPOIMiniMapIconMouseClick += POIClicked;
 
 			// Populate the scene with initial POIs
 			for (int k = 1; k <= initialPoiCount; k++) {
@@ -30,7 +33,7 @@ namespace CompassNavigatorPro {
 
 		void Update () {
 			if (Input.GetKeyDown (KeyCode.B)) {
-				compass.POIShowBeacon (5f, 1.1f, 1f, new Color(1,1,0.25f));
+				compass.POIShowBeacon (5f, 1.1f, 1f, new Color (1, 1, 0.25f));
 			}
 			if (Input.GetKey (KeyCode.Z)) {
 				compass.miniMapZoomLevel -= Time.deltaTime;
@@ -41,8 +44,25 @@ namespace CompassNavigatorPro {
 			if (Input.GetKeyDown (KeyCode.M)) {
 				compass.showMiniMap = !compass.showMiniMap;
 			}
+			if (Input.GetKeyDown (KeyCode.C)) {
+				Ray ray = Camera.main.ViewportPointToRay (new Vector3 (0.5f, 0.5f));
+				RaycastHit hit;
+				if (Physics.Raycast (ray, out hit)) {
+					compass.POIShowBeacon (hit.point, 5f, 1.1f, 1f, new Color (0, 0.5f, 1f)); 
+				}
+			}
 		}
 
+		void OnGUI () {
+			if (POIUnderMouse != null) {
+				Rect rect = POIUnderMouse.GetMiniMapIconScreenRect ();
+				rect = new Rect (rect.center.x - 100, rect.y - 18, 200, 25);
+				GUIStyle style = GUI.skin.GetStyle("Label");
+				style.alignment = TextAnchor.UpperCenter;
+				style.normal.textColor = Color.yellow;
+				GUI.Label (rect, POIUnderMouse.title, style);
+			}
+		}
 
 		void AddRandomPOI () {
 			// Create placeholder
@@ -85,6 +105,18 @@ namespace CompassNavigatorPro {
 				yield return new WaitForEndOfFrame ();
 			}
 			Destroy (poi.gameObject);
+		}
+
+		void POIClicked (CompassProPOI poi) {
+			Debug.Log (poi.title + " has been clicked on minimap.");
+		}
+
+		void POIHover (CompassProPOI poi) {
+			POIUnderMouse = poi;
+		}
+
+		void POIExit (CompassProPOI poi) {
+			POIUnderMouse = null;
 		}
 
 

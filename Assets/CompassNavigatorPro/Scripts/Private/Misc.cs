@@ -1,11 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace CompassNavigatorPro
-{
-	public static class Misc
-	{
-		public static Vector4 Vector4back = new Vector4(0,0,-1,0);
+namespace CompassNavigatorPro {
+	public static class Misc {
+		public static Vector4 Vector4back = new Vector4 (0, 0, -1, 0);
 
 		public static Vector3 Vector3one = Vector3.one;
 		public static Vector3 Vector3zero = Vector3.zero;
@@ -23,10 +21,42 @@ namespace CompassNavigatorPro
 		public static Vector2 Vector2up = Vector2.up;
 		public static Vector2 Vector2max = new Vector2 (100000f, 100000f);
 
-		public static Vector3 ViewportCenter = new Vector3(0.5f, 0.5f, 0.0f);
+		public static Vector3 ViewportCenter = new Vector3 (0.5f, 0.5f, 0.0f);
 
-		public static Color ColorTransparent = new Color(0,0,0,0);
+		public static Color ColorTransparent = new Color (0, 0, 0, 0);
 
 		public static Quaternion QuaternionZero = Quaternion.Euler (0f, 0f, 0f);
+
+		public static Rect GetScreenRect (this RectTransform o) {
+//			Vector3 pos = o.transform.position; // TODO: RML
+//			Vector3 size = o.sizeDelta;
+//			return new Rect (pos.x - size.x * 0.5f, Screen.height - pos.y - size.y * 0.5f, size.x, size.y);
+
+			Vector2 size = Vector2.Scale (o.rect.size, o.lossyScale);
+			Rect rect = new Rect (o.position.x, Screen.height - o.position.y, size.x, size.y);
+			rect.x -= (o.pivot.x * size.x);
+			rect.y -= ((1.0f - o.pivot.y) * size.y);
+			return rect;
+
+		}
+
+		static Vector3[] wc = new Vector3[4];
+
+		public static Rect GetScreenRect (this RectTransform o, Camera camera) {
+			o.GetWorldCorners (wc);
+			return new Rect (wc [0].x, wc [0].y, wc [2].x - wc [0].x, wc [2].y - wc [0].y);
+		}
+
+
+		public static Rect GetViewportRect (this RectTransform o, Camera camera) {
+			Rect rect = o.GetScreenRect (camera);
+			rect.x /= camera.pixelWidth;
+			rect.y /= camera.pixelHeight;
+			rect.width /= camera.pixelWidth;
+			rect.height /= camera.pixelHeight;
+			return rect;
+		}
+
+	
 	}
 }

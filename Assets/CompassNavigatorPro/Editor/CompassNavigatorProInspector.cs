@@ -76,6 +76,8 @@ namespace CompassNavigatorPro {
 
 				_compass.width = EditorGUILayout.Slider (new GUIContent ("Width", "Width of the compass bar in % of the screen width."), _compass.width, 0.05f, 1f);
 				_compass.endCapsWidth = EditorGUILayout.Slider (new GUIContent ("End Caps Width", "Width of the end caps of the compass bar. This setting limits the usable horizontal range of the bar in the screen to prevent icons being drawn over the art of the end caps of the bar."), _compass.endCapsWidth, 0, 100f);
+				_compass.edgeFadeOutWidth = EditorGUILayout.Slider (new GUIContent ("Edge Fade Out Width", "Width of the edge fade out."), _compass.edgeFadeOutWidth, 0f, 1f);
+				_compass.edgeFadeOutStart = EditorGUILayout.Slider (new GUIContent ("Edge Fade Out Start", "Start of the edge fade out."), _compass.edgeFadeOutStart, 0f, 1f);
 				_compass.alpha = EditorGUILayout.Slider (new GUIContent ("Alpha", "Transparency of the compass bar."), _compass.alpha, 0f, 1f);
 				_compass.alwaysVisibleInEditMode = EditorGUILayout.Toggle (new GUIContent ("  Visible In Edit Mode", "Makes the bar always visible (ignored alpha property) while in Edit Mode."), _compass.alwaysVisibleInEditMode);
 				_compass.autoHide = EditorGUILayout.Toggle (new GUIContent ("Auto Hide If Empty", "Hides the compass bar if no POIs are below visible distance."), _compass.autoHide);
@@ -189,7 +191,7 @@ namespace CompassNavigatorPro {
 							_compass.miniMapSnapshotInterval = EditorGUILayout.FloatField (new GUIContent ("   Time Interval (s)", "Frequency of camera capture in seconds."), _compass.miniMapSnapshotInterval);
 							break;
 						case MINIMAP_CAMERA_SNAPSHOT_FREQUENCY.DistanceTravelled:
-							_compass.miniMapSnapshotDistance = EditorGUILayout.FloatField (new GUIContent ("   Distance Travelled", "Distance in meters."), _compass.miniMapSnapshotDistance);
+							_compass.miniMapSnapshotDistance = EditorGUILayout.FloatField (new GUIContent ("   Distance (m)", "Distance in meters."), _compass.miniMapSnapshotDistance);
 							break;
 						}
 						if (GUILayout.Button ("Now!", GUILayout.Width (60))) {
@@ -219,15 +221,16 @@ namespace CompassNavigatorPro {
 				_compass.miniMapSize = EditorGUILayout.Slider (new GUIContent ("Normal Size", "Screen size of mini-map in % of screen height."), _compass.miniMapSize, 0f, 1f);
 				_compass.miniMapResolutionNormalSize = EditorGUILayout.IntField (new GUIContent ("Map Resolution", "Size of the render texture in non-full screen mode."), _compass.miniMapResolutionNormalSize);
 				_compass.miniMapFullScreenSize = EditorGUILayout.Slider (new GUIContent ("Full Screen Size", "Percentage of screen size if full-screen mode. Image resolution will increase according to screen resolution."), _compass.miniMapFullScreenSize, 0.5f, 1f);
+				_compass.miniMapFullScreenPlaceholder = (RectTransform)EditorGUILayout.ObjectField (new GUIContent ("   UI Placeholder", "Optional UI element which serves as placeholder for exact positioning of the mini-map in fullscreen mode."), _compass.miniMapFullScreenPlaceholder, typeof(RectTransform), true);
+				GUI.enabled = _compass.miniMapFullScreenPlaceholder == null;
 				_compass.miniMapKeepAspectRatio = EditorGUILayout.Toggle (new GUIContent ("   Keep Aspect Ratio", "Keep aspect ration in full screen mode."), _compass.miniMapKeepAspectRatio);
-				GUI.enabled = _compass.miniMapFullScreenSize >= 1f && !_compass.miniMapKeepAspectRatio;
-				_compass.miniMapDisableMainCameraInFullScreen = EditorGUILayout.Toggle (new GUIContent ("   Disable Main Camera", "Disable main camera when map fills the screen."), _compass.miniMapDisableMainCameraInFullScreen);
 				GUI.enabled = true;
 				_compass.miniMapAlpha = EditorGUILayout.Slider (new GUIContent ("Alpha", "Transparency of the mini-map."), _compass.miniMapAlpha, 0f, 1f);
 				_compass.miniMapContrast = EditorGUILayout.Slider (new GUIContent ("Contrast"), _compass.miniMapContrast, 0f, 2f);
 				_compass.miniMapBrightness = EditorGUILayout.Slider (new GUIContent ("Brightness"), _compass.miniMapBrightness, 0f, 2f);
 				_compass.miniMapIconSize = EditorGUILayout.FloatField (new GUIContent ("Icon Size", "The size for the icons on the mini-map."), _compass.miniMapIconSize);
 				_compass.miniMapClampBorder = EditorGUILayout.FloatField (new GUIContent ("Clamp Border", "The distance of clamped icons to the edge of the mini-map."), _compass.miniMapClampBorder);
+				_compass.miniMapIconEvents = EditorGUILayout.Toggle (new GUIContent ("Icon Events", "Raise pointer click, down, up, enter and exit events on icons."), _compass.miniMapIconEvents);
 			}
 			EditorGUILayout.EndVertical ();
 			EditorGUILayout.Separator ();

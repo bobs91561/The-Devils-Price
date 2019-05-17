@@ -653,14 +653,14 @@ MonoBehaviour:
   meshfilter: {fileID: 34542989}
   controlPoints:
   - {x: 328.2142, y: 13.047737, z: 200.61987, w: 30}
-  - {x: 306.19525, y: 2.336664, z: 214.58456, w: 30}
+  - {x: 306.19525, y: 2.336665, z: 214.58456, w: 30}
   - {x: 289.802, y: 0, z: 221.49014, w: 30}
   - {x: 266.904, y: 0, z: 231.36682, w: 30}
   - {x: 261.18463, y: 0, z: 243.76974, w: 30}
   - {x: 251.98663, y: -1.2060919, z: 258.39685, w: 30}
   - {x: 247.62662, y: 2.2026577, z: 274.12762, w: 30}
-  - {x: 249.63281, y: 3.8772006, z: 300.08136, w: 30}
-  - {x: 254.38684, y: 1.8699839, z: 316.21985, w: 30}
+  - {x: 249.63281, y: 3.877201, z: 300.08136, w: 30}
+  - {x: 254.38687, y: 1.8699839, z: 316.21985, w: 30}
   - {x: 261.98334, y: 0.4730134, z: 327.002, w: 30}
   - {x: 271.58746, y: 0.027465582, z: 330.3318, w: 47.473625}
   - {x: 285.57965, y: 0, z: 346.34082, w: 52.115826}
@@ -12592,6 +12592,136 @@ LODGroup:
     type: 3}
   m_PrefabInstance: {fileID: 1530833832}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &143136483
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1586074262}
+    m_Modifications:
+    - target: {fileID: 2066231096758887516, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_Name
+      value: DI_FriendlyBase
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5670948032092822873, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5670948032092822873, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.data[0]
+      value: (CurrentQuestState("The Forgotten") == "active") and (CurrentQuestEntryState("The
+        Forgotten", 4) == "active")
+      objectReference: {fileID: 0}
+    - target: {fileID: 2140371814266016209, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2140371814266016209, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: luaCode
+      value: 'SetQuestEntryState("The Forgotten", 5, "active");
+
+        SetQuestEntryState("The Forgotten", 4, "success")'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2140371814266016209, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2140371814266016209, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: trigger
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 2140371814266016209, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: selectedDatabase
+      value: 
+      objectReference: {fileID: 11400000, guid: 4b9387829cfc8d8469142c0106630476,
+        type: 2}
+    - target: {fileID: 2140371814266016209, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.data[0]
+      value: CurrentQuestEntryState("The Forgotten", 4) == "active"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887509, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: actor
+      value: Demon
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887510, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: overrideName
+      value: 
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 2066231096758887512, guid: 19aa79f9bfbaf544db5298e3b9887def, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: 19aa79f9bfbaf544db5298e3b9887def, type: 3}
+--- !u!4 &143136484 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+    type: 3}
+  m_PrefabInstance: {fileID: 143136483}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &145962811 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1559371284925818632, guid: 0a2280cc987d3b8438c00be80fbfcb2c,
@@ -12744,6 +12874,144 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 152883450}
   m_Mesh: {fileID: 4300014, guid: dc8632c904abcf045920940a6e5e8369, type: 3}
+--- !u!1001 &157827929
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1828444121}
+    m_Modifications:
+    - target: {fileID: 2066231096758887516, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_Name
+      value: DI_FriendlyBaseBeleth
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2140371814266016209, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2140371814266016209, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: setEnabledActions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2140371814266016209, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.data[0]
+      value: CurrentQuestEntryState("A Worthy Opponent", 2) == "active"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2140371814266016209, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: luaCode
+      value: 'SetQuestEntryState("A Worthy Opponent", 2, "success");
+
+        SetQuestState("A Worthy Opponent", "success")'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2140371814266016209, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: setEnabledActions.Array.data[0].target
+      value: 
+      objectReference: {fileID: 157827932}
+    - target: {fileID: 2066231096758887509, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: actor
+      value: Beleth
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 19aa79f9bfbaf544db5298e3b9887def, type: 3}
+--- !u!4 &157827930 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+    type: 3}
+  m_PrefabInstance: {fileID: 157827929}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &157827931 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2066231096758887516, guid: 19aa79f9bfbaf544db5298e3b9887def,
+    type: 3}
+  m_PrefabInstance: {fileID: 157827929}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &157827932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 157827931}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39b57c445266b414d8b3be9a0a70f159, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  once: 1
+  trigger: 64
+  playableDirector: {fileID: 0}
+  timelineAsset: {fileID: 0}
+  condition:
+    luaConditions:
+    - CurrentQuestEntryState("A Worthy Opponent", 2) == "success"
+    questConditions: []
+    acceptedTags: []
+    acceptedGameObjects: []
+    luaWizardIndex: -1
+    lastEvaluationValue: 0
+  bindings: []
 --- !u!1 &171249616 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1559371284413803888, guid: 0a2280cc987d3b8438c00be80fbfcb2c,
@@ -13868,6 +14136,91 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cf20412a8aaa30c4aa99aa3fb92c818d, type: 3}
+--- !u!1001 &282801143
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1444667568}
+    m_Modifications:
+    - target: {fileID: 6911007957818860502, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: m_Name
+      value: DI_TriggerCutscene_AllForOne
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860501, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860501, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860501, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860501, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860501, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860501, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860501, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860501, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860501, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860501, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860501, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860498, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860498, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.data[0]
+      value: CurrentQuestEntryState("The Prodigal Son", 2) == "active"
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 71015af7e240d6b439db401221bbba9c, type: 3}
+--- !u!4 &282801144 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6911007957818860501, guid: 71015af7e240d6b439db401221bbba9c,
+    type: 3}
+  m_PrefabInstance: {fileID: 282801143}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &284239370 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2090677816890884540, guid: 7931e01078e25d848ba34a7e828e4097,
@@ -13928,6 +14281,38 @@ MeshFilter:
     type: 3}
   m_PrefabInstance: {fileID: 786851583}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &292182361
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 292182362}
+  m_Layer: 0
+  m_Name: The Blacksmith
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &292182362
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 292182361}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1399286137}
+  - {fileID: 811699160}
+  m_Father: {fileID: 851583312}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &292845695 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2090677816941941886, guid: 7931e01078e25d848ba34a7e828e4097,
@@ -14369,6 +14754,145 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 327605976}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &330654560
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 330654561}
+  - component: {fileID: 330654563}
+  - component: {fileID: 330654562}
+  m_Layer: 0
+  m_Name: Dialogue_Items_Captain
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &330654561
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330654560}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1444667568}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &330654562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330654560}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39b57c445266b414d8b3be9a0a70f159, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  once: 1
+  trigger: 64
+  playableDirector: {fileID: 0}
+  timelineAsset: {fileID: 0}
+  condition:
+    luaConditions:
+    - (CurrentQuestEntryState("The Prodigal Son", 5) == "active") and (CurrentQuestState("The
+      Prodigal Son") == "active")
+    questConditions: []
+    acceptedTags: []
+    acceptedGameObjects: []
+    luaWizardIndex: -1
+    lastEvaluationValue: 0
+  bindings: []
+--- !u!114 &330654563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330654560}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c593457cd8105e148906690e1707c592, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trigger: 64
+  condition:
+    luaConditions:
+    - CurrentQuestEntryState("The Prodigal Son", 4) == "active"
+    questConditions: []
+    acceptedTags: []
+    acceptedGameObjects: []
+    luaWizardIndex: -1
+    lastEvaluationValue: 0
+  setQuestState: 1
+  questName: 
+  questState: 0
+  setQuestEntryState: 0
+  questEntryNumber: 1
+  questEntryState: 0
+  luaCode: 'SetQuestEntryState("The Prodigal Son", 4, "success");
+
+    SetQuestEntryState("The Prodigal Son", 5, "active")'
+  sequence: 
+  sequenceSpeaker: {fileID: 0}
+  sequenceListener: {fileID: 0}
+  waitOneFrameOnStartOrEnable: 1
+  alertMessage: 
+  textTable: {fileID: 0}
+  alertDuration: 0
+  sendMessages: []
+  barkSource: 0
+  barkConversation: 
+  barkText: 
+  barkTextSequence: 
+  barker: {fileID: 0}
+  barkTarget: {fileID: 0}
+  barkOrder: 0
+  allowBarksDuringConversations: 0
+  skipBarkIfNoValidEntries: 0
+  cacheBarkLines: 0
+  conversation: 
+  conversationConversant: {fileID: 0}
+  conversationActor: {fileID: 0}
+  startConversationEntryID: -1
+  exclusive: 0
+  skipIfNoValidEntries: 1
+  stopConversationOnTriggerExit: 0
+  stopConversationIfTooFar: 0
+  maxConversationDistance: 5
+  monitorConversationDistanceFrequency: 1
+  showCursorDuringConversation: 0
+  pauseGameDuringConversation: 0
+  setActiveActions: []
+  setEnabledActions:
+  - condition:
+      luaConditions: []
+      questConditions: []
+      acceptedTags: []
+      acceptedGameObjects: []
+      luaWizardIndex: 0
+      lastEvaluationValue: 0
+    target: {fileID: 330654562}
+    state: 0
+  setAnimatorStateActions: []
+  onExecute:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: PixelCrushers.GameObjectUnityEvent, PixelCrushers, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  useConversationTitlePicker: 1
+  useBarkTitlePicker: 1
+  useQuestNamePicker: 1
+  selectedDatabase: {fileID: 11400000, guid: 4b9387829cfc8d8469142c0106630476, type: 2}
 --- !u!1 &339996659 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100158, guid: b2dc6590c1938bd44812fefd26e42542,
@@ -14429,6 +14953,149 @@ MeshFilter:
     type: 3}
   m_PrefabInstance: {fileID: 786851583}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &347840090
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1444667568}
+    m_Modifications:
+    - target: {fileID: 2066231096758887516, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_Name
+      value: DI_SoulAndCutscene
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5670948032092822873, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5670948032092822873, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.data[0]
+      value: (CurrentQuestEntryState("The Prodigal Son", 3) == "active") and (CurrentQuestEntryState("The
+        Prodigal Son", 2) == "success")
+      objectReference: {fileID: 0}
+    - target: {fileID: 2140371814266016209, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2140371814266016209, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: setEnabledActions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2140371814266016209, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.data[0]
+      value: CurrentQuestEntryState("The Prodigal Son", 3) == "active"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2140371814266016209, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: luaCode
+      value: SetQuestEntryState("The Prodigal Son", 3, "success")
+      objectReference: {fileID: 0}
+    - target: {fileID: 2140371814266016209, guid: 19aa79f9bfbaf544db5298e3b9887def,
+        type: 3}
+      propertyPath: setEnabledActions.Array.data[0].target
+      value: 
+      objectReference: {fileID: 347840093}
+    m_RemovedComponents:
+    - {fileID: 2066231096758887512, guid: 19aa79f9bfbaf544db5298e3b9887def, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: 19aa79f9bfbaf544db5298e3b9887def, type: 3}
+--- !u!4 &347840091 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2066231096758887515, guid: 19aa79f9bfbaf544db5298e3b9887def,
+    type: 3}
+  m_PrefabInstance: {fileID: 347840090}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &347840092 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2066231096758887516, guid: 19aa79f9bfbaf544db5298e3b9887def,
+    type: 3}
+  m_PrefabInstance: {fileID: 347840090}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &347840093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 347840092}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39b57c445266b414d8b3be9a0a70f159, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  once: 1
+  trigger: 64
+  playableDirector: {fileID: 0}
+  timelineAsset: {fileID: 0}
+  condition:
+    luaConditions:
+    - CurrentQuestEntryState("The Prodigal Son", 3) == "success"
+    questConditions: []
+    acceptedTags: []
+    acceptedGameObjects: []
+    luaWizardIndex: -1
+    lastEvaluationValue: 0
+  bindings: []
 --- !u!1 &353825865 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2090677816942019028, guid: 7931e01078e25d848ba34a7e828e4097,
@@ -24301,6 +24968,97 @@ MeshFilter:
     type: 3}
   m_PrefabInstance: {fileID: 786851583}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &794331472
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1586074262}
+    m_Modifications:
+    - target: {fileID: 6911007957818860502, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: m_Name
+      value: DI_TriggerCutscene
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860501, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860501, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860501, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860501, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860501, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860501, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860501, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860501, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860501, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860501, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860501, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860498, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860498, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: trigger
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860498, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.data[0]
+      value: (CurrentQuestState("The Forgotten") == "active") and (CurrentQuestEntryState("The
+        Forgotten", 2) == "active")
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 71015af7e240d6b439db401221bbba9c, type: 3}
+--- !u!4 &794331473 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6911007957818860501, guid: 71015af7e240d6b439db401221bbba9c,
+    type: 3}
+  m_PrefabInstance: {fileID: 794331472}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &802880838
 GameObject:
   m_ObjectHideFlags: 0
@@ -24409,6 +25167,98 @@ MeshFilter:
   m_CorrespondingSourceObject: {fileID: 1559371284179550204, guid: 0a2280cc987d3b8438c00be80fbfcb2c,
     type: 3}
   m_PrefabInstance: {fileID: 1541409223}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &811699159
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 292182362}
+    m_Modifications:
+    - target: {fileID: 1081031700846285506, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_Name
+      value: Dialogue_System_Triggers_BlacksmithEnable
+      objectReference: {fileID: 0}
+    - target: {fileID: 1081031700846285506, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7995114311862989317, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: trigger
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 7995114311862989317, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: luaCode
+      value: 'SetQuestState("The Blacksmith", "active");
+
+        SetQuestEntryState("The Blacksmith", 1, "active")'
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 16b6d24272bb5194786538b3162c69af, type: 3}
+--- !u!4 &811699160 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+    type: 3}
+  m_PrefabInstance: {fileID: 811699159}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &814330502 stripped
 GameObject:
@@ -24784,6 +25634,40 @@ MeshFilter:
     type: 3}
   m_PrefabInstance: {fileID: 786851583}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &851583311
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 851583312}
+  m_Layer: 0
+  m_Name: Dialogue Prep Main
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &851583312
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 851583311}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 244.75008, y: -38.943428, z: 407.2727}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1586074262}
+  - {fileID: 1444667568}
+  - {fileID: 1828444121}
+  - {fileID: 292182362}
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &854552978 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2090677816590494078, guid: 7931e01078e25d848ba34a7e828e4097,
@@ -27548,6 +28432,118 @@ MeshFilter:
     type: 3}
   m_PrefabInstance: {fileID: 786851583}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1138340530
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1586074262}
+    m_Modifications:
+    - target: {fileID: 1081031700846285506, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_Name
+      value: Dialogue_System_Triggers_TheForgotten
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7995114311862989317, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: luaCode
+      value: 'SetQuestState("The Forgotten", "active");
+
+        SetQuestEntryState("The Forgotten", 1, "active")'
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 16b6d24272bb5194786538b3162c69af, type: 3}
+--- !u!4 &1138340531 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+    type: 3}
+  m_PrefabInstance: {fileID: 1138340530}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1138340532 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1081031700846285506, guid: 16b6d24272bb5194786538b3162c69af,
+    type: 3}
+  m_PrefabInstance: {fileID: 1138340530}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1138340533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1138340532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39b57c445266b414d8b3be9a0a70f159, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  once: 1
+  trigger: 16
+  playableDirector: {fileID: 0}
+  timelineAsset: {fileID: 0}
+  condition:
+    luaConditions: []
+    questConditions: []
+    acceptedTags: []
+    acceptedGameObjects: []
+    luaWizardIndex: -1
+    lastEvaluationValue: 0
+  bindings: []
 --- !u!1 &1140265915 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2090677817514861543, guid: 7931e01078e25d848ba34a7e828e4097,
@@ -28485,6 +29481,188 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1211110665}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1212348597
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1586074262}
+    m_Modifications:
+    - target: {fileID: 6911007957818860502, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: m_Name
+      value: DI_TriggerCutscene_IntoTheFire
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860501, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860501, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860501, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860501, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860501, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860501, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860501, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860501, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860501, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860501, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860501, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860498, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860498, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: trigger
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860498, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.data[0]
+      value: (CurrentQuestState("The Forgotten") == "active") and (CurrentQuestEntryState("The
+        Forgotten", 5) == "active")
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860498, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: playableDirector
+      value: 
+      objectReference: {fileID: 970936218}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 71015af7e240d6b439db401221bbba9c, type: 3}
+--- !u!4 &1212348598 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6911007957818860501, guid: 71015af7e240d6b439db401221bbba9c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1212348597}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1212348599 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6911007957818860502, guid: 71015af7e240d6b439db401221bbba9c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1212348597}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1212348600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1212348599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c593457cd8105e148906690e1707c592, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trigger: 8
+  condition:
+    luaConditions:
+    - (CurrentQuestState("The Forgotten") == "active") and (CurrentQuestEntryState("The
+      Forgotten", 5) == "active")
+    questConditions: []
+    acceptedTags:
+    - Player
+    acceptedGameObjects: []
+    luaWizardIndex: -1
+    lastEvaluationValue: 0
+  setQuestState: 1
+  questName: 
+  questState: 0
+  setQuestEntryState: 0
+  questEntryNumber: 1
+  questEntryState: 0
+  luaCode: 'SetQuestState("The Forgotten", "success");
+
+    SetQuestEntryState("The Forgotten", 5, "success");
+
+    SetQuestState("The Prodigal Son", "active");
+
+    SetQuestEntryState("The Prodigal Son", 1, "active");
+
+    Variable["Tormentors_Killed"] = 0'
+  sequence: 
+  sequenceSpeaker: {fileID: 0}
+  sequenceListener: {fileID: 0}
+  waitOneFrameOnStartOrEnable: 1
+  alertMessage: 
+  textTable: {fileID: 0}
+  alertDuration: 0
+  sendMessages: []
+  barkSource: 0
+  barkConversation: 
+  barkText: 
+  barkTextSequence: 
+  barker: {fileID: 0}
+  barkTarget: {fileID: 0}
+  barkOrder: 0
+  allowBarksDuringConversations: 0
+  skipBarkIfNoValidEntries: 0
+  cacheBarkLines: 0
+  conversation: 
+  conversationConversant: {fileID: 0}
+  conversationActor: {fileID: 0}
+  startConversationEntryID: -1
+  exclusive: 0
+  skipIfNoValidEntries: 1
+  stopConversationOnTriggerExit: 0
+  stopConversationIfTooFar: 0
+  maxConversationDistance: 5
+  monitorConversationDistanceFrequency: 1
+  showCursorDuringConversation: 0
+  pauseGameDuringConversation: 0
+  setActiveActions: []
+  setEnabledActions: []
+  setAnimatorStateActions: []
+  onExecute:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: PixelCrushers.GameObjectUnityEvent, PixelCrushers, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  useConversationTitlePicker: 1
+  useBarkTitlePicker: 1
+  useQuestNamePicker: 1
+  selectedDatabase: {fileID: 11400000, guid: 4b9387829cfc8d8469142c0106630476, type: 2}
 --- !u!1 &1219792426 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2090677815963719839, guid: 7931e01078e25d848ba34a7e828e4097,
@@ -28545,6 +29723,81 @@ MeshFilter:
     type: 3}
   m_PrefabInstance: {fileID: 786851583}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1227739178
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1227739179}
+  - component: {fileID: 1227739180}
+  m_Layer: 0
+  m_Name: Rider Incrementer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1227739179
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1227739178}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1444667568}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1227739180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1227739178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b871c74662c23945bf35b97caee462a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  incrementOn: 1
+  variable: Tormentors_Killed
+  increment: 1
+  min: 0
+  max: 100
+  alertMessage: 
+  alertDuration: 0
+  condition:
+    luaConditions:
+    - (CurrentQuestState("The Prodigal Son") == "active") and (CurrentQuestEntryState("The
+      Prodigal Son", 1) == "active")
+    questConditions: []
+    acceptedTags: []
+    acceptedGameObjects: []
+    luaWizardIndex: -1
+    lastEvaluationValue: 0
+  onIncrement:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2077931512}
+        m_MethodName: OnUse
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!1 &1231903847 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1559371284504665588, guid: 0a2280cc987d3b8438c00be80fbfcb2c,
@@ -34666,6 +35919,130 @@ MonoBehaviour:
   ZoneSetting: 0
   EnemyDensity: 0
   SpawnRate: 1
+--- !u!1001 &1399286136
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 292182362}
+    m_Modifications:
+    - target: {fileID: 1021383941007658974, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: m_Name
+      value: Dialogue_System_Triggers_TriggerArea
+      objectReference: {fileID: 0}
+    - target: {fileID: 323107127778621245, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 323107127778621245, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 323107127778621245, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 323107127778621245, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 323107127778621245, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 323107127778621245, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 323107127778621245, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 323107127778621245, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 323107127778621245, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 323107127778621245, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 323107127778621245, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7789431227633294860, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7789431227633294860, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.data[0]
+      value: (CurrentQuestState("The Blacksmith") == "active") and (CurrentQuestEntryState("The
+        Blacksmith", 1) == "active")
+      objectReference: {fileID: 0}
+    - target: {fileID: 7789431227633294860, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: luaCode
+      value: 'SetQuestEntryState("The Blacksmith", 1, "success");
+
+        SetQuestEntryState("The Blacksmith", 2, "active")'
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b969d890613acdb40997624c663e4678, type: 3}
+--- !u!4 &1399286137 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 323107127778621245, guid: b969d890613acdb40997624c663e4678,
+    type: 3}
+  m_PrefabInstance: {fileID: 1399286136}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1399286138 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1021383941007658974, guid: b969d890613acdb40997624c663e4678,
+    type: 3}
+  m_PrefabInstance: {fileID: 1399286136}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1399286139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1399286138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39b57c445266b414d8b3be9a0a70f159, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  once: 1
+  trigger: 8
+  playableDirector: {fileID: 0}
+  timelineAsset: {fileID: 0}
+  condition:
+    luaConditions:
+    - CurrentQuestState("The Blacksmith") == "active"
+    questConditions: []
+    acceptedTags: []
+    acceptedGameObjects: []
+    luaWizardIndex: -1
+    lastEvaluationValue: 0
+  bindings: []
 --- !u!1 &1399699838 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2090677816019623277, guid: 7931e01078e25d848ba34a7e828e4097,
@@ -34840,6 +36217,42 @@ MeshFilter:
     type: 3}
   m_PrefabInstance: {fileID: 786851583}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1444667567
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1444667568}
+  m_Layer: 0
+  m_Name: The Prodigal Son
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1444667568
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1444667567}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1227739179}
+  - {fileID: 2077931511}
+  - {fileID: 282801144}
+  - {fileID: 347840091}
+  - {fileID: 1477004771}
+  - {fileID: 330654561}
+  m_Father: {fileID: 851583312}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1452139653 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2090677817259123249, guid: 7931e01078e25d848ba34a7e828e4097,
@@ -42727,6 +44140,103 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 786851583}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1477004770
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1444667568}
+    m_Modifications:
+    - target: {fileID: 1081031700846285506, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_Name
+      value: Dialogue_System_Triggers_OnStartBase
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7995114311862989317, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7995114311862989317, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: trigger
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 7995114311862989317, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.data[0]
+      value: CurrentQuestEntryState("The Prodigal Son", 3) == "success"
+      objectReference: {fileID: 0}
+    - target: {fileID: 7995114311862989317, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: luaCode
+      value: 'SetQuestEntryState("The Prodigal Son", 4, "active");
+
+        Variable["Tormentors_Killed"] = 0'
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 16b6d24272bb5194786538b3162c69af, type: 3}
+--- !u!4 &1477004771 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+    type: 3}
+  m_PrefabInstance: {fileID: 1477004770}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1481191112
 GameObject:
   m_ObjectHideFlags: 0
@@ -43138,6 +44648,127 @@ MeshFilter:
     type: 3}
   m_PrefabInstance: {fileID: 479081800}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1515707000
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1586074262}
+    m_Modifications:
+    - target: {fileID: 1021383941007658974, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: m_Name
+      value: Dialogue_System_Triggers_BurntTrail
+      objectReference: {fileID: 0}
+    - target: {fileID: 323107127778621245, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 323107127778621245, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 323107127778621245, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 323107127778621245, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 323107127778621245, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 323107127778621245, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 323107127778621245, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 323107127778621245, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 323107127778621245, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 323107127778621245, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 323107127778621245, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7789431227633294860, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7789431227633294860, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.data[0]
+      value: (CurrentQuestState("The Forgotten") == "active") and (CurrentQuestEntryState("The
+        Forgotten", 1) == "active")
+      objectReference: {fileID: 0}
+    - target: {fileID: 7789431227633294860, guid: b969d890613acdb40997624c663e4678,
+        type: 3}
+      propertyPath: luaCode
+      value: SetQuestEntryState("The Forgotten", 2, "active")
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b969d890613acdb40997624c663e4678, type: 3}
+--- !u!4 &1515707001 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 323107127778621245, guid: b969d890613acdb40997624c663e4678,
+    type: 3}
+  m_PrefabInstance: {fileID: 1515707000}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1515707002 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1021383941007658974, guid: b969d890613acdb40997624c663e4678,
+    type: 3}
+  m_PrefabInstance: {fileID: 1515707000}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1515707003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1515707002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39b57c445266b414d8b3be9a0a70f159, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  once: 1
+  trigger: 8
+  playableDirector: {fileID: 0}
+  timelineAsset: {fileID: 0}
+  condition:
+    luaConditions: []
+    questConditions: []
+    acceptedTags: []
+    acceptedGameObjects: []
+    luaWizardIndex: -1
+    lastEvaluationValue: 0
+  bindings: []
 --- !u!1 &1516238144 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1589906568607630, guid: b703338ed928d0e42816853f82c679de,
@@ -44330,6 +45961,41 @@ MeshFilter:
     type: 3}
   m_PrefabInstance: {fileID: 1541409223}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1586074261
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1586074262}
+  m_Layer: 0
+  m_Name: The Forgotten
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1586074262
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1586074261}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1138340531}
+  - {fileID: 1515707001}
+  - {fileID: 794331473}
+  - {fileID: 143136484}
+  - {fileID: 1212348598}
+  m_Father: {fileID: 851583312}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1598465113
 GameObject:
   m_ObjectHideFlags: 0
@@ -44988,7 +46654,7 @@ MonoBehaviour:
     m_LegacyHeadingDefinition: -1
     m_LegacyVelocityFilterStrength: -1
   m_XAxis:
-    Value: -0
+    Value: 2.035555e-13
     m_MaxSpeed: 300
     m_AccelTime: 0.1
     m_DecelTime: 0.1
@@ -47972,6 +49638,39 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 786851583}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1828444120
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1828444121}
+  m_Layer: 0
+  m_Name: A Worthy Opponent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1828444121
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1828444120}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1901047843}
+  - {fileID: 2088522625}
+  - {fileID: 157827930}
+  m_Father: {fileID: 851583312}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1836541631 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8009253652082371718, guid: 7931e01078e25d848ba34a7e828e4097,
@@ -51909,6 +53608,109 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: Cinemachine.CinemachineBrain+VcamActivatedEvent, Cinemachine, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!1 &1901047842
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1901047843}
+  - component: {fileID: 1901047844}
+  m_Layer: 0
+  m_Name: Reputation_Checker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1901047843
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1901047842}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1828444121}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1901047844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1901047842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c593457cd8105e148906690e1707c592, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trigger: 32
+  condition:
+    luaConditions:
+    - Variable["Reputation_Earned"] >= 150
+    questConditions: []
+    acceptedTags: []
+    acceptedGameObjects: []
+    luaWizardIndex: -1
+    lastEvaluationValue: 0
+  setQuestState: 1
+  questName: 
+  questState: 0
+  setQuestEntryState: 0
+  questEntryNumber: 1
+  questEntryState: 0
+  luaCode: 'SetQuestEntryState("A Worthy Opponent", 1, "success");
+
+    SetQuestEntryState("A Worthy Opponent", 2, "active")'
+  sequence: 
+  sequenceSpeaker: {fileID: 0}
+  sequenceListener: {fileID: 0}
+  waitOneFrameOnStartOrEnable: 1
+  alertMessage: 
+  textTable: {fileID: 0}
+  alertDuration: 0
+  sendMessages: []
+  barkSource: 0
+  barkConversation: 
+  barkText: 
+  barkTextSequence: 
+  barker: {fileID: 0}
+  barkTarget: {fileID: 0}
+  barkOrder: 0
+  allowBarksDuringConversations: 0
+  skipBarkIfNoValidEntries: 0
+  cacheBarkLines: 0
+  conversation: 
+  conversationConversant: {fileID: 0}
+  conversationActor: {fileID: 0}
+  startConversationEntryID: -1
+  exclusive: 0
+  skipIfNoValidEntries: 1
+  stopConversationOnTriggerExit: 0
+  stopConversationIfTooFar: 0
+  maxConversationDistance: 5
+  monitorConversationDistanceFrequency: 1
+  showCursorDuringConversation: 0
+  pauseGameDuringConversation: 0
+  setActiveActions: []
+  setEnabledActions: []
+  setAnimatorStateActions: []
+  onExecute:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: PixelCrushers.GameObjectUnityEvent, PixelCrushers, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  useConversationTitlePicker: 1
+  useBarkTitlePicker: 1
+  useQuestNamePicker: 1
+  selectedDatabase: {fileID: 11400000, guid: 4b9387829cfc8d8469142c0106630476, type: 2}
 --- !u!1 &1902911269 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1559371284088176828, guid: 0a2280cc987d3b8438c00be80fbfcb2c,
@@ -53574,6 +55376,135 @@ MeshFilter:
     type: 3}
   m_PrefabInstance: {fileID: 479081800}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2077931510
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1444667568}
+    m_Modifications:
+    - target: {fileID: 1081031700846285506, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_Name
+      value: Dialogue_System_Triggers_IncrementBase
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7995114311862989317, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7995114311862989317, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: trigger
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 7995114311862989317, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.data[0]
+      value: Variable["Tormentors_Killed"] >= 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7995114311862989317, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: questName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7995114311862989317, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: setQuestEntryState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7995114311862989317, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: setQuestState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7995114311862989317, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: questEntryState
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7995114311862989317, guid: 16b6d24272bb5194786538b3162c69af,
+        type: 3}
+      propertyPath: luaCode
+      value: 'SetQuestEntryState("The Prodigal Son", 1, "success");
+
+        SetQuestEntryState("The Prodigal Son", 2, "active")'
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 16b6d24272bb5194786538b3162c69af, type: 3}
+--- !u!4 &2077931511 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7226809935709588078, guid: 16b6d24272bb5194786538b3162c69af,
+    type: 3}
+  m_PrefabInstance: {fileID: 2077931510}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2077931512 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7995114311862989317, guid: 16b6d24272bb5194786538b3162c69af,
+    type: 3}
+  m_PrefabInstance: {fileID: 2077931510}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c593457cd8105e148906690e1707c592, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2080556855 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2090677816356034794, guid: 7931e01078e25d848ba34a7e828e4097,
@@ -53742,6 +55673,102 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4293873389068336, guid: dc9d10754d0b0d9468a7c0d2a8b6d9e2,
     type: 3}
   m_PrefabInstance: {fileID: 2084938670}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2088522624
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1828444121}
+    m_Modifications:
+    - target: {fileID: 6911007957818860502, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: m_Name
+      value: DI_TriggerCutsceneTheWarlord
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860501, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860501, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860501, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860501, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860501, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860501, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860501, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860501, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860501, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860501, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860501, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860498, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860498, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: trigger
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860498, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.data[0]
+      value: (CurrentQuestState("A Worthy Opponent") == "active") and (CurrentQuestEntryState("A
+        Worthy Opponent", 2) == "active")
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911007957818860498, guid: 71015af7e240d6b439db401221bbba9c,
+        type: 3}
+      propertyPath: condition.luaConditions.Array.data[1]
+      value: CurrentQuestEntryState("A Worthy Opponent", 2) ~= "active"
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 71015af7e240d6b439db401221bbba9c, type: 3}
+--- !u!4 &2088522625 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6911007957818860501, guid: 71015af7e240d6b439db401221bbba9c,
+    type: 3}
+  m_PrefabInstance: {fileID: 2088522624}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &2092447753 stripped
 GameObject:

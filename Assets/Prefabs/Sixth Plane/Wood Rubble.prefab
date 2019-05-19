@@ -1,5 +1,18 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &4406365752587413957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4406365751108348679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc23b8b8f9f663b49b05b9ccfd76ad5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particlesScale: 0.5
 --- !u!114 &4406365751328165979
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54,19 +67,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4406365752587413957
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4406365751108348679}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc23b8b8f9f663b49b05b9ccfd76ad5c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  particlesScale: 0.5
 --- !u!1001 &4406365751108382113
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -135,20 +135,20 @@ PrefabInstance:
       value: 0.50000024
       objectReference: {fileID: 0}
     - target: {fileID: 19800004, guid: e613307b2832c3f459948b2f25aea693, type: 3}
-      propertyPath: InitialModule.startSizeY.minMaxState
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19800004, guid: e613307b2832c3f459948b2f25aea693, type: 3}
-      propertyPath: InitialModule.startSizeZ.minMaxState
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19800004, guid: e613307b2832c3f459948b2f25aea693, type: 3}
       propertyPath: InitialModule.startSpeed.scalar
       value: -0.075
       objectReference: {fileID: 0}
     - target: {fileID: 19800004, guid: e613307b2832c3f459948b2f25aea693, type: 3}
       propertyPath: InitialModule.startSize.scalar
       value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800004, guid: e613307b2832c3f459948b2f25aea693, type: 3}
+      propertyPath: InitialModule.startSizeY.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800004, guid: e613307b2832c3f459948b2f25aea693, type: 3}
+      propertyPath: InitialModule.startSizeZ.minMaxState
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 19800004, guid: e613307b2832c3f459948b2f25aea693, type: 3}
       propertyPath: VelocityModule.x.scalar
@@ -569,20 +569,20 @@ PrefabInstance:
       value: 0.50000024
       objectReference: {fileID: 0}
     - target: {fileID: 19800004, guid: e613307b2832c3f459948b2f25aea693, type: 3}
-      propertyPath: InitialModule.startSizeY.minMaxState
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19800004, guid: e613307b2832c3f459948b2f25aea693, type: 3}
-      propertyPath: InitialModule.startSizeZ.minMaxState
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19800004, guid: e613307b2832c3f459948b2f25aea693, type: 3}
       propertyPath: InitialModule.startSpeed.scalar
       value: -0.075
       objectReference: {fileID: 0}
     - target: {fileID: 19800004, guid: e613307b2832c3f459948b2f25aea693, type: 3}
       propertyPath: InitialModule.startSize.scalar
       value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800004, guid: e613307b2832c3f459948b2f25aea693, type: 3}
+      propertyPath: InitialModule.startSizeY.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800004, guid: e613307b2832c3f459948b2f25aea693, type: 3}
+      propertyPath: InitialModule.startSizeZ.minMaxState
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 19800004, guid: e613307b2832c3f459948b2f25aea693, type: 3}
       propertyPath: VelocityModule.x.scalar

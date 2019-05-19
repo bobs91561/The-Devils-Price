@@ -33,7 +33,7 @@ public class AIActionDecider: MonoBehaviour {
     public Vector3 LastKnownPosition;
 
 	// Use this for initialization
-	void Start()
+	protected virtual void Start()
 	{
 	    if (!AI) AI = gameObject;
         skillSet = GetComponent<SkillSet>();

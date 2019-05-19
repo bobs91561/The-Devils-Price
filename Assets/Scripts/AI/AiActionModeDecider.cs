@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AiActionModeDecider : AIActionDecider
+public class AIActionModeDecider : AIActionDecider
 {
     private AttackController m_AttackController;
     private ThirdPersonCharacter m_ThirdPerson;
@@ -19,8 +19,9 @@ public class AiActionModeDecider : AIActionDecider
     private bool changeInitialized = false;
 
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         m_TotalModes = Modes.Count;
     }
 
@@ -30,7 +31,7 @@ public class AiActionModeDecider : AIActionDecider
         if (!changeInitialized)
         {
             ChangeModeAction = Instantiate(ChangeModeAction);
-            ChangeModeAction.Initialize();
+            ChangeModeAction.Initialize(gameObject);
             changeInitialized = true;
         }
         actions.Add(ChangeModeAction);

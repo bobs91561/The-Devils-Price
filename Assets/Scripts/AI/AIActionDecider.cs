@@ -11,6 +11,7 @@ public class AIActionDecider: MonoBehaviour {
     [HideInInspector] public GameObject AI;
 
     public AIAction currentAction;
+    private AIAction_LEAD m_LeadAction;
 
     public float currentPriority = 0f;
 
@@ -58,6 +59,7 @@ public class AIActionDecider: MonoBehaviour {
         {
             actions[i] = Instantiate(actions[i]);
             actions[i].Initialize(gameObject);
+            if (actions[i].GetType() == typeof(AIAction_LEAD)) m_LeadAction = actions[i];
         }
     }
 
@@ -102,21 +104,7 @@ public class AIActionDecider: MonoBehaviour {
             currentAction.Tick();
     }
 
-    public Vector3 FindNearbyPatrolPoint()
-    {
-        Vector3 v = new Vector3(5,0,1);
-        if (patrolPoints.Count == 0)
-        {
-            return v;
-        }
-        else
-        {
-            v = patrolPoints[patrolPoint].transform.position;
-            patrolPoint = (patrolPoint >= patrolPoints.Count-1) ? 0 : patrolPoint+1;
-        }
-        return v;
-    }
-
+    #region Combat Control
     /// <summary>
     /// Method called when gameobject enters combat
     /// </summary>
@@ -186,6 +174,7 @@ public class AIActionDecider: MonoBehaviour {
 
         CombatManager.EnterCombat(gameObject);
     }
+    #endregion
 
     private void OnDeath()
     {
@@ -205,6 +194,30 @@ public class AIActionDecider: MonoBehaviour {
     {
         EventManager.DeathAction -= PlayerDeath;
     }
+
+    #region Special Action Methods
+    public Vector3 FindNearbyPatrolPoint()
+    {
+        Vector3 v = new Vector3(5, 0, 1);
+        if (patrolPoints.Count == 0)
+        {
+            return v;
+        }
+        else
+        {
+            v = patrolPoints[patrolPoint].transform.position;
+            patrolPoint = (patrolPoint >= patrolPoints.Count - 1) ? 0 : patrolPoint + 1;
+        }
+        return v;
+    }
+
+    public void LeadObject(GameObject g = null)
+    {
+        if (!m_LeadAction) return;
+        if (!g) g = Player;
+        m_LeadAction.Lead(g.transform);
+    }
+    #endregion
 
     /*void OnDrawGizmosSelected()
     {

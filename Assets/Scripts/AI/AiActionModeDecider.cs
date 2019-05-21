@@ -15,7 +15,7 @@ public class AIActionModeDecider : AIActionDecider
     public List<ModeModifiers> Modes;
     private ModeModifiers m_CurrentMode;
 
-    public AIAction ChangeModeAction;
+    public AIAction_CHANGEMODE ChangeModeAction;
     private bool changeInitialized = false;
 
     // Start is called before the first frame update
@@ -82,6 +82,11 @@ public class AIActionModeDecider : AIActionDecider
                     break;
             }
         }
+    }
+
+    public void DoneWaiting()
+    {
+        ChangeModeAction.DoneWaiting();
     }
 
     [System.Serializable]

@@ -20,6 +20,7 @@ public abstract class AIAction : ScriptableObject
     protected Animator _animator;
     protected SkillSet _skillSet;
 
+    protected bool waiting = false;
 
     public abstract bool ActionFeasible();
     public abstract bool Tick();
@@ -46,5 +47,10 @@ public abstract class AIAction : ScriptableObject
     {
         if (AIActionDecider.Player) return true;
         return false;
+    }
+
+    public void DoneWaiting()
+    {
+        waiting = false;
     }
 }

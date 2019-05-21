@@ -59,7 +59,7 @@ public class AIActionDecider: MonoBehaviour {
         {
             actions[i] = Instantiate(actions[i]);
             actions[i].Initialize(gameObject);
-            if (actions[i].GetType() == typeof(AIAction_LEAD)) m_LeadAction = actions[i];
+            if (actions[i].GetType() == typeof(AIAction_LEAD)) m_LeadAction = (AIAction_LEAD)actions[i];
         }
     }
 
@@ -196,6 +196,11 @@ public class AIActionDecider: MonoBehaviour {
     }
 
     #region Special Action Methods
+    public void DoneWaiting()
+    {
+        currentAction.DoneWaiting();
+    }
+
     public Vector3 FindNearbyPatrolPoint()
     {
         Vector3 v = new Vector3(5, 0, 1);

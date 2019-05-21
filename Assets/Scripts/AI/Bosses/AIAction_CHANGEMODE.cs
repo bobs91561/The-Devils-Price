@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName ="AIAction/ChangeMode")]
 public abstract class AIAction_CHANGEMODE : AIAction
 {
     public float Threshold;
@@ -68,10 +67,5 @@ public abstract class AIAction_CHANGEMODE : AIAction
         base.Initialize(obj);
         waiting = false;
         modeChanged = false;
-    }
-
-    public void DoneWaiting()
-    {
-        waiting = false;
     }
 }

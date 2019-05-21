@@ -83,12 +83,12 @@ public class AIActionModeDecider : AIActionDecider
             }
         }
     }
-
+    /*
     public void DoneWaiting()
     {
         ChangeModeAction.DoneWaiting();
     }
-
+    */
     [System.Serializable]
     public class ModeModifiers
     {

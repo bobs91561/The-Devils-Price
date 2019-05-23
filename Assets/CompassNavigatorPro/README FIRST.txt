@@ -36,6 +36,24 @@ https://www.assetstore.unity3d.com/en/#!/search/page=1/sortby=popularity/query=p
 Version history
 ---------------
 
+Current version
+- API: added POIShowBeacon(position)
+- [Fix] Fixed camera icon in minimap rotation issue when toggling Keep Straight option at runtime
+
+V4.7
+- Minimap: added full screen placeholder option. Allows to fit the minimap within the given UI element in full screen mode
+- [Fix] Fixed minimap not rendering Aquas water during startup due to delayed rendering
+
+V4.6
+- Added Fade Out Start / Fade Out Width options to fade out compass bar edges
+- Compass Icons created on the Compass Bar UI now use the name of the gameobject to which they represent
+- Demo scene updated to show tooltips on mini-map icons
+- API: added compassIconGameObject to CompassProPOI component. Holds a reference to the compass icon on the navigation bar when the POI icon is created 
+- API: added miniMapIconGameObject to CompassProPOI component. Holds a reference to the compass icon on the mini-map when the POI icon is created 
+- API: added new events OnPOIMiniMapIconMouseEnter, OnPOIMiniMapIconMouseExit, OnPOIMiniMapIconMouseDown, OnPOIMiniMapIconMouseUp, OnPOIMiniMapIconMouseClick
+- API: added GetMiniMapIconScreenRect to CompassProPOI component. Returns the screen rect occupied by the icon on the mini-map (if visible)
+- API: added GetCompassIconScreenRect to CompassProPOI component. Returns the screen rect occupied by the icon on the compass bar (if visible)
+
 V4.5.2
 - Performance improvements
 

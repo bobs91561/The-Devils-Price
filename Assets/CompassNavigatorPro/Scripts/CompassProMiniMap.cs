@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -46,12 +47,12 @@ namespace CompassNavigatorPro {
 		/// <summary>
 		/// Event fired when this POI appears in the Mini-Map.
 		/// </summary>
-		public event POIEvent OnPOIVisibleInMiniMap;
+		public Action<CompassProPOI> OnPOIVisibleInMiniMap;
 
 		/// <summary>
 		/// Event fired when the POI disappears from the Mini-Map
 		/// </summary>
-		public event POIEvent OnPOIHidesInMiniMap;
+		public Action<CompassProPOI> OnPOIHidesInMiniMap;
 
 		#endregion
 
@@ -124,8 +125,10 @@ namespace CompassNavigatorPro {
 			set {
 				if (value != _miniMapKeepStraight) {
 					_miniMapKeepStraight = value;
-					needMiniMapShot = true;
-					needUpdateBarContents = true;
+					if (cameraCompass != null) {
+						cameraCompass.eulerAngles = new Vector3 (0, 0, 180f);
+					}
+                    UpdateMiniMapContents();
 					isDirty = true;
 				}
 			}
@@ -235,6 +238,29 @@ namespace CompassNavigatorPro {
 
 
 		[SerializeField]
+		RectTransform _miniMapFullScreenPlaceholder;
+
+		/// <summary>
+		/// Optionally assign an UI rect transform which will be used to render the mini-map in full-screen mode
+		/// </summary>
+		public RectTransform miniMapFullScreenPlaceholder {
+			get { return _miniMapFullScreenPlaceholder; }
+			set {
+				if (value != _miniMapFullScreenPlaceholder) {
+					if (_miniMapZoomState) {
+						MiniMapZoomToggle (false);
+					} else {
+						SetupMiniMap ();
+					}
+					_miniMapFullScreenPlaceholder = value;
+					isDirty = true;
+				}
+			}
+		}
+
+
+
+		[SerializeField]
 		float _miniMapFullScreenSize = 0.9f;
 
 		/// <summary>
@@ -270,25 +296,6 @@ namespace CompassNavigatorPro {
 			}
 		}
 
-
-		[SerializeField]
-		bool _miniMapDisableMainCameraInFullScreen = true;
-
-		/// <summary>
-		/// Keep aspect ration in full screen mode
-		/// </summary>
-		public bool miniMapDisableMainCameraInFullScreen {
-			get { return _miniMapDisableMainCameraInFullScreen; }
-			set {
-				if (value != _miniMapDisableMainCameraInFullScreen) {
-					_miniMapDisableMainCameraInFullScreen = value;
-					SetupMiniMap ();
-					isDirty = true;
-				}
-			}
-		}
-
-
 		[SerializeField] MINIMAP_CAMERA_MODE _miniMapCameraMode = MINIMAP_CAMERA_MODE.Orthographic;
 
 		/// <summary>
@@ -306,7 +313,7 @@ namespace CompassNavigatorPro {
 		}
 
 
-		[SerializeField] MINIMAP_CAMERA_SNAPSHOT_FREQUENCY _miniMapCameraSnapshotFrequency = MINIMAP_CAMERA_SNAPSHOT_FREQUENCY.Continuous;
+		[SerializeField] MINIMAP_CAMERA_SNAPSHOT_FREQUENCY _miniMapCameraSnapshotFrequency = MINIMAP_CAMERA_SNAPSHOT_FREQUENCY.DistanceTravelled;
 
 		/// <summary>
 		/// How often the mini-map camera will capture the scene
@@ -333,8 +340,7 @@ namespace CompassNavigatorPro {
 			set {
 				if (value != _miniMapCaptureSize) {
 					_miniMapCaptureSize = value;
-					needUpdateBarContents = true;
-					needMiniMapShot = true;
+                    UpdateMiniMapContents(); 
 					isDirty = true;
 				}
 			}
@@ -375,72 +381,63 @@ namespace CompassNavigatorPro {
 		}
 
 
-        [SerializeField]
-        float _miniMapContrast = 1.02f;
+		[SerializeField]
+		float _miniMapContrast = 1.02f;
 
-        /// <summary>
-        /// Contrast of the mini-map image
-        /// </summary>
-        public float miniMapContrast
-        {
-            get { return _miniMapContrast; }
-            set
-            {
-                if (value != _miniMapContrast)
-                {
-                    _miniMapContrast = value;
-                    miniMapMaterialRefresh = true;
-                    isDirty = true;
-                }
-            }
-        }
+		/// <summary>
+		/// Contrast of the mini-map image
+		/// </summary>
+		public float miniMapContrast {
+			get { return _miniMapContrast; }
+			set {
+				if (value != _miniMapContrast) {
+					_miniMapContrast = value;
+					miniMapMaterialRefresh = true;
+					isDirty = true;
+				}
+			}
+		}
 
 
-        [SerializeField]
-        float _miniMapBrightness = 1.05f;
+		[SerializeField]
+		float _miniMapBrightness = 1.05f;
 
-        /// <summary>
-        /// Brightness of the mini-map image
-        /// </summary>
-        public float miniMapBrightness
-        {
-            get { return _miniMapBrightness; }
-            set
-            {
-                if (value != _miniMapBrightness)
-                {
-                    _miniMapBrightness = value;
-                    miniMapMaterialRefresh = true;
-                    isDirty = true;
-                }
-            }
-        }
+		/// <summary>
+		/// Brightness of the mini-map image
+		/// </summary>
+		public float miniMapBrightness {
+			get { return _miniMapBrightness; }
+			set {
+				if (value != _miniMapBrightness) {
+					_miniMapBrightness = value;
+					miniMapMaterialRefresh = true;
+					isDirty = true;
+				}
+			}
+		}
 
 
-        [SerializeField]
-        bool _miniMapEnableShadows = false;
+		[SerializeField]
+		bool _miniMapEnableShadows = false;
 
-        /// <summary>
-        /// Enables/disables shadow casting when rendering mini-map
-        /// </summary>
-        public bool miniMapEnableShadows
-        {
-            get { return _miniMapEnableShadows; }
-            set
-            {
-                if (value != _miniMapEnableShadows)
-                {
-                    _miniMapEnableShadows = value;
-                    isDirty = true;
-                }
-            }
-        }
+		/// <summary>
+		/// Enables/disables shadow casting when rendering mini-map
+		/// </summary>
+		public bool miniMapEnableShadows {
+			get { return _miniMapEnableShadows; }
+			set {
+				if (value != _miniMapEnableShadows) {
+					_miniMapEnableShadows = value;
+					isDirty = true;
+				}
+			}
+		}
 
 
 
 
 
-        [SerializeField, Range(0,1)]
+		[SerializeField, Range (0, 1)]
 		float _miniMapZoomMin = 0.01f;
 
 		/// <summary>
@@ -451,14 +448,13 @@ namespace CompassNavigatorPro {
 			set {
 				if (value != _miniMapZoomMin) {
 					_miniMapZoomMin = value;
-					needUpdateBarContents = true;
-					needMiniMapShot = true;
+                    UpdateMiniMapContents(); 
 					isDirty = true;
 				}
 			}
 		}
 
-		[SerializeField, Range(0,1)]
+		[SerializeField, Range (0, 1)]
 		float _miniMapZoomMax = 1f;
 
 		/// <summary>
@@ -469,8 +465,7 @@ namespace CompassNavigatorPro {
 			set {
 				if (value != _miniMapZoomMax) {
 					_miniMapZoomMax = value;
-					needUpdateBarContents = true;
-					needMiniMapShot = true;
+                    UpdateMiniMapContents();
 					isDirty = true;
 				}
 			}
@@ -488,8 +483,7 @@ namespace CompassNavigatorPro {
 			set {
 				if (value != _miniMapZoomLevel) {
 					_miniMapZoomLevel = Mathf.Clamp01 (value);
-					needMiniMapShot = true;
-					needUpdateBarContents = true;
+                    UpdateMiniMapContents();
 					isDirty = true;
 				}
 			}
@@ -507,8 +501,7 @@ namespace CompassNavigatorPro {
 			set {
 				if (value != _miniMapCameraMinAltitude) {
 					_miniMapCameraMinAltitude = value;
-					needUpdateBarContents = true;
-					needMiniMapShot = true;
+                    UpdateMiniMapContents();
 					isDirty = true;
 				}
 			}
@@ -526,8 +519,7 @@ namespace CompassNavigatorPro {
 			set {
 				if (value != _miniMapCameraMaxAltitude) {
 					_miniMapCameraMaxAltitude = value;
-					needUpdateBarContents = true;
-					needMiniMapShot = true;
+                    UpdateMiniMapContents();
 					isDirty = true;
 				}
 			}
@@ -535,29 +527,25 @@ namespace CompassNavigatorPro {
 
 
 
-        [SerializeField]
-        float _miniMapCameraHeightVSFollow = 200f;
+		[SerializeField]
+		float _miniMapCameraHeightVSFollow = 200f;
 
-        /// <summary>
-        /// When mini-map is in orthographic projection, an optional height for the camera with respect to the main camera or followed item
-        /// </summary>
-        public float miniMapCameraHeightVSFollow
-        {
-            get { return _miniMapCameraHeightVSFollow; }
-            set
-            {
-                if (value != _miniMapCameraHeightVSFollow)
-                {
-                    _miniMapCameraHeightVSFollow = value;
-                    needUpdateBarContents = true;
-                    needMiniMapShot = true;
-                    isDirty = true;
-                }
-            }
-        }
+		/// <summary>
+		/// When mini-map is in orthographic projection, an optional height for the camera with respect to the main camera or followed item
+		/// </summary>
+		public float miniMapCameraHeightVSFollow {
+			get { return _miniMapCameraHeightVSFollow; }
+			set {
+				if (value != _miniMapCameraHeightVSFollow) {
+					_miniMapCameraHeightVSFollow = value;
+                    UpdateMiniMapContents();
+					isDirty = true;
+				}
+			}
+		}
 
 
-        [SerializeField] int _miniMapLayerMask = -1;
+		[SerializeField] int _miniMapLayerMask = -1;
 
 		/// <summary>
 		/// The layer mask for the mini-map camera
@@ -639,6 +627,18 @@ namespace CompassNavigatorPro {
 			}
 		}
 
+		[SerializeField]
+		bool _miniMapIconEvents;
+
+		public bool miniMapIconEvents {
+			get { return _miniMapIconEvents; }
+			set {
+				if (_miniMapIconEvents != value) {
+					_miniMapIconEvents = value;
+				}
+			}
+		}
+
 
 		public void MiniMapZoomIn (float speed = 1f) {
 			miniMapZoomLevel += Time.deltaTime * speed;
@@ -650,6 +650,9 @@ namespace CompassNavigatorPro {
 
 		bool _miniMapZoomState;
 
+		/// <summary>
+		/// Sets mini-map in full-screen mode or normal mode
+		/// </summary>
 		public bool miniMapZoomState {
 			get {
 				return _miniMapZoomState; 
@@ -661,10 +664,25 @@ namespace CompassNavigatorPro {
 			}
 		}
 
-
-		public void UpdateMiniMapContents() {
-			needMiniMapShot = true;
+		/// <summary>
+		/// Forces an update of mini-map contents
+		/// </summary>
+		public void UpdateMiniMapContents (int numberOfFramesToRefresh = 1) {
+			if (needMiniMapShot == 0) {
+				needMiniMapShot += numberOfFramesToRefresh;
+			}
 			needUpdateBarContents = true;
+		}
+
+
+		/// <summary>
+		/// Returns true if mouse pointer is over the mini-map
+		/// </summary>
+		/// <returns><c>true</c> if this instance is pointer over mini map; otherwise, <c>false</c>.</returns>
+		public bool IsMouseOverMiniMap () {
+			if (miniMapUIRootRT == null)
+				return false;
+			return RectTransformUtility.RectangleContainsScreenPoint (miniMapUIRootRT, Input.mousePosition);
 		}
 
 

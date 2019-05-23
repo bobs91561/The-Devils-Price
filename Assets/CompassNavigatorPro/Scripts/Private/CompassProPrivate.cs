@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using System;
 using System.Text;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ using UnityEditor;
 #endif
 
 namespace CompassNavigatorPro {
-	public delegate void POIEvent (CompassProPOI poi);
+	//	public delegate void POIEvent (CompassProPOI poi);
 
 	[ExecuteInEditMode]
 	public partial class CompassPro : MonoBehaviour {
@@ -105,11 +106,13 @@ namespace CompassNavigatorPro {
 		float lastDistanceSqr;
 		CompassPointPOI[] compassPoints;
 		float usedNorthDegrees;
-        const int TEXT_POOL_SIZE = 256;
-        LetterAnimator[] textPool;
-        int poolIndex;
-        Transform canvasTextPool;
-        #endregion
+		const int TEXT_POOL_SIZE = 256;
+		LetterAnimator[] textPool;
+		int poolIndex;
+		Transform canvasTextPool;
+		Canvas _canvas;
+
+		#endregion
 
 		#region internal Minimap stuff
 
@@ -117,6 +120,7 @@ namespace CompassNavigatorPro {
 		const string SKW_COMPASS_ROTATED = "COMPASS_ROTATED";
 		Transform miniMapUIRoot;
 		Transform miniMapUI, miniMapButtonsPanel;
+		RectTransform miniMapUIRootRT;
 		Camera miniMapCamera;
 		Transform cameraCompass;
 		RenderTexture miniMapTex;
@@ -127,11 +131,11 @@ namespace CompassNavigatorPro {
 		MINIMAP_STYLE miniMapCurrentStyle;
 		float miniMapLastSnapshotTime;
 		Vector3 miniMapLastSnapshotLocation;
-		bool needMiniMapShot;
+		int needMiniMapShot;
 		Image miniMapImage;
-        bool miniMapMaterialRefresh;
-        float miniMapLastCameraRotation;
-        Vector3 lastMiniMapCameraPos;
+		bool miniMapMaterialRefresh;
+		float miniMapLastCameraRotation;
+		Vector3 lastMiniMapCameraPos;
 
 		#endregion
 
@@ -168,16 +172,15 @@ namespace CompassNavigatorPro {
 				Init ();
 			}
 
-                // ensure there's an EventSystem gameobject is buttons are visible so they can be used
-                // an EventSystem gameobject is automatically created when instantiating a Canvas prefab so here we go
-                if (Application.isPlaying && _miniMapShowButtons && FindObjectOfType<EventSystem>() == null)
-                {
-                    GameObject eventSystem = new GameObject("EventSystem", typeof(EventSystem));
-                    eventSystem.AddComponent<StandaloneInputModule>();
-                }
+			// ensure there's an EventSystem gameobject is buttons are visible so they can be used
+			// an EventSystem gameobject is automatically created when instantiating a Canvas prefab so here we go
+			if (Application.isPlaying && _miniMapShowButtons && FindObjectOfType<EventSystem> () == null) {
+				GameObject eventSystem = new GameObject ("EventSystem", typeof(EventSystem));
+				eventSystem.AddComponent<StandaloneInputModule> ();
+			}
 
-            SetupTextPool();
-            SetupMiniMap ();
+			SetupTextPool ();
+			SetupMiniMap ();
 
 			if (dontDestroyOnLoad && Application.isPlaying) {
 				if (FindObjectsOfType (GetType ()).Length > 1) {
@@ -189,11 +192,6 @@ namespace CompassNavigatorPro {
 			}
 		}
 
-
-        void OnValidate()
-        {
-            SetupMiniMap();
-        }
 
 		void OnDisable () {
 			DisableMiniMap ();
@@ -215,7 +213,7 @@ namespace CompassNavigatorPro {
 			#endif
 			#endif
 
-
+			_canvas = GetComponent<Canvas> ();
 			icons = new List<CompassActiveIcon> (1000);
 			audioSource = GetComponent<AudioSource> ();
 			spriteOverlayMat = Resources.Load<Material> ("CNPro/Materials/SpriteOverlayUnlit");
@@ -281,6 +279,11 @@ namespace CompassNavigatorPro {
 			UpdateCompassBarContents ();
 			UpdateFogOfWarPosition ();
 			UpdateMiniMap ();
+		}
+
+		internal void BubbleEvent<T> (Action<T> a, T o) {
+			if (a != null && o != null)
+				a (o);
 		}
 
 		#endregion
@@ -445,9 +448,11 @@ namespace CompassNavigatorPro {
 					// POI is visible, should we create the icon in the compass bar?
 					if (activeIcon.rectTransform == null) {
 						GameObject iconGO = Instantiate (compassIconPrefab);
+						iconGO.name = "CompassIcon " + poi.gameObject.name;
 						iconGO.hideFlags = HideFlags.DontSave;
 						iconGO.transform.SetParent (compassBackRect.transform, false);
 						activeIcon.rectTransform = iconGO.GetComponent<RectTransform> ();
+						poi.compassIconRectTransform = activeIcon.rectTransform;
 					}
 
 					// Check bending
@@ -549,8 +554,8 @@ namespace CompassNavigatorPro {
 							activeIcon.rectTransform.localScale = activeIcon.poi.iconScale;
 						}
 
-                        // Set icon's color and alpha
-                        Color spriteColor = poi.tintColor;
+						// Set icon's color and alpha
+						Color spriteColor = poi.tintColor;
 						if (visibleDistanceFallOffSQR > 0) {
 							if (poi.visibility == POI_VISIBILITY.AlwaysVisible) {
 								spriteColor.a = 1f;
@@ -559,7 +564,7 @@ namespace CompassNavigatorPro {
 								spriteColor.a = Mathf.Lerp (0, 1, t);
 							}
 						}
-                        activeIcon.image.color = spriteColor;
+						activeIcon.image.color = spriteColor;
 
 						// Get title if POI is centered
 						if (absPosX < _labelHotZone && distancePlanarSQR < nearestPOIDistanceThisFrame) {
@@ -576,9 +581,18 @@ namespace CompassNavigatorPro {
 					// POI is visible, should we create the icon in the minimap?
 					if (activeIcon.miniMapRectTransform == null) {
 						GameObject iconGO = Instantiate (poi.miniMapClampPosition ? compassMiniMapClampedPrefab : compassIconPrefab);
+						iconGO.name = "MiniMap Icon " + poi.name;
+						if (_miniMapIconEvents) {
+							iconGO.GetComponent<Image> ().raycastTarget = true;
+							CompassIconEventHandler eventHandler = iconGO.AddComponent<CompassIconEventHandler> ();
+							eventHandler.poi = poi;
+							eventHandler.compass = this;
+						}
 						iconGO.hideFlags = HideFlags.DontSave;
 						iconGO.transform.SetParent (miniMapUI.transform, false);
 						activeIcon.miniMapRectTransform = iconGO.GetComponent<RectTransform> ();
+						poi.miniMapIconRectTransform = activeIcon.miniMapRectTransform;
+						poi.compass = this;
 					}
 
 					// Position the icon on the mini-map area
@@ -968,8 +982,8 @@ namespace CompassNavigatorPro {
 		}
 
 		void UpdateTextAppearance () {
-            // Vertical and horizontal position
-            text.alignment = TextAnchor.MiddleCenter;
+			// Vertical and horizontal position
+			text.alignment = TextAnchor.MiddleCenter;
 			Vector3 localScale = new Vector3 (_textScale, _textScale, 1f);
 			RectTransform rt = text.GetComponent<RectTransform> ();
 			rt.pivot = new Vector2 (0.5f, 0.5f);
@@ -1016,77 +1030,69 @@ namespace CompassNavigatorPro {
 			titleShadow.color = new Color (0, 0, 0, t);
 		}
 
-        void SetupTextPool()
-        {
-            if (!Application.isPlaying) return;
+		void SetupTextPool () {
+			if (!Application.isPlaying)
+				return;
 
-            text.text = textShadow.text = "";
-            UpdateTextAppearance();
-            if (textPool == null || textPool.Length != TEXT_POOL_SIZE)
-            {
-                textPool = new LetterAnimator[TEXT_POOL_SIZE];
-            }
+			text.text = textShadow.text = "";
+			UpdateTextAppearance ();
+			if (textPool == null || textPool.Length != TEXT_POOL_SIZE) {
+				textPool = new LetterAnimator[TEXT_POOL_SIZE];
+			}
 
-            GameObject o = GameObject.Find("CompassProTextPool");
-            if (o==null)
-            {
-                o = new GameObject("CompassProTextPool");
-            }
-            canvasTextPool = o.transform;
+			GameObject o = GameObject.Find ("CompassProTextPool");
+			if (o == null) {
+				o = new GameObject ("CompassProTextPool");
+			}
+			canvasTextPool = o.transform;
 
-            for (int k=0;k<textPool.Length;k++)
-            {
-                GameObject letterShadow = Instantiate(textShadow.gameObject);
-                letterShadow.transform.SetParent(canvasTextPool);
-                letterShadow.name = "TextShadowPool";
-                Text lts = letterShadow.GetComponent<Text>();
+			for (int k = 0; k < textPool.Length; k++) {
+				GameObject letterShadow = Instantiate (textShadow.gameObject);
+				letterShadow.transform.SetParent (canvasTextPool);
+				letterShadow.name = "TextShadowPool";
+				Text lts = letterShadow.GetComponent<Text> ();
 
-                GameObject letter = Instantiate (text.gameObject);
-                letter.transform.SetParent(canvasTextPool);
-                letter.name = "TextPool";
-                Text lt = letter.GetComponent<Text>();
+				GameObject letter = Instantiate (text.gameObject);
+				letter.transform.SetParent (canvasTextPool);
+				letter.name = "TextPool";
+				Text lt = letter.GetComponent<Text> ();
 
-                LetterAnimator animator = lts.gameObject.AddComponent<LetterAnimator>();
-                animator.poolIndex = k;
-                animator.text = lt;
-                animator.textShadow = lts;
-                animator.OnAnimationEnds += PushTextToPool;
-                animator.used = false;
-                textPool[k] = animator;
-            }
-        }
+				LetterAnimator animator = lts.gameObject.AddComponent<LetterAnimator> ();
+				animator.poolIndex = k;
+				animator.text = lt;
+				animator.textShadow = lts;
+				animator.OnAnimationEnds += PushTextToPool;
+				animator.used = false;
+				textPool [k] = animator;
+			}
+		}
 
-        void FetchTextFromPool(out Text lt, out Text lts)
-        {
-            for (int k=0;k< TEXT_POOL_SIZE; k++)
-            {
-                ++poolIndex;
-                if (poolIndex >= TEXT_POOL_SIZE)
-                {
-                    poolIndex = 0;
-                }
-                if (!textPool[poolIndex].used)
-                {
-                    break;
-                }
-            }
-            // Setup shadow (first, so it goes behind white text)
-            lts = textPool[poolIndex].textShadow;
-            lts.transform.SetParent(text.transform.parent, false);
-            lt = textPool[poolIndex].text;
-            lt.transform.SetParent(text.transform.parent, false);
-            textPool[poolIndex].used = true;
-        }
+		void FetchTextFromPool (out Text lt, out Text lts) {
+			for (int k = 0; k < TEXT_POOL_SIZE; k++) {
+				++poolIndex;
+				if (poolIndex >= TEXT_POOL_SIZE) {
+					poolIndex = 0;
+				}
+				if (!textPool [poolIndex].used) {
+					break;
+				}
+			}
+			// Setup shadow (first, so it goes behind white text)
+			lts = textPool [poolIndex].textShadow;
+			lts.transform.SetParent (text.transform.parent, false);
+			lt = textPool [poolIndex].text;
+			lt.transform.SetParent (text.transform.parent, false);
+			textPool [poolIndex].used = true;
+		}
 
-        void PushTextToPool(int index)
-        {
-            textPool[index].text.transform.SetParent(canvasTextPool);
-            textPool[index].textShadow.transform.SetParent(canvasTextPool);
-            textPool[index].used = false;
-        }
+		void PushTextToPool (int index) {
+			textPool [index].text.transform.SetParent (canvasTextPool);
+			textPool [index].textShadow.transform.SetParent (canvasTextPool);
+			textPool [index].used = false;
+		}
 
 
-        void ShowPOIDiscoveredText (CompassProPOI poi) {
+		void ShowPOIDiscoveredText (CompassProPOI poi) {
 			if (poi.visitedText == null || !_textRevealEnabled)
 				return;
 			StartCoroutine (AnimateDiscoverText (poi.visitedText));
@@ -1105,27 +1111,26 @@ namespace CompassNavigatorPro {
 			float now = Time.time;
 			endTimeOfCurrentTextReveal = now + _textRevealDuration + _textDuration + _textFadeOutDuration * 0.5f;
 
-            text.text = textShadow.text = "";
-            UpdateTextAppearance();
+			text.text = textShadow.text = "";
+			UpdateTextAppearance ();
 
 			// initial pos of text
 			string discoverTextSpread = discoverText.Replace (" ", "A");
 			float posX = -text.cachedTextGenerator.GetPreferredWidth (discoverTextSpread, text.GetGenerationSettings (Misc.Vector2zero)) * 0.5f * _textScale;
 
 			float acum = 0;
-            TextGenerationSettings settings = new TextGenerationSettings();
-            for (int k = 0; k < len; k++) {
-                Text lts, lt;
-                string ch = discoverText.Substring (k, 1);
-                FetchTextFromPool(out lt, out lts);
-                lts.text = ch;
-                lt.text = ch;
+			TextGenerationSettings settings = new TextGenerationSettings ();
+			for (int k = 0; k < len; k++) {
+				Text lts, lt;
+				string ch = discoverText.Substring (k, 1);
+				FetchTextFromPool (out lt, out lts);
+				lts.text = ch;
+				lt.text = ch;
 
-                float letw = 0;
-                if (k==0)
-                {
-                    settings = lt.GetGenerationSettings(Misc.Vector2max);
-                }
+				float letw = 0;
+				if (k == 0) {
+					settings = lt.GetGenerationSettings (Misc.Vector2max);
+				}
 				if (ch.Equals (" ")) {
 					letw = lt.cachedTextGenerator.GetPreferredWidth ("A", settings) * _textScale;
 				} else {
@@ -1139,14 +1144,14 @@ namespace CompassNavigatorPro {
 
 				acum += letw;
 
-                // Trigger animator
-                LetterAnimator anim = textPool[poolIndex];
+				// Trigger animator
+				LetterAnimator anim = textPool [poolIndex];
 				anim.startTime = now + k * _textRevealLetterDelay;
 				anim.revealDuration = _textRevealDuration;
 				anim.startFadeTime = now + _textRevealDuration + _textDuration;
 				anim.fadeDuration = _textFadeOutDuration;
-                anim.enabled = true;
-                anim.Play();
+				anim.enabled = true;
+				anim.Play ();
 			}
 		}
 
@@ -1155,7 +1160,12 @@ namespace CompassNavigatorPro {
 
 		#region MiniMap
 
-		void SetupMiniMap () {
+		void SetupMiniMap (bool force = false) {
+			if (_miniMapZoomState && !force) {
+				MiniMapZoomToggle (true);
+				return;
+			}
+			
 			if (miniMapFollow == null && _cameraMain != null) {
 				miniMapFollow = _cameraMain.transform;
 			}
@@ -1204,7 +1214,6 @@ namespace CompassNavigatorPro {
 				}
 
 				// check buttons
-
 				ToggleButtonEventHandler ("ZoomIn", () => {
 					MiniMapZoomIn ();
 				}, true);
@@ -1224,7 +1233,7 @@ namespace CompassNavigatorPro {
 					miniMapCamera.enabled = false;
 				}
 				if (miniMapCamera != null && miniMapUIRoot != null) {
-					RectTransform miniMapUIRootRT = miniMapUIRoot.GetComponent<RectTransform> ();
+					miniMapUIRootRT = miniMapUIRoot.GetComponent<RectTransform> ();
 
 					// set mini-map position
 					if (_miniMapLocation != MINIMAP_LOCATION.Custom) {
@@ -1345,6 +1354,9 @@ namespace CompassNavigatorPro {
 					miniMapCamera.cullingMask = _miniMapLayerMask;
 
 					cameraCompass = miniMapUIRoot.Find ("CameraCompass");
+					if (cameraCompass != null) {
+						cameraCompass.eulerAngles = new Vector3 (0, 0, 180f);
+					}
 				} else {
 					Debug.LogError ("Mini Map prefab element could not be intialized.");
 					_showMiniMap = false;
@@ -1358,8 +1370,8 @@ namespace CompassNavigatorPro {
 					miniMapUIRoot.gameObject.SetActive (false);
 				}
 			}
+			needMiniMapShot = 2;
 			needUpdateBarContents = true;
-			needMiniMapShot = true;
 		}
 
 		void MiniMapResizeRenderTexture (int width, int height) {
@@ -1412,32 +1424,31 @@ namespace CompassNavigatorPro {
 				}
 				miniMapCamera.transform.position = new Vector3 (followPos.x, followPos.y + altitude, followPos.z);
 			}
-            if (miniMapCanvasGroup.alpha != _miniMapAlpha)
-            {
-                miniMapCanvasGroup.alpha = _miniMapAlpha;
-            }
+			if (miniMapCanvasGroup.alpha != _miniMapAlpha) {
+				miniMapCanvasGroup.alpha = _miniMapAlpha;
+			}
 
 			// snapshot control
 			switch (_miniMapCameraSnapshotFrequency) {
 			case MINIMAP_CAMERA_SNAPSHOT_FREQUENCY.TimeInterval:
 				if (Time.time - miniMapLastSnapshotTime > _miniMapSnapshotInterval) {
-					needMiniMapShot = true;
+					UpdateMiniMapContents ();
 				}
 				break;
 			case MINIMAP_CAMERA_SNAPSHOT_FREQUENCY.DistanceTravelled:
 				if ((miniMapLastSnapshotLocation - miniMapCamera.transform.position).sqrMagnitude > _miniMapSnapshotDistance * _miniMapSnapshotDistance) {
-					needMiniMapShot = true;
+					UpdateMiniMapContents ();
 				}
 				break;
 			case MINIMAP_CAMERA_SNAPSHOT_FREQUENCY.Continuous:
-				needMiniMapShot = true;
+				UpdateMiniMapContents ();
 				break;
 			}
 
-            // minimapp camera rotation
+			// minimapp camera rotation
 			float rotation = 0;
 			if (_miniMapKeepStraight) {
-                miniMapCamera.transform.eulerAngles = new Vector3(90f, 0, 0);
+				miniMapCamera.transform.eulerAngles = new Vector3 (90f, 0, 0);
 				if (cameraCompass != null) {
 					Vector3 angles = miniMapFollow.rotation.eulerAngles;
 					angles.z = 180f - angles.y;
@@ -1450,69 +1461,66 @@ namespace CompassNavigatorPro {
 				miniMapCamera.transform.LookAt (followPos, forward);
 				rotation = miniMapFollow.rotation.eulerAngles.y * Mathf.Deg2Rad;
 			}
-            if (miniMapLastCameraRotation != rotation)
-            {
-                miniMapLastCameraRotation = rotation;
-                miniMapMaterialRefresh = true;
-            }
+			if (miniMapLastCameraRotation != rotation) {
+				miniMapLastCameraRotation = rotation;
+				miniMapMaterialRefresh = true;
+			}
 
-            // capture map
-            if (needMiniMapShot)
-            {
-                needMiniMapShot = false;
-				Quaternion oldRot = miniMapCamera.transform.rotation;
-				miniMapCamera.transform.eulerAngles = new Vector3(90f, 0, 0);
-                if (!_miniMapEnableShadows)
-                {
-                    ShadowQuality sq = QualitySettings.shadows;
-                    QualitySettings.shadows = ShadowQuality.Disable;
-                    miniMapCamera.Render();
-                    QualitySettings.shadows = sq;
-                } else
-                {
-                    miniMapCamera.Render();
-                }
-                miniMapLastSnapshotTime = Time.time;
-                miniMapLastSnapshotLocation = miniMapCamera.transform.position;
-				miniMapCamera.transform.rotation = oldRot;
-                miniMapMaterialRefresh = true;
-            }
+			// capture map
+			if (needMiniMapShot > 0) {
+				needMiniMapShot--;
+				if (needMiniMapShot == 0) {
+					Quaternion oldRot = miniMapCamera.transform.rotation;
+					miniMapCamera.transform.eulerAngles = new Vector3 (90f, 0, 0);
+					if (!_miniMapEnableShadows && Application.isPlaying) {
+						ShadowQuality sq = QualitySettings.shadows;
+						QualitySettings.shadows = ShadowQuality.Disable;
+						miniMapCamera.Render ();
+						QualitySettings.shadows = sq;
+					} else {
+						miniMapCamera.Render ();
+					}
+					miniMapLastSnapshotTime = Time.time;
+					miniMapLastSnapshotLocation = miniMapCamera.transform.position;
+					miniMapCamera.transform.rotation = oldRot;
+					miniMapMaterialRefresh = true;
+					needUpdateBarContents = true;
+				}
+			}
 
-            // Set mini-map shader properties
+			// Set mini-map shader properties
 
-            // mini-map uv
-            Vector3 miniMapCameraPos = miniMapCamera.transform.position;
-            if (miniMapCameraPos != lastMiniMapCameraPos)
-            {
-                miniMapMaterialRefresh = true;
-                lastMiniMapCameraPos = miniMapCameraPos;
-            }
-            Vector3 uvOffset = miniMapLastSnapshotLocation - miniMapCameraPos;
-            float camSize = miniMapCamera.orthographicSize * 2f;
-            uvOffset.x = uvOffset.x / camSize;
-            uvOffset.y = uvOffset.z / camSize;
-            uvOffset.z = _miniMapZoomLevel;
+			// mini-map uv
+			Vector3 miniMapCameraPos = miniMapCamera.transform.position;
+			if (miniMapCameraPos != lastMiniMapCameraPos) {
+				miniMapMaterialRefresh = true;
+				lastMiniMapCameraPos = miniMapCameraPos;
+			}
+			Vector3 uvOffset = miniMapLastSnapshotLocation - miniMapCameraPos;
+			float camSize = miniMapCamera.orthographicSize * 2f;
+			uvOffset.x = uvOffset.x / camSize;
+			uvOffset.y = uvOffset.z / camSize;
+			uvOffset.z = _miniMapZoomLevel;
 
-            // fog of war shader properties
-            Vector4 uvFogOffset = _fogOfWarCenter - miniMapCameraPos;
-            uvFogOffset.x = (uvFogOffset.x / camSize) / _miniMapZoomLevel;
-            uvFogOffset.y = (uvFogOffset.z / camSize) / _miniMapZoomLevel;
-            uvFogOffset.z = _miniMapZoomLevel * camSize / _fogOfWarSize.x;
-            uvFogOffset.w = _miniMapZoomLevel * camSize / _fogOfWarSize.z;
+			// fog of war shader properties
+			Vector4 uvFogOffset = _fogOfWarCenter - miniMapCameraPos;
+			uvFogOffset.x = (uvFogOffset.x / camSize) / _miniMapZoomLevel;
+			uvFogOffset.y = (uvFogOffset.z / camSize) / _miniMapZoomLevel;
+			uvFogOffset.z = _miniMapZoomLevel * camSize / _fogOfWarSize.x;
+			uvFogOffset.w = _miniMapZoomLevel * camSize / _fogOfWarSize.z;
 
-            // update material
-            if (miniMapMaterialRefresh && miniMapImage != null)
-            {
-                miniMapMaterialRefresh = false;
-                Material mat = miniMapImage.materialForRendering;
-                mat.SetFloat("_Rotation", rotation);
-                mat.SetVector("_UVOffset", uvOffset);
-                mat.SetVector("_UVFogOffset", uvFogOffset);
-                mat.SetTexture("_FogOfWarTex", fogOfWarTexture);
-                mat.SetColor("_FogOfWarTintColor", _fogOfWarColor);
-                mat.SetVector("_Effects", new Vector3(_miniMapBrightness, _miniMapContrast, 0));
-            }
-        }
+			// update material
+			if (miniMapMaterialRefresh && miniMapImage != null) {
+				miniMapMaterialRefresh = false;
+				Material mat = miniMapImage.materialForRendering;
+				mat.SetFloat ("_Rotation", rotation);
+				mat.SetVector ("_UVOffset", uvOffset);
+				mat.SetVector ("_UVFogOffset", uvFogOffset);
+				mat.SetTexture ("_FogOfWarTex", fogOfWarTexture);
+				mat.SetColor ("_FogOfWarTintColor", _fogOfWarColor);
+				mat.SetVector ("_Effects", new Vector3 (_miniMapBrightness, _miniMapContrast, 0));
+			}
+		}
 
 		CanvasGroup GetCanvasGroup (Transform transform) {
 			if (transform == null) {
@@ -1571,47 +1579,55 @@ namespace CompassNavigatorPro {
 				miniMapCurrentStyle = _miniMapStyle;
 				miniMapCameraAspect = miniMapCamera.aspect;
 				if (_miniMapStyle != MINIMAP_STYLE.SolidBox) {
-					miniMapStyle = MINIMAP_STYLE.SolidBox;
+					_miniMapStyle = MINIMAP_STYLE.SolidBox;
 				}
+				SetupMiniMap (true);
 				float padding = (1f - _miniMapFullScreenSize) * 0.5f;
 				float minX, minY, maxX, maxY;
-				minY = padding;
-				maxY = 1f - padding;
 				int height = (int)(cameraMain.pixelHeight * _miniMapFullScreenSize);
 				int width = _miniMapKeepAspectRatio ? height : (int)(cameraMain.pixelWidth * _miniMapFullScreenSize);
-				if (_miniMapKeepAspectRatio) {
-					float paddingW = (1f - _miniMapFullScreenSize / cameraMain.aspect) * 0.5f;
-					minX = paddingW;
-					maxX = 1f - paddingW;
+				if (_miniMapFullScreenPlaceholder != null) {
+					// Disables blocking on the image just in case
+					_miniMapFullScreenPlaceholder.gameObject.SetActive (false);
+					// Adjust viewport
+					Rect vwRect = _miniMapFullScreenPlaceholder.GetViewportRect (_cameraMain);
+					minY = vwRect.yMin + padding;
+					maxY = vwRect.yMax - padding;
+					float aspect = vwRect.width / vwRect.height;
+					minX = vwRect.xMin + padding * aspect;
+					maxX = vwRect.xMax - padding * aspect;
 				} else {
-					minX = minY;
-					maxX = maxY;
-					miniMapCamera.aspect = (float)width / height;
+					minY = padding;
+					maxY = 1f - padding;
+					if (_miniMapKeepAspectRatio) {
+						float paddingW = (1f - _miniMapFullScreenSize / cameraMain.aspect) * 0.5f;
+						minX = paddingW;
+						maxX = 1f - paddingW;
+					} else {
+						minX = minY;
+						maxX = maxY;
+					}
 				}
+				miniMapCamera.aspect = (float)width / height;
 				rt.anchorMin = new Vector3 (minX, minY);
 				rt.anchorMax = new Vector3 (maxX, maxY);
 				rt.pivot = new Vector2 (0.5f, 0.5f);
 				rt.anchoredPosition = Vector2.zero;
 				rt.sizeDelta = new Vector2 (0, 0);
 				MiniMapResizeRenderTexture (width, height);	
-				if (_miniMapFullScreenSize >= 1f && _miniMapDisableMainCameraInFullScreen && !_miniMapKeepAspectRatio) {
-					_cameraMain.enabled = false;
-				}
 			} else {
 				rt.anchorMin = miniMapAnchorMin;
 				rt.anchorMax = miniMapAnchorMax;
 				rt.pivot = miniMapPivot;
 				rt.sizeDelta = miniMapSizeDelta;
 				if (_miniMapStyle != miniMapCurrentStyle) {
-					miniMapStyle = miniMapCurrentStyle;
+					_miniMapStyle = miniMapCurrentStyle;
 				}
+				SetupMiniMap (true);
 				miniMapCamera.aspect = miniMapCameraAspect;
 				MiniMapResizeRenderTexture (_miniMapResolutionNormalSize, _miniMapResolutionNormalSize);
-				if (_miniMapFullScreenSize >= 1f && _miniMapDisableMainCameraInFullScreen && !_miniMapKeepAspectRatio) {
-					_cameraMain.enabled = true;
-				}
-
 			}
+
 		}
 
 		#endregion
@@ -1625,7 +1641,7 @@ namespace CompassNavigatorPro {
 
 			CompassBarMeshModifier m = compassBackImage.GetComponent<CompassBarMeshModifier> ();
 
-			if (_bendAmount == 0) {
+			if (_bendAmount == 0 && _edgeFadeOutWidth == 0) {
 				if (m != null) {
 					DestroyImmediate (m);
 				}
@@ -1652,8 +1668,9 @@ namespace CompassNavigatorPro {
 					defaultUICurvedMat = Resources.Load<Material> ("CNPro/Materials/UIDefaultCurved");
 				}
 
-				curvedMat.SetFloat ("_BendFactor", _bendAmount);
-				defaultUICurvedMat.SetFloat ("_BendFactor", _bendAmount);
+				Vector4 fxData = new Vector4 (_bendAmount, _width, _edgeFadeOutWidth, _edgeFadeOutStart);
+				curvedMat.SetVector ("_FXData", fxData);
+				defaultUICurvedMat.SetVector ("_FXData", fxData);
 
 				if (m == null) {
 					compassBackImage.gameObject.AddComponent<CompassBarMeshModifier> ();

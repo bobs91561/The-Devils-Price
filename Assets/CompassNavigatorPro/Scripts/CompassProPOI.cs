@@ -21,14 +21,15 @@ namespace CompassNavigatorPro {
 	[ExecuteInEditMode]
 	public class CompassProPOI : MonoBehaviour {
 
-		[Header("Compass Bar Settings")]
+		[Header ("Compass Bar Settings")]
 		[Tooltip ("POI visibility in compass bar.")]
 		public POI_VISIBILITY visibility = POI_VISIBILITY.WhenInRange;
 
-		[Tooltip("A value of 0 uses the global visible distance property from the Compass Bar settings. A value greater than 0 will override the global value for this POI. Useful when you need this POI to use a different visible distance.")]
+		[Tooltip ("A value of 0 uses the global visible distance property from the Compass Bar settings. A value greater than 0 will override the global value for this POI. Useful when you need this POI to use a different visible distance.")]
 		public float visibleDistanceOverride = 0;
 
 		[Tooltip ("Specifies if this POI is visible in the compass bar.")]
+		[NonSerialized]
 		public bool isVisible;
 
 		[Tooltip ("Title to be shown when this POI is in the center of the compass bar and it's a known location (isVisited = true)")]
@@ -61,7 +62,7 @@ namespace CompassNavigatorPro {
 		[Tooltip ("The icon for the POI if has been visited.")]
 		public Sprite iconVisited;
 
-		[Tooltip("Tinting color")]
+		[Tooltip ("Tinting color")]
 		public Color tintColor = Color.white;
 
 		[Tooltip ("If the icon will be shown in the scene during playmode. If enabled, the icon will fade in smoothly as the player approaches it.")]
@@ -88,11 +89,12 @@ namespace CompassNavigatorPro {
 		[Tooltip ("Interval of heartbeat rate based on distance.")]
 		public AnimationCurve heartbeatInterval = AnimationCurve.Linear (0, 0.25f, 1f, 3f);
 
-		[Header("Mini-Map Settings")]
+		[Header ("Mini-Map Settings")]
 		[Tooltip ("POI visibility on the mini-map.")]
 		public POI_VISIBILITY miniMapVisibility = POI_VISIBILITY.WhenInRange;
 
 		[Tooltip ("Specifies if this POI is visible on the mini-map.")]
+		[NonSerialized]
 		public bool miniMapIsVisible;
 
 		[Tooltip ("If enabled, the icon will stop at the edges of the mini-map even if it's behind the player.")]
@@ -109,19 +111,59 @@ namespace CompassNavigatorPro {
 		[HideInInspector]
 		public float iconAlpha;
 
-		[HideInInspector]
+		/// <summary>
+		/// In-scene gizmo
+		/// </summary>
+		[NonSerialized]
 		public SpriteRenderer spriteRenderer;
-		// in-scene gizmo
 
+		/// <summary>
+		/// Reference to the icon gameobject on the compass bar when it's created
+		/// </summary>
+		public GameObject compassIconGameObject {
+			get {
+				if (compassIconRectTransform != null) {
+					return compassIconRectTransform.gameObject;
+				}
+				return null;
+			}
+		}
+
+		/// <summary>
+		/// Reference to the icon gameobject on the compass bar when it's created
+		/// </summary>
+		public GameObject miniMapIconGameObject {
+			get {
+				if (miniMapIconRectTransform != null) {
+					return miniMapIconRectTransform.gameObject;
+				}
+				return null;
+			}
+		}
+
+
+		[NonSerialized]
+		public RectTransform compassIconRectTransform, miniMapIconRectTransform;
+
+		/// <summary>
+		/// Reference to the compass script
+		/// </summary>
+		[NonSerialized]
+		public CompassPro compass;
+
+		/// <summary>
+		/// Unique ID to be used when DontDestroyOnLoad is set to true. Otherwise it's not used.
+		/// </summary>
 		[HideInInspector]
 		public int id;
-		// Unique ID to be used when DontDestroyOnLoad is set to true. Otherwise it's not used.
 
-		[HideInInspector]
+		/// <summary>
+		/// Time when the poi appeared on the compass bar
+		/// </summary>
+		[NonSerialized]
 		public float visibleTime;
-		// time where the poi appeared on the compass bar
 
-		[HideInInspector]
+		[NonSerialized]
 		public bool heartbeatIsActive;
 
 		Coroutine heartbeatPlayer;
@@ -199,6 +241,30 @@ namespace CompassNavigatorPro {
 				float delay = heartbeatInterval.Evaluate (curvePos);
 				yield return new WaitForSeconds (delay);
 			}
+		}
+
+		/// <summary>
+		/// Gets the screen rectangle of the icon in the compass bar
+		/// </summary>
+		/// <returns>The compass bar icon screen rect.</returns>
+		public Rect GetCompassIconScreenRect () {
+			if (isVisible && compassIconRectTransform != null && compass != null) {
+				Vector3 pos = compassIconRectTransform.transform.position;
+				Vector3 size = compassIconRectTransform.sizeDelta;
+				return new Rect (pos.x - size.x * 0.5f, Screen.height - pos.y - size.y * 0.5f, size.x, size.y);
+			}
+			return new Rect (0, 0, 0, 0);
+		}
+
+		/// <summary>
+		/// Gets the screen rectangle of the mini-map icon
+		/// </summary>
+		/// <returns>The mini map icon screen rect.</returns>
+		public Rect GetMiniMapIconScreenRect () {
+			if (miniMapIsVisible && miniMapIconRectTransform != null && compass != null) {
+				return miniMapIconRectTransform.GetScreenRect ();
+			}
+			return new Rect (0, 0, 0, 0);
 		}
 	
 	}

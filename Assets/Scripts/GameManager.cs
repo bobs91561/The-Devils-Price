@@ -280,4 +280,23 @@ public class GameManager : MonoBehaviour {
     {
         Destroy(instance);
     }
+
+    public IEnumerator ChangeAudio(AudioClip newClip)
+    {
+        while (_mAudioSource.volume > 0f)
+        {
+            _mAudioSource.volume -= Time.deltaTime;
+            yield return null;
+        }
+
+        _mAudioSource.clip = newClip;
+        ClipPlaying = _mAudioSource.clip;
+        _mAudioSource.Play();
+
+        while (_mAudioSource.volume < 1f)
+        {
+            _mAudioSource.volume += Time.deltaTime;
+            yield return null;
+        }
+    }
 }

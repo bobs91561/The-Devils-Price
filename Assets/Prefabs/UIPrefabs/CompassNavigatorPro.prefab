@@ -347,10 +347,10 @@ Camera:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5579796399131845856}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
@@ -376,7 +376,7 @@ Camera:
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 0
-  m_AllowMSAA: 1
+  m_AllowMSAA: 0
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 0
@@ -1432,8 +1432,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -5, y: 5}
-  m_SizeDelta: {x: 68.200005, y: 68.200005}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 222.40001, y: 222.40001}
   m_Pivot: {x: 1, y: 0}
 --- !u!222 &5579796400355800900
 CanvasRenderer:
@@ -1490,7 +1490,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000015258789, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5579796400380460219
@@ -1982,6 +1982,7 @@ MonoBehaviour:
   _endCapsWidth: 27.2
   _showCardinalPoints: 1
   _showOrdinalPoints: 0
+  _cardinalPointsVerticalOffset: 0
   _showHalfWinds: 1
   _halfWindsHeight: 0.4
   _halfWindsWidth: 1
@@ -2015,22 +2016,47 @@ MonoBehaviour:
   _heartbeatDefaultAudioClip: {fileID: 8300000, guid: 7df58c4da7e344cf1ac45954dbdc36e4,
     type: 3}
   _dontDestroyOnLoad: 0
+  _fogOfWarEnabled: 0
+  _fogOfWarCenter: {x: 0, y: 0, z: 0}
+  _fogOfWarSize: {x: 1024, y: 0, z: 1024}
+  _fogOfWarTextureSize: 256
+  _fogOfWarColor: {r: 0.18431373, g: 0.18431373, b: 0.18431373, a: 1}
+  _fogOfWarAutoClear: 0
+  _fogOfWarAutoClearRadius: 20
+  _fogOfWarDefaultAlpha: 1
   _showMiniMap: 1
+  _miniMapLocation: 8
+  _miniMapLocationOffset: {x: 0, y: 0}
+  _miniMapKeepStraight: 0
   _miniMapSize: 0.2
-  _miniMapCamera: {fileID: 5579796399131845887}
   miniMapFollow: {fileID: 0}
   _miniMapMaskSprite: {fileID: 21300000, guid: c825e21f9f6174b32872b8373f69de13, type: 3}
   _miniMapBorderTexture: {fileID: 2800000, guid: 555522f94bd2a46028c61fbd1c4f3397,
     type: 3}
   _miniMapStyle: 2
-  _miniMapResolution: 8
+  _miniMapResolutionNormalSize: 256
+  _miniMapFullScreenSize: 0.9
+  _miniMapKeepAspectRatio: 1
+  _miniMapDisableMainCameraInFullScreen: 1
   _miniMapCameraMode: 1
-  _miniMapZoomSize: 5
-  _miniMapCameraAltitude: 50
+  _miniMapCameraSnapshotFrequency: 0
+  _miniMapCaptureSize: 256
+  _miniMapSnapshotInterval: 10
+  _miniMapSnapshotDistance: 10
+  _miniMapContrast: 1.02
+  _miniMapBrightness: 1.05
+  _miniMapEnableShadows: 0
+  _miniMapZoomMin: 0.01
+  _miniMapZoomMax: 1
+  _miniMapZoomLevel: 0.5
+  _miniMapCameraMinAltitude: 10
+  _miniMapCameraMaxAltitude: 100
+  _miniMapCameraHeightVSFollow: 200
   _miniMapLayerMask: 1
   _miniMapIconSize: 0.5
   _miniMapClampBorder: 0.02
   _miniMapAlpha: 1
+  _miniMapShowButtons: 0
   isDirty: 0
 --- !u!82 &5579796400681133423
 AudioSource:

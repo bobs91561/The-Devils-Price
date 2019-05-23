@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[CreateAssetMenu(menuName ="AIAction/Special/RAGE")]
 public class AIAction_RAGE : AIAction
 {
     public float Duration;

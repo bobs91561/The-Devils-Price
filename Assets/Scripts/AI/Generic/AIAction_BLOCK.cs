@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[CreateAssetMenu(menuName = "AIAction/BLOCK")]
 public class AIAction_BLOCK : AIAction
 {
     public float MinimumTimeBetweenBlocks = 2f;

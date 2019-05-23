@@ -39,7 +39,11 @@ public class AIActionModeDecider : AIActionDecider
 
     public void ChangeMode()
     {
-        if (m_ModeNumber >= m_TotalModes) return;
+        if (m_ModeNumber >= m_TotalModes)
+        {
+            actions.Remove(ChangeModeAction);
+            return;
+        }
 
         m_CurrentMode = Modes[m_ModeNumber];
         EvaluateModeModifier();

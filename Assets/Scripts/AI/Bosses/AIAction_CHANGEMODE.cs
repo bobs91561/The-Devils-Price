@@ -8,7 +8,6 @@ public abstract class AIAction_CHANGEMODE : AIAction
     public GameObject VisualEffect;
     public string ModeChangeAnimationTrigger = "";
 
-    private bool waiting = false;
     private bool modeChanged = false;
     private Animator m_Animator;
     new AIActionModeDecider decider;
@@ -34,6 +33,7 @@ public abstract class AIAction_CHANGEMODE : AIAction
         {
             decider.ChangeMode();
             modeChanged = true;
+            OnChangeMode();
             return true;
         }
         else
@@ -53,6 +53,11 @@ public abstract class AIAction_CHANGEMODE : AIAction
         if (ModeChangeAnimationTrigger == "") return;
         _animator.SetTrigger(ModeChangeAnimationTrigger);
         waiting = true;
+    }
+
+    protected virtual void OnChangeMode()
+    {
+        return;
     }
 
     public override void SetActive()

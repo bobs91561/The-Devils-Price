@@ -18,6 +18,8 @@ public class HealthManager : MonoBehaviour {
     private FriendlyConditional _friendly;
     private AIActionDecider _decider;
     private ThirdPersonCharacter _mThirdPerson;
+    private Rage m_Rage;
+    private bool m_RageAvailable;
     public GameObject hitBy;
     
     public HealthBar healthBar;
@@ -40,6 +42,9 @@ public class HealthManager : MonoBehaviour {
         if (Respawns) RoD = GetComponent<RespawnsOnDeath>();
         if (!healthBar && HealthBarPrefab) SpawnHealthBar();
         if (isPlayer) EventManager.RespawnAction += Respawn;
+
+        m_Rage = GetComponent<Rage>();
+        m_RageAvailable = m_Rage;
 	}
 
     private void SpawnHealthBar()
@@ -75,6 +80,7 @@ public class HealthManager : MonoBehaviour {
             if (!healthBar.gameObject.activeInHierarchy) healthBar.Activate();
             healthBar.UpdateHealth();
         }
+        if (m_RageAvailable) m_Rage.HealthChanged();
     }
 
     public void ResetHealth()

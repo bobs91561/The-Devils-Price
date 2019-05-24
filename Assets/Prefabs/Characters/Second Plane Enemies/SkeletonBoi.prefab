@@ -126,7 +126,7 @@ MonoBehaviour:
   isAlive: 0
   Respawns: 0
   isPlayer: 0
-  maxHealth: 0
+  maxHealth: 100
   hitBy: {fileID: 0}
   healthBar: {fileID: 0}
   HealthBarPrefab: {fileID: 6160945041397555529, guid: ba65a06ba290ea44eac1cc0982e2d7e3,
@@ -185,7 +185,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92945a7eefc8b824e9c06bde7b96e1d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attacks: []
+  attacks:
+  - {fileID: 11400000, guid: 8e5e8a53b0feb1c4db26aee4111d5e70, type: 2}
   BasicAttack: {fileID: 0}
   ChargedAttack: {fileID: 0}
   BlockAttack: {fileID: 0}

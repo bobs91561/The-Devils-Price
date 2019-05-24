@@ -3,7 +3,7 @@ using System.Collections;
 
 public enum MovementType
 {
-    REGULAR, AIRBORNE, PRONE
+    REGULAR, AIRBORNE, PRONE, MOUNTED
 }
 
 namespace Devdog.InventoryPro.UnityStandardAssets

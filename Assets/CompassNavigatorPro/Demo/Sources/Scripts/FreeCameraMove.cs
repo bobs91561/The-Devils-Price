@@ -20,11 +20,13 @@ namespace CompassNavigatorPro {
 			if (mousePos.x < 0 || mousePos.x > Screen.width || mousePos.y < 0 || mousePos.y > Screen.height)
 				return;
 
-			rotationX += Input.GetAxis ("Mouse X") * cameraSensitivity * Time.deltaTime;
-			transform.localRotation = Quaternion.AngleAxis (rotationX, Vector3.up);
+			if (!CompassPro.instance.IsMouseOverMiniMap ()) {
+				rotationX += Input.GetAxis ("Mouse X") * cameraSensitivity * Time.deltaTime;
+				transform.localRotation = Quaternion.AngleAxis (rotationX, Vector3.up);
 
-			rotationY += Input.GetAxis ("Mouse Y") * cameraSensitivity * Time.deltaTime;
-			transform.localRotation *= Quaternion.AngleAxis (rotationY, Vector3.left);
+				rotationY += Input.GetAxis ("Mouse Y") * cameraSensitivity * Time.deltaTime;
+				transform.localRotation *= Quaternion.AngleAxis (rotationY, Vector3.left);
+			}
 
 			Vector3 oldPos = transform.position;
 
@@ -51,8 +53,9 @@ namespace CompassNavigatorPro {
 			if (!bounds.Contains (transform.position)) {
 				transform.position = oldPos;
 			}
-
 		}
+
+
 
 	}
 }

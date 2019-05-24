@@ -27,6 +27,7 @@ public class FlyingCharacter : ThirdPersonCharacter
     protected override void Start()
     {
         base.Start();
+        m_Agent = GetComponent<NavMeshAgent>();
         RegularBaseOffset = m_Agent.baseOffset;
         RegularHeight = m_Agent.height;
         RegularRadius = m_Agent.radius;

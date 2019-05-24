@@ -5,7 +5,7 @@ Shader "CompassNavigatorPro/Sprite Curved"
 		[PerRendererData] _MainTex ("Sprite Texture", 2D) = "white" {}
 		_Color ("Tint", Color) = (1,1,1,1)
 		[MaterialToggle] PixelSnap ("Pixel snap", Float) = 0
-		_BendFactor ("Bend Factor", Float) = 0
+		[HideInInspector] _FXData ("FX Data", Vector) = (0,0,0,0)
 	}
 
 	SubShader
@@ -34,8 +34,6 @@ Shader "CompassNavigatorPro/Sprite Curved"
 			#pragma multi_compile _ ETC1_EXTERNAL_ALPHA
 			#include "UnityCG.cginc"
 
-			float _BendFactor;
-
 			struct appdata_t
 			{
 				float4 vertex   : POSITION;
@@ -53,6 +51,7 @@ Shader "CompassNavigatorPro/Sprite Curved"
 			};
 			
 			fixed4 _Color;
+			float4 _FXData;
 
 			v2f vert(appdata_t IN)
 			{
@@ -63,10 +62,14 @@ Shader "CompassNavigatorPro/Sprite Curved"
 				// Get screen position
 				float4 pos = UnityObjectToClipPos(IN.vertex);
 				float4 screenPos = ComputeScreenPos(pos);
-				pos.y -= sin(screenPos.x * 3.1415927) * _BendFactor;
-
+				pos.y -= sin(screenPos.x * 3.1415927) * _FXData.x;
 				OUT.texcoord = IN.texcoord;
+
+				float distToEdge = _FXData.y - abs(screenPos.x - 0.5) * 2 + 0.001;
+				float fadeOut = saturate((distToEdge - _FXData.w) / (_FXData.z + 0.0001));
 				OUT.color = IN.color * _Color;
+				OUT.color.a *= fadeOut;
+
 				#ifdef PIXELSNAP_ON
 				pos = UnityPixelSnap (pos);
 				#endif

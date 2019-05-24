@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
 namespace CompassNavigatorPro {
-	
+
 	public enum COMPASS_STYLE {
 		Angled = 0,
 		Rounded = 1,
@@ -26,6 +27,8 @@ namespace CompassNavigatorPro {
 	}
 
 	public partial class CompassPro : MonoBehaviour {
+
+
 		#region Public properties
 
 
@@ -315,6 +318,44 @@ namespace CompassNavigatorPro {
 				}
 			}
 		}
+
+
+
+		[SerializeField]
+		float _edgeFadeOutWidth = 0;
+
+		/// <summary>
+		/// Width of the edge fade out
+		/// </summary>
+		public float edgeFadeOutWidth {
+			get { return _edgeFadeOutWidth; }
+			set {
+				if (value != _edgeFadeOutWidth) {
+					_edgeFadeOutWidth = value;
+					UpdateCompassBarAppearance ();
+					isDirty = true;
+				}
+			}
+		}
+
+
+		[SerializeField]
+		float _edgeFadeOutStart = 0;
+
+		/// <summary>
+		/// Start of the edge fade out
+		/// </summary>
+		public float edgeFadeOutStart {
+			get { return _edgeFadeOutStart; }
+			set {
+				if (value != _edgeFadeOutStart) {
+					_edgeFadeOutStart = value;
+					UpdateCompassBarAppearance ();
+					isDirty = true;
+				}
+			}
+		}
+
 
 		
 		[SerializeField]
@@ -919,16 +960,42 @@ namespace CompassNavigatorPro {
 		/// <summary>
 		/// Event fired when this POI is visited.
 		/// </summary>
-		public event POIEvent OnPOIVisited;
+		public Action<CompassProPOI> OnPOIVisited;
+
 		/// <summary>
 		/// Event fired when the POI appears in the compass bar (gets near than the visible distance)
 		/// </summary>
-		public event POIEvent OnPOIVisible;
+		public Action<CompassProPOI> OnPOIVisible;
+
 		/// <summary>
 		/// Event fired when POI disappears from the compass bar (gets farther than the visible distance)
 		/// </summary>
-		public event POIEvent OnPOIHide;
+		public Action<CompassProPOI> OnPOIHide;
 
+		/// <summary>
+		/// Event fired when mouse enters an icon on the miniMap
+		/// </summary>
+		public Action<CompassProPOI> OnPOIMiniMapIconMouseEnter;
+
+		/// <summary>
+		/// Event fired when mouse exits an icon on the miniMap
+		/// </summary>
+		public Action<CompassProPOI> OnPOIMiniMapIconMouseExit;
+
+		/// <summary>
+		/// Event fired when button is pressed on an icon on the miniMap
+		/// </summary>
+		public Action<CompassProPOI> OnPOIMiniMapIconMouseDown;
+
+		/// <summary>
+		/// Event fired when button is released on an icon on the miniMap
+		/// </summary>
+		public Action<CompassProPOI> OnPOIMiniMapIconMouseUp;
+
+		/// <summary>
+		/// Event fired when an icon is clicked on the minimap
+		/// </summary>
+		public Action<CompassProPOI> OnPOIMiniMapIconMouseClick;
 
 		#endregion
 
@@ -1038,7 +1105,6 @@ namespace CompassNavigatorPro {
 
 			GameObject beaconObj = Instantiate (Resources.Load<GameObject> ("CNPro/Prefabs/POIBeacon"));
 			beaconObj.name = "POIBeacon";
-			beaconObj.hideFlags = HideFlags.DontSave;
 			beacon = beaconObj.transform;
 			beacon.localScale = new Vector3 (beacon.localScale.x * horizontalScale, beacon.localScale.y, beacon.localScale.z);
 			beacon.position = existingPOI.transform.position + Misc.Vector3up * beacon.transform.localScale.y * 0.5f;
@@ -1056,6 +1122,34 @@ namespace CompassNavigatorPro {
 				}
 			}
 		}
+
+
+		/// <summary>
+		/// Show a light beacon over the specified POI.
+		/// </summary>
+		public void POIShowBeacon (Vector3 position, float duration, float horizontalScale, float intensity, Color tintColor) {
+			string beaconName = "POIBeacon " + position;
+			GameObject beaconObj = GameObject.Find (beaconName);
+			if (beaconObj != null)
+				return;
+
+			beaconObj = Instantiate (Resources.Load<GameObject> ("CNPro/Prefabs/POIBeacon"));
+			beaconObj.name = beaconName;
+			Transform beacon = beaconObj.transform;
+			beacon.localScale = new Vector3 (beacon.localScale.x * horizontalScale, beacon.localScale.y, beacon.localScale.z);
+			beacon.position = position + Misc.Vector3up * beacon.transform.localScale.y * 0.5f;
+			BeaconAnimator anim = beacon.gameObject.GetComponent<BeaconAnimator> ();
+			anim.duration = duration;
+			anim.tintColor = tintColor;
+			anim.intensity = intensity;
+
+			if (audioSource != null) {
+				if (_beaconDefaultAudioClip != null) {
+					audioSource.PlayOneShot (_beaconDefaultAudioClip);
+				}
+			}
+		}
+
 
 
 		/// <summary>
@@ -1103,6 +1197,12 @@ namespace CompassNavigatorPro {
 			StartCoroutine (AnimateDiscoverText (text));
 		}
 
+
+		public Canvas canvas {
+			get {
+				return _canvas;
+			}
+		}
 		#endregion
 		
 	}

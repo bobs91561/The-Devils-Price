@@ -125,4 +125,9 @@ public class AnimationCheck : MonoBehaviour
     {
         _mThirdPerson.EndDodge();
     }
+
+    public void DoneWaiting()
+    {
+        _mDecider.DoneWaiting();
+    }
 }

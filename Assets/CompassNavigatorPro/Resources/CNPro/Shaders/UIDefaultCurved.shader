@@ -13,7 +13,7 @@ Shader "CompassNavigatorPro/UI Default Curved"
 
 		_ColorMask ("Color Mask", Float) = 15
 
-		_BendFactor ("Bend Factor", Float) = 0
+		[HideInInspector] _FXData ("FX Data", Vector) = (0,0,0,0)
 
 		[Toggle(UNITY_UI_ALPHACLIP)] _UseUIAlphaClip ("Use Alpha Clip", Float) = 0
 	}
@@ -58,7 +58,7 @@ Shader "CompassNavigatorPro/UI Default Curved"
 
 			#pragma multi_compile __ UNITY_UI_ALPHACLIP
 
-			float _BendFactor;
+			float4 _FXData;
 
 
 			struct appdata_t
@@ -90,13 +90,16 @@ Shader "CompassNavigatorPro/UI Default Curved"
 				// Get screen position
 				float4 pos = UnityObjectToClipPos(IN.vertex);
 				float4 screenPos = ComputeScreenPos(pos);
-				pos.y -= sin(screenPos.x * 3.1415927) * _BendFactor;
+				pos.y -= sin(screenPos.x * 3.1415927) * _FXData.x;
 
 				OUT.vertex = pos;
-
 				OUT.texcoord = IN.texcoord;
-				
+
+				float distToEdge = _FXData.y - abs(screenPos.x - 0.5) * 2 + 0.001;
+				float fadeOut = saturate((distToEdge - _FXData.w) / (_FXData.z + 0.0001));
 				OUT.color = IN.color * _Color;
+				OUT.color.a *= fadeOut;
+
 				return OUT;
 			}
 

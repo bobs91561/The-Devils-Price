@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &717711569230619071
+--- !u!114 &1788464995345090798
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parent: {fileID: 0}
---- !u!114 &717711569230619072
+--- !u!114 &406345258165703816
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -25,7 +25,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d5941d435e8baa45802cc928d6637a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mDamageDealt: 4
+  _mDamageDealt: 10
+--- !u!135 &2590385063972176923
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 717711569230619070}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: -3, y: 0, z: 0}
+--- !u!135 &3665814485591507580
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 717711569230619070}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &717711569230522132
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35,7 +61,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100010, guid: 68ee34f1a8321c44fb37704543f8cd14, type: 3}
       propertyPath: m_Name
-      value: Water Spray
+      value: Water Spray Variant
       objectReference: {fileID: 0}
     - target: {fileID: 400010, guid: 68ee34f1a8321c44fb37704543f8cd14, type: 3}
       propertyPath: m_LocalPosition.x
@@ -80,6 +106,22 @@ PrefabInstance:
     - target: {fileID: 400010, guid: 68ee34f1a8321c44fb37704543f8cd14, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 68ee34f1a8321c44fb37704543f8cd14, type: 3}
+      propertyPath: EffectType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 68ee34f1a8321c44fb37704543f8cd14, type: 3}
+      propertyPath: EffectRadius
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 68ee34f1a8321c44fb37704543f8cd14, type: 3}
+      propertyPath: InstanceBehaviour
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 68ee34f1a8321c44fb37704543f8cd14, type: 3}
+      propertyPath: DestroyTimeDelay
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 19800006, guid: 68ee34f1a8321c44fb37704543f8cd14, type: 3}
       propertyPath: InitialModule.startSizeY.minMaxState

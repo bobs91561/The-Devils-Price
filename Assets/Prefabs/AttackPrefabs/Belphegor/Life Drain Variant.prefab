@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83bfc9b3f02a76b4f9252d29adb848b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damage: 10
+  Damage: 5
   _mParent: {fileID: 0}
   DestroyAfterSeconds: 5
 --- !u!1001 &6880069934833065297
@@ -74,6 +74,26 @@ PrefabInstance:
     - target: {fileID: 4211871861405604, guid: 443b9d04195d337429bce8ad0bd37807, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198479700175399528, guid: 443b9d04195d337429bce8ad0bd37807,
+        type: 3}
+      propertyPath: InitialModule.startSizeY.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 198479700175399528, guid: 443b9d04195d337429bce8ad0bd37807,
+        type: 3}
+      propertyPath: InitialModule.startSizeZ.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 198479700175399528, guid: 443b9d04195d337429bce8ad0bd37807,
+        type: 3}
+      propertyPath: InitialModule.startRotationX.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 198479700175399528, guid: 443b9d04195d337429bce8ad0bd37807,
+        type: 3}
+      propertyPath: InitialModule.startRotationY.minMaxState
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 443b9d04195d337429bce8ad0bd37807, type: 3}

@@ -9,22 +9,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b2bc747f41175a4b8be8410c50e4984, type: 3}
-  m_Name: BiteMelee
+  m_Script: {fileID: 11500000, guid: dd32b70f0b6911b42aa3a2ad99627bd2, type: 3}
+  m_Name: (Old)CastMouth_PSCA_Slimeball
   m_EditorClassIdentifier: 
   attacker: {fileID: 0}
-  objectToGenerate: {fileID: 0}
+  objectToGenerate: {fileID: 4884849308939145613, guid: ccc772b2b3c86bb438193602954ba4e8,
+    type: 3}
   audioToPlay: {fileID: 0}
-  damage: 25
-  coolDown: 1
+  damage: 20
+  coolDown: 4
   soulStrengthRequired: 0
   demonicPowerRequired: 0
-  maxForwardDistance: 5
-  areaOfAttack: 1
-  attackSpeed: 0.5
-  animationKey: LightMelee1
-  OneHit: 1
-  SwapSecondary: 0
-  DontEndAfterDestroy: 0
-  MultipleGenerations: 0
-  HitboxDestroyTime: 1
+  maxForwardDistance: 20
+  areaOfAttack: 2
+  attackSpeed: 2
+  animationKey: Cast1

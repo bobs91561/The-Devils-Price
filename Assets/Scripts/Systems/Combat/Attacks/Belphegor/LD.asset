@@ -9,18 +9,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd32b70f0b6911b42aa3a2ad99627bd2, type: 3}
-  m_Name: CastMouth_PSCA_Slimeball
+  m_Script: {fileID: 11500000, guid: 351984aa3e42ebb449e7dfc0bf5ec6ad, type: 3}
+  m_Name: LD
   m_EditorClassIdentifier: 
   attacker: {fileID: 0}
-  objectToGenerate: {fileID: 4884849308939145613, guid: ccc772b2b3c86bb438193602954ba4e8,
+  objectToGenerate: {fileID: 6881033022721325787, guid: ce5963ba056d52e4c8b87a719523ec32,
     type: 3}
   audioToPlay: {fileID: 0}
-  damage: 20
-  coolDown: 4
+  damage: 10
+  coolDown: 2
   soulStrengthRequired: 0
   demonicPowerRequired: 0
   maxForwardDistance: 20
   areaOfAttack: 2
-  attackSpeed: 2
+  attackSpeed: 1
   animationKey: Cast1
+  effectGrounded: 0
+  duration: 3
+  SingleMoment: 0
+  SelfTargeting: 0
+  ReverseOnComplete: 0

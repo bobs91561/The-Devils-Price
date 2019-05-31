@@ -38,7 +38,7 @@ Transform:
   m_GameObject: {fileID: 462834730895834574}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.25241753, y: 3.0117035, z: 1.91376}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_Children:
   - {fileID: 6074141294644755338}
   m_Father: {fileID: 0}
@@ -68,7 +68,11 @@ MonoBehaviour:
   RecentCombat: 0
   PlayerContact: 0
   Friendly: 0
-  actions: []
+  actions:
+  - {fileID: 11400000, guid: 7737bf21e7fc9a040ab12f8833542f8b, type: 2}
+  - {fileID: 11400000, guid: b4573e29b05d6b4499a454a5d043716d, type: 2}
+  - {fileID: 11400000, guid: 0c28eae9f4195444980e1ccd75c00a0a, type: 2}
+  - {fileID: 11400000, guid: 3cc8190648d13e041a4b071ad5d7d51d, type: 2}
   patrolPoints: []
   spawnPoints: []
   patrolPoint: 0
@@ -105,7 +109,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90e17d0b52d72754b915340b784eb695, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Level: 0
+  Level: 2
   attacks: []
   Decider: {fileID: 0}
   Moving: 0
@@ -186,7 +190,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attacks:
-  - {fileID: 11400000, guid: 8e5e8a53b0feb1c4db26aee4111d5e70, type: 2}
+  - {fileID: 11400000, guid: bd7c25661a8d43448a022ad3abb5bfb9, type: 2}
+  - {fileID: 11400000, guid: f74a7761a6ccf7e4ca661a76513229b0, type: 2}
+  - {fileID: 11400000, guid: c1a6bf27f8b78854b99a099af18abe88, type: 2}
+  - {fileID: 11400000, guid: cfd48485b45eeda4ba1a45790b40a564, type: 2}
   BasicAttack: {fileID: 0}
   ChargedAttack: {fileID: 0}
   BlockAttack: {fileID: 0}
@@ -200,8 +207,8 @@ MonoBehaviour:
   WeaponDamage1: 0
   WeaponDamage2: 0
   CastingDamage: 0
-  castingObject: {fileID: 0}
-  characterCenter: {fileID: 0}
+  castingObject: {fileID: 6074141294644547910}
+  characterCenter: {fileID: 6074141294644544318}
   objectsSheathe: []
   currentAttack: {fileID: 0}
   isAttacking: 0
@@ -342,8 +349,8 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
+  m_Radius: 0.3
+  m_Height: 2.5
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!195 &8704488240223182079
@@ -376,8 +383,8 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 462834730895834574}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 50
+  m_Drag: 3
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -499,6 +506,19 @@ MonoBehaviour:
   AdditionalEffectDamage: 0
   hitSounds: []
   shieldSounds: []
+--- !u!114 &6966649425397083375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6074141294644547910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cb37064a8e9c674e9e171cc8411ba3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CastDamageMultiplier: 1
 --- !u!114 &6074141294644678793
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -918,6 +938,18 @@ GameObject:
 --- !u!4 &6074141294644755338 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 469770, guid: 3b2478f1915ecec40b434b3372eab685,
+    type: 3}
+  m_PrefabInstance: {fileID: 6074141294644678784}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6074141294644544318 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 136126, guid: 3b2478f1915ecec40b434b3372eab685,
+    type: 3}
+  m_PrefabInstance: {fileID: 6074141294644678784}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6074141294644547910 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 131526, guid: 3b2478f1915ecec40b434b3372eab685,
     type: 3}
   m_PrefabInstance: {fileID: 6074141294644678784}
   m_PrefabAsset: {fileID: 0}
